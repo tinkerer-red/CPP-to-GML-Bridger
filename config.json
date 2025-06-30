@@ -1,0 +1,15 @@
+{
+  "input_folder": "input/native-loader/include/openxr",
+  "output_folder": "output",
+  "output_cpp_file": "bridge.cpp",
+  "header": "openxr.h",
+  "dll_name": "GM-OpenXR.dll",
+  "init_function": "YYExtensionInitialise",
+  "extension_name": "GM_OpenXR",
+  "namespace": "XR",
+  "gml_stub": "GM_OpenXR.gml",
+  "yy_extension": "GM_OpenXR.yy",
+  "cull_function_names": true,
+  "cull_constant_names": true,
+  "cull_enum_names": true
+}
