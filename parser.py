@@ -1,4 +1,5 @@
 import re
+import json
 
 def strip_common_prefix(enum_name, entries):
     parts = [k.split('_') for k in entries if '_' in k]
@@ -23,120 +24,236 @@ def get_enum_prefix_suffix_cleanup(enum_keys):
 
     return prefix, suffix
 
+def expand_macros(text, macro_defs):
+    for name, macro in macro_defs.items():
+        params, body = macro["params"], macro["body"]
+        pattern = re.compile(rf'\b{name}\s*\((.*?)\)')
+        for match in reversed(list(pattern.finditer(text))):
+            args = [a.strip() for a in match.group(1).split(',')]
+            if len(args) != len(params):
+                continue
+            mapping = dict(zip(params, args))
+            expanded = body
+            for p, v in mapping.items():
+                expanded = expanded.replace(f"{p}##_T", f"{v}_T")
+                expanded = expanded.replace(p, v)
+            start, end = match.span()
+            text = text[:start] + expanded + text[end:]
+    return text
+
+def classify_c_type(c_type, typedef_map, known_enum_typenames, known_structs):
+    # unwrap any number of typedef aliases
+    def resolve(t):
+        seen = set()
+        while t in typedef_map and t not in seen:
+            seen.add(t)
+            t = typedef_map[t]
+        return t
+
+    original_type = c_type.strip()
+    # first resolve the outer typedef chain
+    resolved_type = resolve(original_type).strip()
+    resolved_lc   = resolved_type.lower()
+
+    # now peel off const/* and find the base
+    is_pointer = resolved_type.endswith("*")
+    is_const   = resolved_type.startswith("const ")
+    base_type  = re.sub(r'^const\s+', '', resolved_type).rstrip('*').strip()
+    # resolve again in case base_type is itself a typedef
+    base_resolved = resolve(base_type).strip()
+    base_lc       = base_resolved.lower()
+
+    result = {
+        "original_type":    original_type,
+        "resolved_type":    resolved_type,
+        "base_type":        base_type,
+        "base_resolved":    base_resolved,
+        "is_pointer":       is_pointer,
+        "is_const":         is_const,
+        "is_enum":          base_lc in known_enum_typenames,
+        "is_struct":        base_type in known_structs,
+        "is_ref_wrapped":   base_resolved.startswith("ref "),
+        "is_primitive":     base_lc in [
+            "double","float","int","bool",
+            "uint64_t","int64_t","uint32_t","int32_t",
+            "uint16_t","int16_t","uint8_t","int8_t"
+        ],
+        "is_string_buffer_out": (base_resolved=="char" and is_pointer and not is_const),
+        "gm_pass_type":     "unknown"
+    }
+
+    # classify
+    if resolved_lc in ["string","const char*"]:
+        result["gm_pass_type"] = "string"
+    elif result["is_string_buffer_out"]:
+        result["gm_pass_type"] = "buffer"
+    elif result["is_ref_wrapped"] or result["is_struct"]:
+        result["gm_pass_type"] = "ref"
+    elif result["is_enum"] or result["is_primitive"]:
+        result["gm_pass_type"] = "double"
+
+    return result
+
 def parse_header(header_path, namespace="XR"):
-    with open(header_path, "r") as f:
+    with open(header_path, "r", encoding="utf-8") as f:
         content = f.read()
 
+    # 1) Collapse multiline macros
+    content = re.sub(r'\\\r?\n\s*', ' ', content)
+
+    # 2) Parameterized macros
+    macro_defs = {}
+    for name, params, body in re.findall(
+        r'^\s*#define\s+(\w+)\s*\((.*?)\)\s+(.*)$',
+        content, re.MULTILINE
+    ):
+        macro_defs[name] = {
+            "params": [p.strip() for p in params.split(',')],
+            "body": body.strip()
+        }
+
+    content = expand_macros(content, macro_defs)
+    with open("expanded_macros.h", "w", encoding="utf-8") as dbg:
+        dbg.write(content)
+
+    # 3) Parse enums
+    enums = {}
+    known_enum_typenames = set()
+    for match in re.finditer(
+        r'typedef\s+enum\s+(\w+)?\s*{([^}]+)}\s*(\w+)?\s*;',
+        content, re.DOTALL
+    ):
+        raw_name = match.group(3) or match.group(1) or "unnamed_enum"
+        body = match.group(2)
+        entries, val = {}, 0
+        for line in body.split(','):
+            line = line.strip()
+            if not line: continue
+            if '=' in line:
+                k, v = map(str.strip, line.split('=', 1))
+                try: val = int(eval(v))
+                except: val = 0
+            else:
+                k = line
+            entries[k] = val
+            val += 1
+
+        short = raw_name
+        if short.lower().startswith(namespace.lower()):
+            short = short[len(namespace):]
+        pre, suf = get_enum_prefix_suffix_cleanup(entries.keys())
+
+        cleaned = {}
+        for k, v in entries.items():
+            ck = k[len(pre):] if pre and k.startswith(pre) else k
+            if suf and ck.endswith(suf):
+                ck = ck[:-len(suf)]
+            cleaned[ck] = v
+        cleaned["_meta"] = {
+            "namespace": namespace,
+            "short_name": short,
+            "base_prefix": pre,
+            "base_suffix": suf
+        }
+
+        enums[raw_name] = cleaned
+        known_enum_typenames.add(raw_name.lower())
+
+    # 4) Simple #define constants
+    constants = {}
+    for n, v in re.findall(
+        r'^#define\s+([A-Za-z_]\w*)\s+("(?:[^"\\]|\\.)*"|-?\d+|0x[0-9A-Fa-f]+)\s*$',
+        content, re.MULTILINE
+    ):
+        constants[n] = (v if v.startswith('"') else int(v, 0))
+
+    # 5) Typedef map
+    typedef_map = {}
+
+    # (a) catch plain aliases, including flags and basic enums
+    for full, alias in re.findall(
+        r'typedef\s+([^\s]+(?:\s+\w+)*)\s+(\w+)\s*;',
+        content
+    ):
+        typedef_map[alias] = full.strip()
+
+    # (b) handles
+    for _, alias in re.findall(
+        r'typedef\s+struct\s+(\w+)_T\s*\*\s*(\w+);',
+        content
+    ):
+        typedef_map[alias] = f"ref {alias}"
+
+    # 6) Full-body structs (capture ANY tokens before the '{')
+    known_structs = set()
+    full_struct = re.compile(
+        r'typedef\s+struct\b[^{}]*?\{[^}]+\}\s*(\w+)\s*;',
+        re.DOTALL
+    )
+    for alias in full_struct.findall(content):
+        known_structs.add(alias)
+        # treat pointers-to-this as ref
+        typedef_map[alias] = alias
+    
+
+    # 7) Function parsing + classification
     func_pattern = re.compile(
         r'XRAPI_ATTR\s+([^\s]+(?:\s+\w+)*)\s+XRAPI_CALL\s+(xr\w+)\((.*?)\);',
         re.DOTALL
     )
-
     functions = []
-
-    for ret_type, name, args in func_pattern.findall(content):
+    for ret, name, args in func_pattern.findall(content):
         arg_list = []
-        if args.strip():
-            for arg in args.split(','):
-                arg = arg.strip()
-                match = re.match(r'(.+?)\s+(\**\w+(?:\[[^\]]+\])?)$', arg)
-                if match:
-                    arg_type, arg_name = match.groups()
+        for raw in [a.strip() for a in args.split(',') if a.strip()]:
+            m = re.match(r'(.+?)\s+(\**\w+(?:\[[^\]]+\])?)$', raw)
+            if not m:
+                continue
+            tp, nm = m.groups()
+            array_size = None
+            if '[' in nm and nm.endswith(']'):
+                idx = nm.index('[')
+                array_size = nm[idx+1:-1]
+                tp = tp.strip() + '*'
+                nm = nm[:idx]
+            entry = {"name": nm.strip(), "type": tp.strip()}
+            if array_size:
+                entry["array_size"] = array_size
+            entry.update(classify_c_type(
+                entry["type"],
+                typedef_map,
+                known_enum_typenames,
+                known_structs
+            ))
+            arg_list.append(entry)
 
-                    # Detect C-style arrays, capture the SIZE for later
-                    array_size = None
-                    if '[' in arg_name and arg_name.endswith(']'):
-                        idx        = arg_name.index('[')
-                        base_name  = arg_name[:idx]
-                        size_macro = arg_name[idx+1:-1]               # e.g. "XR_MAX_RESULT_STRING_SIZE"
-                        arg_type   = arg_type.strip() + '*'           # char → char*
-                        arg_name   = base_name
-
-                        array_size = size_macro
-
-                    arg_entry = {
-                        "type": arg_type.strip(),
-                        "name": arg_name.strip()
-                    }
-                    if array_size:
-                        arg_entry["array_size"] = array_size         # stash it for the generators
-
-                    arg_list.append(arg_entry)
-
+        ret_meta = classify_c_type(
+            ret.strip(),
+            typedef_map,
+            known_enum_typenames,
+            known_structs
+        )
 
         functions.append({
             "name": name,
-            "return_type": ret_type.strip(),
+            "return_type": ret.strip(),
+            "return_meta": ret_meta,
             "args": arg_list
         })
 
-    enum_pattern = re.compile(r'typedef\s+enum\s+(\w+)?\s*{([^}]+)}\s*(\w+)?\s*;', re.DOTALL)
-    enums = {}
-    known_enum_typenames = set()
-
-    for match in enum_pattern.finditer(content):
-        enum_name = match.group(3) or match.group(1) or "unnamed_enum"
-        enum_body = match.group(2)
-        enum_entries = {}
-        current_value = 0
-
-        for line in enum_body.split(','):
-            line = line.strip()
-            if not line:
-                continue
-            if '=' in line:
-                key, val = map(str.strip, line.split('=', 1))
-                try:
-                    current_value = int(eval(val))
-                except Exception:
-                    current_value = 0
-            else:
-                key = line
-            enum_entries[key] = current_value
-            current_value += 1
-
-        short_name = enum_name
-        if short_name.lower().startswith(namespace.lower()):
-            short_name = short_name[len(namespace):]
-
-        prefix, suffix = get_enum_prefix_suffix_cleanup(enum_entries.keys())
-
-        cleaned_entries = {}
-        for key, val in enum_entries.items():
-            clean_key = key
-            if prefix and clean_key.startswith(prefix):
-                clean_key = clean_key[len(prefix):]
-            if suffix and clean_key.endswith(suffix):
-                clean_key = clean_key[:-len(suffix)]
-            cleaned_entries[clean_key] = val
-
-        cleaned_entries["_meta"] = {
-            "namespace": namespace,
-            "short_name": short_name,
-            "base_prefix": prefix,
-            "base_suffix": suffix
-        }
-
-        enums[enum_name] = cleaned_entries
-        known_enum_typenames.add(enum_name.lower())
-
-    # --- Parse simple #defines with numeric or string values; ignore macros ---
-    define_pattern = re.compile(
-        r'^#define\s+([A-Za-z_]\w*)\s+("(?:[^"\\]|\\.)*"|-?\d+|0x[0-9A-Fa-f]+)\s*$',
-        re.MULTILINE
-    )
-    constants = {}
-    for name, val in define_pattern.findall(content):
-        if val.startswith('"') and val.endswith('"'):
-            # keep the quotes for string literals
-            constants[name] = val
-        else:
-            # parse decimal or hex integers
-            constants[name] = int(val, 0)
+    # Dump a debug file for inspection
+    with open("debug_types.json", "w", encoding="utf-8") as dbg:
+        json.dump({
+            "typedef_map": typedef_map,
+            "known_enum_typenames": list(known_enum_typenames),
+            "known_structs": list(known_structs),
+            "functions": functions
+        }, dbg, indent=4)
 
     return {
         "functions": functions,
         "enums": enums,
+        "constants": constants,
+        "typedef_map": typedef_map,
         "known_enum_typenames": known_enum_typenames,
-        "constants": constants
+        "known_structs": known_structs
     }

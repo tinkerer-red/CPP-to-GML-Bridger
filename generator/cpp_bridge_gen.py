@@ -1,11 +1,15 @@
 # generator/cpp_bridge_gen.py
 import os
 
-def generate_cpp_bridge(functions, config):
+def generate_cpp_bridge(parse_result, config):
+    functions     = parse_result["functions"]
+    known_structs = parse_result["known_structs"]
+
     header_file = config.get("header_file", "openxr.h").replace("\\", "/")
     namespace   = config.get("namespace", "XR")
 
     bridge = [f'''\
+// Auto-generated GMBridge.cpp
 #include <iostream>
 #include <string>
 #include <limits>
@@ -19,158 +23,189 @@ extern "C" double get_debug_mode() {{
 }}
 ''']
 
-    def is_numeric(t):
-        t = t.lower().replace('const ', '').replace('*', '').strip()
-        return t in ("float", "double", "int", "int32_t", "int64_t",
-                     "short", "long", "size_t", "uint32_t", "uint64_t")
-
     # --- Cache Manager bridge functions ---
     bridge.append("""
 
+// Shared buffer for JSON/ref returns
+static std::string _tmp_str;
 
-
-// Cache Manager: set a key/value on an ref
-extern "C" double __ref_set(const char* ref, const char* key, const char* json) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_set" << std::endl;
-    }
-    // TODO: implement your global cache storage here
-    return 1;  // success
-}
-
-// Cache Manager: get a simple value
+// Cache Manager: get value by key
 extern "C" const char* __ref_get(const char* ref, const char* key) {
     if (debug_mode) {
         std::cout << "[GMBridge] Called __ref_get" << std::endl;
     }
-    // TODO: implement retrieval (return a C-string)
-    return "{}"; //returns a ref even if it's a `Real`
+    _tmp_str = RefManager::instance().get(ref, key);
+    return _tmp_str.c_str();
 }
 
-// Cache Manager: overwrite entire struct
+// Cache Manager: set full struct
 extern "C" double __ref_set_struct(const char* ref, const char* json) {
     if (debug_mode) {
         std::cout << "[GMBridge] Called __ref_set_struct" << std::endl;
     }
-    // TODO: implement struct overwrite
-    return 1; // success
+    return RefManager::instance().set_struct(ref, json) ? 1.0 : 0.0;
 }
 
-// Cache Manager: alias for ref_get_struct
+// Cache Manager: get struct as JSON
 extern "C" const char* __ref_json(const char* ref) {
     if (debug_mode) {
         std::cout << "[GMBridge] Called __ref_json" << std::endl;
     }
-    return "{}"; //return a json of the full object/struct
+
+    void* obj = RefManager::instance().retrieve(ref);
+    if (obj) {
+        // If your type has to_json(), you can do:
+        // _tmp_str = static_cast<YourType*>(obj)->to_json();
+        // return _tmp_str.c_str();
+    }
+
+    _tmp_str = RefManager::instance().get_struct(ref);
+    return _tmp_str.c_str();
 }
 
+// Cache Manager: destroy a single ref
+extern "C" double __ref_destroy(const char* ref) {
+    if (debug_mode) {
+        std::cout << "[GMBridge] Called __ref_destroy" << std::endl;
+    }
+    RefManager::instance().release(ref);
+    RefManager::instance().destroy(ref);
+    return 1.0;
+}
 
+// Cache Manager: flush everything
+extern "C" double __ref_manager_flush() {
+    if (debug_mode) {
+        std::cout << "[GMBridge] Called __ref_manager_flush (ALL)" << std::endl;
+    }
+    RefManager::instance().flush();
+    return 1.0;
+}
 
 """)
 
+
+    # === Struct constructors ===
+    for s in sorted(known_structs):
+        # e.g. XrMyStruct → __create_XrMyStruct()
+        bridge.append(f'''
+// Allocate a fresh {s} and hand back a GML ref
+extern "C" const char* __create_{s}() {{
+    auto* obj = new {s}{{}};  // zero-initialize
+    std::string ref = RefManager::instance().store("{s}", obj);
+    return ref.c_str();
+}}
+''')
+
+    # --- Function bridges ---
     for fn in functions:
         name      = fn["name"]
-        ret       = fn["return_type"]
-        ret_clean = ret.lower().replace('const ', '').strip()
+        ret_meta  = fn.get("return_meta", {})
+        ret_type  = ret_meta.get("gm_pass_type", "unknown")
 
-        # Detect if last arg was a C‐style array (parser populated "array_size")
-        has_array_arg = False
-        array_size    = None
-        if fn["args"]:
-            last = fn["args"][-1]
-            if "array_size" in last:
-                has_array_arg = True
-                array_size    = last["array_size"]
+        # detect a buffer-style out-param
+        has_buffer_arg = False
+        buffer_size    = None
+        for arg in fn["args"]:
+            if arg.get("gm_pass_type") == "buffer":
+                has_buffer_arg = True
+                buffer_size    = arg.get("array_size", "1024")
+                break
 
-        # Choose return signature & error return
-        if has_array_arg:
-            # We're going to drop the buffer arg and return its contents as a C‐string
+        # choose return signature & error return
+        if has_buffer_arg:
             ret_sig    = "const char*"
             err_return = "\"\""
+        elif ret_type == "double":
+            ret_sig    = "double"
+            err_return = "std::numeric_limits<double>::quiet_NaN()"
+        elif ret_type == "string":
+            ret_sig    = "const char*"
+            err_return = "\"\""
+        elif ret_type == "ref":
+            ret_sig    = "const char*"
+            err_return = "_tmp_str.c_str()"
         else:
-            if is_numeric(ret_clean):
-                ret_sig    = "double"
-                err_return = "std::numeric_limits<double>::quiet_NaN()"
-            else:
-                ret_sig    = "const char*"
-                err_return = "_err.c_str()"
+            ret_sig    = "const char*"
+            err_return = "_tmp_str.c_str()"
 
-        # Build argument decls, conversions, call args (skip the buffer if present)
+        # build decls, conversions, and call-args
         decls, convert, call_args = [], [], []
         for i, arg in enumerate(fn["args"]):
-            ctype = arg["type"]
-            aname = arg.get("name") or f"arg{i}"
-            tclean = ctype.lower().replace('const ', '').replace('*','').strip()
-
-            # Skip the buffer parameter entirely if it's the array
-            if has_array_arg and i == len(fn["args"]) - 1:
+            # drop buffer params—they become thread-local arrays
+            if arg.get("gm_pass_type") == "buffer":
                 continue
 
-            if is_numeric(tclean):
+            aname     = arg["name"]
+            pass_type = arg.get("gm_pass_type", "unknown")
+            
+            if pass_type == "double":
                 decls.append(f"double {aname}")
                 call_args.append(aname)
-            else:
+
+            elif pass_type == "string":
+                decls.append(f"const char* {aname}")
+                call_args.append(aname)
+
+            elif pass_type == "ref":
                 decls.append(f"const char* {aname}_ref")
-                convert.append(f'''\
-        // arg #{i} ({aname})
-        void* _ptr_{i} = RefManager::instance().retrieve({aname}_ref);
-        if (!_ptr_{i}) {{
-            std::string _err = "ref ERROR {namespace} {name} argument {i} incorrect type (\\"" + std::string({aname}_ref) + "\\") expecting a ref";
-            return {err_return};
-        }}''')
+                convert.append(f"""\
+// Convert GML ref -> C++ pointer
+    void* _ptr_{i} = RefManager::instance().retrieve({aname}_ref);
+    if (!_ptr_{i}) return {err_return};""")
                 call_args.append(f"_ptr_{i}")
 
-        # Pick wrapper name: add “_noBuf” suffix if we dropped the buffer
-        wrapper_name = f"__{name}{'_noBuf' if has_array_arg else ''}"
-        sig = f'extern "C" {ret_sig} {wrapper_name}({", ".join(decls)})'
-        bridge.append(f"// Bridge for {name}{'_noBuf' if has_array_arg else ''}\n{sig} {{")
-        bridge.append(f'''\
-        if (debug_mode) {{
-            std::cout << "[GMBridge] Called {name}" << std::endl;
-        }}''')
+            else:
+                # fallback for anything else — show the original C type inline
+                orig_type = arg.get("original_type", arg["type"])
+                decls.append(f"/* unsupported: {orig_type} */ const char* {aname}")
+                call_args.append(aname)
+
+        # wrapper name (suffix _noBuf if buffer was dropped)
+        suffix       = "_noBuf" if has_buffer_arg else ""
+        wrapper_name = f"__{name}{suffix}"
+        sig          = f'extern "C" {ret_sig} {wrapper_name}({", ".join(decls)})'
+
+        bridge.append(f"// Bridge for {name}{suffix}")
+        bridge.append(sig + " {")
+        bridge.append(f'    if (debug_mode) std::cout << "[GMBridge] Called {name}" << std::endl;')
         bridge.extend(convert)
 
-        # Actual call
-        if has_array_arg:
-            bridge.append(f"    // allocate a static buffer of size {array_size}")
-            bridge.append(f"    static thread_local char buf[{array_size}];")
-            bridge.append("    // call original C API, letting it write into buf")
+        if has_buffer_arg:
+            bridge.append(f"    static thread_local char buf[{buffer_size}];")
+            bridge.append(f"    // call original API, let it write into buf")
             bridge.append(f"    {name}({', '.join(call_args + ['buf'])});")
             bridge.append("    return buf;")
         else:
-            bridge.append("    // actual call")
             bridge.append(f"    auto result = {name}({', '.join(call_args)});")
             if ret_sig == "double":
                 bridge.append("    return result;")
+            elif ret_type == "string":
+                bridge.append("    return result;")
+            elif ret_type == "ref":
+                bridge.append(f"""\
+// wrap into GML ref
+    _tmp_str = RefManager::instance().store("{ret_meta.get('resolved_type','')}", result);
+    return _tmp_str.c_str();""")
             else:
-                if ret_clean in ("char*", "const char*"):
-                    bridge.append("    return result;")
-                else:
-                    bridge.append(f'''\
-        // wrap into GM ref
-        std::string _result = RefManager::instance().store("{ret_clean}", result);
-        return _result.c_str();''')
+                bridge.append("    return nullptr;  // unsupported return")
 
         bridge.append("}\n")
 
-    # join all lines
     bridge_cpp = "\n".join(bridge)
 
-
-
-    # --- RefManager.h ---
-    ref_h = '''\
+    # emit RefManager.h/.cpp unchanged…
+    ref_h = """\
 #pragma once
 #include <unordered_map>
 #include <string>
 #include <sstream>
-#include <mutex>
 
 class RefManager {
 private:
     std::unordered_map<std::string, std::unordered_map<int, void*>> registry;
     std::unordered_map<std::string, int> counters;
-    std::mutex mutex_;
+    std::unordered_map<std::string, std::unordered_map<std::string, std::string>> json_data;
 
     RefManager() = default;
     ~RefManager() = default;
@@ -184,14 +219,12 @@ public:
     }
 
     std::string store(const std::string& type, void* ptr) {
-        std::lock_guard<std::mutex> lock(mutex_);
         int id = counters[type]++;
         registry[type][id] = ptr;
         return "ref " + type + " " + std::to_string(id);
     }
 
     void* retrieve(const std::string& ref) {
-        std::lock_guard<std::mutex> lock(mutex_);
         std::istringstream ss(ref);
         std::string tag, type;
         int id;
@@ -202,16 +235,60 @@ public:
     }
 
     void release(const std::string& ref) {
-        std::lock_guard<std::mutex> lock(mutex_);
         std::istringstream ss(ref);
         std::string tag, type;
         int id;
         ss >> tag >> type >> id;
         registry[type].erase(id);
     }
-};'''
 
-    # --- RefManager.cpp (empty) ---
+    bool set(const std::string& ref, const std::string& key, const std::string& value) {
+        json_data[ref][key] = value;
+        return true;
+    }
+    std::string get(const std::string& ref, const std::string& key) {
+        return json_data[ref][key];
+    }
+
+    bool set_struct(const std::string& ref, const std::string& json) {
+        json_data[ref].clear();
+        size_t pos = 0;
+        while ((pos = json.find("\"", pos)) != std::string::npos) {
+            size_t ks = pos+1, ke = json.find("\"", ks);
+            std::string k = json.substr(ks, ke-ks);
+            size_t colon = json.find(":", ke);
+            size_t vs = json.find("\"", colon), ve = json.find("\"", vs+1);
+            std::string v = json.substr(vs+1, ve-vs-1);
+            json_data[ref][k] = v;
+            pos = ve+1;
+        }
+        return true;
+    }
+
+    std::string get_struct(const std::string& ref) {
+        std::ostringstream out;
+        out << "{";
+        bool first = true;
+        for (auto& [k,v] : json_data[ref]) {
+            if (!first) out << ",";
+            out << "\"" << k << "\":\"" << v << "\"";
+            first = false;
+        }
+        out << "}";
+        return out.str();
+    }
+
+    void destroy(const std::string& ref) {
+        json_data.erase(ref);
+    }
+    void flush() {
+        registry.clear();
+        counters.clear();
+        json_data.clear();
+    }
+};
+"""
+
     ref_cpp = '#include "RefManager.h"\n// nothing to implement here; header-only\n'
 
     return {

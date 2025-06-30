@@ -2,21 +2,21 @@
 import re
 
 def map_jsdoc_type(c_type, known_enums=None, namespace="", cull_enum=True):
+    """
+    Map a C type (possibly with const/*) to a GML JsDoc type.
+    """
     t = c_type.lower().replace('const ', '').replace('*', '').strip()
 
-    # Known enum match
+    # 1) Enums
     if known_enums and t in known_enums:
         enum_name = known_enums[t]
-
-        # choose short vs full based on cull_enum
         if cull_enum and enum_name.lower().startswith(namespace.lower()):
             short = enum_name[len(namespace):]
         else:
             short = enum_name
-
         return f"Constant.{namespace}.{short}"
 
-    # Standard mappings
+    # 2) Primitives
     if t in ("bool", "_bool"):
         return "Bool"
     if "char" in t or "string" in t:
@@ -32,13 +32,14 @@ def map_jsdoc_type(c_type, known_enums=None, namespace="", cull_enum=True):
     if t == "function" or t.startswith("pfn_"):
         return "Function"
 
-    # Structs
+    # 3) Structs
     if t.startswith("xr") or "struct" in t:
-        name = t.replace("struct", "").strip()
+        # e.g. "xractionstategetinfo" → "Xractionstategetinfo" → Struct.XrActionStateGetInfo
+        name = re.sub(r'\bstruct\b', '', t).strip()
         name = name[0].upper() + name[1:]
         return f"Struct.{name}"
 
-    # Pointer fallback
+    # 4) Fallback pointer
     if "*" in c_type:
         return "Pointer"
 
@@ -50,6 +51,8 @@ def generate_gml_stub(functions_dict, config):
     enums          = functions_dict.get("enums", {})
     cull_enums     = config.get("cull_enum_names", True)
     known_enum_map = {k.lower(): k for k in enums.keys()}
+    constants      = functions_dict.get("constants", {})
+    known_structs  = functions_dict.get("known_structs", set())
 
     lines = [
         "/**",
@@ -57,8 +60,6 @@ def generate_gml_stub(functions_dict, config):
         " */",
         f"function {namespace}() {{"
     ]
-
-
 
     # --- Cache Manager region ---
     lines.append("""
@@ -72,7 +73,8 @@ def generate_gml_stub(functions_dict, config):
     /// @returns {Bool}
     #endregion
     static ref_set = function(_ref, _key, _value) {
-        return __ref_set(_ref, _key, _value);
+        var _json = (typeof(_value) == "string") ? _value : json_stringify(_value);
+        return __ref_set(_ref, _key, _json);
     };
 
     #region JsDocs
@@ -84,10 +86,7 @@ def generate_gml_stub(functions_dict, config):
     #endregion
     static ref_get = function(_ref, _key) {
         var _ret = __ref_get(_ref, _key);
-        if (string_pos("ref error", _ret)) {
-            show_error(_ret, true);
-            return undefined;
-        }
+        if (string_pos("ref error", _ret)) { show_error(_ret, true); return undefined; }
         return _ret;
     };
 
@@ -98,8 +97,8 @@ def generate_gml_stub(functions_dict, config):
     /// @param {Struct} struct
     /// @returns {Bool}
     #endregion
-    static ref_set_struct = function(_ref, _data) {
-        return __ref_set_struct(_ref, json_stringify(_data));
+    static ref_set_struct = function(_ref, _struct) {
+        return __ref_set_struct(_ref, json_stringify(_struct));
     };
 
     #region JsDocs
@@ -121,136 +120,134 @@ def generate_gml_stub(functions_dict, config):
     static ref_json = function(_ref) {
         return __ref_json(_ref);
     };
+
+    #region JsDocs
+    /// @function ref_destroy(ref)
+    /// @desc Destroy a single ref from the manager
+    /// @param {String} ref
+    /// @returns {Bool}
+    #endregion
+    static ref_destroy = function(_ref) {
+        return __ref_destroy(_ref);
+    };
+
+    #region JsDocs
+    /// @function ref_manager_flush()
+    /// @desc Flush all data from the ref manager
+    /// @returns {Bool}
+    #endregion
+    static ref_manager_flush = function() {
+        return __ref_manager_flush();
+    };
     #endregion
 """)
-    
-    # --- constants at the top ---
-    lines.append(f"    #region Constants")
-    # Toggle stripping the namespace prefix from constant names
+
+    # --- Constants ---
+    lines.append("    #region Constants")
     cull_consts = config.get("cull_constant_names", True)
-    constants = functions_dict.get("constants", {})
+    ns_prefix   = f"{namespace}_" if cull_consts else ""
+    for name, val in constants.items():
+        clean = name[len(ns_prefix):] if cull_consts and name.startswith(ns_prefix) else name
+        if clean and clean[0].isdigit(): clean = "_" + clean
+        lines.append(f"    static {clean} = {val};")
+    lines.append("    #endregion\n")
 
-    # Build the namespace prefix, e.g. "XR_"
-    ns_prefix = f"{namespace}_" if cull_consts else ""
-
-    for const_name, const_val in constants.items():
-        if cull_consts and const_name.startswith(ns_prefix):
-            clean_name = const_name[len(ns_prefix):]
-        else:
-            clean_name = const_name
-        lines.append(f"    static {clean_name} = {const_val};")
-    lines.append(f"    #endregion")
-    lines.append("")
-
-
-
-    # --- enums at the top ---
-    lines.append(f"    #region Enums")
-    cull = config.get("cull_enum_names", True)
-
-    for enum_name, enum_data in enums.items():
-        meta          = enum_data["_meta"]
-        base_prefix   = meta["base_prefix"]
-        base_suffix   = meta.get("base_suffix", "")
-
-        # choose field name: stripped short_name vs full enum_name
-        gml_field = meta["short_name"] if cull else enum_name
-
-        lines.append(f"    static {gml_field} = {{")
-        for key, val in enum_data.items():
-            if key == "_meta":
-                continue
-
-            if cull:
-                # remove parser-computed prefix & suffix
-                clean_key = key
-                if clean_key.startswith(base_prefix):
-                    clean_key = clean_key[len(base_prefix):]
-                if base_suffix and clean_key.endswith(base_suffix):
-                    clean_key = clean_key[:-len(base_suffix)]
+    # --- Struct Constructors ---
+    if known_structs:
+        lines.append("    #region Struct Constructors")
+        cull_structs = config.get("cull_struct_names", True)
+        for s in sorted(known_structs):
+            # derive a JS name: drop the namespace prefix if desired
+            if cull_structs and s.lower().startswith(namespace.lower()):
+                short = s[len(namespace):]
             else:
-                # reconstruct the original entry name
-                clean_key = f"{base_prefix}{key}{base_suffix}"
+                short = s
+            # camelCase for the ctor
+            ctorBase = short[0].upper() + short[1:]
+            jsName   = "create" + ctorBase
 
-            # ensure it doesn’t start with a digit
-            if clean_key and clean_key[0].isdigit():
-                clean_key = "_" + clean_key
+            lines.append("    #region JsDocs")
+            lines.append(f"    /// @function {jsName}()")
+            lines.append(f"    /// @desc Create a new `{s}` struct")
+            lines.append(f"    /// @returns {{Struct.{s}}}")
+            lines.append("    #endregion")
+            lines.append(f"    static {jsName} = function() {{")
+            lines.append(f"        return __create_{s}();")
+            lines.append("    };")
+            lines.append("")
+        lines.append("    #endregion\n")
 
-            lines.append(f"        {clean_key}: {val},")
+    # --- Enums ---
+    lines.append("    #region Enums")
+    for enum_name, data in enums.items():
+        meta       = data["_meta"]
+        pre, suf   = meta["base_prefix"], meta.get("base_suffix", "")
+        field      = meta["short_name"] if cull_enums else enum_name
+
+        lines.append(f"    static {field} = {{")
+        for key, val in data.items():
+            if key == "_meta": continue
+            # clean name
+            if cull_enums:
+                clean = key[len(pre):] if key.startswith(pre) else key
+                if suf and clean.endswith(suf): clean = clean[:-len(suf)]
+            else:
+                clean = f"{pre}{key}{suf}"
+            if clean and clean[0].isdigit(): clean = "_" + clean
+            lines.append(f"        {clean}: {val},")
         lines.append("    };")
         lines.append("")
+    lines.append("    #endregion\n")
 
-    lines.append(f"    #endregion")
-    lines.append("")
-
-
-
-    # --- functions ---
-    lines.append(f"    #region Functions")
-    # toggle stripping the "xr" prefix from GML names
+    # --- Functions ---
+    lines.append("    #region Functions")
     cull_funcs = config.get("cull_function_names", True)
 
     for fn in functions_dict["functions"]:
-        orig_name = fn["name"]
+        orig    = fn["name"]
+        args    = fn["args"]
+        has_buf = bool(args and "array_size" in args[-1])
 
-        # detect if the last arg was a C-style array (parser added "array_size")
-        has_array_arg = bool(fn["args"] and "array_size" in fn["args"][-1])
-
-        # derive GML method name
-        if cull_funcs and orig_name.startswith("xr"):
-            js_name = orig_name[2:]
+        # build GML name
+        if cull_funcs and orig.startswith("xr"):
+            js_name = orig[2:]
             js_name = js_name[0].lower() + js_name[1:]
         else:
-            js_name = orig_name
+            js_name = orig
 
-        # prepare doc & code arg lists, dropping buffer if present
-        doc_args = [arg["name"] or f"a{i}" for i, arg in enumerate(fn["args"])]
-        if has_array_arg:
-            doc_args = doc_args[:-1]
+        # doc + code args (drop buffer if present)
+        doc_args  = [a["name"] for a in args]
+        if has_buf: doc_args = doc_args[:-1]
         code_args = [f"_{n}" for n in doc_args]
 
-        # JsDoc region
-        lines.append(f"    #region JsDocs")
+        # JsDocs
+        lines.append("    #region JsDocs")
         lines.append(f"    /// @function {js_name}({', '.join(doc_args)})")
-        lines.append(f"    /// @desc Bridges to {orig_name}")
-
-        # @param tags (skip buffer)
-        for arg, name in zip(fn["args"], doc_args):
-            js_type = map_jsdoc_type(arg["type"], known_enum_map, namespace, cull_enums)
-            lines.append(f"    /// @param {{{js_type}}} {name}")
-
-        # @returns: String if we dropped a buffer, else the mapped return type
-        if has_array_arg:
-            lines.append(f"    /// @returns {{String}}")
+        lines.append(f"    /// @desc Bridges to {orig}")
+        for a, nm in zip(args, doc_args):
+            js_t = map_jsdoc_type(a["type"], known_enum_map, namespace, cull_enums)
+            lines.append(f"    /// @param {{{js_t}}} {nm}")
+        if has_buf:
+            lines.append("    /// @returns {String}")
         else:
-            rt    = fn.get("return_type", "double")
+            rt    = fn.get("return_type", "void")
             js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
             lines.append(f"    /// @returns {{{js_rt}}}")
+        lines.append("    #endregion")
 
-        lines.append(f"    #endregion")
-
-        # function signature
+        # Stub
         lines.append(f"    static {js_name} = function({', '.join(code_args)}) {{")
-
-        if has_array_arg:
-            # call the no-buffer C++ wrapper and return the string directly
-            lines.append(f"        return __{orig_name}_noBuf({', '.join(code_args)});")
+        if has_buf:
+            lines.append(f"        return __{orig}_noBuf({', '.join(code_args)});")
         else:
-            lines.append(f"        var _ret = __{orig_name}({', '.join(code_args)});")
-            lines.append(f"        if (string_pos(\"ref error\", _ret)) {{")
-            lines.append(f"            show_error(_ret, true);")
-            lines.append(f"            return undefined;")
-            lines.append(f"        }}")
-            lines.append(f"        return _ret;")
+            lines.append(f"        var _ret = __{orig}({', '.join(code_args)});")
+            lines.append('        if (string_pos("ref error", _ret)) { show_error(_ret, true); return undefined; }')
+            lines.append("        return _ret;")
+        lines.append("    };")
+        lines.append("")
 
-        lines.append(f"    }};")
-        lines.append("")  # blank line between functions
-
-    lines.append(f"    #endregion")
-    lines.append("")  # trailing blank line
-
-
-
+    lines.append("    #endregion\n")
     lines.append("}")
     lines.append(f"{namespace}();")
+
     return "\n".join(lines)
