@@ -29,7 +29,7 @@ def map_jsdoc_type(c_type, known_enums=None, namespace="", cull_enum=True):
         return "Real.Integer"
     if t == "void":
         return "Real"
-    if t == "function" or t.startswith("pfn_"):
+    if t == "function":
         return "Function"
 
     # 3) Structs

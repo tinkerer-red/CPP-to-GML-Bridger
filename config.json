@@ -9,7 +9,9 @@
   "dll_name": "GM-OpenXR.dll",
   "gml_stub": "GM_OpenXR.gml",
   "yy_extension": "GM_OpenXR.yy",
-  "cull_function_names": false,
-  "cull_constant_names": false,
-  "cull_enum_names": false
+  "cull_function_names": true,
+  "cull_constant_names": true,
+  "cull_enum_names": true,
+  "treat_int64_as_ref": true,
+  "debug": true
 }

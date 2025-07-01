@@ -1,298 +1,136 @@
 # generator/cpp_bridge_gen.py
 import os
+from pathlib import Path
+from string import Template
+
+# Load your templates…
+TEMPLATES_DIR     = Path(__file__).parent / "templates"
+BRIDGE_HEADER_TPL = Template((TEMPLATES_DIR / "bridge_header.cpp.tpl").read_text())
+REF_MANAGER_H     = (TEMPLATES_DIR / "RefManager.h").read_text()
+REF_MANAGER_CPP   = (TEMPLATES_DIR / "RefManager.cpp").read_text()
+
+# Constants for 64-bit limits
+INT64_MIN = "-9223372036854775808"
+INT64_MAX = "9223372036854775807"
 
 def generate_cpp_bridge(parse_result, config):
-    functions     = parse_result["functions"]
-    known_structs = parse_result["known_structs"]
+    debug               = config.get("debug", True)
+    functions           = parse_result["functions"]
+    known_structs       = parse_result["known_structs"]
+    func_ptr_aliases    = parse_result["function_ptr_aliases"]
+    treat_int64_as_ref  = config.get("treat_int64_as_ref", False)
 
     header_file = config.get("header_file", "openxr.h").replace("\\", "/")
     namespace   = config.get("namespace", "XR")
 
-    bridge = [f'''\
-// Auto-generated GMBridge.cpp
-#include <iostream>
-#include <string>
-#include <limits>
-#include "{header_file}"
-#include "RefManager.h"
-
-extern double debug_mode;
-
-extern "C" double get_debug_mode() {{
-    return debug_mode;
-}}
-''']
-
-    # --- Cache Manager bridge functions ---
-    bridge.append("""
-
-// Shared buffer for JSON/ref returns
-static std::string _tmp_str;
-
-// Cache Manager: get value by key
-extern "C" const char* __ref_get(const char* ref, const char* key) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_get" << std::endl;
-    }
-    _tmp_str = RefManager::instance().get(ref, key);
-    return _tmp_str.c_str();
-}
-
-// Cache Manager: set full struct
-extern "C" double __ref_set_struct(const char* ref, const char* json) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_set_struct" << std::endl;
-    }
-    return RefManager::instance().set_struct(ref, json) ? 1.0 : 0.0;
-}
-
-// Cache Manager: get struct as JSON
-extern "C" const char* __ref_json(const char* ref) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_json" << std::endl;
-    }
-
-    void* obj = RefManager::instance().retrieve(ref);
-    if (obj) {
-        // If your type has to_json(), you can do:
-        // _tmp_str = static_cast<YourType*>(obj)->to_json();
-        // return _tmp_str.c_str();
-    }
-
-    _tmp_str = RefManager::instance().get_struct(ref);
-    return _tmp_str.c_str();
-}
-
-// Cache Manager: destroy a single ref
-extern "C" double __ref_destroy(const char* ref) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_destroy" << std::endl;
-    }
-    RefManager::instance().release(ref);
-    RefManager::instance().destroy(ref);
-    return 1.0;
-}
-
-// Cache Manager: flush everything
-extern "C" double __ref_manager_flush() {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_manager_flush (ALL)" << std::endl;
-    }
-    RefManager::instance().flush();
-    return 1.0;
-}
-
-""")
-
-
-    # === Struct constructors ===
+    # 1) Struct constructors
+    struct_constructors = []
     for s in sorted(known_structs):
-        # e.g. XrMyStruct → __create_XrMyStruct()
-        bridge.append(f'''
+        struct_constructors.append(f'''\
 // Allocate a fresh {s} and hand back a GML ref
 extern "C" const char* __create_{s}() {{
-    auto* obj = new {s}{{}};  // zero-initialize
+    auto* obj = new {s}{{}};  
     std::string ref = RefManager::instance().store("{s}", obj);
     return ref.c_str();
-}}
-''')
+}}''')
 
-    # --- Function bridges ---
+    # 2) Function bridges
+    function_bridges = []
     for fn in functions:
-        name      = fn["name"]
-        ret_meta  = fn.get("return_meta", {})
-        ret_type  = ret_meta.get("gm_pass_type", "unknown")
+        name     = fn["name"]
+        ret_meta = fn["return_meta"]
+        ret_ext  = ret_meta["extension_type"]
+        ret_cat  = ret_meta["usage_category"]
+        canon_rt = ret_meta["canonical_type"]
 
-        # detect a buffer-style out-param
-        has_buffer_arg = False
-        buffer_size    = None
-        for arg in fn["args"]:
-            if arg.get("gm_pass_type") == "buffer":
-                has_buffer_arg = True
-                buffer_size    = arg.get("array_size", "1024")
-                break
-
-        # choose return signature & error return
-        if has_buffer_arg:
-            ret_sig    = "const char*"
-            err_return = "\"\""
-        elif ret_type == "double":
-            ret_sig    = "double"
-            err_return = "std::numeric_limits<double>::quiet_NaN()"
-        elif ret_type == "string":
-            ret_sig    = "const char*"
-            err_return = "\"\""
-        elif ret_type == "ref":
-            ret_sig    = "const char*"
-            err_return = "_tmp_str.c_str()"
+        # pick return signature and default error return
+        if ret_ext == "double":
+            ret_sig, err_return = "double", "std::numeric_limits<double>::quiet_NaN()"
+        elif ret_ext in ("ref", "string"):
+            ret_sig, err_return = "const char*", "\"\""
         else:
-            ret_sig    = "const char*"
-            err_return = "_tmp_str.c_str()"
+            ret_sig, err_return = "const char*", "\"\""
 
-        # build decls, conversions, and call-args
-        decls, convert, call_args = [], [], []
+
+
+        # build argument decls, conversions, and call args 
+        decls, converts, call_args = [], [], []
         for i, arg in enumerate(fn["args"]):
-            # drop buffer params—they become thread-local arrays
-            if arg.get("gm_pass_type") == "buffer":
-                continue
+            nm  = arg["name"]
+            base = arg["base_type"]
+            ext = arg["extension_type"]
+            cat = arg["usage_category"]
 
-            aname     = arg["name"]
-            pass_type = arg.get("gm_pass_type", "unknown")
-            
-            if pass_type == "double":
-                decls.append(f"double {aname}")
-                call_args.append(aname)
+            if cat == "double":
+                decls.append(f"double {nm}")
+                call_args.append(nm)
 
-            elif pass_type == "string":
-                decls.append(f"const char* {aname}")
-                call_args.append(aname)
+            elif cat == "string":
+                decls.append(f"const char* {nm}")
+                call_args.append(nm)
 
-            elif pass_type == "ref":
-                decls.append(f"const char* {aname}_ref")
-                convert.append(f"""\
-// Convert GML ref -> C++ pointer
-    void* _ptr_{i} = RefManager::instance().retrieve({aname}_ref);
-    if (!_ptr_{i}) return {err_return};""")
-                call_args.append(f"_ptr_{i}")
+            elif cat == "ref":
+                decls.append(f"const char* {nm}_ref")
+                converts.append(f"""
+    // Convert Argument{i} ({nm}) to {base}
+    void* {nm}_ptr = RefManager::instance().retrieve({nm}_ref);
+    if (!{nm}_ptr) return {err_return};
+    {base}* {nm} = static_cast<{base}*>({nm}_ptr);""")
+                call_args.append(f"{nm}")
 
             else:
-                # fallback for anything else — show the original C type inline
-                orig_type = arg.get("original_type", arg["type"])
-                decls.append(f"/* unsupported: {orig_type} */ const char* {aname}")
-                call_args.append(aname)
+                decls.append(f"/* unsupported: {arg['declared_type']} */ const char* {nm}")
+                call_args.append(nm)
 
-        # wrapper name (suffix _noBuf if buffer was dropped)
-        suffix       = "_noBuf" if has_buffer_arg else ""
-        wrapper_name = f"__{name}{suffix}"
-        sig          = f'extern "C" {ret_sig} {wrapper_name}({", ".join(decls)})'
 
-        bridge.append(f"// Bridge for {name}{suffix}")
-        bridge.append(sig + " {")
-        bridge.append(f'    if (debug_mode) std::cout << "[GMBridge] Called {name}" << std::endl;')
-        bridge.extend(convert)
 
-        if has_buffer_arg:
-            bridge.append(f"    static thread_local char buf[{buffer_size}];")
-            bridge.append(f"    // call original API, let it write into buf")
-            bridge.append(f"    {name}({', '.join(call_args + ['buf'])});")
-            bridge.append("    return buf;")
-        else:
-            bridge.append(f"    auto result = {name}({', '.join(call_args)});")
-            if ret_sig == "double":
-                bridge.append("    return result;")
-            elif ret_type == "string":
-                bridge.append("    return result;")
-            elif ret_type == "ref":
-                bridge.append(f"""\
-// wrap into GML ref
-    _tmp_str = RefManager::instance().store("{ret_meta.get('resolved_type','')}", result);
+        # assemble the function bridge
+        fb = [f"// Bridge for {name}"]
+        fb.append(f'extern "C" {ret_sig} __{name}({", ".join(decls)}) {{')
+
+        if debug:
+            fb.append(f'    std::cout << "[GMBridge] Called {name}" << std::endl;')
+
+        fb += [f"    {line}" for line in converts if line.strip()]
+        fb.append(f"\n    {canon_rt} result = {name}({', '.join(call_args)});")
+
+        if ret_cat == "double":
+            if not treat_int64_as_ref and canon_rt == "int64_t":
+                fb.append(f"""\
+    if (result < {INT64_MIN} || result > {INT64_MAX}) {{
+        return {err_return};
+    }}""")
+            elif not treat_int64_as_ref and canon_rt == "uint64_t":
+                fb.append(f"""\
+    if (result > {INT64_MAX}) {{
+        return {err_return};
+    }}""")
+            fb.append("    return static_cast<double>(result);")
+
+        elif ret_cat == "ref":
+            fb.append(f"""\
+    _tmp_str = RefManager::instance().store("{ret_meta['base_type']}", result);
     return _tmp_str.c_str();""")
-            else:
-                bridge.append("    return nullptr;  // unsupported return")
 
-        bridge.append("}\n")
+        elif ret_cat == "string":
+            fb.append("    return result;")
 
-    bridge_cpp = "\n".join(bridge)
+        else:
+            fb.append(f"    return {err_return};")
 
-    # emit RefManager.h/.cpp unchanged…
-    ref_h = """\
-#pragma once
-#include <unordered_map>
-#include <string>
-#include <sstream>
+        fb.append("}\n")
+        function_bridges.append("\n".join(fb))
 
-class RefManager {
-private:
-    std::unordered_map<std::string, std::unordered_map<int, void*>> registry;
-    std::unordered_map<std::string, int> counters;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::string>> json_data;
-
-    RefManager() = default;
-    ~RefManager() = default;
-    RefManager(const RefManager&) = delete;
-    RefManager& operator=(const RefManager&) = delete;
-
-public:
-    static RefManager& instance() {
-        static RefManager inst;
-        return inst;
-    }
-
-    std::string store(const std::string& type, void* ptr) {
-        int id = counters[type]++;
-        registry[type][id] = ptr;
-        return "ref " + type + " " + std::to_string(id);
-    }
-
-    void* retrieve(const std::string& ref) {
-        std::istringstream ss(ref);
-        std::string tag, type;
-        int id;
-        ss >> tag >> type >> id;
-        if (tag != "ref") return nullptr;
-        auto it = registry[type].find(id);
-        return it != registry[type].end() ? it->second : nullptr;
-    }
-
-    void release(const std::string& ref) {
-        std::istringstream ss(ref);
-        std::string tag, type;
-        int id;
-        ss >> tag >> type >> id;
-        registry[type].erase(id);
-    }
-
-    bool set(const std::string& ref, const std::string& key, const std::string& value) {
-        json_data[ref][key] = value;
-        return true;
-    }
-    std::string get(const std::string& ref, const std::string& key) {
-        return json_data[ref][key];
-    }
-
-    bool set_struct(const std::string& ref, const std::string& json) {
-        json_data[ref].clear();
-        size_t pos = 0;
-        while ((pos = json.find("\"", pos)) != std::string::npos) {
-            size_t ks = pos+1, ke = json.find("\"", ks);
-            std::string k = json.substr(ks, ke-ks);
-            size_t colon = json.find(":", ke);
-            size_t vs = json.find("\"", colon), ve = json.find("\"", vs+1);
-            std::string v = json.substr(vs+1, ve-vs-1);
-            json_data[ref][k] = v;
-            pos = ve+1;
-        }
-        return true;
-    }
-
-    std::string get_struct(const std::string& ref) {
-        std::ostringstream out;
-        out << "{";
-        bool first = true;
-        for (auto& [k,v] : json_data[ref]) {
-            if (!first) out << ",";
-            out << "\"" << k << "\":\"" << v << "\"";
-            first = false;
-        }
-        out << "}";
-        return out.str();
-    }
-
-    void destroy(const std::string& ref) {
-        json_data.erase(ref);
-    }
-    void flush() {
-        registry.clear();
-        counters.clear();
-        json_data.clear();
-    }
-};
-"""
-
-    ref_cpp = '#include "RefManager.h"\n// nothing to implement here; header-only\n'
+    # 3) Fill in the header template
+    bridge_cpp = BRIDGE_HEADER_TPL.substitute({
+        "HEADER_FILE":         header_file,
+        "REF_MANAGER_BRIDGES": "",  
+        "STRUCT_CONSTRUCTORS": "\n".join(struct_constructors),
+        "FUNCTION_BRIDGES":    "\n".join(function_bridges)
+    })
 
     return {
         config["output_cpp_file"]: bridge_cpp,
-        "RefManager.h": ref_h,
-        "RefManager.cpp": ref_cpp
+        "RefManager.h": REF_MANAGER_H,
+        "RefManager.cpp": REF_MANAGER_CPP
     }
