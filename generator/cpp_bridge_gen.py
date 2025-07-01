@@ -29,10 +29,11 @@ def generate_cpp_bridge(parse_result, config):
         struct_constructors.append(f'''\
 // Allocate a fresh {s} and hand back a GML ref
 extern "C" const char* __create_{s}() {{
-    auto* obj = new {s}{{}};  
-    std::string ref = RefManager::instance().store("{s}", obj);
-    return ref.c_str();
+    auto* obj = new {s}{{}};
+    _tmp_str = RefManager::instance().store("{s}", obj);
+    return _tmp_str.c_str();
 }}''')
+
 
     # 2) Function bridges
     function_bridges = []

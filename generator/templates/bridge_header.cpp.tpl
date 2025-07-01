@@ -14,9 +14,9 @@ static std::string _tmp_str;
 // Allocate a fresh buffer of `size` bytes and return its GML ref
 extern "C" const char* __create_buffer(size_t size) {
     // ref string: "buffer <id>"
-    std::string ref = RefManager::instance().store("buffer", nullptr);
-    RefManager::instance().set_buffer(ref, size);
-    return ref.c_str();
+    _tmp_str = RefManager::instance().store("buffer", nullptr);
+    RefManager::instance().set_buffer(_tmp_str, size);
+    return _tmp_str.c_str();
 }
 
 // Get pointer into that buffer for C++ calls
