@@ -2,6 +2,9 @@
 #include <unordered_map>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <functional>
+#include <type_traits>
 
 class RefManager {
 private:
@@ -9,6 +12,7 @@ private:
     std::unordered_map<std::string, int> counters;
     std::unordered_map<std::string, std::unordered_map<std::string, std::string>> json_data;
     std::unordered_map<std::string, std::vector<char>> buffer_registry;
+    std::unordered_map<std::string, std::function<void(void*)>> destroy_map;
 
     RefManager() = default;
     ~RefManager() = default;
@@ -21,6 +25,39 @@ public:
         return inst;
     }
 
+    // === Type registration ===
+    template<typename T>
+    void register_type(const std::string& type_name) {
+        destroy_map[type_name] = [](void* ptr) {
+            delete static_cast<T*>(ptr);
+        };
+    }
+
+    void register_type(const std::string& type_name, std::function<void(void*)> deleter) {
+        destroy_map[type_name] = std::move(deleter);
+    }
+
+    // === JSON I/O ===
+    void register_json_io(
+        const std::string& type,
+        std::function<std::string(void*)> exporter,
+        std::function<void(void*, const std::string&)> importer
+    ) {
+        export_json_map[type] = std::move(exporter);
+        import_json_map[type] = std::move(importer);
+    }
+
+    const std::function<std::string(void*)>* get_exporter(const std::string& type) const {
+        auto it = export_json_map.find(type);
+        return (it != export_json_map.end()) ? &it->second : nullptr;
+    }
+
+    const std::function<void(void*, const std::string&)>* get_importer(const std::string& type) const {
+        auto it = import_json_map.find(type);
+        return (it != import_json_map.end()) ? &it->second : nullptr;
+    }
+    
+    // === Ref management ===
     std::string store(const std::string& type, void* ptr) {
         int id = counters[type]++;
         registry[type][id] = ptr;
@@ -42,66 +79,47 @@ public:
         std::string tag, type;
         int id;
         ss >> tag >> type >> id;
-        registry[type].erase(id);
-    }
 
-    bool set(const std::string& ref, const std::string& key, const std::string& value) {
-        json_data[ref][key] = value;
-        return true;
-    }
-    std::string get(const std::string& ref, const std::string& key) {
-        return json_data[ref][key];
-    }
-
-    bool set_struct(const std::string& ref, const std::string& json) {
-        json_data[ref].clear();
-        size_t pos = 0;
-        while ((pos = json.find("\"", pos)) != std::string::npos) {
-            size_t ks = pos+1, ke = json.find("\"", ks);
-            std::string k = json.substr(ks, ke-ks);
-            size_t colon = json.find(":", ke);
-            size_t vs = json.find("\"", colon), ve = json.find("\"", vs+1);
-            std::string v = json.substr(vs+1, ve-vs-1);
-            json_data[ref][k] = v;
-            pos = ve+1;
+        auto it = registry[type].find(id);
+        if (it != registry[type].end()) {
+            void* ptr = it->second;
+            if (destroy_map.contains(type)) {
+                destroy_map[type](ptr);
+            }
+            registry[type].erase(it);
         }
-        return true;
     }
 
-    std::string get_struct(const std::string& ref) {
-        std::ostringstream out;
-        out << "{";
-        bool first = true;
-        for (auto& [k,v] : json_data[ref]) {
-            if (!first) out << ",";
-            out << "\"" << k << "\":\"" << v << "\"";
-            first = false;
-        }
-        out << "}";
-        return out.str();
-    }
-
-    /// Create or resize a named buffer
-    bool set_buffer(const std::string& ref, size_t size) {
-        buffer_registry[ref].assign(size, '\0');
-        return true;
-    }
-    /// Get raw pointer to buffer data
-    char* get_buffer(const std::string& ref) {
-        auto it = buffer_registry.find(ref);
-        return (it != buffer_registry.end()) ? it->second.data() : nullptr;
-    }
-    /// Destroy a buffer
-    void destroy_buffer(const std::string& ref) {
-        buffer_registry.erase(ref);
-    }
-
+    // === Cleanup ===
     void destroy(const std::string& ref) {
         json_data.erase(ref);
     }
+
     void flush() {
         registry.clear();
         counters.clear();
         json_data.clear();
+        destroy_map.clear();
+        buffer_registry.clear();
     }
 };
+
+// === RefManager Macros ===
+
+#define REFMAN_REGISTER_TYPE(NAME, TYPE) \
+    static bool _refman_registered_##TYPE = [] { \
+        RefManager::instance().register_type<TYPE>(NAME); \
+        return true; \
+    }()
+
+#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, FN) \
+    static bool _refman_registered_##NAME = [] { \
+        RefManager::instance().register_type(NAME, FN); \
+        return true; \
+    }()
+
+#define REFMAN_REGISTER_JSON_IO(NAME, EXPORT_FN, IMPORT_FN) \
+    static bool _refman_json_registered_##NAME = [] { \
+        RefManager::instance().register_json_io(NAME, EXPORT_FN, IMPORT_FN); \
+        return true; \
+    }()
