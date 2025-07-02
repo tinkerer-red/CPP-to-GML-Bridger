@@ -206,7 +206,7 @@ def generate_gml_stub(functions_dict, config):
     for fn in functions_dict["functions"]:
         orig    = fn["name"]
         args    = fn["args"]
-        has_buf = bool(args and "array_size" in args[-1])
+
 
         # build GML name
         if cull_funcs and orig.startswith("xr"):
@@ -217,7 +217,6 @@ def generate_gml_stub(functions_dict, config):
 
         # doc + code args (drop buffer if present)
         doc_args  = [a["name"] for a in args]
-        if has_buf: doc_args = doc_args[:-1]
         code_args = [f"_{n}" for n in doc_args]
 
         # JsDocs
@@ -227,22 +226,16 @@ def generate_gml_stub(functions_dict, config):
         for a, nm in zip(args, doc_args):
             js_t = map_jsdoc_type(a["type"], known_enum_map, namespace, cull_enums)
             lines.append(f"    /// @param {{{js_t}}} {nm}")
-        if has_buf:
-            lines.append("    /// @returns {String}")
-        else:
-            rt    = fn.get("return_type", "void")
-            js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
-            lines.append(f"    /// @returns {{{js_rt}}}")
+        rt    = fn.get("return_type", "void")
+        js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
+        lines.append(f"    /// @returns {{{js_rt}}}")
         lines.append("    #endregion")
 
         # Stub
         lines.append(f"    static {js_name} = function({', '.join(code_args)}) {{")
-        if has_buf:
-            lines.append(f"        return __{orig}_noBuf({', '.join(code_args)});")
-        else:
-            lines.append(f"        var _ret = __{orig}({', '.join(code_args)});")
-            lines.append('        if (string_pos("ref error", _ret)) { show_error(_ret, true); return undefined; }')
-            lines.append("        return _ret;")
+        rt    = fn.get("return_type", "void")
+        js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
+        lines.append(f"    /// @returns {{{js_rt}}}")
         lines.append("    };")
         lines.append("")
 
