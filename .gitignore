@@ -206,5 +206,10 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Ignore all files in input/ and output/
 input/*
 output/*
+
+# But allow the folders themselves to exist
+!input/.gitkeep
+!output/.gitkeep
