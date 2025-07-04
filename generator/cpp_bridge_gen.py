@@ -5,34 +5,149 @@ from string import Template
 
 # Load templates…
 TEMPLATES_DIR     = Path(__file__).parent / "templates"
-BRIDGE_HEADER_TPL = Template((TEMPLATES_DIR / "bridge_header.cpp.tpl").read_text())
-REF_MANAGER_H     = (TEMPLATES_DIR / "RefManager.h").read_text()
-REF_MANAGER_CPP   = (TEMPLATES_DIR / "RefManager.cpp").read_text()
+BRIDGE_HEADER_TPL = Template((TEMPLATES_DIR / "bridge_header.cpp.tpl").read_text(encoding="utf-8"))
+REF_MANAGER_H     = (TEMPLATES_DIR / "RefManager.h").read_text(encoding="utf-8")
+REF_MANAGER_CPP   = (TEMPLATES_DIR / "RefManager.cpp").read_text(encoding="utf-8")
 
 # Constants for 64-bit limits
 INT64_MIN = "-9223372036854775808"
 INT64_MAX = "9223372036854775807"
 
-def generate_struct_json_overloads(struct_name: str, fields: list[dict]) -> str:
+import re
+
+def generate_struct_json_overloads(struct_name: str,
+                                   fields: list[dict],
+                                   parse_result: dict) -> str:
+    """
+    Emits to_json, from_json, and REFMAN_REGISTER_TYPE for struct_name,
+    with support for:
+      - numeric types (including enums)
+      - std::string
+      - fixed-size char arrays
+      - nested structs (via ADL)
+      - opaque types (via RefManager handles)
+      - TODO comments for anything else
+    """
+    typedef_map = parse_result["typedef_map"]
+    struct_set  = set(parse_result["struct_fields"])
+    enum_set    = set(parse_result["enums"])
+
+    def resolve_type(type_name: str) -> str:
+        seen = set()
+        result = type_name.strip()
+        while result in typedef_map and result not in seen:
+            seen.add(result)
+            result = typedef_map[result].strip()
+        return result
+
+    def classify_field(field: dict) -> str:
+        raw_type   = field["type"]
+        array_size = field.get("array_size")
+        resolved   = resolve_type(raw_type)
+
+        if array_size and resolved == "char":
+            return "char_array"
+
+        bare      = resolved.lstrip("const ").rstrip("*").strip()
+        canonical = resolve_type(bare)
+        integer_types = {
+            "bool","int","float","double",
+            "int8_t","uint8_t","int16_t","uint16_t",
+            "int32_t","uint32_t","int64_t","uint64_t"
+        }
+
+        if canonical in enum_set or canonical in integer_types:
+            return "numeric"
+        if canonical in ("std::string","char*","const char*"):
+            return "string"
+        if canonical in struct_set:
+            return "struct"
+        return "ref_handle"
+
+    GEN_HANDLERS = {
+        "numeric": (
+            lambda name, size=None:
+                f'    jsonValue["{name}"] = o.{name};',
+            lambda name, size=None:
+                f'    jsonValue.at("{name}").get_to(o.{name});'
+        ),
+        "string": (
+            lambda name, size=None:
+                f'    jsonValue["{name}"] = o.{name};',
+            lambda name, size=None:
+                f'    jsonValue.at("{name}").get_to(o.{name});'
+        ),
+        "char_array": (
+            lambda name, size:
+                f'    jsonValue["{name}"] = std::string(o.{name}, strnlen(o.{name}, {size}));',
+            lambda name, size: "\n".join([
+                f'    {{',
+                f'        auto tempString = jsonValue.at("{name}").get<std::string>();',
+                f'        std::strncpy(o.{name}, tempString.c_str(), {size});',
+                f'        o.{name}[{size}-1] = \'\\0\';',
+                f'    }}'
+            ])
+        ),
+        "struct": (
+            lambda name, size=None:
+                f'    jsonValue["{name}"] = o.{name};',
+            lambda name, size=None:
+                f'    jsonValue.at("{name}").get_to(o.{name});'
+        ),
+        "ref_handle": (
+            lambda name, size=None:
+                f'    jsonValue["{name}"] = RefManager::instance().to_string(o.{name});',
+            lambda name, size=None: "\n".join([
+                f'    {{',
+                f'        auto handleString = jsonValue.at("{name}").get<std::string>();',
+                f'        RefManager::instance().from_string(handleString);',
+                f'    }}'
+            ])
+        ),
+    }
+
     lines = []
     # to_json
-    lines.append(f'inline void to_json(json& j, const {struct_name}& o) {{')
-    lines.append('    j = {')
-    for idx, f in enumerate(fields):
-        comma = ',' if idx < len(fields)-1 else ''
-        lines.append(f'        {{"{f["name"]}", o.{f["name"]}}}{comma}')
-    lines.append('    };')
+    lines.append(f'inline void to_json(json& jsonValue, const {struct_name}& o) {{')
+    lines.append('    jsonValue = json::object();')
+    for field in fields:
+        fname      = field["name"]
+        kind       = classify_field(field)
+        array_size = field.get("array_size")
+        handler    = GEN_HANDLERS.get(kind)
+        if handler:
+            to_fn = handler[0]
+            snippet = (to_fn(fname, array_size)
+                       if kind == "char_array"
+                       else to_fn(fname, None))
+            lines.append(snippet)
+        else:
+            lines.append(f'    // TODO handle {fname}:{field["type"]}')
     lines.append('}')
+
     # from_json
-    lines.append(f'inline void from_json(const json& j, {struct_name}& o) {{')
-    for f in fields:
-        lines.append(f'    j.at("{f["name"]}").get_to(o.{f["name"]});')
+    lines.append('')
+    lines.append(f'inline void from_json(const json& jsonValue, {struct_name}& o) {{')
+    for field in fields:
+        fname      = field["name"]
+        kind       = classify_field(field)
+        array_size = field.get("array_size")
+        handler    = GEN_HANDLERS.get(kind)
+        if handler:
+            from_fn = handler[1]
+            snippet = (from_fn(fname, array_size)
+                       if kind == "char_array"
+                       else from_fn(fname, None))
+            lines.append(snippet)
+        else:
+            lines.append(f'    // TODO handle {fname}:{field["type"]}')
     lines.append('}')
-    # register the type for destruction + JSON import/export
-    lines.append(f'REFMAN_REGISTER_TYPE("{struct_name}", {struct_name});')
+
+    # registration
+    lines.append('')
+    lines.append(f'REFMAN_REGISTER_TYPE({struct_name}, {struct_name});')
+
     return "\n".join(lines)
-
-
 
 
 def generate_cpp_bridge(parse_result, config):
@@ -53,13 +168,13 @@ def generate_cpp_bridge(parse_result, config):
 // === Auto-generated bridge for {name} ===
 extern "C" const char* __cpp_create_{name}() {{
     auto* obj = new {name}{{}};
-    _tmp_str = RefManager::instance().store("{name}", obj);
+    std::string _tmp_str = RefManager::instance().store("{name}", obj);
     return _tmp_str.c_str();
 }}
 '''.strip())
 
         # 2) JSON overloads
-        struct_constructors.append(generate_struct_json_overloads(name, fields))
+        struct_constructors.append(generate_struct_json_overloads(name, fields, parse_result))
 
     
     # 2) Function bridges

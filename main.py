@@ -1,5 +1,7 @@
 import os
 import json
+import shutil
+from pathlib import Path
 
 from parser import parse_header
 from generator.cpp_bridge_gen import generate_cpp_bridge
@@ -12,6 +14,22 @@ def main():
     with open("config.json", "r", encoding="utf-8") as cfg_file:
         config = json.load(cfg_file)
 
+    # Clean output folder (preserve .gitignore and .vs)
+    output_path = Path(config["output_folder"])
+    preserved = {".gitignore", ".vs"}
+
+    if output_path.exists():
+        for item in output_path.iterdir():
+            if item.name in preserved:
+                continue
+            try:
+                if item.is_dir():
+                    shutil.rmtree(item)
+                else:
+                    item.unlink()
+            except PermissionError:
+                print(f"[warning] Skipped locked item: {item}")
+    
     # Parse the header into a single result dict
     parse_result  = parse_header(config)
 
@@ -35,7 +53,7 @@ def main():
         f.write(yy_file)
 
     # 4) Build the Visual Studio project structure
-    generate_vs_project(config, config["output_folder"])
+    generate_vs_project(config)
 
 if __name__ == "__main__":
     main()

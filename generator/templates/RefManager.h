@@ -109,9 +109,11 @@ public:
         if (it == rit->second.end()) return;
 
         void* ptr = it->second;
-        if (destroy_map.contains(type)) {
-            destroy_map[type](ptr);
+        auto dit = destroy_map.find(type);
+        if (dit != destroy_map.end()) {
+            dit->second(ptr);
         }
+        
         rit->second.erase(it);
         reverse_registry[type].erase(ptr);
     }
@@ -140,24 +142,28 @@ public:
 
 // === RefManager Macros ===
 // For any TYPE that has global to_json/from_json and uses `new` allocation
-#define REFMAN_REGISTER_TYPE(NAME, TYPE)                             \
-static bool _refman_registered_##TYPE = []{                          \
-    auto& m = RefManager::instance();                                \
-    m.register_type_custom(                                          \
-        NAME,                                                        \
-        [](void* p){ delete static_cast<TYPE*>(p); },                \
-        [](void* p){ return json(*static_cast<TYPE*>(p)).dump(); },  \
-        [](void* p, const std::string& s){                           \
-            json::parse(s).get_to(*static_cast<TYPE*>(p));           \
-        }                                                            \
-    );                                                               \
-    return true;                                                     \
+#define REFMAN_REGISTER_TYPE(NAME, TYPE)                                    \
+static bool _refman_registered_##NAME = []{                                 \
+    auto& managerInstance = RefManager::instance();                         \
+    managerInstance.register_type_custom(                                   \
+        std::string(#NAME),                                                 \
+        [](void* pointer){ delete static_cast<TYPE*>(pointer); },           \
+        [](void* pointer){                                                  \
+            return json(*static_cast<TYPE*>(pointer)).dump();              \
+        },                                                                  \
+        [](void* pointer, const std::string& str){                          \
+            json::parse(str).get_to(*static_cast<TYPE*>(pointer));         \
+        }                                                                   \
+    );                                                                      \
+    return true;                                                            \
 }();
 
 // If you need a custom deleter/export/import
-#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, DELETER, EXPORTER, IMPORTER) \
-static bool _refman_registered_##NAME = []{                            \
-    auto& m = RefManager::instance();                                  \
-    m.register_type_custom(NAME, DELETER, EXPORTER, IMPORTER);         \
-    return true;                                                       \
+#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, DELETER, EXPORTER, IMPORTER)      \
+static bool _refman_registered_##NAME = []{                                 \
+    auto& managerInstance = RefManager::instance();                         \
+    managerInstance.register_type_custom(                                   \
+        std::string(#NAME), DELETER, EXPORTER, IMPORTER                     \
+    );                                                                      \
+    return true;                                                            \
 }();

@@ -227,18 +227,54 @@ def parse_header(config):
     for struct_name, alias in HANDLE_RE.findall(content):
         parse_result["typedef_map"][alias] = f"ref {alias}"
 
-    # 7) Collect struct fields
+    # 7) Collect struct fields (with array sizes + type metadata)
     for m in STRUCT_RE.finditer(content):
         name = m.group("name")
         body = m.group("body")
         fields = []
         for line in body.split(';'):
             line = line.strip()
-            if not line: continue
-            fm = re.match(r'(.+?)\s+(\**\w+)(?:\s*\[.*\])?$', line)
-            if not fm: continue
-            tp, nm = fm.group(1).strip(), fm.group(2).strip()
-            fields.append({"name": nm, "type": tp})
+            if not line:
+                continue
+
+            # capture: 1=type, 2=name, optional 3=array_size
+            am = re.match(r'''
+                (.+?)             # group(1): the raw base type (e.g. "char", "XrVector3f")
+                \s+
+                (\**\w+)          # group(2): the field name (possibly pointer)
+                (?:\s*\[\s*       # optionally:
+                    ([^\]]+)      #   group(3): the array size expression
+                \s*\]            # closing bracket
+                )?                # array is optional
+                $                 # end of string
+            ''', line, re.VERBOSE)
+            if not am:
+                continue
+
+            raw_base, nm, sz = am.group(1).strip(), am.group(2).strip(), am.group(3)
+            # strip out all-caps macros from raw_base, leaving qualifiers like "const" and pointers
+            clean_base = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', '', raw_base)
+            clean_base = clean_base.replace('  ', ' ').strip()
+
+            # start building the field entry
+            field = {
+                "name": nm,
+                "type": clean_base,
+            }
+            # array size if present
+            if sz is not None:
+                try:
+                    field["array_size"] = int(sz)
+                except ValueError:
+                    field["array_size"] = sz  # keep macro name
+
+            # ==== NEW: resolve typedefs & classify ====
+            meta = classify_c_type(parse_result, clean_base, config)
+            field.update(meta)
+            # ========================================
+
+            fields.append(field)
+
         parse_result["struct_fields"][name] = fields
 
     # 7a) Promote typedef aliases into struct_fields
