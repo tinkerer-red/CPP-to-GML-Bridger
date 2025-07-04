@@ -2,17 +2,19 @@
 #include <unordered_map>
 #include <string>
 #include <sstream>
-#include <vector>
 #include <functional>
 #include <type_traits>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 class RefManager {
 private:
     std::unordered_map<std::string, std::unordered_map<int, void*>> registry;
+    std::unordered_map<std::string, std::unordered_map<void*, std::string>> reverse_registry;
     std::unordered_map<std::string, int> counters;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::string>> json_data;
-    std::unordered_map<std::string, std::vector<char>> buffer_registry;
     std::unordered_map<std::string, std::function<void(void*)>> destroy_map;
+    std::unordered_map<std::string, std::function<std::string(void*)>> json_exporter;
+    std::unordered_map<std::string, std::function<void(void*, const std::string&)>> json_importer;
 
     RefManager() = default;
     ~RefManager() = default;
@@ -25,101 +27,137 @@ public:
         return inst;
     }
 
-    // === Type registration ===
-    template<typename T>
-    void register_type(const std::string& type_name) {
-        destroy_map[type_name] = [](void* ptr) {
-            delete static_cast<T*>(ptr);
-        };
+    // Parse "ref Type id"
+    static bool parse_ref(const std::string& ref,
+                          std::string& out_type,
+                          int& out_id) {
+        std::istringstream ss(ref);
+        std::string tag;
+        ss >> tag >> out_type >> out_id;
+        return (tag == "ref" && !out_type.empty());
     }
 
-    void register_type(const std::string& type_name, std::function<void(void*)> deleter) {
-        destroy_map[type_name] = std::move(deleter);
+    // Bridge entry for JSON serialization
+    std::string to_string(const std::string& ref) const {
+        std::string type; int id;
+        if (!parse_ref(ref, type, id)) return "{}";
+        void* ptr = retrieve(ref);
+        if (!ptr) return "{}";
+        if (auto it = json_exporter.find(type); it != json_exporter.end()) {
+            return it->second(ptr);
+        }
+        return "{}";
     }
 
-    // === JSON I/O ===
-    void register_json_io(
-        const std::string& type,
-        std::function<std::string(void*)> exporter,
-        std::function<void(void*, const std::string&)> importer
+    // Bridge entry for JSON deserialization
+    bool from_string(const std::string& ref, const std::string& data) const {
+        std::string type; int id;
+        if (!parse_ref(ref, type, id)) return false;
+        void* ptr = retrieve(ref);
+        if (!ptr) return false;
+        // NEW: dispatch via importer map
+        if (auto it = json_importer.find(type); it != json_importer.end()) {
+            it->second(ptr, data);
+            return true;
+        }
+        return false;
+    }
+
+
+    // Type registration for destruction
+    void register_type_custom(
+        const std::string& name,
+        std::function<void(void*)> deleter,
+        std::function<std::string(void*)> exporter = {},
+        std::function<void(void*, const std::string&)> importer = {}
     ) {
-        export_json_map[type] = std::move(exporter);
-        import_json_map[type] = std::move(importer);
+        destroy_map[name] = std::move(deleter);
+        if (exporter) json_exporter[name] = std::move(exporter);
+        if (importer) json_importer[name] = std::move(importer);
     }
 
-    const std::function<std::string(void*)>* get_exporter(const std::string& type) const {
-        auto it = export_json_map.find(type);
-        return (it != export_json_map.end()) ? &it->second : nullptr;
-    }
-
-    const std::function<void(void*, const std::string&)>* get_importer(const std::string& type) const {
-        auto it = import_json_map.find(type);
-        return (it != import_json_map.end()) ? &it->second : nullptr;
-    }
-    
-    // === Ref management ===
+    // Store / retrieve / release
     std::string store(const std::string& type, void* ptr) {
         int id = counters[type]++;
         registry[type][id] = ptr;
-        return "ref " + type + " " + std::to_string(id);
+        std::string ref = "ref " + type + " " + std::to_string(id);
+        reverse_registry[type][ptr] = ref;
+        return ref;
     }
-
-    void* retrieve(const std::string& ref) {
+    void* retrieve(const std::string& ref) const {
         std::istringstream ss(ref);
-        std::string tag, type;
-        int id;
+        std::string tag, type; int id;
         ss >> tag >> type >> id;
         if (tag != "ref") return nullptr;
-        auto it = registry[type].find(id);
-        return it != registry[type].end() ? it->second : nullptr;
-    }
+        
+        auto rit = registry.find(type);
+        if (rit == registry.end()) return nullptr;
 
+        auto it = rit->second.find(id);
+        return it != rit->second.end() ? it->second : nullptr;
+    }
     void release(const std::string& ref) {
         std::istringstream ss(ref);
-        std::string tag, type;
-        int id;
+        std::string tag, type; int id;
         ss >> tag >> type >> id;
+        if (tag != "ref") return;
 
-        auto it = registry[type].find(id);
-        if (it != registry[type].end()) {
-            void* ptr = it->second;
-            if (destroy_map.contains(type)) {
-                destroy_map[type](ptr);
-            }
-            registry[type].erase(it);
+        auto rit = registry.find(type);
+        if (rit == registry.end()) return;
+
+        auto it = rit->second.find(id);
+        if (it == rit->second.end()) return;
+
+        void* ptr = it->second;
+        if (destroy_map.contains(type)) {
+            destroy_map[type](ptr);
         }
+        rit->second.erase(it);
+        reverse_registry[type].erase(ptr);
     }
 
-    // === Cleanup ===
-    void destroy(const std::string& ref) {
-        json_data.erase(ref);
+
+    // Get the original ref string for a live pointer
+    std::string get_ref_for_ptr(void* ptr) const {
+        for (auto& [type, map] : reverse_registry) {
+            if (auto it = map.find(ptr); it != map.end())
+                return it->second;
+        }
+        return {};
     }
 
+    // Clear everything
     void flush() {
         registry.clear();
+        reverse_registry.clear();
         counters.clear();
-        json_data.clear();
         destroy_map.clear();
-        buffer_registry.clear();
+        json_exporter.clear();
+        json_importer.clear();
     }
 };
 
+
 // === RefManager Macros ===
+// For any TYPE that has global to_json/from_json and uses `new` allocation
+#define REFMAN_REGISTER_TYPE(NAME, TYPE)                             \
+static bool _refman_registered_##TYPE = []{                          \
+    auto& m = RefManager::instance();                                \
+    m.register_type_custom(                                          \
+        NAME,                                                        \
+        [](void* p){ delete static_cast<TYPE*>(p); },                \
+        [](void* p){ return json(*static_cast<TYPE*>(p)).dump(); },  \
+        [](void* p, const std::string& s){                           \
+            json::parse(s).get_to(*static_cast<TYPE*>(p));           \
+        }                                                            \
+    );                                                               \
+    return true;                                                     \
+}();
 
-#define REFMAN_REGISTER_TYPE(NAME, TYPE) \
-    static bool _refman_registered_##TYPE = [] { \
-        RefManager::instance().register_type<TYPE>(NAME); \
-        return true; \
-    }()
-
-#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, FN) \
-    static bool _refman_registered_##NAME = [] { \
-        RefManager::instance().register_type(NAME, FN); \
-        return true; \
-    }()
-
-#define REFMAN_REGISTER_JSON_IO(NAME, EXPORT_FN, IMPORT_FN) \
-    static bool _refman_json_registered_##NAME = [] { \
-        RefManager::instance().register_json_io(NAME, EXPORT_FN, IMPORT_FN); \
-        return true; \
-    }()
+// If you need a custom deleter/export/import
+#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, DELETER, EXPORTER, IMPORTER) \
+static bool _refman_registered_##NAME = []{                            \
+    auto& m = RefManager::instance();                                  \
+    m.register_type_custom(NAME, DELETER, EXPORTER, IMPORTER);         \
+    return true;                                                       \
+}();

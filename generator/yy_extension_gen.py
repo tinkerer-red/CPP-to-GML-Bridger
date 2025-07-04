@@ -10,7 +10,7 @@ def generate_yy_extension(parse_result, config):
     """
 
     typedef_map   = parse_result["typedef_map"]
-    known_structs = parse_result["known_structs"]    # now a list
+    known_structs = parse_result["struct_fields"].keys()
     enum_names    = set(parse_result["enums"].keys())
 
     dll_name      = config.get("dll_name", "GM-OpenXR.dll")

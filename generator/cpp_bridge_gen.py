@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 from string import Template
 
-# Load your templates…
+# Load templates…
 TEMPLATES_DIR     = Path(__file__).parent / "templates"
 BRIDGE_HEADER_TPL = Template((TEMPLATES_DIR / "bridge_header.cpp.tpl").read_text())
 REF_MANAGER_H     = (TEMPLATES_DIR / "RefManager.h").read_text()
@@ -13,28 +13,55 @@ REF_MANAGER_CPP   = (TEMPLATES_DIR / "RefManager.cpp").read_text()
 INT64_MIN = "-9223372036854775808"
 INT64_MAX = "9223372036854775807"
 
+def generate_struct_json_overloads(struct_name: str, fields: list[dict]) -> str:
+    lines = []
+    # to_json
+    lines.append(f'inline void to_json(json& j, const {struct_name}& o) {{')
+    lines.append('    j = {')
+    for idx, f in enumerate(fields):
+        comma = ',' if idx < len(fields)-1 else ''
+        lines.append(f'        {{"{f["name"]}", o.{f["name"]}}}{comma}')
+    lines.append('    };')
+    lines.append('}')
+    # from_json
+    lines.append(f'inline void from_json(const json& j, {struct_name}& o) {{')
+    for f in fields:
+        lines.append(f'    j.at("{f["name"]}").get_to(o.{f["name"]});')
+    lines.append('}')
+    # register the type for destruction + JSON import/export
+    lines.append(f'REFMAN_REGISTER_TYPE("{struct_name}", {struct_name});')
+    return "\n".join(lines)
+
+
+
+
 def generate_cpp_bridge(parse_result, config):
     debug               = config.get("debug", True)
     functions           = parse_result["functions"]
-    known_structs       = parse_result["known_structs"]
+    known_structs       = parse_result["struct_fields"].keys()
     func_ptr_aliases    = parse_result["function_ptr_aliases"]
     treat_int64_as_ref  = config.get("treat_int64_as_ref", False)
 
     header_file = config.get("header_file", "openxr.h").replace("\\", "/")
     namespace   = config.get("namespace", "XR")
 
-    # 1) Struct constructors
+    # 1) Struct constructors + JSON I/O (import then export)
     struct_constructors = []
-    for s in sorted(known_structs):
-        struct_constructors.append(f'''\
-// Allocate a fresh {s} and hand back a GML ref
-extern "C" const char* __create_{s}() {{
-    auto* obj = new {s}{{}};
-    _tmp_str = RefManager::instance().store("{s}", obj);
+    for name, fields in parse_result["struct_fields"].items():
+        # 1) Create function
+        struct_constructors.append(f'''
+// === Auto-generated bridge for {name} ===
+extern "C" const char* __cpp_create_{name}() {{
+    auto* obj = new {name}{{}};
+    _tmp_str = RefManager::instance().store("{name}", obj);
     return _tmp_str.c_str();
-}}''')
+}}
+'''.strip())
 
+        # 2) JSON overloads
+        struct_constructors.append(generate_struct_json_overloads(name, fields))
 
+    
     # 2) Function bridges
     function_bridges = []
     for fn in functions:

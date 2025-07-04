@@ -5,6 +5,7 @@ from parser import parse_header
 from generator.cpp_bridge_gen import generate_cpp_bridge
 from generator.gml_stub_gen import generate_gml_stub
 from generator.yy_extension_gen import generate_yy_extension
+from generator.vcx_proj_gen import generate_vs_project
 
 def main():
     # Load tool configuration
@@ -32,6 +33,9 @@ def main():
     yy_path = os.path.join(config["output_folder"], config["yy_extension"])
     with open(yy_path, "w", encoding="utf-8") as f:
         f.write(yy_file)
+
+    # 4) Build the Visual Studio project structure
+    generate_vs_project(config, config["output_folder"])
 
 if __name__ == "__main__":
     main()
