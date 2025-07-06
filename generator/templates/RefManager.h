@@ -142,28 +142,28 @@ public:
 
 // === RefManager Macros ===
 // For any TYPE that has global to_json/from_json and uses `new` allocation
-#define REFMAN_REGISTER_TYPE(NAME, TYPE)                                    \
+#define REFMAN_REGISTER_TYPE(NAME, ...)                                    \
 static bool _refman_registered_##NAME = []{                                 \
     auto& managerInstance = RefManager::instance();                         \
     managerInstance.register_type_custom(                                   \
         std::string(#NAME),                                                 \
-        [](void* pointer){ delete static_cast<TYPE*>(pointer); },           \
+        [](void* pointer){ delete static_cast<__VA_ARGS__*>(pointer); },    \
         [](void* pointer){                                                  \
-            return json(*static_cast<TYPE*>(pointer)).dump();              \
+            return json(*static_cast<__VA_ARGS__*>(pointer)).dump();       \
         },                                                                  \
         [](void* pointer, const std::string& str){                          \
-            json::parse(str).get_to(*static_cast<TYPE*>(pointer));         \
+            json::parse(str).get_to(*static_cast<__VA_ARGS__*>(pointer));  \
         }                                                                   \
     );                                                                      \
     return true;                                                            \
 }();
 
 // If you need a custom deleter/export/import
-#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, DELETER, EXPORTER, IMPORTER)      \
+#define REFMAN_REGISTER_TYPE_CUSTOM(NAME, ...)                             \
 static bool _refman_registered_##NAME = []{                                 \
     auto& managerInstance = RefManager::instance();                         \
     managerInstance.register_type_custom(                                   \
-        std::string(#NAME), DELETER, EXPORTER, IMPORTER                     \
+        std::string(#NAME), __VA_ARGS__                                     \
     );                                                                      \
     return true;                                                            \
 }();

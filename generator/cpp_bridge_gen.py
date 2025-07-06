@@ -15,6 +15,15 @@ INT64_MAX = "9223372036854775807"
 
 import re
 
+def resolve_type(type_name: str, typedef_map: dict[str,str]) -> str:
+    """Chase typedefs until we find the underlying type."""
+    seen = set()
+    result = type_name.strip()
+    while result in typedef_map and result not in seen:
+        seen.add(result)
+        result = typedef_map[result].strip()
+    return result
+
 def generate_struct_json_overloads(struct_name: str,
                                    fields: list[dict],
                                    parse_result: dict) -> str:
@@ -25,82 +34,93 @@ def generate_struct_json_overloads(struct_name: str,
       - std::string
       - fixed-size char arrays
       - nested structs (via ADL)
-      - opaque types (via RefManager handles)
+      - pointer/ref fields (via RefManager.get_ref_for_ptr / retrieve)
       - TODO comments for anything else
     """
     typedef_map = parse_result["typedef_map"]
     struct_set  = set(parse_result["struct_fields"])
     enum_set    = set(parse_result["enums"])
 
-    def resolve_type(type_name: str) -> str:
-        seen = set()
-        result = type_name.strip()
-        while result in typedef_map and result not in seen:
-            seen.add(result)
-            result = typedef_map[result].strip()
-        return result
-
     def classify_field(field: dict) -> str:
-        raw_type   = field["type"]
+        # We use the parser’s canonical_type for integer/enum detection,
+        # and never consult treat_int64_as_ref here.
+        canonical  = field["canonical_type"]
         array_size = field.get("array_size")
-        resolved   = resolve_type(raw_type)
+        resolved   = resolve_type(field["type"], typedef_map)
 
+        # fixed-size char arrays
         if array_size and resolved == "char":
             return "char_array"
 
-        bare      = resolved.lstrip("const ").rstrip("*").strip()
-        canonical = resolve_type(bare)
         integer_types = {
             "bool","int","float","double",
             "int8_t","uint8_t","int16_t","uint16_t",
             "int32_t","uint32_t","int64_t","uint64_t"
         }
 
+        # enums or 64-bit integer handles
         if canonical in enum_set or canonical in integer_types:
             return "numeric"
+
+        # std::string or C strings
         if canonical in ("std::string","char*","const char*"):
             return "string"
+
+        # nested structs
         if canonical in struct_set:
             return "struct"
-        return "ref_handle"
 
+        # true pointers (declared with *)
+        if field["type"].strip().endswith("*"):
+            return "ref_handle"
+
+        # anything else is unknown—emit a TODO
+        return "unknown"
+    
     GEN_HANDLERS = {
         "numeric": (
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue["{name}"] = o.{name};',
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue.at("{name}").get_to(o.{name});'
         ),
         "string": (
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue["{name}"] = o.{name};',
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue.at("{name}").get_to(o.{name});'
         ),
         "char_array": (
-            lambda name, size:
-                f'    jsonValue["{name}"] = std::string(o.{name}, strnlen(o.{name}, {size}));',
-            lambda name, size: "\n".join([
+            lambda name, array_size:
+                f'    jsonValue["{name}"] = '
+                f'std::string(o.{name}, strnlen(o.{name}, {array_size}));',
+            lambda name, array_size: "\n".join([
                 f'    {{',
-                f'        auto tempString = jsonValue.at("{name}").get<std::string>();',
-                f'        std::strncpy(o.{name}, tempString.c_str(), {size});',
-                f'        o.{name}[{size}-1] = \'\\0\';',
+                f'        auto tmp = jsonValue.at("{name}").get<std::string>();',
+                f'        std::strncpy(o.{name}, tmp.c_str(), {array_size});',
+                f'        o.{name}[{array_size}-1] = \'\\0\';',
                 f'    }}'
             ])
         ),
         "struct": (
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue["{name}"] = o.{name};',
-            lambda name, size=None:
+            lambda name, array_size=None:
                 f'    jsonValue.at("{name}").get_to(o.{name});'
         ),
         "ref_handle": (
-            lambda name, size=None:
-                f'    jsonValue["{name}"] = RefManager::instance().to_string(o.{name});',
-            lambda name, size=None: "\n".join([
+            # to_json: export the GML handle for this pointer field
+            lambda name, array_size=None:
+                (f'    jsonValue["{name}"] = '
+                 f'RefManager::instance().get_ref_for_ptr('
+                 f'const_cast<void*>(o.{name}));'),
+            # from_json: retrieve pointer by handle and assign back
+            lambda name, array_size=None, field=None: "\n".join([
                 f'    {{',
                 f'        auto handleString = jsonValue.at("{name}").get<std::string>();',
-                f'        RefManager::instance().from_string(handleString);',
+                f'        void* ptr = RefManager::instance().retrieve(handleString);',
+                f'        o.{name} = static_cast<'
+                f'{resolve_type(field["type"], typedef_map)}*>(ptr);',
                 f'    }}'
             ])
         ),
@@ -111,36 +131,41 @@ def generate_struct_json_overloads(struct_name: str,
     lines.append(f'inline void to_json(json& jsonValue, const {struct_name}& o) {{')
     lines.append('    jsonValue = json::object();')
     for field in fields:
-        fname      = field["name"]
+        name       = field["name"]
         kind       = classify_field(field)
         array_size = field.get("array_size")
         handler    = GEN_HANDLERS.get(kind)
-        if handler:
-            to_fn = handler[0]
-            snippet = (to_fn(fname, array_size)
-                       if kind == "char_array"
-                       else to_fn(fname, None))
+
+        if handler is not None:
+            if kind == "char_array":
+                snippet = handler[0](name, array_size)
+            else:
+                snippet = handler[0](name, None)
             lines.append(snippet)
         else:
-            lines.append(f'    // TODO handle {fname}:{field["type"]}')
+            lines.append(f'    // TODO handle {name}:{field["type"]}')
+
     lines.append('}')
 
     # from_json
     lines.append('')
     lines.append(f'inline void from_json(const json& jsonValue, {struct_name}& o) {{')
     for field in fields:
-        fname      = field["name"]
+        name       = field["name"]
         kind       = classify_field(field)
         array_size = field.get("array_size")
         handler    = GEN_HANDLERS.get(kind)
-        if handler:
-            from_fn = handler[1]
-            snippet = (from_fn(fname, array_size)
-                       if kind == "char_array"
-                       else from_fn(fname, None))
-            lines.append(snippet)
+
+        if handler is not None:
+            if kind == "char_array":
+                lines.append(handler[1](name, array_size))
+            elif kind == "ref_handle":
+                lines.append(handler[1](name, None, field))
+            else:
+                lines.append(handler[1](name, None))
         else:
-            lines.append(f'    // TODO handle {fname}:{field["type"]}')
+            lines.append(f'    // TODO handle {name}:{field["type"]}')
+
     lines.append('}')
 
     # registration
@@ -148,6 +173,44 @@ def generate_struct_json_overloads(struct_name: str,
     lines.append(f'REFMAN_REGISTER_TYPE({struct_name}, {struct_name});')
 
     return "\n".join(lines)
+
+def order_structs_by_dependency(dependency_map: dict[str, list[str]]) -> list[str]:
+    """
+    dependency_map: map from struct_name to list of structs it depends on
+    returns a list of struct_names in an order where dependencies come first
+    """
+    # 1) Build reverse adjacency: for each edge parent→child, record child→parent
+    dependents: dict[str, list[str]] = {name: [] for name in dependency_map}
+    for parent, children in dependency_map.items():
+        for child in children:
+            dependents[child].append(parent)
+
+    # 2) Compute in-degree = number of dependencies each struct has
+    in_degree: dict[str, int] = {
+        name: len(children)
+        for name, children in dependency_map.items()
+    }
+
+    # 3) Start with structs that have no dependencies
+    processing_queue = [name for name, deg in in_degree.items() if deg == 0]
+    sorted_list: list[str] = []
+
+    # 4) Kahn’s algorithm
+    while processing_queue:
+        current = processing_queue.pop(0)
+        sorted_list.append(current)
+        # “Remove” edges from current to its dependents
+        for parent in dependents[current]:
+            in_degree[parent] -= 1
+            if in_degree[parent] == 0:
+                processing_queue.append(parent)
+
+    # 5) Detect cycles
+    if len(sorted_list) != len(dependency_map):
+        raise ValueError("Cycle detected in struct dependencies")
+
+    return sorted_list
+
 
 
 def generate_cpp_bridge(parse_result, config):
@@ -160,9 +223,28 @@ def generate_cpp_bridge(parse_result, config):
     header_file = config.get("header_file", "openxr.h").replace("\\", "/")
     namespace   = config.get("namespace", "XR")
 
+    # 0) Build dependency graph: structName -> [list of nested struct names]
+    struct_fields = parse_result["struct_fields"]
+    struct_set    = set(struct_fields.keys())
+
+    deps = {}
+    for struct_name, fields in struct_fields.items():
+        needed = []
+        for f in fields:
+            # resolve to canonical type (reuse your resolve_type logic)
+            canon = resolve_type(f["type"], parse_result["typedef_map"])
+            # if it’s one of your structs, record the dependency
+            if canon in struct_set:
+                needed.append(canon)
+        deps[struct_name] = needed
+
+    # Topologically sort so that nested structs come first
+    ordered_structs = order_structs_by_dependency(deps)
+
     # 1) Struct constructors + JSON I/O (import then export)
     struct_constructors = []
-    for name, fields in parse_result["struct_fields"].items():
+    for name in ordered_structs:
+        fields = parse_result["struct_fields"][name]
         # 1) Create function
         struct_constructors.append(f'''
 // === Auto-generated bridge for {name} ===

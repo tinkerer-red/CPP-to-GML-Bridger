@@ -4,6 +4,16 @@
 #include "openxr.h"
 #include "RefManager.h"
 #include <string>
+#include <string_view>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+#include <stack>
+#include <span>
+#include <optional>
+#include <variant>
+#include <memory>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
@@ -61,59 +71,68 @@ extern "C" double __ref_manager_flush() {
 #pragma region CreateFunctions
 
 // === String ===
+using GMString = std::string;
 extern "C" const char* __cpp_create_string() {
-    auto* ptr = new std::string{};
-    REFMAN_REGISTER_TYPE(string, std::string);
-    std::string _tmp_str = RefManager::instance().store("string", ptr);
+    REFMAN_REGISTER_TYPE(string, GMString);
+    
+    auto* stringPtr = new GMString;
+    std::string _tmp_str = RefManager::instance().store("string", stringPtr);
     return _tmp_str.c_str();
 }
 
 // === String View ===
+using GMStringView = std::string_view;
 extern "C" const char* __cpp_create_string_view() {
-    auto* ptr = new std::string_view{};
-    REFMAN_REGISTER_TYPE(string_view, std::string_view);
-    std::string _tmp_str = RefManager::instance().store("string_view", ptr);
+    REFMAN_REGISTER_TYPE(string_view, GMStringView);
+    
+    auto* stringViewPtr = new GMStringView{};
+    std::string _tmp_str = RefManager::instance().store("string_view", stringViewPtr);
     return _tmp_str.c_str();
 }
 
 // === Vector<double> ===
+using GMVectorOfDouble = std::vector<double>;
 extern "C" const char* __cpp_create_vector() {
-    auto* ptr = new std::vector<double>{};
-    REFMAN_REGISTER_TYPE(vector, std::vector<double>);
-    std::string _tmp_str = RefManager::instance().store("vector", ptr);
+    REFMAN_REGISTER_TYPE(vector, GMVectorOfDouble);
+    
+    auto* vecPtr = new GMVectorOfDouble{};
+    std::string _tmp_str = RefManager::instance().store("vector", vecPtr);
     return _tmp_str.c_str();
 }
 
 // === Map<string,double> ===
+using GMMapOfStringDouble = std::unordered_map<std::string, double>;
 extern "C" const char* __cpp_create_map() {
-    REFMAN_REGISTER_TYPE(map, std::unordered_map<std::string, double>);
+    REFMAN_REGISTER_TYPE(map, GMMapOfStringDouble);
 
-    auto* mapPtr = new std::unordered_map<std::string, double>{};
+    auto* mapPtr = new GMMapOfStringDouble{};
     std::string _tmp_str = RefManager::instance().store("map", mapPtr);
     return _tmp_str.c_str();
 }
 
 // === Set<string> ===
+using GMSetOfString = std::unordered_set<std::string>;
 extern "C" const char* __cpp_create_set() {
-    REFMAN_REGISTER_TYPE(set, std::unordered_set<std::string>);
+    REFMAN_REGISTER_TYPE(set, GMSetOfString);
 
-    auto* ptr = new std::unordered_set<std::string>{};
-    std::string _tmp_str = RefManager::instance().store("set", ptr);
+    auto* setPtr = new GMSetOfString{};
+    std::string _tmp_str = RefManager::instance().store("set", setPtr);
     return _tmp_str.c_str();
 }
 
-/ === Queue<double> ===
+// === Queue<double> ===
+using GMQueueOfDouble = std::queue<double>;
 extern "C" const char* __cpp_create_queue() {
     REFMAN_REGISTER_TYPE_CUSTOM(
         queue,
         // deleter
         [](void* pointer) {
-            delete static_cast<std::queue<double>*>(pointer);
+            delete static_cast<GMQueueOfDouble*>(pointer);
         },
         // exporter: turn queue into a vector and serialize
         [](void* pointer) {
-            auto* qp = static_cast<std::queue<double>*>(pointer);
-            std::queue<double> copy = *qp;            // copy so we don’t consume the original
+            auto* qp = static_cast<GMQueueOfDouble*>(pointer);
+            GMQueueOfDouble copy = *qp;            // copy so we don’t consume the original
             std::vector<double> tempVec;
             while (!copy.empty()) {
                 tempVec.push_back(copy.front());
@@ -123,9 +142,9 @@ extern "C" const char* __cpp_create_queue() {
         },
         // importer: parse vector and push back into queue
         [](void* pointer, const std::string& s) {
-            auto* qp = static_cast<std::queue<double>*>(pointer);
+            auto* qp = static_cast<GMQueueOfDouble*>(pointer);
             std::vector<double> tempVec = json::parse(s).get<std::vector<double>>();
-            std::queue<double> empty;
+            GMQueueOfDouble empty;
             std::swap(*qp, empty);
             for (double v : tempVec) {
                 qp->push(v);
@@ -133,45 +152,66 @@ extern "C" const char* __cpp_create_queue() {
         }
     );
     
-    auto* queuePtr = new std::queue<double>{};
+    auto* queuePtr = new GMQueueOfDouble{};
     std::string _tmp_str = RefManager::instance().store("queue", queuePtr);
     return _tmp_str.c_str();
 }
 
 // === Stack<double> ===
+using GMStackOfDouble = std::stack<double>;
 extern "C" const char* __cpp_create_stack() {
-    REFMAN_REGISTER_TYPE(stack, std::stack<double>);
+    REFMAN_REGISTER_TYPE_CUSTOM(
+        stack,
+        /* deleter */ [](void* p) { delete static_cast<GMStackOfDouble*>(p); },
+        /* exporter*/ [](void* p) {
+            auto copy = *static_cast<GMStackOfDouble*>(p);
+            std::vector<double> v;
+            while (!copy.empty()) { v.push_back(copy.top()); copy.pop(); }
+            return json(v).dump();
+        },
+        /* importer*/ [](void* p, const std::string& s) {
+            auto* sp = static_cast<GMStackOfDouble*>(p);
+            std::vector<double> v = json::parse(s).get<std::vector<double>>();
+            GMStackOfDouble empty;
+            std::swap(*sp, empty);
+            for (double x : v) sp->push(x);
+        }
+    );
 
-    auto* ptr = new std::stack<double>{};
-    std::string _tmp_str = RefManager::instance().store("stack", ptr);
+    
+
+    auto* stackPtr = new GMStackOfDouble{};
+    std::string _tmp_str = RefManager::instance().store("stack", stackPtr);
     return _tmp_str.c_str();
 }
 
 // === Buffer (uint8_t*) ===
+using GMBufferPtr = uint8_t*;
 extern "C" const char* __cpp_create_buffer() {
     REFMAN_REGISTER_TYPE_CUSTOM(
         buffer,
         /* deleter */ [](void* p) {
             // p is uint8_t**; first delete the pointed‐to array, then the holder
-            uint8_t* data = *static_cast<uint8_t**>(p);
+            uint8_t* data = *static_cast<GMBufferPtr*>(p);
             delete[] data;
-            delete static_cast<uint8_t**>(p);
+            delete static_cast<GMBufferPtr*>(p);
         },
         /* exporter */ nullptr,
         /* importer */ nullptr
     );
 
-    auto* ptr = new uint8_t* {};
-    std::string _tmp_str = RefManager::instance().store("buffer", ptr);
+    auto* buffPtr = new GMBufferPtr{};
+    std::string _tmp_str = RefManager::instance().store("buffer", buffPtr);
     return _tmp_str.c_str();
 }
 
 // === Span<uint8_t> ===
+using GMSpanOfUint8 = std::span<uint8_t>;
 extern "C" const char* __cpp_create_span() {
-    REFMAN_REGISTER_TYPE(span, std::span<uint8_t>);
+    REFMAN_REGISTER_TYPE(span, GMSpanOfUint8);
 
-    auto* ptr = new std::span<uint8_t>{};
-    std::string _tmp_str = RefManager::instance().store("span", ptr);
+    auto* spanPtr = new GMSpanOfUint8{};
+    std::string _tmp_str = RefManager::instance().store("span", spanPtr);
     return _tmp_str.c_str();
 }
 
@@ -187,23 +227,24 @@ extern "C" const char* __cpp_create_ref() {
         /*importer*/   nullptr
     );
 
-    auto* ptr = new void* {};
-    std::string _tmp_str = RefManager::instance().store("ref", ptr);
+    auto* refPtr = new void* {};
+    std::string _tmp_str = RefManager::instance().store("ref", refPtr);
     return _tmp_str.c_str();
 }
 
 // === Shared<T> ===
+using GMSharedVoid = std::shared_ptr<void>;
 extern "C" const char* __cpp_create_shared() {
     REFMAN_REGISTER_TYPE_CUSTOM(
         shared,
         /* deleter: delete the holder itself */
         [](void* p) {
-            delete static_cast<std::shared_ptr<void>*>(p);
+            delete static_cast<GMSharedVoid*>(p);
         },
         /* exporter: return the held GML ref if any */
         [](void* p) -> std::string {
             // get the shared_ptr<void>*
-            auto sp = static_cast<std::shared_ptr<void>*>(p);
+            auto sp = static_cast<GMSharedVoid*>(p);
             void* held = sp->get();  // NOT *sp!
             return RefManager::instance().get_ref_for_ptr(held);
         },
@@ -211,23 +252,24 @@ extern "C" const char* __cpp_create_shared() {
         nullptr
     );
 
-    auto* ptr = new std::shared_ptr<void>{};
-    std::string _tmp_str = RefManager::instance().store("shared", ptr);
+    auto* sharedPtr = new GMSharedVoid{};
+    std::string _tmp_str = RefManager::instance().store("shared", sharedPtr);
     return _tmp_str.c_str();
 }
 
 // === Optional<double> ===
+using GMOptionalOfDouble = std::optional<double>;
 extern "C" const char* __cpp_create_optional() {
     REFMAN_REGISTER_TYPE_CUSTOM(
         optional,
-        /*deleter=*/[](void* p) { delete static_cast<std::optional<double>*>(p); },
+        /*deleter=*/[](void* p) { delete static_cast<GMOptionalOfDouble*>(p); },
         /*exporter=*/[](void* p)->std::string {
-            auto& opt = *static_cast<std::optional<double>*>(p);
+            auto& opt = *static_cast<GMOptionalOfDouble*>(p);
             if (!opt.has_value()) return "null";
             return std::to_string(opt.value());
         },
         /*importer=*/[](void* p, const std::string& s) {
-            auto& opt = *static_cast<std::optional<double>*>(p);
+            auto& opt = *static_cast<GMOptionalOfDouble*>(p);
             if (s == "null" || s == "") {
                 opt = std::nullopt;
             }
@@ -237,30 +279,65 @@ extern "C" const char* __cpp_create_optional() {
         }
     );
 
-    auto* ptr = new std::optional<double>{};
-    std::string _tmp_str = RefManager::instance().store("optional", ptr);
+    auto* optnPtr = new GMOptionalOfDouble{};
+    std::string _tmp_str = RefManager::instance().store("optional", optnPtr);
     return _tmp_str.c_str();
 }
 
 // === Variant<int,double,string> ===
+using GMVariantIntDoubleStr = std::variant<int, double, std::string>;
 extern "C" const char* __cpp_create_variant() {
-    REFMAN_REGISTER_TYPE(variant, std::variant<int, double, std::string>);
+    REFMAN_REGISTER_TYPE_CUSTOM(
+        variant,
 
-    auto* variantPtr = new std::variant<int, double, std::string>{};
+        /* deleter */
+        [](void* p) {
+            delete static_cast<GMVariantIntDoubleStr*>(p);
+        },
+
+        /* exporter: serialize as [ index, value ] */
+        [](void* p) -> std::string {
+            auto* vp = static_cast<GMVariantIntDoubleStr*>(p);
+            // produce a small JSON array: [which_index, value]
+            int idx = static_cast<int>(vp->index());
+            json out;
+            std::visit([&](auto&& val) {
+                out = json::array({ idx, val });
+                }, *vp);
+            return out.dump();
+        },
+
+        /* importer: parse [ index, value ] back into variant */
+        [](void* p, const std::string& s) {
+            auto* vp = static_cast<GMVariantIntDoubleStr*>(p);
+            json in = json::parse(s);
+            int idx = in.at(0).get<int>();
+            // depending on idx, pull the right type
+            switch (idx) {
+            case 0: *vp = in.at(1).get<int>();        break;
+            case 1: *vp = in.at(1).get<double>();     break;
+            case 2: *vp = in.at(1).get<std::string>(); break;
+            }
+        }
+    );
+
+    auto* variantPtr = new GMVariantIntDoubleStr{};
     std::string _tmp_str = RefManager::instance().store("variant", variantPtr);
     return _tmp_str.c_str();
 }
 
 // === Pair<double,double> ===
+using GMPairDoubleDouble = std::pair<double, double>;
 extern "C" const char* __cpp_create_pair() {
-    REFMAN_REGISTER_TYPE(pair, std::pair<double, double>);
+    REFMAN_REGISTER_TYPE(pair, GMPairDoubleDouble);
 
-    auto* ptr = new std::pair<double, double>{};
-    std::string _tmp_str = RefManager::instance().store("pair", ptr);
+    auto* pairPtr = new GMPairDoubleDouble{};
+    std::string _tmp_str = RefManager::instance().store("pair", pairPtr);
     return _tmp_str.c_str();
 }
 
 #pragma endregion
+
 
 
 #pragma region StructConstructors
