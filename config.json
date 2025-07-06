@@ -12,6 +12,6 @@
   "cull_function_names": true,
   "cull_constant_names": true,
   "cull_enum_names": true,
-  "treat_int64_as_ref": true,
+  "treat_int64_as_ref": false,
   "debug": true
 }

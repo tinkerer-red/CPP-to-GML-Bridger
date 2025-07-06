@@ -24,153 +24,173 @@ def resolve_type(type_name: str, typedef_map: dict[str,str]) -> str:
         result = typedef_map[result].strip()
     return result
 
+def classify_field(field: dict,
+                   typedef_map: dict[str,str],
+                   struct_set: set[str],
+                   enum_set: set[str]) -> str:
+    raw        = field["type"].strip()
+    canonical  = field["canonical_type"].lower()
+    array_size = field.get("array_size")
+
+    # 1) fixed‐size char arrays
+    if array_size and raw.rstrip("*").endswith("char"):
+        return "char_array"
+    # 2) all other C‐arrays
+    if array_size:
+        return "array"
+    # 3) any raw pointer (T*, const T*, T**…) → handle
+    if raw.endswith("*"):
+        return "ref_handle"
+    # 4) parser said “ref” (covers function‐pointer typedefs, flags‐as‐refs, void*, etc.)
+    if field["usage_category"] == "ref":
+        # but if it’s actually a nested struct, do struct instead
+        if field["canonical_type"] in struct_set:
+            return "struct"
+        return "ref_handle"
+    # 5) nested structs
+    if field["canonical_type"] in struct_set:
+        return "struct"
+    # 6) numeric & enums
+    integer_types = {
+        "bool","int","float","double",
+        "int8_t","uint8_t","int16_t","uint16_t",
+        "int32_t","uint32_t","int64_t","uint64_t"
+    }
+    if canonical in integer_types or field["base_type"] in enum_set:
+        return "numeric"
+    # 7) strings
+    if canonical in ("std::string","char*","const char*"):
+        return "string"
+    # fallback
+    return "numeric"
+
 def generate_struct_json_overloads(struct_name: str,
                                    fields: list[dict],
                                    parse_result: dict) -> str:
-    """
-    Emits to_json, from_json, and REFMAN_REGISTER_TYPE for struct_name,
-    with support for:
-      - numeric types (including enums)
-      - std::string
-      - fixed-size char arrays
-      - nested structs (via ADL)
-      - pointer/ref fields (via RefManager.get_ref_for_ptr / retrieve)
-      - TODO comments for anything else
-    """
     typedef_map = parse_result["typedef_map"]
     struct_set  = set(parse_result["struct_fields"])
     enum_set    = set(parse_result["enums"])
 
-    def classify_field(field: dict) -> str:
-        # We use the parser’s canonical_type for integer/enum detection,
-        # and never consult treat_int64_as_ref here.
-        canonical  = field["canonical_type"]
-        array_size = field.get("array_size")
-        resolved   = resolve_type(field["type"], typedef_map)
+    # Named handlers for pointer/handle fields
+    def ref_to_json(name: str, sz: int=None, field: dict=None) -> str:
+        """
+        Emit a RefManager handle for any pointer‐typed field (including function pointers).
+        """
+        raw       = field["declared_type"]
+        # strip all const so we can const_cast
+        inner     = re.sub(r'\bconst\b\s*', '', raw).strip()
+        return (
+            f'    jsonValue["{name}"] = '
+            f'RefManager::instance().get_ref_for_ptr('
+            f'reinterpret_cast<void*>(const_cast<{inner}>(o.{name}))'
+            f');'
+        )
 
-        # fixed-size char arrays
-        if array_size and resolved == "char":
-            return "char_array"
+    def ref_from_json(name: str, sz: int=None, field: dict=None) -> str:
+        """
+        Retrieve a RefManager handle and cast it back to the exact declared type.
+        """
+        decl = field["declared_type"]
+        return "\n".join([
+            f'    {{',
+            f'        auto handleString = jsonValue.at("{name}").get<std::string>();',
+            f'        void* ptr = RefManager::instance().retrieve(handleString);',
+            f'        o.{name} = reinterpret_cast<{decl}>(ptr);',
+            f'    }}'
+        ])
 
-        integer_types = {
-            "bool","int","float","double",
-            "int8_t","uint8_t","int16_t","uint16_t",
-            "int32_t","uint32_t","int64_t","uint64_t"
-        }
-
-        # enums or 64-bit integer handles
-        if canonical in enum_set or canonical in integer_types:
-            return "numeric"
-
-        # std::string or C strings
-        if canonical in ("std::string","char*","const char*"):
-            return "string"
-
-        # nested structs
-        if canonical in struct_set:
-            return "struct"
-
-        # true pointers (declared with *)
-        if field["type"].strip().endswith("*"):
-            return "ref_handle"
-
-        # anything else is unknown—emit a TODO
-        return "unknown"
-    
     GEN_HANDLERS = {
-        "numeric": (
-            lambda name, array_size=None:
-                f'    jsonValue["{name}"] = o.{name};',
-            lambda name, array_size=None:
-                f'    jsonValue.at("{name}").get_to(o.{name});'
-        ),
-        "string": (
-            lambda name, array_size=None:
-                f'    jsonValue["{name}"] = o.{name};',
-            lambda name, array_size=None:
-                f'    jsonValue.at("{name}").get_to(o.{name});'
-        ),
         "char_array": (
-            lambda name, array_size:
-                f'    jsonValue["{name}"] = '
-                f'std::string(o.{name}, strnlen(o.{name}, {array_size}));',
-            lambda name, array_size: "\n".join([
+            lambda name, sz, field=None:
+                f'    jsonValue["{name}"] = std::string(o.{name}, strnlen(o.{name}, {sz}));',
+            lambda name, sz, field=None: "\n".join([
                 f'    {{',
                 f'        auto tmp = jsonValue.at("{name}").get<std::string>();',
-                f'        std::strncpy(o.{name}, tmp.c_str(), {array_size});',
-                f'        o.{name}[{array_size}-1] = \'\\0\';',
+                f'        std::strncpy(o.{name}, tmp.c_str(), {sz});',
+                f'        o.{name}[{sz}-1] = \'\\0\';',
                 f'    }}'
             ])
         ),
-        "struct": (
-            lambda name, array_size=None:
+        "array": (
+            lambda name, sz, field=None: "\n".join([
+                f'    {{',
+                f'        std::vector<{field["canonical_type"]}> tmp;',
+                f'        tmp.reserve({sz});',
+                f'        for (size_t i = 0; i < {sz}; ++i) tmp.push_back(o.{name}[i]);',
+                f'        jsonValue["{name}"] = tmp;',
+                f'    }}'
+            ]),
+            lambda name, sz, field=None: "\n".join([
+                f'    {{',
+                f'        auto tmp = jsonValue.at("{name}").get<std::vector<{field["canonical_type"]}>>();',
+                f'        size_t n = std::min(tmp.size(), size_t({sz}));',
+                f'        for (size_t i = 0; i < n; ++i) o.{name}[i] = tmp[i];',
+                f'        for (size_t i = n; i < {sz}; ++i) o.{name}[i] = {field["canonical_type"]}();',
+                f'    }}'
+            ])
+        ),
+        "numeric": (
+            lambda name, sz=None, field=None:
+                f'    jsonValue["{name}"] = ({field["canonical_type"]})o.{name};',
+            lambda name, sz=None, field=None: "\n".join([
+                f'    {{',
+                f'        {field["canonical_type"]} tmp = '
+                f'jsonValue.at("{name}").get<{field["canonical_type"]}>();',
+                f'        o.{name} = ({field["type"]})tmp;',
+                f'    }}'
+            ])
+        ),
+        "string": (
+            lambda name, sz=None, field=None:
                 f'    jsonValue["{name}"] = o.{name};',
-            lambda name, array_size=None:
+            lambda name, sz=None, field=None:
+                f'    jsonValue.at("{name}").get_to(o.{name});'
+        ),
+        "struct": (
+            lambda name, sz=None, field=None:
+                f'    jsonValue["{name}"] = o.{name};',
+            lambda name, sz=None, field=None:
                 f'    jsonValue.at("{name}").get_to(o.{name});'
         ),
         "ref_handle": (
-            # to_json: export the GML handle for this pointer field
-            lambda name, array_size=None:
-                (f'    jsonValue["{name}"] = '
-                 f'RefManager::instance().get_ref_for_ptr('
-                 f'const_cast<void*>(o.{name}));'),
-            # from_json: retrieve pointer by handle and assign back
-            lambda name, array_size=None, field=None: "\n".join([
-                f'    {{',
-                f'        auto handleString = jsonValue.at("{name}").get<std::string>();',
-                f'        void* ptr = RefManager::instance().retrieve(handleString);',
-                f'        o.{name} = static_cast<'
-                f'{resolve_type(field["type"], typedef_map)}*>(ptr);',
-                f'    }}'
-            ])
+            ref_to_json,
+            ref_from_json
         ),
     }
-
+    
     lines = []
     # to_json
     lines.append(f'inline void to_json(json& jsonValue, const {struct_name}& o) {{')
     lines.append('    jsonValue = json::object();')
     for field in fields:
-        name       = field["name"]
-        kind       = classify_field(field)
-        array_size = field.get("array_size")
-        handler    = GEN_HANDLERS.get(kind)
-
-        if handler is not None:
-            if kind == "char_array":
-                snippet = handler[0](name, array_size)
-            else:
-                snippet = handler[0](name, None)
-            lines.append(snippet)
-        else:
-            lines.append(f'    // TODO handle {name}:{field["type"]}')
-
+        kind = classify_field(field, typedef_map, struct_set, enum_set)
+        handler = GEN_HANDLERS[kind]
+        lines.append(handler[0](
+            field["name"],
+            field.get("array_size"),
+            field
+        ))
     lines.append('}')
 
     # from_json
-    lines.append('')
     lines.append(f'inline void from_json(const json& jsonValue, {struct_name}& o) {{')
     for field in fields:
-        name       = field["name"]
-        kind       = classify_field(field)
-        array_size = field.get("array_size")
-        handler    = GEN_HANDLERS.get(kind)
-
-        if handler is not None:
-            if kind == "char_array":
-                lines.append(handler[1](name, array_size))
-            elif kind == "ref_handle":
-                lines.append(handler[1](name, None, field))
-            else:
-                lines.append(handler[1](name, None))
-        else:
-            lines.append(f'    // TODO handle {name}:{field["type"]}')
-
+        kind = classify_field(field, typedef_map, struct_set, enum_set)
+        handler = GEN_HANDLERS[kind]
+        lines.append(handler[1](
+            field["name"],
+            field.get("array_size"),
+            field
+        ))
     lines.append('}')
+
+
 
     # registration
     lines.append('')
     lines.append(f'REFMAN_REGISTER_TYPE({struct_name}, {struct_name});')
+    return "\n".join(lines)
+
 
     return "\n".join(lines)
 
@@ -241,9 +261,15 @@ def generate_cpp_bridge(parse_result, config):
     # Topologically sort so that nested structs come first
     ordered_structs = order_structs_by_dependency(deps)
 
+    # Only keep structs whose name is their own canonical type
+    filtered_structs = [
+        name for name in ordered_structs
+        if resolve_type(name, parse_result["typedef_map"]) == name
+    ]
+
     # 1) Struct constructors + JSON I/O (import then export)
     struct_constructors = []
-    for name in ordered_structs:
+    for name in filtered_structs:
         fields = parse_result["struct_fields"][name]
         # 1) Create function
         struct_constructors.append(f'''
