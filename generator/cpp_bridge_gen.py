@@ -32,20 +32,17 @@ def classify_field(field: dict,
     canonical  = field["canonical_type"].lower()
     array_size = field.get("array_size")
 
-    # 1) fixed‐size char arrays
+    # 1) fixed-size char arrays
     if array_size and raw.rstrip("*").endswith("char"):
         return "char_array"
-    # 2) all other C‐arrays
+    # 2) all other C-arrays
     if array_size:
         return "array"
     # 3) any raw pointer (T*, const T*, T**…) → handle
     if raw.endswith("*"):
         return "ref_handle"
-    # 4) parser said “ref” (covers function‐pointer typedefs, flags‐as‐refs, void*, etc.)
-    if field["usage_category"] == "ref":
-        # but if it’s actually a nested struct, do struct instead
-        if field["canonical_type"] in struct_set:
-            return "struct"
+    # 4) function-pointer typedefs → handle
+    if field.get("is_function_ptr", False):
         return "ref_handle"
     # 5) nested structs
     if field["canonical_type"] in struct_set:
@@ -56,11 +53,14 @@ def classify_field(field: dict,
         "int8_t","uint8_t","int16_t","uint16_t",
         "int32_t","uint32_t","int64_t","uint64_t"
     }
-    if canonical in integer_types or field["base_type"] in enum_set:
+    if canonical in integer_types or field["is_enum"]:
         return "numeric"
     # 7) strings
-    if canonical in ("std::string","char*","const char*"):
+    if field["extension_type"] == "string" and not field["is_ref"]:
         return "string"
+    # 8) refs caught here (in case classify_c_type set is_ref on some pointer-like)
+    if field.get("is_ref", False):
+        return "ref_handle"
     # fallback
     return "numeric"
 
@@ -134,7 +134,7 @@ def generate_struct_json_overloads(struct_name: str,
                 f'    jsonValue["{name}"] = ({field["canonical_type"]})o.{name};',
             lambda name, sz=None, field=None: "\n".join([
                 f'    {{',
-                f'        {field["canonical_type"]} tmp = '
+                f'        {field["base_type"]} tmp = '
                 f'jsonValue.at("{name}").get<{field["canonical_type"]}>();',
                 f'        o.{name} = ({field["type"]})tmp;',
                 f'    }}'
@@ -238,9 +238,7 @@ def generate_cpp_bridge(parse_result, config):
     functions           = parse_result["functions"]
     known_structs       = parse_result["struct_fields"].keys()
     func_ptr_aliases    = parse_result["function_ptr_aliases"]
-    treat_int64_as_ref  = config.get("treat_int64_as_ref", False)
-
-    header_file = config.get("header_file", "openxr.h").replace("\\", "/")
+    
     namespace   = config.get("namespace", "XR")
 
     # 0) Build dependency graph: structName -> [list of nested struct names]
@@ -288,10 +286,9 @@ extern "C" const char* __cpp_create_{name}() {{
     # 2) Function bridges
     function_bridges = []
     for fn in functions:
-        name     = fn["name"]
+        fn_name     = fn["name"]
         ret_meta = fn["return_meta"]
         ret_ext  = ret_meta["extension_type"]
-        ret_cat  = ret_meta["usage_category"]
         canon_rt = ret_meta["canonical_type"]
 
         # pick return signature and default error return
@@ -304,77 +301,109 @@ extern "C" const char* __cpp_create_{name}() {{
 
 
 
-        # build argument decls, conversions, and call args 
+        # Build argument decls, conversions, and call_args:
         decls, converts, call_args = [], [], []
         for i, arg in enumerate(fn["args"]):
-            nm  = arg["name"]
-            base = arg["base_type"]
-            ext = arg["extension_type"]
-            cat = arg["usage_category"]
+            arg_name         = arg["name"]
+            base_type    = arg["base_type"]
+            canonical    = arg["canonical_type"].lower()
+            is_big       = arg["is_unsupported_numeric"]
+            is_ref       = arg["is_ref"]
+            ext          = arg["extension_type"]
 
-            if cat == "double":
-                decls.append(f"double {nm}")
-                call_args.append(nm)
+            # 1) Big integers → receive as string, parse back
+            if is_big:
+                decls.append(f"const char* {name}_str")
+                # Use the real declared_type (e.g. XrInstance) for the local variable
+                if canonical.startswith("u"):
+                    converts.append(f"// Parse big unsigned integer Argument{i} ({name})")
+                    converts.append(f"{arg['declared_type']} {name} = static_cast<{arg['declared_type']}>(std::stoull({name}_str));")
+                else:
+                    converts.append(f"// Parse big signed integer Argument{i} ({name})")
+                    converts.append(f"{arg['declared_type']} {name} = static_cast<{arg['declared_type']}>(std::stoll({name}_str));")
+                call_args.append(name)
 
-            elif cat == "string":
-                decls.append(f"const char* {nm}")
-                call_args.append(nm)
+            # 2) Standard numerics (float, double, int32, bool, enum)
+            elif ext == "double":
+                decls.append(f"double {arg_name}")
+                call_args.append(arg_name)
 
-            elif cat == "ref":
-                decls.append(f"const char* {nm}_ref")
-                converts.append(f"""
-    // Convert Argument{i} ({nm}) to {base}
-    void* {nm}_ptr = RefManager::instance().retrieve({nm}_ref);
-    if (!{nm}_ptr) return {err_return};
-    {base}* {nm} = static_cast<{base}*>({nm}_ptr);""")
-                call_args.append(f"{nm}")
+            # 3) Plain strings (const char*, std::string)
+            elif ext == "string":
+                decls.append(f"const char* {arg_name}")
+                call_args.append(arg_name)
 
+            # 4) Refs (pointers to structs or function pointers)
+            elif is_ref:
+                decls.append(f"const char* {arg_name}_ref")
+                converts.append(f"// Convert Argument{i} ({arg_name}) to {base_type}")
+                converts.append(f"void* {arg_name}_ptr = RefManager::instance().retrieve({arg_name}_ref);")
+                converts.append(f"if (!{arg_name}_ptr) return {err_return};")
+                converts.append(f"{base_type}* {arg_name} = static_cast<{base_type}*>({arg_name}_ptr);")
+                call_args.append(arg_name)
+
+            # 5) Fallback: treat as string
             else:
-                decls.append(f"/* unsupported: {arg['declared_type']} */ const char* {nm}")
-                call_args.append(nm)
+                decls.append(f"const char* {arg_name}")
+                call_args.append(arg_name)
 
 
 
         # assemble the function bridge
-        fb = [f"// Bridge for {name}"]
-        fb.append(f'extern "C" {ret_sig} __{name}({", ".join(decls)}) {{')
+        fb = [f"// Bridge for {fn_name}"]
+        fb.append(f'extern "C" {ret_sig} __{fn_name}({", ".join(decls)}) {{')
 
         if debug:
-            fb.append(f'    std::cout << "[GMBridge] Called {name}" << std::endl;')
+            fb.append(f'    std::cout << "[GMBridge] Called {fn_name}" << std::endl;')
 
         fb += [f"    {line}" for line in converts if line.strip()]
-        fb.append(f"\n    {canon_rt} result = {name}({', '.join(call_args)});")
+        fb.append(f"\n    {canon_rt} result = {fn_name}({', '.join(call_args)});")
 
-        if ret_cat == "double":
-            if not treat_int64_as_ref and canon_rt == "int64_t":
-                fb.append(f"""\
-    if (result < {INT64_MIN} || result > {INT64_MAX}) {{
-        return {err_return};
-    }}""")
-            elif not treat_int64_as_ref and canon_rt == "uint64_t":
-                fb.append(f"""\
-    if (result > {INT64_MAX}) {{
-        return {err_return};
-    }}""")
+        # 1) Unsupported-width integer returns → serialize to string
+        if ret_meta["is_unsupported_numeric"]:
+            fb.append(
+                "    _tmp_str = std::to_string(result);\n"
+                "    return _tmp_str.c_str();"
+            )
+
+        # 2) Standard-number returns
+        elif ret_meta["extension_type"] == "double":
             fb.append("    return static_cast<double>(result);")
 
-        elif ret_cat == "ref":
-            fb.append(f"""\
-    _tmp_str = RefManager::instance().store("{ret_meta['base_type']}", result);
-    return _tmp_str.c_str();""")
+        # 3) Ref returns
+        elif ret_meta["is_ref"]:
+            fb.append(
+                f'    _tmp_str = RefManager::instance().store("{ret_meta["base_type"]}", result);\n'
+                "    return _tmp_str.c_str();"
+            )
 
-        elif ret_cat == "string":
+        # 4) Native-string returns
+        elif ret_meta["extension_type"] == "string":
             fb.append("    return result;")
 
+        # 5) Fallback error
         else:
             fb.append(f"    return {err_return};")
-
+        
         fb.append("}\n")
         function_bridges.append("\n".join(fb))
 
     # 3) Fill in the header template
+    # build a multi-line include block from every entry in config["include_files"]:
+    include_lines = []
+    for path in config.get("include_files", []):
+        # normalize and strip any leading folders up through "include/"
+        rel = Path(path).as_posix()
+        if "/include/" in rel:
+            rel = rel.split("/include/",1)[1]
+        include_lines.append(f'#include "{rel}"')
+    # if none were supplied, fall back to a single default include
+    if not include_lines:
+        include_lines = ['#include "openxr.h"']
+    include_header = "\n".join(include_lines)
+
     bridge_cpp = BRIDGE_HEADER_TPL.substitute({
-        "HEADER_FILE":         header_file,
+        "INCLUDE_HEADER":         include_header,
         "REF_MANAGER_BRIDGES": "",  
         "STRUCT_CONSTRUCTORS": "\n".join(struct_constructors),
         "FUNCTION_BRIDGES":    "\n".join(function_bridges)

@@ -206,7 +206,7 @@ def generate_gml_stub(functions_dict, config):
     for fn in functions_dict["functions"]:
         orig    = fn["name"]
         args    = fn["args"]
-
+        ret_meta  = fn["return_meta"]
 
         # build GML name
         if cull_funcs and orig.startswith("xr"):
@@ -233,9 +233,29 @@ def generate_gml_stub(functions_dict, config):
 
         # Stub
         lines.append(f"    static {js_name} = function({', '.join(code_args)}) {{")
-        rt    = fn.get("return_type", "void")
-        js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
-        lines.append(f"    /// @returns {{{js_rt}}}")
+
+        # 1) Convert any big-number args to strings
+        call_args = []
+        for a in args:
+            nm          = a["name"]
+            is_big_arg  = a.get("is_unsupported_numeric", False)
+            if is_big_arg:
+                lines.append(f"        var {nm}_str = string({nm});")
+                call_args.append(f"{nm}_str")
+            else:
+                call_args.append(nm)
+
+        # 2) Invoke the real bridge
+        lines.append(
+            f"        var _res = __{orig}({', '.join(call_args)});"
+        )
+
+        # 3) Wrap big-number returns in int64(), otherwise pass through
+        if ret_meta.get("is_unsupported_numeric", False):
+            lines.append("        return int64(_res);")
+        else:
+            lines.append("        return _res;")
+
         lines.append("    };")
         lines.append("")
 

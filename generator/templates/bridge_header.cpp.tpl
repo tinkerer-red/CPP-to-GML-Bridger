@@ -1,8 +1,8 @@
 // Auto-generated GMBridge.cpp
 #include <iostream>
 #include <limits>
-#include "openxr.h"
 #include "RefManager.h"
+#include <cstdlib>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -16,11 +16,12 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
+${INCLUDE_HEADER}
 
 extern double debug_mode;
 
 // Shared buffer for JSON/ref returns
-static std::string _tmp_str;
+static thread_local std::string _tmp_str;
 
 // Cache Manager functions...
 extern "C" const char* __cpp_to_json(const char* ref_cstr) {

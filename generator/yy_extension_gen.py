@@ -28,70 +28,59 @@ def generate_yy_extension(parse_result, config):
 
         # === Process arguments ===
         for arg in fn["args"]:
-            ext_t = arg["extension_type"]           # "string", "double", or "unknown"
-            canon = arg["canonical_type"]           # e.g. "XrResult", "float", etc.
+            ext_type    = arg["extension_type"]       # "string" or "double"
+            is_big_arg  = arg.get("is_unsupported_numeric", False)
+            valid       = True
 
-            warn = False
-            
-            # if unknown but enum, treat as double
-            if ext_t == "unknown" and canon in enum_names:
-                ext_t = "double"
-
-            # map to GML type codes: 1=string, 2=double
-            if ext_t == "string":
+            # Big numerics always come in as strings now
+            if is_big_arg:
                 type_code = 1
-            elif ext_t == "double":
-                if canon in ("uint64_t", "int64_t") and not config.get("treat_int64_as_ref", False):
-                    print(
-                        f"[Warning] Function arg {fn['name']} '{arg['name']}' is 64-bit ('{canon}'); "
-                        "as double it may lose precision — enable `treat_int64_as_ref` in config."
-                    )
-                    warn = True
+
+            # Standard strings
+            elif ext_type == "string":
+                type_code = 1
+
+            # Standard numerics (float, double, int32, bool, enums)
+            elif ext_type == "double":
                 type_code = 2
+
             else:
                 # unsupported type
-                print(f"[Error] Function arg {fn['name']} '{arg['name']}' has unsupported type '{canon}'")
+                print(
+                    f"[Error] Function arg {fn['name']} "
+                    f"'{arg['name']}' has unsupported extension_type "
+                    f"'{ext_type}'"
+                )
                 valid = False
+
+            if not valid:
+                count_failure += 1
                 break
 
             arg_types.append(type_code)
-            if warn:
-                local_warnings += 1
 
         if not valid:
             count_failure += 1
             continue
 
         # === Process return type ===
-        ret_meta = fn["return_meta"]
-        ext_rt   = ret_meta["extension_type"]
-        canon_rt = ret_meta["canonical_type"]
-        
-        warn = False
+        ret_meta   = fn["return_meta"]
+        ext_type   = ret_meta["extension_type"]
+        canon_rt   = ret_meta["canonical_type"]
 
-        if ext_rt == "unknown" and canon_rt in enum_names:
-            ext_rt = "double"
-
-        if ext_rt == "string":
+        # Map to GML return codes: 1=string, 2=double
+        if ext_type == "string":
             return_code = 1
-        elif ext_rt == "double":
-            if canon in ("uint64_t", "int64_t") and not config.get("treat_int64_as_ref", False):
-                print(
-                    f"[Warning] Function return {fn['name']} is 64-bit ('{canon_rt}'); "
-                    "as double it may lose precision — enable `treat_int64_as_ref` in config."
-                )
-                warn = True
+        elif ext_type == "double" or canon_rt == "void":
             return_code = 2
-        elif canon_rt == "void":
-            return_code = 2  # GMS treats void as 0 (DOES IT????)
         else:
-            print(f"[Error] Function return {fn['name']} has unsupported type '{canon_rt}'")
+            print(
+                f"[Error] Function return {fn['name']} "
+                f"has unsupported extension_type '{ext_type}'"
+            )
             count_failure += 1
             continue
-
-        if warn:
-            local_warnings += 1
-
+        
         # === Build the function entry ===
         func_entries.append({
             "$GMExtensionFunction": "",

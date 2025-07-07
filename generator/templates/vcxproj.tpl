@@ -42,7 +42,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions> <!-- /Oi -->
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        _CRT_SECURE_NO_WARNINGS;${USER_PREPROCESSOR_DEFINES};%(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
@@ -60,7 +62,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        _CRT_SECURE_NO_WARNINGS;${USER_PREPROCESSOR_DEFINES};%(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
     </ClCompile>

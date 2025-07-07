@@ -1,117 +1,6449 @@
-#ifndef OPENXR_H_
-#define OPENXR_H_ 1
-
-/*
-** Copyright 2017-2025 The Khronos Group Inc.
-**
-** SPDX-License-Identifier: Apache-2.0 OR MIT
-*/
-
-/*
-** This header is generated from the Khronos OpenXR XML API Registry.
-**
-*/
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#line 1 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
 
-// XR_VERSION_1_0 is a preprocessor guard. Do not pass it to API calls.
-#define XR_VERSION_1_0 1
-#include "openxr_platform_defines.h"
-#define ((((major) & 0xffffULL) << 48) | (((minor) & 0xffffULL) << 32) | ((patch) & 0xffffffffULL))  ((((major) & 0xffffULL) << 48) | (((minor) & 0xffffULL) << 32) | ((patch) & 0xffffffffULL))
-
-// OpenXR current version number.
-#define XR_CURRENT_API_VERSION ((((1) & 0xffffULL) << 48) | (((1) & 0xffffULL) << 32) | ((49) & 0xffffffffULL))
-
-// OpenXR 1.0 version number
-#define XR_API_VERSION_1_0 ((((1) & 0xffffULL) << 48) | (((0) & 0xffffULL) << 32) | (((uint32_t)((uint64_t)(XR_CURRENT_API_VERSION) & 0xffffffffULL) & 0xffffffffULL)))
-
-#define (uint16_t)(((uint64_t)(version) >> 48)& 0xffffULL) (uint16_t)(((uint64_t)(version) >> 48)& 0xffffULL)
-#define (uint16_t)(((uint64_t)(version) >> 32) & 0xffffULL) (uint16_t)(((uint64_t)(version) >> 32) & 0xffffULL)
-#define (uint32_t)((uint64_t)(version) & 0xffffffffULL) (uint32_t)((uint64_t)(version) & 0xffffffffULL)
-
-#define XR_MIN_COMPOSITION_LAYERS_SUPPORTED 16
 
 
-#if !defined(XR_NULL_HANDLE)
-#if (XR_PTR_SIZE == 8) && XR_CPP_NULLPTR_SUPPORTED
-    #define XR_NULL_HANDLE nullptr
-#else
-    #define XR_NULL_HANDLE 0
-#endif
-#endif
 
 
-#define XR_NULL_SYSTEM_ID 0
 
 
-#define XR_NULL_PATH 0
 
 
-#define ((result) >= 0) ((result) >= 0)
 
 
-#define ((result) < 0) ((result) < 0)
 
 
-#define ((result) == 0) ((result) == 0)
 
 
-#define XR_NO_DURATION 0
 
 
-#define XR_INFINITE_DURATION 0x7fffffffffffffffLL
 
 
-#define XR_MIN_HAPTIC_DURATION -1
 
 
-#define XR_FREQUENCY_UNSPECIFIED 0
+#line 1 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
 
 
-#define XR_MAX_EVENT_DATA_SIZE sizeof(XrEventDataBuffer)
 
 
-#define XR_EXTENSION_ENUM_BASE 1000000000
 
 
-#define XR_EXTENSION_ENUM_STRIDE 1000
 
 
-#if !defined(XR_MAY_ALIAS)
-#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ > 4))
-#define XR_MAY_ALIAS __attribute__((__may_alias__))
-#else
-#define XR_MAY_ALIAS
-#endif
-#endif
 
 
-#if !defined(XR_DEFINE_HANDLE)
-#if (XR_PTR_SIZE == 8)
-    #define typedef uint64_t object; typedef struct object##_T* object;
-#else
-    #define typedef uint64_t object; typedef uint64_t object;
-#endif
-#endif
 
 
-#if !defined(XR_DEFINE_OPAQUE_64)
-    #if (XR_PTR_SIZE == 8)
-        #define typedef uint64_t object; typedef struct object##_T* object;
-    #else
-        #define typedef uint64_t object; typedef uint64_t object;
-    #endif
-#endif
 
 
-#if !defined(XR_DEFINE_ATOM)
-    #define typedef uint64_t object; typedef uint64_t object;
-#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 49 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+#line 1 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+
+
+
+
+
+
+
+#pragma once
+
+
+
+#line 1 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+#pragma once
+
+#line 1 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+#pragma once
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 32 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+#line 34 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 35 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+#line 39 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+    
+    
+
+#line 49 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+
+
+            
+        #line 54 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+    #line 55 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 56 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+#line 1 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma once
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 151 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+#line 155 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 185 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+#line 188 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+#line 190 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+#line 196 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+#line 200 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+#line 207 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 219 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+#line 228 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 229 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma region Input Buffer SAL 1 compatibility macros
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma endregion Input Buffer SAL 1 compatibility macros
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1555 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1586 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1611 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1624 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1663 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1775 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1878 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2047 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2149 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2366 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 2367 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2595 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+
+#line 2634 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2868 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+#line 2878 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+    
+    
+
+
+#line 2886 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 2887 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+#line 2894 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 2895 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+#line 2902 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 2903 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 2915 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2949 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\concurrencysal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma once
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 292 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\concurrencysal.h"
+
+
+
+#line 296 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\concurrencysal.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 389 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\concurrencysal.h"
+
+
+
+
+
+#line 395 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\concurrencysal.h"
+#line 2975 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\sal.h"
+#line 58 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 1 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+#pragma once
+
+
+
+#pragma pack(push, 8)
+
+
+
+    
+
+
+        
+    #line 24 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+#line 25 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+    
+
+
+        
+    #line 34 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+#line 35 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+    
+#line 40 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+    
+#line 46 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+#pragma warning(push)
+#pragma warning(disable:   4514 4820)
+
+
+
+
+
+
+
+#line 57 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+    
+    
+        typedef unsigned __int64  uintptr_t;
+    
+
+#line 65 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+#line 66 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+    
+    
+
+
+        typedef char* va_list;
+    #line 74 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+#line 75 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+    
+#line 81 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+#line 87 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+#line 91 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+    
+    
+#line 94 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 106 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+#line 114 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 126 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+#line 132 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+#line 143 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+#line 154 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+    void  __va_start(va_list* , ...);
+#line 165 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 202 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+    
+
+#line 206 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vadefs.h"
+
+#pragma warning(pop) 
+#pragma pack(pop)
+#line 59 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+#pragma warning(push)
+#pragma warning(disable:   4514 4820)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 77 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+
+#line 87 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+    
+
+
+    
+
+
+#line 95 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+__pragma(pack(push, 8))
+
+
+
+
+    
+
+
+        
+    #line 106 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 107 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+#line 126 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+#line 128 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+    #line 130 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 131 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+#line 136 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+    #line 138 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 139 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+#line 145 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+    
+    
+#line 148 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+    
+#line 154 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+
+
+#line 165 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+    
+#line 167 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+    
+#line 173 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+
+
+      
+    #line 181 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 182 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+    typedef unsigned __int64 size_t;
+    typedef __int64          ptrdiff_t;
+    typedef __int64          intptr_t;
+
+
+
+
+#line 196 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 200 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 204 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+    typedef _Bool __vcrt_bool;
+#line 206 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+    
+#line 211 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+#line 215 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+#line 219 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+    
+    typedef unsigned short wchar_t;
+#line 225 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+
+        
+    #line 232 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 233 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+
+#line 239 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 243 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+
+
+    
+#line 255 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 259 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+    
+#line 269 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+#line 274 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+    #line 276 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 277 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+#line 282 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+    #line 284 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 285 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+#line 290 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        
+    #line 292 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 293 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+#line 299 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 303 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+    
+        
+    
+
+
+
+#line 313 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 314 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 318 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+    
+#line 320 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+
+
+    
+
+
+        
+    #line 334 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 335 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+
+    
+#line 344 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+
+
+
+#line 351 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+
+
+        
+
+
+
+
+    #line 362 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 363 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+
+#line 367 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    
+        
+    
+
+
+#line 375 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 376 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+    void  __security_init_cookie(void);
+#line 384 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+
+#line 387 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+        void  __security_check_cookie(uintptr_t _StackCookie);
+__declspec(noreturn) void  __report_gsfailure(uintptr_t _StackCookie);
+#line 390 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 391 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+extern uintptr_t __security_cookie;
+
+
+    
+    
+    
+#line 399 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+
+__pragma(pack(pop))
+
+#pragma warning(pop) 
+
+#line 405 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vcruntime.h"
+#line 11 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    #line 38 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 39 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+#line 43 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+        
+    
+
+#line 50 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 51 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+        
+    #line 73 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 74 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+    
+#line 79 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+#line 95 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+        
+    #line 111 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 112 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+    #line 119 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 120 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4324  4514 4574 4710 4793 4820 4995 4996 28719 28726 28727)
+
+
+__pragma(pack(push, 8))
+
+
+
+
+
+
+
+    
+
+#line 136 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+#line 138 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+        
+    #line 140 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 141 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+    
+#line 147 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+#line 152 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+#line 154 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+        
+    #line 156 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 157 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 161 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 163 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+#line 169 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+#line 175 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 177 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+    
+#line 184 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 188 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 190 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+    
+#line 201 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+        
+    #line 219 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 220 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 224 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 226 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 230 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 232 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 236 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+#line 238 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+    #line 245 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 246 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 270 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 274 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    typedef _Bool __crt_bool;
+#line 276 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        
+
+
+            
+        #line 296 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    #line 297 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 298 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+#line 320 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+        
+    #line 322 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 323 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 327 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+#line 331 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+ 
+
+
+
+
+
+
+  
+
+#line 343 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+   
+  #line 345 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+ #line 346 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 347 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+ 
+
+#line 352 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+   
+ #line 354 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 355 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ void  _invalid_parameter_noinfo(void);
+__declspec(noreturn) void  _invalid_parameter_noinfo_noreturn(void);
+__declspec(noreturn)
+ void  _invoke_watson(wchar_t const* _Expression,       wchar_t const* _FunctionName,       wchar_t const* _FileName,             unsigned int _LineNo,             uintptr_t _Reserved);
+#line 401 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 402 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+#line 419 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 423 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+
+
+    #line 432 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 433 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+        
+    #line 451 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 452 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+    #line 459 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 460 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 464 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 478 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 494 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+    
+#line 501 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 505 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+#line 510 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 511 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+
+
+            
+        #line 521 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    #line 522 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 523 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 527 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+#line 533 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        
+
+
+
+    #line 543 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 544 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+        
+    
+
+
+
+#line 553 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+    
+        
+        
+        
+    
+
+
+
+#line 563 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+    
+        
+              
+        
+
+#line 570 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    
+
+
+
+#line 575 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+    
+        
+    
+
+
+
+#line 583 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+    
+        
+    
+
+
+
+#line 591 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 592 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+#line 596 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+typedef int                           errno_t;
+typedef unsigned short                wint_t;
+typedef unsigned short                wctype_t;
+typedef long                          __time32_t;
+typedef __int64                       __time64_t;
+
+typedef struct __crt_locale_data_public
+{
+      unsigned short const* _locale_pctype;
+      int _locale_mb_cur_max;
+               unsigned int _locale_lc_codepage;
+} __crt_locale_data_public;
+
+typedef struct __crt_locale_pointers
+{
+    struct __crt_locale_data*    locinfo;
+    struct __crt_multibyte_data* mbcinfo;
+} __crt_locale_pointers;
+
+typedef __crt_locale_pointers* _locale_t;
+
+typedef struct _Mbstatet
+{ 
+    unsigned long _Wchar;
+    unsigned short _Byte, _State;
+} _Mbstatet;
+
+typedef _Mbstatet mbstate_t;
+
+
+
+#line 636 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+#line 640 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    
+
+
+        typedef __time64_t time_t;
+    #line 647 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 648 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+    
+#line 653 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+    typedef size_t rsize_t;
+#line 657 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 812 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+    #line 827 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 828 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 1879 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+        
+        
+        
+        
+
+        
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+
+            
+
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+            
+
+
+
+            
+
+
+
+            
+
+
+
+            
+
+
+            
+
+
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+            
+
+
+
+
+            
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 2069 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+    #line 2070 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+#line 2071 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\corecrt.h"
+
+__pragma(pack(pop))
+
+
+#pragma warning(pop) 
+#line 13 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+
+#pragma warning(push)
+#pragma warning(disable: 4324  4514 4574 4710 4793 4820 4995 4996 28719 28726 28727)
+
+
+__pragma(pack(push, 8))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     int*  _errno(void);
+errno_t  _set_errno(int _Value);
+errno_t  _get_errno(int* _Value);
+#line 42 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+
+
+
+
+    
+
+
+        
+    #line 51 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+
+
+#line 54 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+
+ extern unsigned long   __threadid(void);
+extern uintptr_t  __threadhandle(void);
+__pragma(pack(pop))
+
+#pragma warning(pop) 
+#line 65 "C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0\\ucrt\\stddef.h"
+#line 51 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 63 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 1 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\stdint.h"
+
+
+
+
+
+
+
+#pragma once
+
+
+
+
+
+
+#pragma warning(push)
+#pragma warning(disable:   4514 4820)
+
+typedef signed char        int8_t;
+typedef short              int16_t;
+typedef int                int32_t;
+typedef long long          int64_t;
+typedef unsigned char      uint8_t;
+typedef unsigned short     uint16_t;
+typedef unsigned int       uint32_t;
+typedef unsigned long long uint64_t;
+
+typedef signed char        int_least8_t;
+typedef short              int_least16_t;
+typedef int                int_least32_t;
+typedef long long          int_least64_t;
+typedef unsigned char      uint_least8_t;
+typedef unsigned short     uint_least16_t;
+typedef unsigned int       uint_least32_t;
+typedef unsigned long long uint_least64_t;
+
+typedef signed char        int_fast8_t;
+typedef int                int_fast16_t;
+typedef int                int_fast32_t;
+typedef long long          int_fast64_t;
+typedef unsigned char      uint_fast8_t;
+typedef unsigned int       uint_fast16_t;
+typedef unsigned int       uint_fast32_t;
+typedef unsigned long long uint_fast64_t;
+
+typedef long long          intmax_t;
+typedef unsigned long long uintmax_t;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+
+
+
+#line 97 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\stdint.h"
+
+
+
+
+
+
+
+
+
+    
+    
+        
+    
+
+#line 112 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\stdint.h"
+#line 113 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\stdint.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma warning(pop) 
+
+#line 139 "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\stdint.h"
+#line 64 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 65 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 66 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+
+#line 73 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+#line 79 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+#line 81 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 82 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+
+
+
+
+
+
+#line 94 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+#line 104 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 105 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+#line 109 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+
+
+
+
+
+#line 115 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h"
+#line 25 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 45 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+    
+#line 47 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 48 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 90 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+#line 92 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 93 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+    
+
+
+#line 101 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 102 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+    
+        
+    
+
+#line 110 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 111 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+    
+#line 116 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 typedef uint64_t XrVersion;
 typedef uint64_t XrFlags64;
@@ -120,28 +6452,28 @@ typedef uint32_t XrBool32;
 typedef uint64_t XrPath;
 typedef int64_t XrTime;
 typedef int64_t XrDuration;
-typedef uint64_t XrInstance;
-typedef uint64_t XrSession;
-typedef uint64_t XrSpace;
-typedef uint64_t XrAction;
-typedef uint64_t XrSwapchain;
-typedef uint64_t XrActionSet;
-#define XR_TRUE                           1
-#define XR_FALSE                          0
-#define XR_MAX_EXTENSION_NAME_SIZE        128
-#define XR_MAX_API_LAYER_NAME_SIZE        256
-#define XR_MAX_API_LAYER_DESCRIPTION_SIZE 256
-#define XR_MAX_SYSTEM_NAME_SIZE           256
-#define XR_MAX_APPLICATION_NAME_SIZE      128
-#define XR_MAX_ENGINE_NAME_SIZE           128
-#define XR_MAX_RUNTIME_NAME_SIZE          128
-#define XR_MAX_PATH_LENGTH                256
-#define XR_MAX_STRUCTURE_NAME_SIZE        64
-#define XR_MAX_RESULT_STRING_SIZE         64
-#define XR_MAX_ACTION_SET_NAME_SIZE       64
-#define XR_MAX_LOCALIZED_ACTION_SET_NAME_SIZE 128
-#define XR_MAX_ACTION_NAME_SIZE           64
-#define XR_MAX_LOCALIZED_ACTION_NAME_SIZE 128
+typedef struct XrInstance_T* XrInstance;
+typedef struct XrSession_T* XrSession;
+typedef struct XrSpace_T* XrSpace;
+typedef struct XrAction_T* XrAction;
+typedef struct XrSwapchain_T* XrSwapchain;
+typedef struct XrActionSet_T* XrActionSet;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 typedef enum XrResult {
     XR_SUCCESS = 0,
@@ -942,21 +7274,21 @@ typedef enum XrObjectType {
 } XrObjectType;
 typedef XrFlags64 XrInstanceCreateFlags;
 
-// Flag bits for XrInstanceCreateFlags
+
 
 typedef XrFlags64 XrSessionCreateFlags;
 
-// Flag bits for XrSessionCreateFlags
+
 
 typedef XrFlags64 XrSpaceVelocityFlags;
 
-// Flag bits for XrSpaceVelocityFlags
+
 static const XrSpaceVelocityFlags XR_SPACE_VELOCITY_LINEAR_VALID_BIT = 0x00000001;
 static const XrSpaceVelocityFlags XR_SPACE_VELOCITY_ANGULAR_VALID_BIT = 0x00000002;
 
 typedef XrFlags64 XrSpaceLocationFlags;
 
-// Flag bits for XrSpaceLocationFlags
+
 static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_VALID_BIT = 0x00000001;
 static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_VALID_BIT = 0x00000002;
 static const XrSpaceLocationFlags XR_SPACE_LOCATION_ORIENTATION_TRACKED_BIT = 0x00000004;
@@ -964,13 +7296,13 @@ static const XrSpaceLocationFlags XR_SPACE_LOCATION_POSITION_TRACKED_BIT = 0x000
 
 typedef XrFlags64 XrSwapchainCreateFlags;
 
-// Flag bits for XrSwapchainCreateFlags
+
 static const XrSwapchainCreateFlags XR_SWAPCHAIN_CREATE_PROTECTED_CONTENT_BIT = 0x00000001;
 static const XrSwapchainCreateFlags XR_SWAPCHAIN_CREATE_STATIC_IMAGE_BIT = 0x00000002;
 
 typedef XrFlags64 XrSwapchainUsageFlags;
 
-// Flag bits for XrSwapchainUsageFlags
+
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_COLOR_ATTACHMENT_BIT = 0x00000001;
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT = 0x00000002;
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_UNORDERED_ACCESS_BIT = 0x00000004;
@@ -979,12 +7311,12 @@ static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_TRANSFER_DST_BIT = 0x00000
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_SAMPLED_BIT = 0x00000020;
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_MUTABLE_FORMAT_BIT = 0x00000040;
 static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_MND = 0x00000080;
-static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_KHR = 0x00000080;  // alias of XR_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_MND
+static const XrSwapchainUsageFlags XR_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_KHR = 0x00000080;  
 
 typedef XrFlags64 XrCompositionLayerFlags;
 
-// Flag bits for XrCompositionLayerFlags
-// XR_COMPOSITION_LAYER_CORRECT_CHROMATIC_ABERRATION_BIT is deprecated and should not be used
+
+
 static const XrCompositionLayerFlags XR_COMPOSITION_LAYER_CORRECT_CHROMATIC_ABERRATION_BIT = 0x00000001;
 static const XrCompositionLayerFlags XR_COMPOSITION_LAYER_BLEND_TEXTURE_SOURCE_ALPHA_BIT = 0x00000002;
 static const XrCompositionLayerFlags XR_COMPOSITION_LAYER_UNPREMULTIPLIED_ALPHA_BIT = 0x00000004;
@@ -992,7 +7324,7 @@ static const XrCompositionLayerFlags XR_COMPOSITION_LAYER_INVERTED_ALPHA_BIT_EXT
 
 typedef XrFlags64 XrViewStateFlags;
 
-// Flag bits for XrViewStateFlags
+
 static const XrViewStateFlags XR_VIEW_STATE_ORIENTATION_VALID_BIT = 0x00000001;
 static const XrViewStateFlags XR_VIEW_STATE_POSITION_VALID_BIT = 0x00000002;
 static const XrViewStateFlags XR_VIEW_STATE_ORIENTATION_TRACKED_BIT = 0x00000004;
@@ -1000,39 +7332,39 @@ static const XrViewStateFlags XR_VIEW_STATE_POSITION_TRACKED_BIT = 0x00000008;
 
 typedef XrFlags64 XrInputSourceLocalizedNameFlags;
 
-// Flag bits for XrInputSourceLocalizedNameFlags
+
 static const XrInputSourceLocalizedNameFlags XR_INPUT_SOURCE_LOCALIZED_NAME_USER_PATH_BIT = 0x00000001;
 static const XrInputSourceLocalizedNameFlags XR_INPUT_SOURCE_LOCALIZED_NAME_INTERACTION_PROFILE_BIT = 0x00000002;
 static const XrInputSourceLocalizedNameFlags XR_INPUT_SOURCE_LOCALIZED_NAME_COMPONENT_BIT = 0x00000004;
 
-typedef void (XRAPI_PTR *PFN_xrVoidFunction)(void);
+typedef void (*PFN_xrVoidFunction)(void);
 typedef struct XrApiLayerProperties {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
-    char                  layerName[XR_MAX_API_LAYER_NAME_SIZE];
+    void*     next;
+    char                  layerName[256];
     XrVersion             specVersion;
     uint32_t              layerVersion;
-    char                  description[XR_MAX_API_LAYER_DESCRIPTION_SIZE];
+    char                  description[256];
 } XrApiLayerProperties;
 
 typedef struct XrExtensionProperties {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
-    char                  extensionName[XR_MAX_EXTENSION_NAME_SIZE];
+    void*     next;
+    char                  extensionName[128];
     uint32_t              extensionVersion;
 } XrExtensionProperties;
 
 typedef struct XrApplicationInfo {
-    char         applicationName[XR_MAX_APPLICATION_NAME_SIZE];
+    char         applicationName[128];
     uint32_t     applicationVersion;
-    char         engineName[XR_MAX_ENGINE_NAME_SIZE];
+    char         engineName[128];
     uint32_t     engineVersion;
     XrVersion    apiVersion;
 } XrApplicationInfo;
 
 typedef struct XrInstanceCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrInstanceCreateFlags       createFlags;
     XrApplicationInfo           applicationInfo;
     uint32_t                    enabledApiLayerCount;
@@ -1043,20 +7375,20 @@ typedef struct XrInstanceCreateInfo {
 
 typedef struct XrInstanceProperties {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrVersion             runtimeVersion;
-    char                  runtimeName[XR_MAX_RUNTIME_NAME_SIZE];
+    char                  runtimeName[128];
 } XrInstanceProperties;
 
 typedef struct XrEventDataBuffer {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint8_t                     varying[4000];
 } XrEventDataBuffer;
 
 typedef struct XrSystemGetInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFormFactor                formFactor;
 } XrSystemGetInfo;
 
@@ -1073,17 +7405,17 @@ typedef struct XrSystemTrackingProperties {
 
 typedef struct XrSystemProperties {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     XrSystemId                    systemId;
     uint32_t                      vendorId;
-    char                          systemName[XR_MAX_SYSTEM_NAME_SIZE];
+    char                          systemName[256];
     XrSystemGraphicsProperties    graphicsProperties;
     XrSystemTrackingProperties    trackingProperties;
 } XrSystemProperties;
 
 typedef struct XrSessionCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSessionCreateFlags        createFlags;
     XrSystemId                  systemId;
 } XrSessionCreateInfo;
@@ -1094,10 +7426,10 @@ typedef struct XrVector3f {
     float    z;
 } XrVector3f;
 
-// XrSpaceVelocity extends XrSpaceLocation
+
 typedef struct XrSpaceVelocity {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrSpaceVelocityFlags    velocityFlags;
     XrVector3f              linearVelocity;
     XrVector3f              angularVelocity;
@@ -1117,7 +7449,7 @@ typedef struct XrPosef {
 
 typedef struct XrReferenceSpaceCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrReferenceSpaceType        referenceSpaceType;
     XrPosef                     poseInReferenceSpace;
 } XrReferenceSpaceCreateInfo;
@@ -1129,7 +7461,7 @@ typedef struct XrExtent2Df {
 
 typedef struct XrActionSpaceCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAction                    action;
     XrPath                      subactionPath;
     XrPosef                     poseInActionSpace;
@@ -1137,21 +7469,21 @@ typedef struct XrActionSpaceCreateInfo {
 
 typedef struct XrSpaceLocation {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrSpaceLocationFlags    locationFlags;
     XrPosef                 pose;
 } XrSpaceLocation;
 
 typedef struct XrViewConfigurationProperties {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     XrViewConfigurationType    viewConfigurationType;
     XrBool32                   fovMutable;
 } XrViewConfigurationProperties;
 
 typedef struct XrViewConfigurationView {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              recommendedImageRectWidth;
     uint32_t              maxImageRectWidth;
     uint32_t              recommendedImageRectHeight;
@@ -1162,7 +7494,7 @@ typedef struct XrViewConfigurationView {
 
 typedef struct XrSwapchainCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSwapchainCreateFlags      createFlags;
     XrSwapchainUsageFlags       usageFlags;
     int64_t                     format;
@@ -1174,41 +7506,41 @@ typedef struct XrSwapchainCreateInfo {
     uint32_t                    mipCount;
 } XrSwapchainCreateInfo;
 
-typedef struct XR_MAY_ALIAS XrSwapchainImageBaseHeader {
+typedef struct  XrSwapchainImageBaseHeader {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
 } XrSwapchainImageBaseHeader;
 
 typedef struct XrSwapchainImageAcquireInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSwapchainImageAcquireInfo;
 
 typedef struct XrSwapchainImageWaitInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrDuration                  timeout;
 } XrSwapchainImageWaitInfo;
 
 typedef struct XrSwapchainImageReleaseInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSwapchainImageReleaseInfo;
 
 typedef struct XrSessionBeginInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrViewConfigurationType     primaryViewConfigurationType;
 } XrSessionBeginInfo;
 
 typedef struct XrFrameWaitInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrFrameWaitInfo;
 
 typedef struct XrFrameState {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrTime                predictedDisplayTime;
     XrDuration            predictedDisplayPeriod;
     XrBool32              shouldRender;
@@ -1216,19 +7548,19 @@ typedef struct XrFrameState {
 
 typedef struct XrFrameBeginInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrFrameBeginInfo;
 
-typedef struct XR_MAY_ALIAS XrCompositionLayerBaseHeader {
+typedef struct  XrCompositionLayerBaseHeader {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
 } XrCompositionLayerBaseHeader;
 
 typedef struct XrFrameEndInfo {
     XrStructureType                               type;
-    const void* XR_MAY_ALIAS                      next;
+    const void*                       next;
     XrTime                                        displayTime;
     XrEnvironmentBlendMode                        environmentBlendMode;
     uint32_t                                      layerCount;
@@ -1237,7 +7569,7 @@ typedef struct XrFrameEndInfo {
 
 typedef struct XrViewLocateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrViewConfigurationType     viewConfigurationType;
     XrTime                      displayTime;
     XrSpace                     space;
@@ -1245,7 +7577,7 @@ typedef struct XrViewLocateInfo {
 
 typedef struct XrViewState {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrViewStateFlags      viewStateFlags;
 } XrViewState;
 
@@ -1258,27 +7590,27 @@ typedef struct XrFovf {
 
 typedef struct XrView {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrPosef               pose;
     XrFovf                fov;
 } XrView;
 
 typedef struct XrActionSetCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
-    char                        actionSetName[XR_MAX_ACTION_SET_NAME_SIZE];
-    char                        localizedActionSetName[XR_MAX_LOCALIZED_ACTION_SET_NAME_SIZE];
+    const void*     next;
+    char                        actionSetName[64];
+    char                        localizedActionSetName[128];
     uint32_t                    priority;
 } XrActionSetCreateInfo;
 
 typedef struct XrActionCreateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
-    char                        actionName[XR_MAX_ACTION_NAME_SIZE];
+    const void*     next;
+    char                        actionName[64];
     XrActionType                actionType;
     uint32_t                    countSubactionPaths;
     const XrPath*               subactionPaths;
-    char                        localizedActionName[XR_MAX_LOCALIZED_ACTION_NAME_SIZE];
+    char                        localizedActionName[128];
 } XrActionCreateInfo;
 
 typedef struct XrActionSuggestedBinding {
@@ -1288,7 +7620,7 @@ typedef struct XrActionSuggestedBinding {
 
 typedef struct XrInteractionProfileSuggestedBinding {
     XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
+    const void*            next;
     XrPath                             interactionProfile;
     uint32_t                           countSuggestedBindings;
     const XrActionSuggestedBinding*    suggestedBindings;
@@ -1296,27 +7628,27 @@ typedef struct XrInteractionProfileSuggestedBinding {
 
 typedef struct XrSessionActionSetsAttachInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    countActionSets;
     const XrActionSet*          actionSets;
 } XrSessionActionSetsAttachInfo;
 
 typedef struct XrInteractionProfileState {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrPath                interactionProfile;
 } XrInteractionProfileState;
 
 typedef struct XrActionStateGetInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAction                    action;
     XrPath                      subactionPath;
 } XrActionStateGetInfo;
 
 typedef struct XrActionStateBoolean {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              currentState;
     XrBool32              changedSinceLastSync;
     XrTime                lastChangeTime;
@@ -1325,7 +7657,7 @@ typedef struct XrActionStateBoolean {
 
 typedef struct XrActionStateFloat {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     float                 currentState;
     XrBool32              changedSinceLastSync;
     XrTime                lastChangeTime;
@@ -1339,7 +7671,7 @@ typedef struct XrVector2f {
 
 typedef struct XrActionStateVector2f {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrVector2f            currentState;
     XrBool32              changedSinceLastSync;
     XrTime                lastChangeTime;
@@ -1348,7 +7680,7 @@ typedef struct XrActionStateVector2f {
 
 typedef struct XrActionStatePose {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              isActive;
 } XrActionStatePose;
 
@@ -1359,42 +7691,42 @@ typedef struct XrActiveActionSet {
 
 typedef struct XrActionsSyncInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    countActiveActionSets;
     const XrActiveActionSet*    activeActionSets;
 } XrActionsSyncInfo;
 
 typedef struct XrBoundSourcesForActionEnumerateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAction                    action;
 } XrBoundSourcesForActionEnumerateInfo;
 
 typedef struct XrInputSourceLocalizedNameGetInfo {
     XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
+    const void*            next;
     XrPath                             sourcePath;
     XrInputSourceLocalizedNameFlags    whichComponents;
 } XrInputSourceLocalizedNameGetInfo;
 
 typedef struct XrHapticActionInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAction                    action;
     XrPath                      subactionPath;
 } XrHapticActionInfo;
 
-typedef struct XR_MAY_ALIAS XrHapticBaseHeader {
+typedef struct  XrHapticBaseHeader {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrHapticBaseHeader;
 
-typedef struct XR_MAY_ALIAS XrBaseInStructure {
+typedef struct  XrBaseInStructure {
     XrStructureType                    type;
     const struct XrBaseInStructure*    next;
 } XrBaseInStructure;
 
-typedef struct XR_MAY_ALIAS XrBaseOutStructure {
+typedef struct  XrBaseOutStructure {
     XrStructureType               type;
     struct XrBaseOutStructure*    next;
 } XrBaseOutStructure;
@@ -1422,7 +7754,7 @@ typedef struct XrSwapchainSubImage {
 
 typedef struct XrCompositionLayerProjectionView {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPosef                     pose;
     XrFovf                      fov;
     XrSwapchainSubImage         subImage;
@@ -1430,7 +7762,7 @@ typedef struct XrCompositionLayerProjectionView {
 
 typedef struct XrCompositionLayerProjection {
     XrStructureType                            type;
-    const void* XR_MAY_ALIAS                   next;
+    const void*                    next;
     XrCompositionLayerFlags                    layerFlags;
     XrSpace                                    space;
     uint32_t                                   viewCount;
@@ -1439,7 +7771,7 @@ typedef struct XrCompositionLayerProjection {
 
 typedef struct XrCompositionLayerQuad {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrEyeVisibility             eyeVisibility;
@@ -1448,26 +7780,26 @@ typedef struct XrCompositionLayerQuad {
     XrExtent2Df                 size;
 } XrCompositionLayerQuad;
 
-typedef struct XR_MAY_ALIAS XrEventDataBaseHeader {
+typedef struct  XrEventDataBaseHeader {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrEventDataBaseHeader;
 
 typedef struct XrEventDataEventsLost {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    lostEventCount;
 } XrEventDataEventsLost;
 
 typedef struct XrEventDataInstanceLossPending {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTime                      lossTime;
 } XrEventDataInstanceLossPending;
 
 typedef struct XrEventDataSessionStateChanged {
      XrStructureType            type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSession                   session;
     XrSessionState              state;
     XrTime                      time;
@@ -1475,7 +7807,7 @@ typedef struct XrEventDataSessionStateChanged {
 
 typedef struct XrEventDataReferenceSpaceChangePending {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSession                   session;
     XrReferenceSpaceType        referenceSpaceType;
     XrTime                      changeTime;
@@ -1485,13 +7817,13 @@ typedef struct XrEventDataReferenceSpaceChangePending {
 
 typedef struct XrEventDataInteractionProfileChanged {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSession                   session;
 } XrEventDataInteractionProfileChanged;
 
 typedef struct XrHapticVibration {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrDuration                  duration;
     float                       frequency;
     float                       amplitude;
@@ -1521,341 +7853,125 @@ typedef struct XrColor4f {
     float    a;
 } XrColor4f;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetInstanceProcAddr)(XrInstance instance, const char* name, PFN_xrVoidFunction* function);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateApiLayerProperties)(uint32_t propertyCapacityInput, uint32_t* propertyCountOutput, XrApiLayerProperties* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateInstanceExtensionProperties)(const char* layerName, uint32_t propertyCapacityInput, uint32_t* propertyCountOutput, XrExtensionProperties* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateInstance)(const XrInstanceCreateInfo* createInfo, XrInstance* instance);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyInstance)(XrInstance instance);
-typedef XrResult (XRAPI_PTR *PFN_xrGetInstanceProperties)(XrInstance instance, XrInstanceProperties* instanceProperties);
-typedef XrResult (XRAPI_PTR *PFN_xrPollEvent)(XrInstance instance, XrEventDataBuffer* eventData);
-typedef XrResult (XRAPI_PTR *PFN_xrResultToString)(XrInstance instance, XrResult value, char buffer[XR_MAX_RESULT_STRING_SIZE]);
-typedef XrResult (XRAPI_PTR *PFN_xrStructureTypeToString)(XrInstance instance, XrStructureType value, char buffer[XR_MAX_STRUCTURE_NAME_SIZE]);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSystem)(XrInstance instance, const XrSystemGetInfo* getInfo, XrSystemId* systemId);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSystemProperties)(XrInstance instance, XrSystemId systemId, XrSystemProperties* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateEnvironmentBlendModes)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t environmentBlendModeCapacityInput, uint32_t* environmentBlendModeCountOutput, XrEnvironmentBlendMode* environmentBlendModes);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSession)(XrInstance instance, const XrSessionCreateInfo* createInfo, XrSession* session);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySession)(XrSession session);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateReferenceSpaces)(XrSession session, uint32_t spaceCapacityInput, uint32_t* spaceCountOutput, XrReferenceSpaceType* spaces);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateReferenceSpace)(XrSession session, const XrReferenceSpaceCreateInfo* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrGetReferenceSpaceBoundsRect)(XrSession session, XrReferenceSpaceType referenceSpaceType, XrExtent2Df* bounds);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateActionSpace)(XrSession session, const XrActionSpaceCreateInfo* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateSpace)(XrSpace space, XrSpace baseSpace, XrTime time, XrSpaceLocation* location);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpace)(XrSpace space);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateViewConfigurations)(XrInstance instance, XrSystemId systemId, uint32_t viewConfigurationTypeCapacityInput, uint32_t* viewConfigurationTypeCountOutput, XrViewConfigurationType* viewConfigurationTypes);
-typedef XrResult (XRAPI_PTR *PFN_xrGetViewConfigurationProperties)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, XrViewConfigurationProperties* configurationProperties);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateViewConfigurationViews)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t viewCapacityInput, uint32_t* viewCountOutput, XrViewConfigurationView* views);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSwapchainFormats)(XrSession session, uint32_t formatCapacityInput, uint32_t* formatCountOutput, int64_t* formats);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSwapchain)(XrSession session, const XrSwapchainCreateInfo* createInfo, XrSwapchain* swapchain);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySwapchain)(XrSwapchain swapchain);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSwapchainImages)(XrSwapchain swapchain, uint32_t imageCapacityInput, uint32_t* imageCountOutput, XrSwapchainImageBaseHeader* images);
-typedef XrResult (XRAPI_PTR *PFN_xrAcquireSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageAcquireInfo* acquireInfo, uint32_t* index);
-typedef XrResult (XRAPI_PTR *PFN_xrWaitSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageWaitInfo* waitInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrReleaseSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageReleaseInfo* releaseInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrBeginSession)(XrSession session, const XrSessionBeginInfo* beginInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrEndSession)(XrSession session);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestExitSession)(XrSession session);
-typedef XrResult (XRAPI_PTR *PFN_xrWaitFrame)(XrSession session, const XrFrameWaitInfo* frameWaitInfo, XrFrameState* frameState);
-typedef XrResult (XRAPI_PTR *PFN_xrBeginFrame)(XrSession session, const XrFrameBeginInfo* frameBeginInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrEndFrame)(XrSession session, const XrFrameEndInfo* frameEndInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateViews)(XrSession session, const XrViewLocateInfo* viewLocateInfo, XrViewState* viewState, uint32_t viewCapacityInput, uint32_t* viewCountOutput, XrView* views);
-typedef XrResult (XRAPI_PTR *PFN_xrStringToPath)(XrInstance instance, const char* pathString, XrPath* path);
-typedef XrResult (XRAPI_PTR *PFN_xrPathToString)(XrInstance instance, XrPath path, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateActionSet)(XrInstance instance, const XrActionSetCreateInfo* createInfo, XrActionSet* actionSet);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyActionSet)(XrActionSet actionSet);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateAction)(XrActionSet actionSet, const XrActionCreateInfo* createInfo, XrAction* action);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyAction)(XrAction action);
-typedef XrResult (XRAPI_PTR *PFN_xrSuggestInteractionProfileBindings)(XrInstance instance, const XrInteractionProfileSuggestedBinding* suggestedBindings);
-typedef XrResult (XRAPI_PTR *PFN_xrAttachSessionActionSets)(XrSession session, const XrSessionActionSetsAttachInfo* attachInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetCurrentInteractionProfile)(XrSession session, XrPath topLevelUserPath, XrInteractionProfileState* interactionProfile);
-typedef XrResult (XRAPI_PTR *PFN_xrGetActionStateBoolean)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateBoolean* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetActionStateFloat)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateFloat* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetActionStateVector2f)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateVector2f* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetActionStatePose)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStatePose* state);
-typedef XrResult (XRAPI_PTR *PFN_xrSyncActions)(XrSession session, const XrActionsSyncInfo* syncInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateBoundSourcesForAction)(XrSession session, const XrBoundSourcesForActionEnumerateInfo* enumerateInfo, uint32_t sourceCapacityInput, uint32_t* sourceCountOutput, XrPath* sources);
-typedef XrResult (XRAPI_PTR *PFN_xrGetInputSourceLocalizedName)(XrSession session, const XrInputSourceLocalizedNameGetInfo* getInfo, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrApplyHapticFeedback)(XrSession session, const XrHapticActionInfo* hapticActionInfo, const XrHapticBaseHeader* hapticFeedback);
-typedef XrResult (XRAPI_PTR *PFN_xrStopHapticFeedback)(XrSession session, const XrHapticActionInfo* hapticActionInfo);
-
-#ifndef XR_NO_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetInstanceProcAddr(
-    XrInstance                                  instance,
-    const char*                                 name,
-    PFN_xrVoidFunction*                         function);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateApiLayerProperties(
-    uint32_t                                    propertyCapacityInput,
-    uint32_t*                                   propertyCountOutput,
-    XrApiLayerProperties*                       properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateInstanceExtensionProperties(
-    const char*                                 layerName,
-    uint32_t                                    propertyCapacityInput,
-    uint32_t*                                   propertyCountOutput,
-    XrExtensionProperties*                      properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateInstance(
-    const XrInstanceCreateInfo*                 createInfo,
-    XrInstance*                                 instance);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyInstance(
-    XrInstance                                  instance);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetInstanceProperties(
-    XrInstance                                  instance,
-    XrInstanceProperties*                       instanceProperties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPollEvent(
-    XrInstance                                  instance,
-    XrEventDataBuffer*                          eventData);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrResultToString(
-    XrInstance                                  instance,
-    XrResult                                    value,
-    char                                        buffer[XR_MAX_RESULT_STRING_SIZE]);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStructureTypeToString(
-    XrInstance                                  instance,
-    XrStructureType                             value,
-    char                                        buffer[XR_MAX_STRUCTURE_NAME_SIZE]);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSystem(
-    XrInstance                                  instance,
-    const XrSystemGetInfo*                      getInfo,
-    XrSystemId*                                 systemId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSystemProperties(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrSystemProperties*                         properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateEnvironmentBlendModes(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrViewConfigurationType                     viewConfigurationType,
-    uint32_t                                    environmentBlendModeCapacityInput,
-    uint32_t*                                   environmentBlendModeCountOutput,
-    XrEnvironmentBlendMode*                     environmentBlendModes);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSession(
-    XrInstance                                  instance,
-    const XrSessionCreateInfo*                  createInfo,
-    XrSession*                                  session);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySession(
-    XrSession                                   session);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateReferenceSpaces(
-    XrSession                                   session,
-    uint32_t                                    spaceCapacityInput,
-    uint32_t*                                   spaceCountOutput,
-    XrReferenceSpaceType*                       spaces);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateReferenceSpace(
-    XrSession                                   session,
-    const XrReferenceSpaceCreateInfo*           createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetReferenceSpaceBoundsRect(
-    XrSession                                   session,
-    XrReferenceSpaceType                        referenceSpaceType,
-    XrExtent2Df*                                bounds);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateActionSpace(
-    XrSession                                   session,
-    const XrActionSpaceCreateInfo*              createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateSpace(
-    XrSpace                                     space,
-    XrSpace                                     baseSpace,
-    XrTime                                      time,
-    XrSpaceLocation*                            location);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpace(
-    XrSpace                                     space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateViewConfigurations(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    uint32_t                                    viewConfigurationTypeCapacityInput,
-    uint32_t*                                   viewConfigurationTypeCountOutput,
-    XrViewConfigurationType*                    viewConfigurationTypes);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetViewConfigurationProperties(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrViewConfigurationType                     viewConfigurationType,
-    XrViewConfigurationProperties*              configurationProperties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateViewConfigurationViews(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrViewConfigurationType                     viewConfigurationType,
-    uint32_t                                    viewCapacityInput,
-    uint32_t*                                   viewCountOutput,
-    XrViewConfigurationView*                    views);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSwapchainFormats(
-    XrSession                                   session,
-    uint32_t                                    formatCapacityInput,
-    uint32_t*                                   formatCountOutput,
-    int64_t*                                    formats);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSwapchain(
-    XrSession                                   session,
-    const XrSwapchainCreateInfo*                createInfo,
-    XrSwapchain*                                swapchain);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySwapchain(
-    XrSwapchain                                 swapchain);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSwapchainImages(
-    XrSwapchain                                 swapchain,
-    uint32_t                                    imageCapacityInput,
-    uint32_t*                                   imageCountOutput,
-    XrSwapchainImageBaseHeader*                 images);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrAcquireSwapchainImage(
-    XrSwapchain                                 swapchain,
-    const XrSwapchainImageAcquireInfo*          acquireInfo,
-    uint32_t*                                   index);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrWaitSwapchainImage(
-    XrSwapchain                                 swapchain,
-    const XrSwapchainImageWaitInfo*             waitInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrReleaseSwapchainImage(
-    XrSwapchain                                 swapchain,
-    const XrSwapchainImageReleaseInfo*          releaseInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrBeginSession(
-    XrSession                                   session,
-    const XrSessionBeginInfo*                   beginInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEndSession(
-    XrSession                                   session);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestExitSession(
-    XrSession                                   session);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrWaitFrame(
-    XrSession                                   session,
-    const XrFrameWaitInfo*                      frameWaitInfo,
-    XrFrameState*                               frameState);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrBeginFrame(
-    XrSession                                   session,
-    const XrFrameBeginInfo*                     frameBeginInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEndFrame(
-    XrSession                                   session,
-    const XrFrameEndInfo*                       frameEndInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateViews(
-    XrSession                                   session,
-    const XrViewLocateInfo*                     viewLocateInfo,
-    XrViewState*                                viewState,
-    uint32_t                                    viewCapacityInput,
-    uint32_t*                                   viewCountOutput,
-    XrView*                                     views);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStringToPath(
-    XrInstance                                  instance,
-    const char*                                 pathString,
-    XrPath*                                     path);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPathToString(
-    XrInstance                                  instance,
-    XrPath                                      path,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateActionSet(
-    XrInstance                                  instance,
-    const XrActionSetCreateInfo*                createInfo,
-    XrActionSet*                                actionSet);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyActionSet(
-    XrActionSet                                 actionSet);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateAction(
-    XrActionSet                                 actionSet,
-    const XrActionCreateInfo*                   createInfo,
-    XrAction*                                   action);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyAction(
-    XrAction                                    action);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSuggestInteractionProfileBindings(
-    XrInstance                                  instance,
-    const XrInteractionProfileSuggestedBinding* suggestedBindings);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrAttachSessionActionSets(
-    XrSession                                   session,
-    const XrSessionActionSetsAttachInfo*        attachInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetCurrentInteractionProfile(
-    XrSession                                   session,
-    XrPath                                      topLevelUserPath,
-    XrInteractionProfileState*                  interactionProfile);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetActionStateBoolean(
-    XrSession                                   session,
-    const XrActionStateGetInfo*                 getInfo,
-    XrActionStateBoolean*                       state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetActionStateFloat(
-    XrSession                                   session,
-    const XrActionStateGetInfo*                 getInfo,
-    XrActionStateFloat*                         state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetActionStateVector2f(
-    XrSession                                   session,
-    const XrActionStateGetInfo*                 getInfo,
-    XrActionStateVector2f*                      state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetActionStatePose(
-    XrSession                                   session,
-    const XrActionStateGetInfo*                 getInfo,
-    XrActionStatePose*                          state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSyncActions(
-    XrSession                                   session,
-    const XrActionsSyncInfo*                    syncInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateBoundSourcesForAction(
-    XrSession                                   session,
-    const XrBoundSourcesForActionEnumerateInfo* enumerateInfo,
-    uint32_t                                    sourceCapacityInput,
-    uint32_t*                                   sourceCountOutput,
-    XrPath*                                     sources);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetInputSourceLocalizedName(
-    XrSession                                   session,
-    const XrInputSourceLocalizedNameGetInfo*    getInfo,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrApplyHapticFeedback(
-    XrSession                                   session,
-    const XrHapticActionInfo*                   hapticActionInfo,
-    const XrHapticBaseHeader*                   hapticFeedback);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStopHapticFeedback(
-    XrSession                                   session,
-    const XrHapticActionInfo*                   hapticActionInfo);
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetInstanceProcAddr)(XrInstance instance, const char* name, PFN_xrVoidFunction* function);
+typedef XrResult (*PFN_xrEnumerateApiLayerProperties)(uint32_t propertyCapacityInput, uint32_t* propertyCountOutput, XrApiLayerProperties* properties);
+typedef XrResult (*PFN_xrEnumerateInstanceExtensionProperties)(const char* layerName, uint32_t propertyCapacityInput, uint32_t* propertyCountOutput, XrExtensionProperties* properties);
+typedef XrResult (*PFN_xrCreateInstance)(const XrInstanceCreateInfo* createInfo, XrInstance* instance);
+typedef XrResult (*PFN_xrDestroyInstance)(XrInstance instance);
+typedef XrResult (*PFN_xrGetInstanceProperties)(XrInstance instance, XrInstanceProperties* instanceProperties);
+typedef XrResult (*PFN_xrPollEvent)(XrInstance instance, XrEventDataBuffer* eventData);
+typedef XrResult (*PFN_xrResultToString)(XrInstance instance, XrResult value, char buffer[64]);
+typedef XrResult (*PFN_xrStructureTypeToString)(XrInstance instance, XrStructureType value, char buffer[64]);
+typedef XrResult (*PFN_xrGetSystem)(XrInstance instance, const XrSystemGetInfo* getInfo, XrSystemId* systemId);
+typedef XrResult (*PFN_xrGetSystemProperties)(XrInstance instance, XrSystemId systemId, XrSystemProperties* properties);
+typedef XrResult (*PFN_xrEnumerateEnvironmentBlendModes)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t environmentBlendModeCapacityInput, uint32_t* environmentBlendModeCountOutput, XrEnvironmentBlendMode* environmentBlendModes);
+typedef XrResult (*PFN_xrCreateSession)(XrInstance instance, const XrSessionCreateInfo* createInfo, XrSession* session);
+typedef XrResult (*PFN_xrDestroySession)(XrSession session);
+typedef XrResult (*PFN_xrEnumerateReferenceSpaces)(XrSession session, uint32_t spaceCapacityInput, uint32_t* spaceCountOutput, XrReferenceSpaceType* spaces);
+typedef XrResult (*PFN_xrCreateReferenceSpace)(XrSession session, const XrReferenceSpaceCreateInfo* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrGetReferenceSpaceBoundsRect)(XrSession session, XrReferenceSpaceType referenceSpaceType, XrExtent2Df* bounds);
+typedef XrResult (*PFN_xrCreateActionSpace)(XrSession session, const XrActionSpaceCreateInfo* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrLocateSpace)(XrSpace space, XrSpace baseSpace, XrTime time, XrSpaceLocation* location);
+typedef XrResult (*PFN_xrDestroySpace)(XrSpace space);
+typedef XrResult (*PFN_xrEnumerateViewConfigurations)(XrInstance instance, XrSystemId systemId, uint32_t viewConfigurationTypeCapacityInput, uint32_t* viewConfigurationTypeCountOutput, XrViewConfigurationType* viewConfigurationTypes);
+typedef XrResult (*PFN_xrGetViewConfigurationProperties)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, XrViewConfigurationProperties* configurationProperties);
+typedef XrResult (*PFN_xrEnumerateViewConfigurationViews)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t viewCapacityInput, uint32_t* viewCountOutput, XrViewConfigurationView* views);
+typedef XrResult (*PFN_xrEnumerateSwapchainFormats)(XrSession session, uint32_t formatCapacityInput, uint32_t* formatCountOutput, int64_t* formats);
+typedef XrResult (*PFN_xrCreateSwapchain)(XrSession session, const XrSwapchainCreateInfo* createInfo, XrSwapchain* swapchain);
+typedef XrResult (*PFN_xrDestroySwapchain)(XrSwapchain swapchain);
+typedef XrResult (*PFN_xrEnumerateSwapchainImages)(XrSwapchain swapchain, uint32_t imageCapacityInput, uint32_t* imageCountOutput, XrSwapchainImageBaseHeader* images);
+typedef XrResult (*PFN_xrAcquireSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageAcquireInfo* acquireInfo, uint32_t* index);
+typedef XrResult (*PFN_xrWaitSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageWaitInfo* waitInfo);
+typedef XrResult (*PFN_xrReleaseSwapchainImage)(XrSwapchain swapchain, const XrSwapchainImageReleaseInfo* releaseInfo);
+typedef XrResult (*PFN_xrBeginSession)(XrSession session, const XrSessionBeginInfo* beginInfo);
+typedef XrResult (*PFN_xrEndSession)(XrSession session);
+typedef XrResult (*PFN_xrRequestExitSession)(XrSession session);
+typedef XrResult (*PFN_xrWaitFrame)(XrSession session, const XrFrameWaitInfo* frameWaitInfo, XrFrameState* frameState);
+typedef XrResult (*PFN_xrBeginFrame)(XrSession session, const XrFrameBeginInfo* frameBeginInfo);
+typedef XrResult (*PFN_xrEndFrame)(XrSession session, const XrFrameEndInfo* frameEndInfo);
+typedef XrResult (*PFN_xrLocateViews)(XrSession session, const XrViewLocateInfo* viewLocateInfo, XrViewState* viewState, uint32_t viewCapacityInput, uint32_t* viewCountOutput, XrView* views);
+typedef XrResult (*PFN_xrStringToPath)(XrInstance instance, const char* pathString, XrPath* path);
+typedef XrResult (*PFN_xrPathToString)(XrInstance instance, XrPath path, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+typedef XrResult (*PFN_xrCreateActionSet)(XrInstance instance, const XrActionSetCreateInfo* createInfo, XrActionSet* actionSet);
+typedef XrResult (*PFN_xrDestroyActionSet)(XrActionSet actionSet);
+typedef XrResult (*PFN_xrCreateAction)(XrActionSet actionSet, const XrActionCreateInfo* createInfo, XrAction* action);
+typedef XrResult (*PFN_xrDestroyAction)(XrAction action);
+typedef XrResult (*PFN_xrSuggestInteractionProfileBindings)(XrInstance instance, const XrInteractionProfileSuggestedBinding* suggestedBindings);
+typedef XrResult (*PFN_xrAttachSessionActionSets)(XrSession session, const XrSessionActionSetsAttachInfo* attachInfo);
+typedef XrResult (*PFN_xrGetCurrentInteractionProfile)(XrSession session, XrPath topLevelUserPath, XrInteractionProfileState* interactionProfile);
+typedef XrResult (*PFN_xrGetActionStateBoolean)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateBoolean* state);
+typedef XrResult (*PFN_xrGetActionStateFloat)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateFloat* state);
+typedef XrResult (*PFN_xrGetActionStateVector2f)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStateVector2f* state);
+typedef XrResult (*PFN_xrGetActionStatePose)(XrSession session, const XrActionStateGetInfo* getInfo, XrActionStatePose* state);
+typedef XrResult (*PFN_xrSyncActions)(XrSession session, const XrActionsSyncInfo* syncInfo);
+typedef XrResult (*PFN_xrEnumerateBoundSourcesForAction)(XrSession session, const XrBoundSourcesForActionEnumerateInfo* enumerateInfo, uint32_t sourceCapacityInput, uint32_t* sourceCountOutput, XrPath* sources);
+typedef XrResult (*PFN_xrGetInputSourceLocalizedName)(XrSession session, const XrInputSourceLocalizedNameGetInfo* getInfo, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+typedef XrResult (*PFN_xrApplyHapticFeedback)(XrSession session, const XrHapticActionInfo* hapticActionInfo, const XrHapticBaseHeader* hapticFeedback);
+typedef XrResult (*PFN_xrStopHapticFeedback)(XrSession session, const XrHapticActionInfo* hapticActionInfo);
+XrResult  xrGetInstanceProcAddr(XrInstance                                  instance,     const char*                                 name,     PFN_xrVoidFunction*                         function);
+XrResult  xrEnumerateApiLayerProperties(uint32_t                                    propertyCapacityInput,     uint32_t*                                   propertyCountOutput,     XrApiLayerProperties*                       properties);
+XrResult  xrEnumerateInstanceExtensionProperties(const char*                                 layerName,     uint32_t                                    propertyCapacityInput,     uint32_t*                                   propertyCountOutput,     XrExtensionProperties*                      properties);
+XrResult  xrCreateInstance(const XrInstanceCreateInfo*                 createInfo,     XrInstance*                                 instance);
+XrResult  xrDestroyInstance(XrInstance                                  instance);
+XrResult  xrGetInstanceProperties(XrInstance                                  instance,     XrInstanceProperties*                       instanceProperties);
+XrResult  xrPollEvent(XrInstance                                  instance,     XrEventDataBuffer*                          eventData);
+XrResult  xrResultToString(XrInstance                                  instance,     XrResult                                    value,     char                                        buffer[64]);
+XrResult  xrStructureTypeToString(XrInstance                                  instance,     XrStructureType                             value,     char                                        buffer[64]);
+XrResult  xrGetSystem(XrInstance                                  instance,     const XrSystemGetInfo*                      getInfo,     XrSystemId*                                 systemId);
+XrResult  xrGetSystemProperties(XrInstance                                  instance,     XrSystemId                                  systemId,     XrSystemProperties*                         properties);
+XrResult  xrEnumerateEnvironmentBlendModes(XrInstance                                  instance,     XrSystemId                                  systemId,     XrViewConfigurationType                     viewConfigurationType,     uint32_t                                    environmentBlendModeCapacityInput,     uint32_t*                                   environmentBlendModeCountOutput,     XrEnvironmentBlendMode*                     environmentBlendModes);
+XrResult  xrCreateSession(XrInstance                                  instance,     const XrSessionCreateInfo*                  createInfo,     XrSession*                                  session);
+XrResult  xrDestroySession(XrSession                                   session);
+XrResult  xrEnumerateReferenceSpaces(XrSession                                   session,     uint32_t                                    spaceCapacityInput,     uint32_t*                                   spaceCountOutput,     XrReferenceSpaceType*                       spaces);
+XrResult  xrCreateReferenceSpace(XrSession                                   session,     const XrReferenceSpaceCreateInfo*           createInfo,     XrSpace*                                    space);
+XrResult  xrGetReferenceSpaceBoundsRect(XrSession                                   session,     XrReferenceSpaceType                        referenceSpaceType,     XrExtent2Df*                                bounds);
+XrResult  xrCreateActionSpace(XrSession                                   session,     const XrActionSpaceCreateInfo*              createInfo,     XrSpace*                                    space);
+XrResult  xrLocateSpace(XrSpace                                     space,     XrSpace                                     baseSpace,     XrTime                                      time,     XrSpaceLocation*                            location);
+XrResult  xrDestroySpace(XrSpace                                     space);
+XrResult  xrEnumerateViewConfigurations(XrInstance                                  instance,     XrSystemId                                  systemId,     uint32_t                                    viewConfigurationTypeCapacityInput,     uint32_t*                                   viewConfigurationTypeCountOutput,     XrViewConfigurationType*                    viewConfigurationTypes);
+XrResult  xrGetViewConfigurationProperties(XrInstance                                  instance,     XrSystemId                                  systemId,     XrViewConfigurationType                     viewConfigurationType,     XrViewConfigurationProperties*              configurationProperties);
+XrResult  xrEnumerateViewConfigurationViews(XrInstance                                  instance,     XrSystemId                                  systemId,     XrViewConfigurationType                     viewConfigurationType,     uint32_t                                    viewCapacityInput,     uint32_t*                                   viewCountOutput,     XrViewConfigurationView*                    views);
+XrResult  xrEnumerateSwapchainFormats(XrSession                                   session,     uint32_t                                    formatCapacityInput,     uint32_t*                                   formatCountOutput,     int64_t*                                    formats);
+XrResult  xrCreateSwapchain(XrSession                                   session,     const XrSwapchainCreateInfo*                createInfo,     XrSwapchain*                                swapchain);
+XrResult  xrDestroySwapchain(XrSwapchain                                 swapchain);
+XrResult  xrEnumerateSwapchainImages(XrSwapchain                                 swapchain,     uint32_t                                    imageCapacityInput,     uint32_t*                                   imageCountOutput,     XrSwapchainImageBaseHeader*                 images);
+XrResult  xrAcquireSwapchainImage(XrSwapchain                                 swapchain,     const XrSwapchainImageAcquireInfo*          acquireInfo,     uint32_t*                                   index);
+XrResult  xrWaitSwapchainImage(XrSwapchain                                 swapchain,     const XrSwapchainImageWaitInfo*             waitInfo);
+XrResult  xrReleaseSwapchainImage(XrSwapchain                                 swapchain,     const XrSwapchainImageReleaseInfo*          releaseInfo);
+XrResult  xrBeginSession(XrSession                                   session,     const XrSessionBeginInfo*                   beginInfo);
+XrResult  xrEndSession(XrSession                                   session);
+XrResult  xrRequestExitSession(XrSession                                   session);
+XrResult  xrWaitFrame(XrSession                                   session,     const XrFrameWaitInfo*                      frameWaitInfo,     XrFrameState*                               frameState);
+XrResult  xrBeginFrame(XrSession                                   session,     const XrFrameBeginInfo*                     frameBeginInfo);
+XrResult  xrEndFrame(XrSession                                   session,     const XrFrameEndInfo*                       frameEndInfo);
+XrResult  xrLocateViews(XrSession                                   session,     const XrViewLocateInfo*                     viewLocateInfo,     XrViewState*                                viewState,     uint32_t                                    viewCapacityInput,     uint32_t*                                   viewCountOutput,     XrView*                                     views);
+XrResult  xrStringToPath(XrInstance                                  instance,     const char*                                 pathString,     XrPath*                                     path);
+XrResult  xrPathToString(XrInstance                                  instance,     XrPath                                      path,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+XrResult  xrCreateActionSet(XrInstance                                  instance,     const XrActionSetCreateInfo*                createInfo,     XrActionSet*                                actionSet);
+XrResult  xrDestroyActionSet(XrActionSet                                 actionSet);
+XrResult  xrCreateAction(XrActionSet                                 actionSet,     const XrActionCreateInfo*                   createInfo,     XrAction*                                   action);
+XrResult  xrDestroyAction(XrAction                                    action);
+XrResult  xrSuggestInteractionProfileBindings(XrInstance                                  instance,     const XrInteractionProfileSuggestedBinding* suggestedBindings);
+XrResult  xrAttachSessionActionSets(XrSession                                   session,     const XrSessionActionSetsAttachInfo*        attachInfo);
+XrResult  xrGetCurrentInteractionProfile(XrSession                                   session,     XrPath                                      topLevelUserPath,     XrInteractionProfileState*                  interactionProfile);
+XrResult  xrGetActionStateBoolean(XrSession                                   session,     const XrActionStateGetInfo*                 getInfo,     XrActionStateBoolean*                       state);
+XrResult  xrGetActionStateFloat(XrSession                                   session,     const XrActionStateGetInfo*                 getInfo,     XrActionStateFloat*                         state);
+XrResult  xrGetActionStateVector2f(XrSession                                   session,     const XrActionStateGetInfo*                 getInfo,     XrActionStateVector2f*                      state);
+XrResult  xrGetActionStatePose(XrSession                                   session,     const XrActionStateGetInfo*                 getInfo,     XrActionStatePose*                          state);
+XrResult  xrSyncActions(XrSession                                   session,     const XrActionsSyncInfo*                    syncInfo);
+XrResult  xrEnumerateBoundSourcesForAction(XrSession                                   session,     const XrBoundSourcesForActionEnumerateInfo* enumerateInfo,     uint32_t                                    sourceCapacityInput,     uint32_t*                                   sourceCountOutput,     XrPath*                                     sources);
+XrResult  xrGetInputSourceLocalizedName(XrSession                                   session,     const XrInputSourceLocalizedNameGetInfo*    getInfo,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+XrResult  xrApplyHapticFeedback(XrSession                                   session,     const XrHapticActionInfo*                   hapticActionInfo,     const XrHapticBaseHeader*                   hapticFeedback);
+XrResult  xrStopHapticFeedback(XrSession                                   session,     const XrHapticActionInfo*                   hapticActionInfo);
+#line 1852 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_VERSION_1_1 is a preprocessor guard. Do not pass it to API calls.
-#define XR_VERSION_1_1 1
-// OpenXR 1.1 version number
-#define XR_API_VERSION_1_1 ((((1) & 0xffffULL) << 48) | (((1) & 0xffffULL) << 32) | (((uint32_t)((uint64_t)(XR_CURRENT_API_VERSION) & 0xffffffffULL) & 0xffffffffULL)))
 
-#define XR_UUID_SIZE                      16
+
+
+
+
+
 typedef struct XrColor3f {
     float    r;
     float    g;
@@ -1886,12 +8002,12 @@ typedef struct XrFrustumf {
 } XrFrustumf;
 
 typedef struct XrUuid {
-    uint8_t    data[XR_UUID_SIZE];
+    uint8_t    data[16];
 } XrUuid;
 
 typedef struct XrSpacesLocateInfo {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     uint32_t                    spaceCount;
@@ -1905,7 +8021,7 @@ typedef struct XrSpaceLocationData {
 
 typedef struct XrSpaceLocations {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     uint32_t                locationCount;
     XrSpaceLocationData*    locations;
 } XrSpaceLocations;
@@ -1916,31 +8032,26 @@ typedef struct XrSpaceVelocityData {
     XrVector3f              angularVelocity;
 } XrSpaceVelocityData;
 
-// XrSpaceVelocities extends XrSpaceLocations
+
 typedef struct XrSpaceVelocities {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     uint32_t                velocityCount;
     XrSpaceVelocityData*    velocities;
 } XrSpaceVelocities;
 
-typedef XrResult (XRAPI_PTR *PFN_xrLocateSpaces)(XrSession session, const XrSpacesLocateInfo* locateInfo, XrSpaceLocations* spaceLocations);
-
-#ifndef XR_NO_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateSpaces(
-    XrSession                                   session,
-    const XrSpacesLocateInfo*                   locateInfo,
-    XrSpaceLocations*                           spaceLocations);
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrLocateSpaces)(XrSession session, const XrSpacesLocateInfo* locateInfo, XrSpaceLocations* spaceLocations);
+XrResult  xrLocateSpaces(XrSession                                   session,     const XrSpacesLocateInfo*                   locateInfo,     XrSpaceLocations*                           spaceLocations);
+#line 1936 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_KHR_composition_layer_cube is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_cube 1
-#define XR_KHR_composition_layer_cube_SPEC_VERSION 8
-#define XR_KHR_COMPOSITION_LAYER_CUBE_EXTENSION_NAME "XR_KHR_composition_layer_cube"
+
+
+
+
 typedef struct XrCompositionLayerCubeKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrEyeVisibility             eyeVisibility;
@@ -1951,14 +8062,14 @@ typedef struct XrCompositionLayerCubeKHR {
 
 
 
-// XR_KHR_composition_layer_depth is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_depth 1
-#define XR_KHR_composition_layer_depth_SPEC_VERSION 6
-#define XR_KHR_COMPOSITION_LAYER_DEPTH_EXTENSION_NAME "XR_KHR_composition_layer_depth"
-// XrCompositionLayerDepthInfoKHR extends XrCompositionLayerProjectionView
+
+
+
+
+
 typedef struct XrCompositionLayerDepthInfoKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSwapchainSubImage         subImage;
     float                       minDepth;
     float                       maxDepth;
@@ -1968,13 +8079,13 @@ typedef struct XrCompositionLayerDepthInfoKHR {
 
 
 
-// XR_KHR_composition_layer_cylinder is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_cylinder 1
-#define XR_KHR_composition_layer_cylinder_SPEC_VERSION 4
-#define XR_KHR_COMPOSITION_LAYER_CYLINDER_EXTENSION_NAME "XR_KHR_composition_layer_cylinder"
+
+
+
+
 typedef struct XrCompositionLayerCylinderKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrEyeVisibility             eyeVisibility;
@@ -1987,13 +8098,13 @@ typedef struct XrCompositionLayerCylinderKHR {
 
 
 
-// XR_KHR_composition_layer_equirect is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_equirect 1
-#define XR_KHR_composition_layer_equirect_SPEC_VERSION 3
-#define XR_KHR_COMPOSITION_LAYER_EQUIRECT_EXTENSION_NAME "XR_KHR_composition_layer_equirect"
+
+
+
+
 typedef struct XrCompositionLayerEquirectKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrEyeVisibility             eyeVisibility;
@@ -2006,10 +8117,10 @@ typedef struct XrCompositionLayerEquirectKHR {
 
 
 
-// XR_KHR_visibility_mask is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_visibility_mask 1
-#define XR_KHR_visibility_mask_SPEC_VERSION 2
-#define XR_KHR_VISIBILITY_MASK_EXTENSION_NAME "XR_KHR_visibility_mask"
+
+
+
+
 
 typedef enum XrVisibilityMaskTypeKHR {
     XR_VISIBILITY_MASK_TYPE_HIDDEN_TRIANGLE_MESH_KHR = 1,
@@ -2019,7 +8130,7 @@ typedef enum XrVisibilityMaskTypeKHR {
 } XrVisibilityMaskTypeKHR;
 typedef struct XrVisibilityMaskKHR {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector2f*           vertices;
@@ -2030,66 +8141,54 @@ typedef struct XrVisibilityMaskKHR {
 
 typedef struct XrEventDataVisibilityMaskChangedKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSession                   session;
     XrViewConfigurationType     viewConfigurationType;
     uint32_t                    viewIndex;
 } XrEventDataVisibilityMaskChangedKHR;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetVisibilityMaskKHR)(XrSession session, XrViewConfigurationType viewConfigurationType, uint32_t viewIndex, XrVisibilityMaskTypeKHR visibilityMaskType, XrVisibilityMaskKHR* visibilityMask);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetVisibilityMaskKHR(
-    XrSession                                   session,
-    XrViewConfigurationType                     viewConfigurationType,
-    uint32_t                                    viewIndex,
-    XrVisibilityMaskTypeKHR                     visibilityMaskType,
-    XrVisibilityMaskKHR*                        visibilityMask);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetVisibilityMaskKHR)(XrSession session, XrViewConfigurationType viewConfigurationType, uint32_t viewIndex, XrVisibilityMaskTypeKHR visibilityMaskType, XrVisibilityMaskKHR* visibilityMask);
+XrResult  xrGetVisibilityMaskKHR(XrSession                                   session,     XrViewConfigurationType                     viewConfigurationType,     uint32_t                                    viewIndex,     XrVisibilityMaskTypeKHR                     visibilityMaskType,     XrVisibilityMaskKHR*                        visibilityMask);
+#line 2051 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2052 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_KHR_composition_layer_color_scale_bias is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_color_scale_bias 1
-#define XR_KHR_composition_layer_color_scale_bias_SPEC_VERSION 5
-#define XR_KHR_COMPOSITION_LAYER_COLOR_SCALE_BIAS_EXTENSION_NAME "XR_KHR_composition_layer_color_scale_bias"
-// XrCompositionLayerColorScaleBiasKHR extends XrCompositionLayerBaseHeader
+
+
+
+
+
 typedef struct XrCompositionLayerColorScaleBiasKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrColor4f                   colorScale;
     XrColor4f                   colorBias;
 } XrCompositionLayerColorScaleBiasKHR;
 
 
 
-// XR_KHR_loader_init is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_loader_init 1
-#define XR_KHR_loader_init_SPEC_VERSION   2
-#define XR_KHR_LOADER_INIT_EXTENSION_NAME "XR_KHR_loader_init"
-typedef struct XR_MAY_ALIAS XrLoaderInitInfoBaseHeaderKHR {
+
+
+
+
+typedef struct  XrLoaderInitInfoBaseHeaderKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrLoaderInitInfoBaseHeaderKHR;
 
-typedef XrResult (XRAPI_PTR *PFN_xrInitializeLoaderKHR)(const XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrInitializeLoaderKHR(
-    const XrLoaderInitInfoBaseHeaderKHR*        loaderInitInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrInitializeLoaderKHR)(const XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo);
+XrResult  xrInitializeLoaderKHR(const XrLoaderInitInfoBaseHeaderKHR*        loaderInitInfo);
+#line 2084 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2085 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_KHR_composition_layer_equirect2 is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_composition_layer_equirect2 1
-#define XR_KHR_composition_layer_equirect2_SPEC_VERSION 1
-#define XR_KHR_COMPOSITION_LAYER_EQUIRECT2_EXTENSION_NAME "XR_KHR_composition_layer_equirect2"
+
+
+
+
 typedef struct XrCompositionLayerEquirect2KHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrEyeVisibility             eyeVisibility;
@@ -2103,52 +8202,46 @@ typedef struct XrCompositionLayerEquirect2KHR {
 
 
 
-// XR_KHR_binding_modification is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_binding_modification 1
-#define XR_KHR_binding_modification_SPEC_VERSION 1
-#define XR_KHR_BINDING_MODIFICATION_EXTENSION_NAME "XR_KHR_binding_modification"
-typedef struct XR_MAY_ALIAS XrBindingModificationBaseHeaderKHR {
+
+
+
+
+typedef struct  XrBindingModificationBaseHeaderKHR {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrBindingModificationBaseHeaderKHR;
 
-// XrBindingModificationsKHR extends XrInteractionProfileSuggestedBinding
+
 typedef struct XrBindingModificationsKHR {
     XrStructureType                                     type;
-    const void* XR_MAY_ALIAS                            next;
+    const void*                             next;
     uint32_t                                            bindingModificationCount;
     const XrBindingModificationBaseHeaderKHR* const*    bindingModifications;
 } XrBindingModificationsKHR;
 
 
 
-// XR_KHR_extended_struct_name_lengths is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_extended_struct_name_lengths 1
-#define XR_KHR_extended_struct_name_lengths_SPEC_VERSION 1
-#define XR_KHR_EXTENDED_STRUCT_NAME_LENGTHS_EXTENSION_NAME "XR_KHR_extended_struct_name_lengths"
-#define XR_MAX_STRUCTURE_NAME_SIZE_EXTENDED_KHR 256
-typedef XrResult (XRAPI_PTR *PFN_xrStructureTypeToString2KHR)(XrInstance instance, XrStructureType value, char buffer[XR_MAX_STRUCTURE_NAME_SIZE_EXTENDED_KHR]);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrStructureTypeToString2KHR(
-    XrInstance                                  instance,
-    XrStructureType                             value,
-    char                                        buffer[XR_MAX_STRUCTURE_NAME_SIZE_EXTENDED_KHR]);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
 
-// XR_KHR_swapchain_usage_input_attachment_bit is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_swapchain_usage_input_attachment_bit 1
-#define XR_KHR_swapchain_usage_input_attachment_bit_SPEC_VERSION 3
-#define XR_KHR_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_EXTENSION_NAME "XR_KHR_swapchain_usage_input_attachment_bit"
 
 
-// XR_KHR_locate_spaces is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_locate_spaces 1
-#define XR_KHR_locate_spaces_SPEC_VERSION 1
-#define XR_KHR_LOCATE_SPACES_EXTENSION_NAME "XR_KHR_locate_spaces"
+
+typedef XrResult (*PFN_xrStructureTypeToString2KHR)(XrInstance instance, XrStructureType value, char buffer[256]);
+XrResult  xrStructureTypeToString2KHR(XrInstance                                  instance,     XrStructureType                             value,     char                                        buffer[256]);
+#line 2140 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2141 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+
+
+
+
+
+
+
+
 typedef XrSpacesLocateInfo XrSpacesLocateInfoKHR;
 
 typedef XrSpaceLocationData XrSpaceLocationDataKHR;
@@ -2159,22 +8252,16 @@ typedef XrSpaceVelocityData XrSpaceVelocityDataKHR;
 
 typedef XrSpaceVelocities XrSpaceVelocitiesKHR;
 
-typedef XrResult (XRAPI_PTR *PFN_xrLocateSpacesKHR)(XrSession session, const XrSpacesLocateInfo* locateInfo, XrSpaceLocations* spaceLocations);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateSpacesKHR(
-    XrSession                                   session,
-    const XrSpacesLocateInfo*                   locateInfo,
-    XrSpaceLocations*                           spaceLocations);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrLocateSpacesKHR)(XrSession session, const XrSpacesLocateInfo* locateInfo, XrSpaceLocations* spaceLocations);
+XrResult  xrLocateSpacesKHR(XrSession                                   session,     const XrSpacesLocateInfo*                   locateInfo,     XrSpaceLocations*                           spaceLocations);
+#line 2172 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2173 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_KHR_maintenance1 is a preprocessor guard. Do not pass it to API calls.
-#define XR_KHR_maintenance1 1
-#define XR_KHR_maintenance1_SPEC_VERSION  1
-#define XR_KHR_MAINTENANCE1_EXTENSION_NAME "XR_KHR_maintenance1"
+
+
+
+
 typedef XrColor3f XrColor3fKHR;
 
 typedef XrExtent3Df XrExtent3DfKHR;
@@ -2187,10 +8274,10 @@ typedef XrFrustumf XrFrustumfKHR;
 
 
 
-// XR_EXT_performance_settings is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_performance_settings 1
-#define XR_EXT_performance_settings_SPEC_VERSION 4
-#define XR_EXT_PERFORMANCE_SETTINGS_EXTENSION_NAME "XR_EXT_performance_settings"
+
+
+
+
 
 typedef enum XrPerfSettingsDomainEXT {
     XR_PERF_SETTINGS_DOMAIN_CPU_EXT = 1,
@@ -2221,51 +8308,37 @@ typedef enum XrPerfSettingsNotificationLevelEXT {
 } XrPerfSettingsNotificationLevelEXT;
 typedef struct XrEventDataPerfSettingsEXT {
     XrStructureType                       type;
-    const void* XR_MAY_ALIAS              next;
+    const void*               next;
     XrPerfSettingsDomainEXT               domain;
     XrPerfSettingsSubDomainEXT            subDomain;
     XrPerfSettingsNotificationLevelEXT    fromLevel;
     XrPerfSettingsNotificationLevelEXT    toLevel;
 } XrEventDataPerfSettingsEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrPerfSettingsSetPerformanceLevelEXT)(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsLevelEXT level);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrPerfSettingsSetPerformanceLevelEXT(
-    XrSession                                   session,
-    XrPerfSettingsDomainEXT                     domain,
-    XrPerfSettingsLevelEXT                      level);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrPerfSettingsSetPerformanceLevelEXT)(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsLevelEXT level);
+XrResult  xrPerfSettingsSetPerformanceLevelEXT(XrSession                                   session,     XrPerfSettingsDomainEXT                     domain,     XrPerfSettingsLevelEXT                      level);
+#line 2241 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2242 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_thermal_query is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_thermal_query 1
-#define XR_EXT_thermal_query_SPEC_VERSION 2
-#define XR_EXT_THERMAL_QUERY_EXTENSION_NAME "XR_EXT_thermal_query"
-typedef XrResult (XRAPI_PTR *PFN_xrThermalGetTemperatureTrendEXT)(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsNotificationLevelEXT* notificationLevel, float* tempHeadroom, float* tempSlope);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrThermalGetTemperatureTrendEXT(
-    XrSession                                   session,
-    XrPerfSettingsDomainEXT                     domain,
-    XrPerfSettingsNotificationLevelEXT*         notificationLevel,
-    float*                                      tempHeadroom,
-    float*                                      tempSlope);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
 
-// XR_EXT_debug_utils is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_debug_utils 1
-typedef uint64_t XrDebugUtilsMessengerEXT;
-#define XR_EXT_debug_utils_SPEC_VERSION   5
-#define XR_EXT_DEBUG_UTILS_EXTENSION_NAME "XR_EXT_debug_utils"
+
+
+typedef XrResult (*PFN_xrThermalGetTemperatureTrendEXT)(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsNotificationLevelEXT* notificationLevel, float* tempHeadroom, float* tempSlope);
+XrResult  xrThermalGetTemperatureTrendEXT(XrSession                                   session,     XrPerfSettingsDomainEXT                     domain,     XrPerfSettingsNotificationLevelEXT*         notificationLevel,     float*                                      tempHeadroom,     float*                                      tempSlope);
+#line 2259 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2260 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+typedef struct XrDebugUtilsMessengerEXT_T* XrDebugUtilsMessengerEXT;
+
+
 typedef XrFlags64 XrDebugUtilsMessageSeverityFlagsEXT;
 
-// Flag bits for XrDebugUtilsMessageSeverityFlagsEXT
+
 static const XrDebugUtilsMessageSeverityFlagsEXT XR_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT = 0x00000001;
 static const XrDebugUtilsMessageSeverityFlagsEXT XR_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT = 0x00000010;
 static const XrDebugUtilsMessageSeverityFlagsEXT XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT = 0x00000100;
@@ -2273,7 +8346,7 @@ static const XrDebugUtilsMessageSeverityFlagsEXT XR_DEBUG_UTILS_MESSAGE_SEVERITY
 
 typedef XrFlags64 XrDebugUtilsMessageTypeFlagsEXT;
 
-// Flag bits for XrDebugUtilsMessageTypeFlagsEXT
+
 static const XrDebugUtilsMessageTypeFlagsEXT XR_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT = 0x00000001;
 static const XrDebugUtilsMessageTypeFlagsEXT XR_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT = 0x00000002;
 static const XrDebugUtilsMessageTypeFlagsEXT XR_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT = 0x00000004;
@@ -2281,7 +8354,7 @@ static const XrDebugUtilsMessageTypeFlagsEXT XR_DEBUG_UTILS_MESSAGE_TYPE_CONFORM
 
 typedef struct XrDebugUtilsObjectNameInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrObjectType                objectType;
     uint64_t                    objectHandle;
     const char*                 objectName;
@@ -2289,13 +8362,13 @@ typedef struct XrDebugUtilsObjectNameInfoEXT {
 
 typedef struct XrDebugUtilsLabelEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     const char*                 labelName;
 } XrDebugUtilsLabelEXT;
 
 typedef struct XrDebugUtilsMessengerCallbackDataEXT {
     XrStructureType                   type;
-    const void* XR_MAY_ALIAS          next;
+    const void*           next;
     const char*                       messageId;
     const char*                       functionName;
     const char*                       message;
@@ -2305,135 +8378,104 @@ typedef struct XrDebugUtilsMessengerCallbackDataEXT {
     XrDebugUtilsLabelEXT*             sessionLabels;
 } XrDebugUtilsMessengerCallbackDataEXT;
 
-typedef XrBool32 (XRAPI_PTR *PFN_xrDebugUtilsMessengerCallbackEXT)(
-            XrDebugUtilsMessageSeverityFlagsEXT              messageSeverity,
-            XrDebugUtilsMessageTypeFlagsEXT                  messageTypes,
-            const XrDebugUtilsMessengerCallbackDataEXT*      callbackData,
-            void*                                            userData);
-        
-
-// XrDebugUtilsMessengerCreateInfoEXT extends XrInstanceCreateInfo
+typedef XrBool32 (*PFN_xrDebugUtilsMessengerCallbackEXT)(XrDebugUtilsMessageSeverityFlagsEXT              messageSeverity,             XrDebugUtilsMessageTypeFlagsEXT                  messageTypes,             const XrDebugUtilsMessengerCallbackDataEXT*      callbackData,             void*                                            userData);
 typedef struct XrDebugUtilsMessengerCreateInfoEXT {
     XrStructureType                         type;
-    const void* XR_MAY_ALIAS                next;
+    const void*                 next;
     XrDebugUtilsMessageSeverityFlagsEXT     messageSeverities;
     XrDebugUtilsMessageTypeFlagsEXT         messageTypes;
     PFN_xrDebugUtilsMessengerCallbackEXT    userCallback;
-    void* XR_MAY_ALIAS                      userData;
+    void*                       userData;
 } XrDebugUtilsMessengerCreateInfoEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSetDebugUtilsObjectNameEXT)(XrInstance instance, const XrDebugUtilsObjectNameInfoEXT* nameInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateDebugUtilsMessengerEXT)(XrInstance instance, const XrDebugUtilsMessengerCreateInfoEXT* createInfo, XrDebugUtilsMessengerEXT* messenger);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyDebugUtilsMessengerEXT)(XrDebugUtilsMessengerEXT messenger);
-typedef XrResult (XRAPI_PTR *PFN_xrSubmitDebugUtilsMessageEXT)(XrInstance instance, XrDebugUtilsMessageSeverityFlagsEXT messageSeverity, XrDebugUtilsMessageTypeFlagsEXT messageTypes, const XrDebugUtilsMessengerCallbackDataEXT* callbackData);
-typedef XrResult (XRAPI_PTR *PFN_xrSessionBeginDebugUtilsLabelRegionEXT)(XrSession session, const XrDebugUtilsLabelEXT* labelInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrSessionEndDebugUtilsLabelRegionEXT)(XrSession session);
-typedef XrResult (XRAPI_PTR *PFN_xrSessionInsertDebugUtilsLabelEXT)(XrSession session, const XrDebugUtilsLabelEXT* labelInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetDebugUtilsObjectNameEXT(
-    XrInstance                                  instance,
-    const XrDebugUtilsObjectNameInfoEXT*        nameInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateDebugUtilsMessengerEXT(
-    XrInstance                                  instance,
-    const XrDebugUtilsMessengerCreateInfoEXT*   createInfo,
-    XrDebugUtilsMessengerEXT*                   messenger);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyDebugUtilsMessengerEXT(
-    XrDebugUtilsMessengerEXT                    messenger);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSubmitDebugUtilsMessageEXT(
-    XrInstance                                  instance,
-    XrDebugUtilsMessageSeverityFlagsEXT         messageSeverity,
-    XrDebugUtilsMessageTypeFlagsEXT             messageTypes,
-    const XrDebugUtilsMessengerCallbackDataEXT* callbackData);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSessionBeginDebugUtilsLabelRegionEXT(
-    XrSession                                   session,
-    const XrDebugUtilsLabelEXT*                 labelInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSessionEndDebugUtilsLabelRegionEXT(
-    XrSession                                   session);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSessionInsertDebugUtilsLabelEXT(
-    XrSession                                   session,
-    const XrDebugUtilsLabelEXT*                 labelInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSetDebugUtilsObjectNameEXT)(XrInstance instance, const XrDebugUtilsObjectNameInfoEXT* nameInfo);
+typedef XrResult (*PFN_xrCreateDebugUtilsMessengerEXT)(XrInstance instance, const XrDebugUtilsMessengerCreateInfoEXT* createInfo, XrDebugUtilsMessengerEXT* messenger);
+typedef XrResult (*PFN_xrDestroyDebugUtilsMessengerEXT)(XrDebugUtilsMessengerEXT messenger);
+typedef XrResult (*PFN_xrSubmitDebugUtilsMessageEXT)(XrInstance instance, XrDebugUtilsMessageSeverityFlagsEXT messageSeverity, XrDebugUtilsMessageTypeFlagsEXT messageTypes, const XrDebugUtilsMessengerCallbackDataEXT* callbackData);
+typedef XrResult (*PFN_xrSessionBeginDebugUtilsLabelRegionEXT)(XrSession session, const XrDebugUtilsLabelEXT* labelInfo);
+typedef XrResult (*PFN_xrSessionEndDebugUtilsLabelRegionEXT)(XrSession session);
+typedef XrResult (*PFN_xrSessionInsertDebugUtilsLabelEXT)(XrSession session, const XrDebugUtilsLabelEXT* labelInfo);
+XrResult  xrSetDebugUtilsObjectNameEXT(XrInstance                                  instance,     const XrDebugUtilsObjectNameInfoEXT*        nameInfo);
+XrResult  xrCreateDebugUtilsMessengerEXT(XrInstance                                  instance,     const XrDebugUtilsMessengerCreateInfoEXT*   createInfo,     XrDebugUtilsMessengerEXT*                   messenger);
+XrResult  xrDestroyDebugUtilsMessengerEXT(XrDebugUtilsMessengerEXT                    messenger);
+XrResult  xrSubmitDebugUtilsMessageEXT(XrInstance                                  instance,     XrDebugUtilsMessageSeverityFlagsEXT         messageSeverity,     XrDebugUtilsMessageTypeFlagsEXT             messageTypes,     const XrDebugUtilsMessengerCallbackDataEXT* callbackData);
+XrResult  xrSessionBeginDebugUtilsLabelRegionEXT(XrSession                                   session,     const XrDebugUtilsLabelEXT*                 labelInfo);
+XrResult  xrSessionEndDebugUtilsLabelRegionEXT(XrSession                                   session);
+XrResult  xrSessionInsertDebugUtilsLabelEXT(XrSession                                   session,     const XrDebugUtilsLabelEXT*                 labelInfo);
+#line 2365 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2366 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_eye_gaze_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_eye_gaze_interaction 1
-#define XR_EXT_eye_gaze_interaction_SPEC_VERSION 2
-#define XR_EXT_EYE_GAZE_INTERACTION_EXTENSION_NAME "XR_EXT_eye_gaze_interaction"
-// XrSystemEyeGazeInteractionPropertiesEXT extends XrSystemProperties
+
+
+
+
+
 typedef struct XrSystemEyeGazeInteractionPropertiesEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsEyeGazeInteraction;
 } XrSystemEyeGazeInteractionPropertiesEXT;
 
-// XrEyeGazeSampleTimeEXT extends XrSpaceLocation
+
 typedef struct XrEyeGazeSampleTimeEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrTime                time;
 } XrEyeGazeSampleTimeEXT;
 
 
 
-// XR_EXTX_overlay is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXTX_overlay 1
-#define XR_EXTX_overlay_SPEC_VERSION      5
-#define XR_EXTX_OVERLAY_EXTENSION_NAME    "XR_EXTX_overlay"
+
+
+
+
 typedef XrFlags64 XrOverlaySessionCreateFlagsEXTX;
 
-// Flag bits for XrOverlaySessionCreateFlagsEXTX
+
 
 typedef XrFlags64 XrOverlayMainSessionFlagsEXTX;
 
-// Flag bits for XrOverlayMainSessionFlagsEXTX
+
 static const XrOverlayMainSessionFlagsEXTX XR_OVERLAY_MAIN_SESSION_ENABLED_COMPOSITION_LAYER_INFO_DEPTH_BIT_EXTX = 0x00000001;
 
-// XrSessionCreateInfoOverlayEXTX extends XrSessionCreateInfo
+
 typedef struct XrSessionCreateInfoOverlayEXTX {
     XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
+    const void*            next;
     XrOverlaySessionCreateFlagsEXTX    createFlags;
     uint32_t                           sessionLayersPlacement;
 } XrSessionCreateInfoOverlayEXTX;
 
 typedef struct XrEventDataMainSessionVisibilityChangedEXTX {
     XrStructureType                  type;
-    const void* XR_MAY_ALIAS         next;
+    const void*          next;
     XrBool32                         visible;
     XrOverlayMainSessionFlagsEXTX    flags;
 } XrEventDataMainSessionVisibilityChangedEXTX;
 
 
 
-// XR_VARJO_quad_views is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_quad_views 1
-#define XR_VARJO_quad_views_SPEC_VERSION  2
-#define XR_VARJO_QUAD_VIEWS_EXTENSION_NAME "XR_VARJO_quad_views"
 
 
-// XR_MSFT_unbounded_reference_space is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_unbounded_reference_space 1
-#define XR_MSFT_unbounded_reference_space_SPEC_VERSION 1
-#define XR_MSFT_UNBOUNDED_REFERENCE_SPACE_EXTENSION_NAME "XR_MSFT_unbounded_reference_space"
 
 
-// XR_MSFT_spatial_anchor is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_spatial_anchor 1
-typedef uint64_t XrSpatialAnchorMSFT;
-#define XR_MSFT_spatial_anchor_SPEC_VERSION 2
-#define XR_MSFT_SPATIAL_ANCHOR_EXTENSION_NAME "XR_MSFT_spatial_anchor"
+
+
+
+
+
+
+
+
+
+
+typedef struct XrSpatialAnchorMSFT_T* XrSpatialAnchorMSFT;
+
+
 typedef struct XrSpatialAnchorCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrPosef                     pose;
     XrTime                      time;
@@ -2441,55 +8483,43 @@ typedef struct XrSpatialAnchorCreateInfoMSFT {
 
 typedef struct XrSpatialAnchorSpaceCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpatialAnchorMSFT         anchor;
     XrPosef                     poseInAnchorSpace;
 } XrSpatialAnchorSpaceCreateInfoMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorMSFT)(XrSession session, const XrSpatialAnchorCreateInfoMSFT* createInfo, XrSpatialAnchorMSFT* anchor);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorSpaceMSFT)(XrSession session, const XrSpatialAnchorSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialAnchorMSFT)(XrSpatialAnchorMSFT anchor);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorMSFT(
-    XrSession                                   session,
-    const XrSpatialAnchorCreateInfoMSFT*        createInfo,
-    XrSpatialAnchorMSFT*                        anchor);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorSpaceMSFT(
-    XrSession                                   session,
-    const XrSpatialAnchorSpaceCreateInfoMSFT*   createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialAnchorMSFT(
-    XrSpatialAnchorMSFT                         anchor);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorMSFT)(XrSession session, const XrSpatialAnchorCreateInfoMSFT* createInfo, XrSpatialAnchorMSFT* anchor);
+typedef XrResult (*PFN_xrCreateSpatialAnchorSpaceMSFT)(XrSession session, const XrSpatialAnchorSpaceCreateInfoMSFT* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrDestroySpatialAnchorMSFT)(XrSpatialAnchorMSFT anchor);
+XrResult  xrCreateSpatialAnchorMSFT(XrSession                                   session,     const XrSpatialAnchorCreateInfoMSFT*        createInfo,     XrSpatialAnchorMSFT*                        anchor);
+XrResult  xrCreateSpatialAnchorSpaceMSFT(XrSession                                   session,     const XrSpatialAnchorSpaceCreateInfoMSFT*   createInfo,     XrSpace*                                    space);
+XrResult  xrDestroySpatialAnchorMSFT(XrSpatialAnchorMSFT                         anchor);
+#line 2469 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2470 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_composition_layer_image_layout is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_composition_layer_image_layout 1
-#define XR_FB_composition_layer_image_layout_SPEC_VERSION 1
-#define XR_FB_COMPOSITION_LAYER_IMAGE_LAYOUT_EXTENSION_NAME "XR_FB_composition_layer_image_layout"
+
+
+
+
 typedef XrFlags64 XrCompositionLayerImageLayoutFlagsFB;
 
-// Flag bits for XrCompositionLayerImageLayoutFlagsFB
+
 static const XrCompositionLayerImageLayoutFlagsFB XR_COMPOSITION_LAYER_IMAGE_LAYOUT_VERTICAL_FLIP_BIT_FB = 0x00000001;
 
-// XrCompositionLayerImageLayoutFB extends XrCompositionLayerBaseHeader
+
 typedef struct XrCompositionLayerImageLayoutFB {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     XrCompositionLayerImageLayoutFlagsFB    flags;
 } XrCompositionLayerImageLayoutFB;
 
 
 
-// XR_FB_composition_layer_alpha_blend is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_composition_layer_alpha_blend 1
-#define XR_FB_composition_layer_alpha_blend_SPEC_VERSION 3
-#define XR_FB_COMPOSITION_LAYER_ALPHA_BLEND_EXTENSION_NAME "XR_FB_composition_layer_alpha_blend"
+
+
+
+
 
 typedef enum XrBlendFactorFB {
     XR_BLEND_FACTOR_ZERO_FB = 0,
@@ -2500,10 +8530,10 @@ typedef enum XrBlendFactorFB {
     XR_BLEND_FACTOR_ONE_MINUS_DST_ALPHA_FB = 5,
     XR_BLEND_FACTOR_MAX_ENUM_FB = 0x7FFFFFFF
 } XrBlendFactorFB;
-// XrCompositionLayerAlphaBlendFB extends XrCompositionLayerBaseHeader
+
 typedef struct XrCompositionLayerAlphaBlendFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBlendFactorFB       srcFactorColor;
     XrBlendFactorFB       dstFactorColor;
     XrBlendFactorFB       srcFactorAlpha;
@@ -2512,26 +8542,26 @@ typedef struct XrCompositionLayerAlphaBlendFB {
 
 
 
-// XR_MND_headless is a preprocessor guard. Do not pass it to API calls.
-#define XR_MND_headless 1
-#define XR_MND_headless_SPEC_VERSION      2
-#define XR_MND_HEADLESS_EXTENSION_NAME    "XR_MND_headless"
 
 
-// XR_OCULUS_android_session_state_enable is a preprocessor guard. Do not pass it to API calls.
-#define XR_OCULUS_android_session_state_enable 1
-#define XR_OCULUS_android_session_state_enable_SPEC_VERSION 1
-#define XR_OCULUS_ANDROID_SESSION_STATE_ENABLE_EXTENSION_NAME "XR_OCULUS_android_session_state_enable"
 
 
-// XR_EXT_view_configuration_depth_range is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_view_configuration_depth_range 1
-#define XR_EXT_view_configuration_depth_range_SPEC_VERSION 1
-#define XR_EXT_VIEW_CONFIGURATION_DEPTH_RANGE_EXTENSION_NAME "XR_EXT_view_configuration_depth_range"
-// XrViewConfigurationDepthRangeEXT extends XrViewConfigurationView
+
+
+
+
+
+
+
+
+
+
+
+
+
 typedef struct XrViewConfigurationDepthRangeEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     float                 recommendedNearZ;
     float                 minNearZ;
     float                 recommendedFarZ;
@@ -2540,58 +8570,30 @@ typedef struct XrViewConfigurationDepthRangeEXT {
 
 
 
-// XR_EXT_conformance_automation is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_conformance_automation 1
-#define XR_EXT_conformance_automation_SPEC_VERSION 3
-#define XR_EXT_CONFORMANCE_AUTOMATION_EXTENSION_NAME "XR_EXT_conformance_automation"
-typedef XrResult (XRAPI_PTR *PFN_xrSetInputDeviceActiveEXT)(XrSession session, XrPath interactionProfile, XrPath topLevelPath, XrBool32 isActive);
-typedef XrResult (XRAPI_PTR *PFN_xrSetInputDeviceStateBoolEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrBool32 state);
-typedef XrResult (XRAPI_PTR *PFN_xrSetInputDeviceStateFloatEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, float state);
-typedef XrResult (XRAPI_PTR *PFN_xrSetInputDeviceStateVector2fEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrVector2f state);
-typedef XrResult (XRAPI_PTR *PFN_xrSetInputDeviceLocationEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrSpace space, XrPosef pose);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetInputDeviceActiveEXT(
-    XrSession                                   session,
-    XrPath                                      interactionProfile,
-    XrPath                                      topLevelPath,
-    XrBool32                                    isActive);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetInputDeviceStateBoolEXT(
-    XrSession                                   session,
-    XrPath                                      topLevelPath,
-    XrPath                                      inputSourcePath,
-    XrBool32                                    state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetInputDeviceStateFloatEXT(
-    XrSession                                   session,
-    XrPath                                      topLevelPath,
-    XrPath                                      inputSourcePath,
-    float                                       state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetInputDeviceStateVector2fEXT(
-    XrSession                                   session,
-    XrPath                                      topLevelPath,
-    XrPath                                      inputSourcePath,
-    XrVector2f                                  state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetInputDeviceLocationEXT(
-    XrSession                                   session,
-    XrPath                                      topLevelPath,
-    XrPath                                      inputSourcePath,
-    XrSpace                                     space,
-    XrPosef                                     pose);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
 
-// XR_MSFT_spatial_graph_bridge is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_spatial_graph_bridge 1
-typedef uint64_t XrSpatialGraphNodeBindingMSFT;
-#define XR_GUID_SIZE_MSFT                 16
-#define XR_MSFT_spatial_graph_bridge_SPEC_VERSION 2
-#define XR_MSFT_SPATIAL_GRAPH_BRIDGE_EXTENSION_NAME "XR_MSFT_spatial_graph_bridge"
+
+
+typedef XrResult (*PFN_xrSetInputDeviceActiveEXT)(XrSession session, XrPath interactionProfile, XrPath topLevelPath, XrBool32 isActive);
+typedef XrResult (*PFN_xrSetInputDeviceStateBoolEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrBool32 state);
+typedef XrResult (*PFN_xrSetInputDeviceStateFloatEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, float state);
+typedef XrResult (*PFN_xrSetInputDeviceStateVector2fEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrVector2f state);
+typedef XrResult (*PFN_xrSetInputDeviceLocationEXT)(XrSession session, XrPath topLevelPath, XrPath inputSourcePath, XrSpace space, XrPosef pose);
+XrResult  xrSetInputDeviceActiveEXT(XrSession                                   session,     XrPath                                      interactionProfile,     XrPath                                      topLevelPath,     XrBool32                                    isActive);
+XrResult  xrSetInputDeviceStateBoolEXT(XrSession                                   session,     XrPath                                      topLevelPath,     XrPath                                      inputSourcePath,     XrBool32                                    state);
+XrResult  xrSetInputDeviceStateFloatEXT(XrSession                                   session,     XrPath                                      topLevelPath,     XrPath                                      inputSourcePath,     float                                       state);
+XrResult  xrSetInputDeviceStateVector2fEXT(XrSession                                   session,     XrPath                                      topLevelPath,     XrPath                                      inputSourcePath,     XrVector2f                                  state);
+XrResult  xrSetInputDeviceLocationEXT(XrSession                                   session,     XrPath                                      topLevelPath,     XrPath                                      inputSourcePath,     XrSpace                                     space,     XrPosef                                     pose);
+#line 2587 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2588 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+typedef struct XrSpatialGraphNodeBindingMSFT_T* XrSpatialGraphNodeBindingMSFT;
+
+
+
 
 typedef enum XrSpatialGraphNodeTypeMSFT {
     XR_SPATIAL_GRAPH_NODE_TYPE_STATIC_MSFT = 1,
@@ -2600,15 +8602,15 @@ typedef enum XrSpatialGraphNodeTypeMSFT {
 } XrSpatialGraphNodeTypeMSFT;
 typedef struct XrSpatialGraphNodeSpaceCreateInfoMSFT {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrSpatialGraphNodeTypeMSFT    nodeType;
-    uint8_t                       nodeId[XR_GUID_SIZE_MSFT];
+    uint8_t                       nodeId[16];
     XrPosef                       pose;
 } XrSpatialGraphNodeSpaceCreateInfoMSFT;
 
 typedef struct XrSpatialGraphStaticNodeBindingCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrPosef                     poseInSpace;
     XrTime                      time;
@@ -2616,58 +8618,42 @@ typedef struct XrSpatialGraphStaticNodeBindingCreateInfoMSFT {
 
 typedef struct XrSpatialGraphNodeBindingPropertiesGetInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpatialGraphNodeBindingPropertiesGetInfoMSFT;
 
 typedef struct XrSpatialGraphNodeBindingPropertiesMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
-    uint8_t               nodeId[XR_GUID_SIZE_MSFT];
+    void*     next;
+    uint8_t               nodeId[16];
     XrPosef               poseInNodeSpace;
 } XrSpatialGraphNodeBindingPropertiesMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialGraphNodeSpaceMSFT)(XrSession session, const XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrTryCreateSpatialGraphStaticNodeBindingMSFT)(XrSession session, const XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo, XrSpatialGraphNodeBindingMSFT* nodeBinding);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialGraphNodeBindingMSFT)(XrSpatialGraphNodeBindingMSFT nodeBinding);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialGraphNodeBindingPropertiesMSFT)(XrSpatialGraphNodeBindingMSFT nodeBinding, const XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo, XrSpatialGraphNodeBindingPropertiesMSFT* properties);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialGraphNodeSpaceMSFT(
-    XrSession                                   session,
-    const XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTryCreateSpatialGraphStaticNodeBindingMSFT(
-    XrSession                                   session,
-    const XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo,
-    XrSpatialGraphNodeBindingMSFT*              nodeBinding);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialGraphNodeBindingMSFT(
-    XrSpatialGraphNodeBindingMSFT               nodeBinding);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialGraphNodeBindingPropertiesMSFT(
-    XrSpatialGraphNodeBindingMSFT               nodeBinding,
-    const XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo,
-    XrSpatialGraphNodeBindingPropertiesMSFT*    properties);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialGraphNodeSpaceMSFT)(XrSession session, const XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrTryCreateSpatialGraphStaticNodeBindingMSFT)(XrSession session, const XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo, XrSpatialGraphNodeBindingMSFT* nodeBinding);
+typedef XrResult (*PFN_xrDestroySpatialGraphNodeBindingMSFT)(XrSpatialGraphNodeBindingMSFT nodeBinding);
+typedef XrResult (*PFN_xrGetSpatialGraphNodeBindingPropertiesMSFT)(XrSpatialGraphNodeBindingMSFT nodeBinding, const XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo, XrSpatialGraphNodeBindingPropertiesMSFT* properties);
+XrResult  xrCreateSpatialGraphNodeSpaceMSFT(XrSession                                   session,     const XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo,     XrSpace*                                    space);
+XrResult  xrTryCreateSpatialGraphStaticNodeBindingMSFT(XrSession                                   session,     const XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo,     XrSpatialGraphNodeBindingMSFT*              nodeBinding);
+XrResult  xrDestroySpatialGraphNodeBindingMSFT(XrSpatialGraphNodeBindingMSFT               nodeBinding);
+XrResult  xrGetSpatialGraphNodeBindingPropertiesMSFT(XrSpatialGraphNodeBindingMSFT               nodeBinding,     const XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo,     XrSpatialGraphNodeBindingPropertiesMSFT*    properties);
+#line 2655 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2656 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_hand_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_hand_interaction 1
-#define XR_MSFT_hand_interaction_SPEC_VERSION 1
-#define XR_MSFT_HAND_INTERACTION_EXTENSION_NAME "XR_MSFT_hand_interaction"
 
 
-// XR_EXT_hand_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_hand_tracking 1
 
-#define XR_HAND_JOINT_COUNT_EXT 26
 
-typedef uint64_t XrHandTrackerEXT;
-#define XR_EXT_hand_tracking_SPEC_VERSION 4
-#define XR_EXT_HAND_TRACKING_EXTENSION_NAME "XR_EXT_hand_tracking"
+
+
+
+
+
+
+
+typedef struct XrHandTrackerEXT_T* XrHandTrackerEXT;
+
+
 
 typedef enum XrHandEXT {
     XR_HAND_LEFT_EXT = 1,
@@ -2710,23 +8696,23 @@ typedef enum XrHandJointSetEXT {
     XR_HAND_JOINT_SET_HAND_WITH_FOREARM_ULTRALEAP = 1000149000,
     XR_HAND_JOINT_SET_MAX_ENUM_EXT = 0x7FFFFFFF
 } XrHandJointSetEXT;
-// XrSystemHandTrackingPropertiesEXT extends XrSystemProperties
+
 typedef struct XrSystemHandTrackingPropertiesEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsHandTracking;
 } XrSystemHandTrackingPropertiesEXT;
 
 typedef struct XrHandTrackerCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrHandEXT                   hand;
     XrHandJointSetEXT           handJointSet;
 } XrHandTrackerCreateInfoEXT;
 
 typedef struct XrHandJointsLocateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrHandJointsLocateInfoEXT;
@@ -2745,56 +8731,44 @@ typedef struct XrHandJointVelocityEXT {
 
 typedef struct XrHandJointLocationsEXT {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     XrBool32                   isActive;
     uint32_t                   jointCount;
     XrHandJointLocationEXT*    jointLocations;
 } XrHandJointLocationsEXT;
 
-// XrHandJointVelocitiesEXT extends XrHandJointLocationsEXT
+
 typedef struct XrHandJointVelocitiesEXT {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     uint32_t                   jointCount;
     XrHandJointVelocityEXT*    jointVelocities;
 } XrHandJointVelocitiesEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateHandTrackerEXT)(XrSession session, const XrHandTrackerCreateInfoEXT* createInfo, XrHandTrackerEXT* handTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyHandTrackerEXT)(XrHandTrackerEXT handTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateHandJointsEXT)(XrHandTrackerEXT handTracker, const XrHandJointsLocateInfoEXT* locateInfo, XrHandJointLocationsEXT* locations);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateHandTrackerEXT(
-    XrSession                                   session,
-    const XrHandTrackerCreateInfoEXT*           createInfo,
-    XrHandTrackerEXT*                           handTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyHandTrackerEXT(
-    XrHandTrackerEXT                            handTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateHandJointsEXT(
-    XrHandTrackerEXT                            handTracker,
-    const XrHandJointsLocateInfoEXT*            locateInfo,
-    XrHandJointLocationsEXT*                    locations);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateHandTrackerEXT)(XrSession session, const XrHandTrackerCreateInfoEXT* createInfo, XrHandTrackerEXT* handTracker);
+typedef XrResult (*PFN_xrDestroyHandTrackerEXT)(XrHandTrackerEXT handTracker);
+typedef XrResult (*PFN_xrLocateHandJointsEXT)(XrHandTrackerEXT handTracker, const XrHandJointsLocateInfoEXT* locateInfo, XrHandJointLocationsEXT* locations);
+XrResult  xrCreateHandTrackerEXT(XrSession                                   session,     const XrHandTrackerCreateInfoEXT*           createInfo,     XrHandTrackerEXT*                           handTracker);
+XrResult  xrDestroyHandTrackerEXT(XrHandTrackerEXT                            handTracker);
+XrResult  xrLocateHandJointsEXT(XrHandTrackerEXT                            handTracker,     const XrHandJointsLocateInfoEXT*            locateInfo,     XrHandJointLocationsEXT*                    locations);
+#line 2782 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2783 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_hand_tracking_mesh is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_hand_tracking_mesh 1
-#define XR_MSFT_hand_tracking_mesh_SPEC_VERSION 4
-#define XR_MSFT_HAND_TRACKING_MESH_EXTENSION_NAME "XR_MSFT_hand_tracking_mesh"
+
+
+
+
 
 typedef enum XrHandPoseTypeMSFT {
     XR_HAND_POSE_TYPE_TRACKED_MSFT = 0,
     XR_HAND_POSE_TYPE_REFERENCE_OPEN_PALM_MSFT = 1,
     XR_HAND_POSE_TYPE_MAX_ENUM_MSFT = 0x7FFFFFFF
 } XrHandPoseTypeMSFT;
-// XrSystemHandTrackingMeshPropertiesMSFT extends XrSystemProperties
+
 typedef struct XrSystemHandTrackingMeshPropertiesMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsHandTrackingMesh;
     uint32_t              maxHandMeshIndexCount;
     uint32_t              maxHandMeshVertexCount;
@@ -2802,14 +8776,14 @@ typedef struct XrSystemHandTrackingMeshPropertiesMSFT {
 
 typedef struct XrHandMeshSpaceCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrHandPoseTypeMSFT          handPoseType;
     XrPosef                     poseInHandMeshSpace;
 } XrHandMeshSpaceCreateInfoMSFT;
 
 typedef struct XrHandMeshUpdateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTime                      time;
     XrHandPoseTypeMSFT          handPoseType;
 } XrHandMeshUpdateInfoMSFT;
@@ -2835,7 +8809,7 @@ typedef struct XrHandMeshVertexBufferMSFT {
 
 typedef struct XrHandMeshMSFT {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     XrBool32                      isActive;
     XrBool32                      indexBufferChanged;
     XrBool32                      vertexBufferChanged;
@@ -2843,115 +8817,105 @@ typedef struct XrHandMeshMSFT {
     XrHandMeshVertexBufferMSFT    vertexBuffer;
 } XrHandMeshMSFT;
 
-// XrHandPoseTypeInfoMSFT extends XrHandTrackerCreateInfoEXT
+
 typedef struct XrHandPoseTypeInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrHandPoseTypeMSFT          handPoseType;
 } XrHandPoseTypeInfoMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateHandMeshSpaceMSFT)(XrHandTrackerEXT handTracker, const XrHandMeshSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrUpdateHandMeshMSFT)(XrHandTrackerEXT handTracker, const XrHandMeshUpdateInfoMSFT* updateInfo, XrHandMeshMSFT* handMesh);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateHandMeshSpaceMSFT(
-    XrHandTrackerEXT                            handTracker,
-    const XrHandMeshSpaceCreateInfoMSFT*        createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUpdateHandMeshMSFT(
-    XrHandTrackerEXT                            handTracker,
-    const XrHandMeshUpdateInfoMSFT*             updateInfo,
-    XrHandMeshMSFT*                             handMesh);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateHandMeshSpaceMSFT)(XrHandTrackerEXT handTracker, const XrHandMeshSpaceCreateInfoMSFT* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrUpdateHandMeshMSFT)(XrHandTrackerEXT handTracker, const XrHandMeshUpdateInfoMSFT* updateInfo, XrHandMeshMSFT* handMesh);
+XrResult  xrCreateHandMeshSpaceMSFT(XrHandTrackerEXT                            handTracker,     const XrHandMeshSpaceCreateInfoMSFT*        createInfo,     XrSpace*                                    space);
+XrResult  xrUpdateHandMeshMSFT(XrHandTrackerEXT                            handTracker,     const XrHandMeshUpdateInfoMSFT*             updateInfo,     XrHandMeshMSFT*                             handMesh);
+#line 2869 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 2870 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_secondary_view_configuration is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_secondary_view_configuration 1
-#define XR_MSFT_secondary_view_configuration_SPEC_VERSION 1
-#define XR_MSFT_SECONDARY_VIEW_CONFIGURATION_EXTENSION_NAME "XR_MSFT_secondary_view_configuration"
-// XrSecondaryViewConfigurationSessionBeginInfoMSFT extends XrSessionBeginInfo
+
+
+
+
+
 typedef struct XrSecondaryViewConfigurationSessionBeginInfoMSFT {
     XrStructureType                   type;
-    const void* XR_MAY_ALIAS          next;
+    const void*           next;
     uint32_t                          viewConfigurationCount;
     const XrViewConfigurationType*    enabledViewConfigurationTypes;
 } XrSecondaryViewConfigurationSessionBeginInfoMSFT;
 
 typedef struct XrSecondaryViewConfigurationStateMSFT {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     XrViewConfigurationType    viewConfigurationType;
     XrBool32                   active;
 } XrSecondaryViewConfigurationStateMSFT;
 
-// XrSecondaryViewConfigurationFrameStateMSFT extends XrFrameState
+
 typedef struct XrSecondaryViewConfigurationFrameStateMSFT {
     XrStructureType                           type;
-    void* XR_MAY_ALIAS                        next;
+    void*                         next;
     uint32_t                                  viewConfigurationCount;
     XrSecondaryViewConfigurationStateMSFT*    viewConfigurationStates;
 } XrSecondaryViewConfigurationFrameStateMSFT;
 
 typedef struct XrSecondaryViewConfigurationLayerInfoMSFT {
     XrStructureType                               type;
-    const void* XR_MAY_ALIAS                      next;
+    const void*                       next;
     XrViewConfigurationType                       viewConfigurationType;
     XrEnvironmentBlendMode                        environmentBlendMode;
     uint32_t                                      layerCount;
     const XrCompositionLayerBaseHeader* const*    layers;
 } XrSecondaryViewConfigurationLayerInfoMSFT;
 
-// XrSecondaryViewConfigurationFrameEndInfoMSFT extends XrFrameEndInfo
+
 typedef struct XrSecondaryViewConfigurationFrameEndInfoMSFT {
     XrStructureType                                     type;
-    const void* XR_MAY_ALIAS                            next;
+    const void*                             next;
     uint32_t                                            viewConfigurationCount;
     const XrSecondaryViewConfigurationLayerInfoMSFT*    viewConfigurationLayersInfo;
 } XrSecondaryViewConfigurationFrameEndInfoMSFT;
 
-// XrSecondaryViewConfigurationSwapchainCreateInfoMSFT extends XrSwapchainCreateInfo
+
 typedef struct XrSecondaryViewConfigurationSwapchainCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrViewConfigurationType     viewConfigurationType;
 } XrSecondaryViewConfigurationSwapchainCreateInfoMSFT;
 
 
 
-// XR_MSFT_first_person_observer is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_first_person_observer 1
-#define XR_MSFT_first_person_observer_SPEC_VERSION 1
-#define XR_MSFT_FIRST_PERSON_OBSERVER_EXTENSION_NAME "XR_MSFT_first_person_observer"
 
 
-// XR_MSFT_controller_model is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_controller_model 1
 
-#define XR_NULL_CONTROLLER_MODEL_KEY_MSFT 0
+
+
+
+
+
+
+
 
 typedef uint64_t XrControllerModelKeyMSFT;
-#define XR_MAX_CONTROLLER_MODEL_NODE_NAME_SIZE_MSFT 64
-#define XR_MSFT_controller_model_SPEC_VERSION 2
-#define XR_MSFT_CONTROLLER_MODEL_EXTENSION_NAME "XR_MSFT_controller_model"
+
+
+
 typedef struct XrControllerModelKeyStateMSFT {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrControllerModelKeyMSFT    modelKey;
 } XrControllerModelKeyStateMSFT;
 
 typedef struct XrControllerModelNodePropertiesMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
-    char                  parentNodeName[XR_MAX_CONTROLLER_MODEL_NODE_NAME_SIZE_MSFT];
-    char                  nodeName[XR_MAX_CONTROLLER_MODEL_NODE_NAME_SIZE_MSFT];
+    void*     next;
+    char                  parentNodeName[64];
+    char                  nodeName[64];
 } XrControllerModelNodePropertiesMSFT;
 
 typedef struct XrControllerModelPropertiesMSFT {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     uint32_t                                nodeCapacityInput;
     uint32_t                                nodeCountOutput;
     XrControllerModelNodePropertiesMSFT*    nodeProperties;
@@ -2959,74 +8923,54 @@ typedef struct XrControllerModelPropertiesMSFT {
 
 typedef struct XrControllerModelNodeStateMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrPosef               nodePose;
 } XrControllerModelNodeStateMSFT;
 
 typedef struct XrControllerModelStateMSFT {
     XrStructureType                    type;
-    void* XR_MAY_ALIAS                 next;
+    void*                  next;
     uint32_t                           nodeCapacityInput;
     uint32_t                           nodeCountOutput;
     XrControllerModelNodeStateMSFT*    nodeStates;
 } XrControllerModelStateMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetControllerModelKeyMSFT)(XrSession session, XrPath topLevelUserPath, XrControllerModelKeyStateMSFT* controllerModelKeyState);
-typedef XrResult (XRAPI_PTR *PFN_xrLoadControllerModelMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetControllerModelPropertiesMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, XrControllerModelPropertiesMSFT* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrGetControllerModelStateMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, XrControllerModelStateMSFT* state);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetControllerModelKeyMSFT(
-    XrSession                                   session,
-    XrPath                                      topLevelUserPath,
-    XrControllerModelKeyStateMSFT*              controllerModelKeyState);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLoadControllerModelMSFT(
-    XrSession                                   session,
-    XrControllerModelKeyMSFT                    modelKey,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    uint8_t*                                    buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetControllerModelPropertiesMSFT(
-    XrSession                                   session,
-    XrControllerModelKeyMSFT                    modelKey,
-    XrControllerModelPropertiesMSFT*            properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetControllerModelStateMSFT(
-    XrSession                                   session,
-    XrControllerModelKeyMSFT                    modelKey,
-    XrControllerModelStateMSFT*                 state);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetControllerModelKeyMSFT)(XrSession session, XrPath topLevelUserPath, XrControllerModelKeyStateMSFT* controllerModelKeyState);
+typedef XrResult (*PFN_xrLoadControllerModelMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
+typedef XrResult (*PFN_xrGetControllerModelPropertiesMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, XrControllerModelPropertiesMSFT* properties);
+typedef XrResult (*PFN_xrGetControllerModelStateMSFT)(XrSession session, XrControllerModelKeyMSFT modelKey, XrControllerModelStateMSFT* state);
+XrResult  xrGetControllerModelKeyMSFT(XrSession                                   session,     XrPath                                      topLevelUserPath,     XrControllerModelKeyStateMSFT*              controllerModelKeyState);
+XrResult  xrLoadControllerModelMSFT(XrSession                                   session,     XrControllerModelKeyMSFT                    modelKey,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     uint8_t*                                    buffer);
+XrResult  xrGetControllerModelPropertiesMSFT(XrSession                                   session,     XrControllerModelKeyMSFT                    modelKey,     XrControllerModelPropertiesMSFT*            properties);
+XrResult  xrGetControllerModelStateMSFT(XrSession                                   session,     XrControllerModelKeyMSFT                    modelKey,     XrControllerModelStateMSFT*                 state);
+#line 3004 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3005 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_win32_appcontainer_compatible is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_win32_appcontainer_compatible 1
-#define XR_EXT_win32_appcontainer_compatible_SPEC_VERSION 1
-#define XR_EXT_WIN32_APPCONTAINER_COMPATIBLE_EXTENSION_NAME "XR_EXT_win32_appcontainer_compatible"
 
 
-// XR_EPIC_view_configuration_fov is a preprocessor guard. Do not pass it to API calls.
-#define XR_EPIC_view_configuration_fov 1
-#define XR_EPIC_view_configuration_fov_SPEC_VERSION 2
-#define XR_EPIC_VIEW_CONFIGURATION_FOV_EXTENSION_NAME "XR_EPIC_view_configuration_fov"
-// XrViewConfigurationViewFovEPIC extends XrViewConfigurationView
+
+
+
+
+
+
+
+
+
 typedef struct XrViewConfigurationViewFovEPIC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFovf                      recommendedFov;
     XrFovf                      maxMutableFov;
 } XrViewConfigurationViewFovEPIC;
 
 
 
-// XR_MSFT_composition_layer_reprojection is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_composition_layer_reprojection 1
-#define XR_MSFT_composition_layer_reprojection_SPEC_VERSION 1
-#define XR_MSFT_COMPOSITION_LAYER_REPROJECTION_EXTENSION_NAME "XR_MSFT_composition_layer_reprojection"
+
+
+
+
 
 typedef enum XrReprojectionModeMSFT {
     XR_REPROJECTION_MODE_DEPTH_MSFT = 1,
@@ -3035,92 +8979,75 @@ typedef enum XrReprojectionModeMSFT {
     XR_REPROJECTION_MODE_ORIENTATION_ONLY_MSFT = 4,
     XR_REPROJECTION_MODE_MAX_ENUM_MSFT = 0x7FFFFFFF
 } XrReprojectionModeMSFT;
-// XrCompositionLayerReprojectionInfoMSFT extends XrCompositionLayerProjection
+
 typedef struct XrCompositionLayerReprojectionInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrReprojectionModeMSFT      reprojectionMode;
 } XrCompositionLayerReprojectionInfoMSFT;
 
-// XrCompositionLayerReprojectionPlaneOverrideMSFT extends XrCompositionLayerProjection
+
 typedef struct XrCompositionLayerReprojectionPlaneOverrideMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVector3f                  position;
     XrVector3f                  normal;
     XrVector3f                  velocity;
 } XrCompositionLayerReprojectionPlaneOverrideMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateReprojectionModesMSFT)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t modeCapacityInput, uint32_t* modeCountOutput, XrReprojectionModeMSFT* modes);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateReprojectionModesMSFT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrViewConfigurationType                     viewConfigurationType,
-    uint32_t                                    modeCapacityInput,
-    uint32_t*                                   modeCountOutput,
-    XrReprojectionModeMSFT*                     modes);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateReprojectionModesMSFT)(XrInstance instance, XrSystemId systemId, XrViewConfigurationType viewConfigurationType, uint32_t modeCapacityInput, uint32_t* modeCountOutput, XrReprojectionModeMSFT* modes);
+XrResult  xrEnumerateReprojectionModesMSFT(XrInstance                                  instance,     XrSystemId                                  systemId,     XrViewConfigurationType                     viewConfigurationType,     uint32_t                                    modeCapacityInput,     uint32_t*                                   modeCountOutput,     XrReprojectionModeMSFT*                     modes);
+#line 3067 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3068 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HUAWEI_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HUAWEI_controller_interaction 1
-#define XR_HUAWEI_controller_interaction_SPEC_VERSION 1
-#define XR_HUAWEI_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_HUAWEI_controller_interaction"
 
 
-// XR_FB_swapchain_update_state is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_swapchain_update_state 1
-#define XR_FB_swapchain_update_state_SPEC_VERSION 3
-#define XR_FB_SWAPCHAIN_UPDATE_STATE_EXTENSION_NAME "XR_FB_swapchain_update_state"
-typedef struct XR_MAY_ALIAS XrSwapchainStateBaseHeaderFB {
+
+
+
+
+
+
+
+
+typedef struct  XrSwapchainStateBaseHeaderFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
 } XrSwapchainStateBaseHeaderFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrUpdateSwapchainFB)(XrSwapchain swapchain, const XrSwapchainStateBaseHeaderFB* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSwapchainStateFB)(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrUpdateSwapchainFB(
-    XrSwapchain                                 swapchain,
-    const XrSwapchainStateBaseHeaderFB*         state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSwapchainStateFB(
-    XrSwapchain                                 swapchain,
-    XrSwapchainStateBaseHeaderFB*               state);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrUpdateSwapchainFB)(XrSwapchain swapchain, const XrSwapchainStateBaseHeaderFB* state);
+typedef XrResult (*PFN_xrGetSwapchainStateFB)(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state);
+XrResult  xrUpdateSwapchainFB(XrSwapchain                                 swapchain,     const XrSwapchainStateBaseHeaderFB*         state);
+XrResult  xrGetSwapchainStateFB(XrSwapchain                                 swapchain,     XrSwapchainStateBaseHeaderFB*               state);
+#line 3098 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3099 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_composition_layer_secure_content is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_composition_layer_secure_content 1
-#define XR_FB_composition_layer_secure_content_SPEC_VERSION 1
-#define XR_FB_COMPOSITION_LAYER_SECURE_CONTENT_EXTENSION_NAME "XR_FB_composition_layer_secure_content"
+
+
+
+
 typedef XrFlags64 XrCompositionLayerSecureContentFlagsFB;
 
-// Flag bits for XrCompositionLayerSecureContentFlagsFB
+
 static const XrCompositionLayerSecureContentFlagsFB XR_COMPOSITION_LAYER_SECURE_CONTENT_EXCLUDE_LAYER_BIT_FB = 0x00000001;
 static const XrCompositionLayerSecureContentFlagsFB XR_COMPOSITION_LAYER_SECURE_CONTENT_REPLACE_LAYER_BIT_FB = 0x00000002;
 
-// XrCompositionLayerSecureContentFB extends XrCompositionLayerBaseHeader
+
 typedef struct XrCompositionLayerSecureContentFB {
     XrStructureType                           type;
-    const void* XR_MAY_ALIAS                  next;
+    const void*                   next;
     XrCompositionLayerSecureContentFlagsFB    flags;
 } XrCompositionLayerSecureContentFB;
 
 
 
-// XR_FB_body_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_body_tracking 1
-typedef uint64_t XrBodyTrackerFB;
-#define XR_FB_body_tracking_SPEC_VERSION  1
-#define XR_FB_BODY_TRACKING_EXTENSION_NAME "XR_FB_body_tracking"
+
+
+typedef struct XrBodyTrackerFB_T* XrBodyTrackerFB;
+
+
 
 typedef enum XrBodyJointFB {
     XR_BODY_JOINT_ROOT_FB = 0,
@@ -3208,16 +9135,16 @@ typedef struct XrBodyJointLocationFB {
     XrPosef                 pose;
 } XrBodyJointLocationFB;
 
-// XrSystemBodyTrackingPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemBodyTrackingPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsBodyTracking;
 } XrSystemBodyTrackingPropertiesFB;
 
 typedef struct XrBodyTrackerCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBodyJointSetFB            bodyJointSet;
 } XrBodyTrackerCreateInfoFB;
 
@@ -3229,21 +9156,21 @@ typedef struct XrBodySkeletonJointFB {
 
 typedef struct XrBodySkeletonFB {
     XrStructureType           type;
-    void* XR_MAY_ALIAS        next;
+    void*         next;
     uint32_t                  jointCount;
     XrBodySkeletonJointFB*    joints;
 } XrBodySkeletonFB;
 
 typedef struct XrBodyJointsLocateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrBodyJointsLocateInfoFB;
 
 typedef struct XrBodyJointLocationsFB {
     XrStructureType           type;
-    void* XR_MAY_ALIAS        next;
+    void*         next;
     XrBool32                  isActive;
     float                     confidence;
     uint32_t                  jointCount;
@@ -3252,40 +9179,25 @@ typedef struct XrBodyJointLocationsFB {
     XrTime                    time;
 } XrBodyJointLocationsFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateBodyTrackerFB)(XrSession session, const XrBodyTrackerCreateInfoFB* createInfo, XrBodyTrackerFB* bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyBodyTrackerFB)(XrBodyTrackerFB bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateBodyJointsFB)(XrBodyTrackerFB bodyTracker, const XrBodyJointsLocateInfoFB* locateInfo, XrBodyJointLocationsFB* locations);
-typedef XrResult (XRAPI_PTR *PFN_xrGetBodySkeletonFB)(XrBodyTrackerFB bodyTracker, XrBodySkeletonFB* skeleton);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateBodyTrackerFB(
-    XrSession                                   session,
-    const XrBodyTrackerCreateInfoFB*            createInfo,
-    XrBodyTrackerFB*                            bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyBodyTrackerFB(
-    XrBodyTrackerFB                             bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateBodyJointsFB(
-    XrBodyTrackerFB                             bodyTracker,
-    const XrBodyJointsLocateInfoFB*             locateInfo,
-    XrBodyJointLocationsFB*                     locations);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetBodySkeletonFB(
-    XrBodyTrackerFB                             bodyTracker,
-    XrBodySkeletonFB*                           skeleton);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateBodyTrackerFB)(XrSession session, const XrBodyTrackerCreateInfoFB* createInfo, XrBodyTrackerFB* bodyTracker);
+typedef XrResult (*PFN_xrDestroyBodyTrackerFB)(XrBodyTrackerFB bodyTracker);
+typedef XrResult (*PFN_xrLocateBodyJointsFB)(XrBodyTrackerFB bodyTracker, const XrBodyJointsLocateInfoFB* locateInfo, XrBodyJointLocationsFB* locations);
+typedef XrResult (*PFN_xrGetBodySkeletonFB)(XrBodyTrackerFB bodyTracker, XrBodySkeletonFB* skeleton);
+XrResult  xrCreateBodyTrackerFB(XrSession                                   session,     const XrBodyTrackerCreateInfoFB*            createInfo,     XrBodyTrackerFB*                            bodyTracker);
+XrResult  xrDestroyBodyTrackerFB(XrBodyTrackerFB                             bodyTracker);
+XrResult  xrLocateBodyJointsFB(XrBodyTrackerFB                             bodyTracker,     const XrBodyJointsLocateInfoFB*             locateInfo,     XrBodyJointLocationsFB*                     locations);
+XrResult  xrGetBodySkeletonFB(XrBodyTrackerFB                             bodyTracker,     XrBodySkeletonFB*                           skeleton);
+#line 3280 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3281 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_dpad_binding is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_dpad_binding 1
-#define XR_EXT_dpad_binding_SPEC_VERSION  1
-#define XR_EXT_DPAD_BINDING_EXTENSION_NAME "XR_EXT_dpad_binding"
+
+
+
+
 typedef struct XrInteractionProfileDpadBindingEXT {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrPath                       binding;
     XrActionSet                  actionSet;
     float                        forceThreshold;
@@ -3299,13 +9211,13 @@ typedef struct XrInteractionProfileDpadBindingEXT {
 
 
 
-// XR_VALVE_analog_threshold is a preprocessor guard. Do not pass it to API calls.
-#define XR_VALVE_analog_threshold 1
-#define XR_VALVE_analog_threshold_SPEC_VERSION 2
-#define XR_VALVE_ANALOG_THRESHOLD_EXTENSION_NAME "XR_VALVE_analog_threshold"
+
+
+
+
 typedef struct XrInteractionProfileAnalogThresholdVALVE {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrAction                     action;
     XrPath                       binding;
     float                        onThreshold;
@@ -3316,53 +9228,53 @@ typedef struct XrInteractionProfileAnalogThresholdVALVE {
 
 
 
-// XR_EXT_hand_joints_motion_range is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_hand_joints_motion_range 1
-#define XR_EXT_hand_joints_motion_range_SPEC_VERSION 1
-#define XR_EXT_HAND_JOINTS_MOTION_RANGE_EXTENSION_NAME "XR_EXT_hand_joints_motion_range"
+
+
+
+
 
 typedef enum XrHandJointsMotionRangeEXT {
     XR_HAND_JOINTS_MOTION_RANGE_UNOBSTRUCTED_EXT = 1,
     XR_HAND_JOINTS_MOTION_RANGE_CONFORMING_TO_CONTROLLER_EXT = 2,
     XR_HAND_JOINTS_MOTION_RANGE_MAX_ENUM_EXT = 0x7FFFFFFF
 } XrHandJointsMotionRangeEXT;
-// XrHandJointsMotionRangeInfoEXT extends XrHandJointsLocateInfoEXT
+
 typedef struct XrHandJointsMotionRangeInfoEXT {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrHandJointsMotionRangeEXT    handJointsMotionRange;
 } XrHandJointsMotionRangeInfoEXT;
 
 
 
-// XR_EXT_samsung_odyssey_controller is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_samsung_odyssey_controller 1
-#define XR_EXT_samsung_odyssey_controller_SPEC_VERSION 1
-#define XR_EXT_SAMSUNG_ODYSSEY_CONTROLLER_EXTENSION_NAME "XR_EXT_samsung_odyssey_controller"
 
 
-// XR_EXT_hp_mixed_reality_controller is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_hp_mixed_reality_controller 1
-#define XR_EXT_hp_mixed_reality_controller_SPEC_VERSION 1
-#define XR_EXT_HP_MIXED_REALITY_CONTROLLER_EXTENSION_NAME "XR_EXT_hp_mixed_reality_controller"
 
 
-// XR_MND_swapchain_usage_input_attachment_bit is a preprocessor guard. Do not pass it to API calls.
-#define XR_MND_swapchain_usage_input_attachment_bit 1
-#define XR_MND_swapchain_usage_input_attachment_bit_SPEC_VERSION 2
-#define XR_MND_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_EXTENSION_NAME "XR_MND_swapchain_usage_input_attachment_bit"
 
 
-// XR_MSFT_scene_understanding is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_scene_understanding 1
-
-            typedef uint64_t XrSceneObserverMSFT;
 
 
-            typedef uint64_t XrSceneMSFT;
 
-#define XR_MSFT_scene_understanding_SPEC_VERSION 2
-#define XR_MSFT_SCENE_UNDERSTANDING_EXTENSION_NAME "XR_MSFT_scene_understanding"
+
+
+
+
+
+
+
+
+
+
+
+
+            typedef struct XrSceneObserverMSFT_T* XrSceneObserverMSFT;
+
+
+            typedef struct XrSceneMSFT_T* XrSceneMSFT;
+
+
+
 
 typedef enum XrSceneComputeFeatureMSFT {
     XR_SCENE_COMPUTE_FEATURE_PLANE_MSFT = 1,
@@ -3431,12 +9343,12 @@ typedef struct XrUuidMSFT {
 
 typedef struct XrSceneObserverCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSceneObserverCreateInfoMSFT;
 
 typedef struct XrSceneCreateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSceneCreateInfoMSFT;
 
 typedef struct XrSceneSphereBoundMSFT {
@@ -3468,17 +9380,17 @@ typedef struct XrSceneBoundsMSFT {
 
 typedef struct XrNewSceneComputeInfoMSFT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     uint32_t                            requestedFeatureCount;
     const XrSceneComputeFeatureMSFT*    requestedFeatures;
     XrSceneComputeConsistencyMSFT       consistency;
     XrSceneBoundsMSFT                   bounds;
 } XrNewSceneComputeInfoMSFT;
 
-// XrVisualMeshComputeLodInfoMSFT extends XrNewSceneComputeInfoMSFT
+
 typedef struct XrVisualMeshComputeLodInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrMeshComputeLodMSFT        lod;
 } XrVisualMeshComputeLodInfoMSFT;
 
@@ -3491,7 +9403,7 @@ typedef struct XrSceneComponentMSFT {
 
 typedef struct XrSceneComponentsMSFT {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     uint32_t                 componentCapacityInput;
     uint32_t                 componentCountOutput;
     XrSceneComponentMSFT*    components;
@@ -3499,7 +9411,7 @@ typedef struct XrSceneComponentsMSFT {
 
 typedef struct XrSceneComponentsGetInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSceneComponentTypeMSFT    componentType;
 } XrSceneComponentsGetInfoMSFT;
 
@@ -3510,14 +9422,14 @@ typedef struct XrSceneComponentLocationMSFT {
 
 typedef struct XrSceneComponentLocationsMSFT {
     XrStructureType                  type;
-    void* XR_MAY_ALIAS               next;
+    void*                next;
     uint32_t                         locationCount;
     XrSceneComponentLocationMSFT*    locations;
 } XrSceneComponentLocationsMSFT;
 
 typedef struct XrSceneComponentsLocateInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     uint32_t                    componentIdCount;
@@ -3528,25 +9440,25 @@ typedef struct XrSceneObjectMSFT {
     XrSceneObjectTypeMSFT    objectType;
 } XrSceneObjectMSFT;
 
-// XrSceneObjectsMSFT extends XrSceneComponentsMSFT
+
 typedef struct XrSceneObjectsMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              sceneObjectCount;
     XrSceneObjectMSFT*    sceneObjects;
 } XrSceneObjectsMSFT;
 
-// XrSceneComponentParentFilterInfoMSFT extends XrSceneComponentsGetInfoMSFT
+
 typedef struct XrSceneComponentParentFilterInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidMSFT                  parentId;
 } XrSceneComponentParentFilterInfoMSFT;
 
-// XrSceneObjectTypesFilterInfoMSFT extends XrSceneComponentsGetInfoMSFT
+
 typedef struct XrSceneObjectTypesFilterInfoMSFT {
     XrStructureType                 type;
-    const void* XR_MAY_ALIAS        next;
+    const void*         next;
     uint32_t                        objectTypeCount;
     const XrSceneObjectTypeMSFT*    objectTypes;
 } XrSceneObjectTypesFilterInfoMSFT;
@@ -3558,18 +9470,18 @@ typedef struct XrScenePlaneMSFT {
     XrBool32                         supportsIndicesUint16;
 } XrScenePlaneMSFT;
 
-// XrScenePlanesMSFT extends XrSceneComponentsMSFT
+
 typedef struct XrScenePlanesMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              scenePlaneCount;
     XrScenePlaneMSFT*     scenePlanes;
 } XrScenePlanesMSFT;
 
-// XrScenePlaneAlignmentFilterInfoMSFT extends XrSceneComponentsGetInfoMSFT
+
 typedef struct XrScenePlaneAlignmentFilterInfoMSFT {
     XrStructureType                         type;
-    const void* XR_MAY_ALIAS                next;
+    const void*                 next;
     uint32_t                                alignmentCount;
     const XrScenePlaneAlignmentTypeMSFT*    alignments;
 } XrScenePlaneAlignmentFilterInfoMSFT;
@@ -3579,28 +9491,28 @@ typedef struct XrSceneMeshMSFT {
     XrBool32    supportsIndicesUint16;
 } XrSceneMeshMSFT;
 
-// XrSceneMeshesMSFT extends XrSceneComponentsMSFT
+
 typedef struct XrSceneMeshesMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              sceneMeshCount;
     XrSceneMeshMSFT*      sceneMeshes;
 } XrSceneMeshesMSFT;
 
 typedef struct XrSceneMeshBuffersGetInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint64_t                    meshBufferId;
 } XrSceneMeshBuffersGetInfoMSFT;
 
 typedef struct XrSceneMeshBuffersMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
 } XrSceneMeshBuffersMSFT;
 
 typedef struct XrSceneMeshVertexBufferMSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector3f*           vertices;
@@ -3608,7 +9520,7 @@ typedef struct XrSceneMeshVertexBufferMSFT {
 
 typedef struct XrSceneMeshIndicesUint32MSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              indexCapacityInput;
     uint32_t              indexCountOutput;
     uint32_t*             indices;
@@ -3616,81 +9528,43 @@ typedef struct XrSceneMeshIndicesUint32MSFT {
 
 typedef struct XrSceneMeshIndicesUint16MSFT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              indexCapacityInput;
     uint32_t              indexCountOutput;
     uint16_t*             indices;
 } XrSceneMeshIndicesUint16MSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSceneComputeFeaturesMSFT)(XrInstance instance, XrSystemId systemId, uint32_t featureCapacityInput, uint32_t* featureCountOutput, XrSceneComputeFeatureMSFT* features);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSceneObserverMSFT)(XrSession session, const XrSceneObserverCreateInfoMSFT* createInfo, XrSceneObserverMSFT* sceneObserver);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySceneObserverMSFT)(XrSceneObserverMSFT sceneObserver);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrSceneCreateInfoMSFT* createInfo, XrSceneMSFT* scene);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySceneMSFT)(XrSceneMSFT scene);
-typedef XrResult (XRAPI_PTR *PFN_xrComputeNewSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrNewSceneComputeInfoMSFT* computeInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSceneComputeStateMSFT)(XrSceneObserverMSFT sceneObserver, XrSceneComputeStateMSFT* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSceneComponentsMSFT)(XrSceneMSFT scene, const XrSceneComponentsGetInfoMSFT* getInfo, XrSceneComponentsMSFT* components);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateSceneComponentsMSFT)(XrSceneMSFT scene, const XrSceneComponentsLocateInfoMSFT* locateInfo, XrSceneComponentLocationsMSFT* locations);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSceneMeshBuffersMSFT)(XrSceneMSFT scene, const XrSceneMeshBuffersGetInfoMSFT* getInfo, XrSceneMeshBuffersMSFT* buffers);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSceneComputeFeaturesMSFT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    uint32_t                                    featureCapacityInput,
-    uint32_t*                                   featureCountOutput,
-    XrSceneComputeFeatureMSFT*                  features);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSceneObserverMSFT(
-    XrSession                                   session,
-    const XrSceneObserverCreateInfoMSFT*        createInfo,
-    XrSceneObserverMSFT*                        sceneObserver);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySceneObserverMSFT(
-    XrSceneObserverMSFT                         sceneObserver);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSceneMSFT(
-    XrSceneObserverMSFT                         sceneObserver,
-    const XrSceneCreateInfoMSFT*                createInfo,
-    XrSceneMSFT*                                scene);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySceneMSFT(
-    XrSceneMSFT                                 scene);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrComputeNewSceneMSFT(
-    XrSceneObserverMSFT                         sceneObserver,
-    const XrNewSceneComputeInfoMSFT*            computeInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneComputeStateMSFT(
-    XrSceneObserverMSFT                         sceneObserver,
-    XrSceneComputeStateMSFT*                    state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneComponentsMSFT(
-    XrSceneMSFT                                 scene,
-    const XrSceneComponentsGetInfoMSFT*         getInfo,
-    XrSceneComponentsMSFT*                      components);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateSceneComponentsMSFT(
-    XrSceneMSFT                                 scene,
-    const XrSceneComponentsLocateInfoMSFT*      locateInfo,
-    XrSceneComponentLocationsMSFT*              locations);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneMeshBuffersMSFT(
-    XrSceneMSFT                                 scene,
-    const XrSceneMeshBuffersGetInfoMSFT*        getInfo,
-    XrSceneMeshBuffersMSFT*                     buffers);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateSceneComputeFeaturesMSFT)(XrInstance instance, XrSystemId systemId, uint32_t featureCapacityInput, uint32_t* featureCountOutput, XrSceneComputeFeatureMSFT* features);
+typedef XrResult (*PFN_xrCreateSceneObserverMSFT)(XrSession session, const XrSceneObserverCreateInfoMSFT* createInfo, XrSceneObserverMSFT* sceneObserver);
+typedef XrResult (*PFN_xrDestroySceneObserverMSFT)(XrSceneObserverMSFT sceneObserver);
+typedef XrResult (*PFN_xrCreateSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrSceneCreateInfoMSFT* createInfo, XrSceneMSFT* scene);
+typedef XrResult (*PFN_xrDestroySceneMSFT)(XrSceneMSFT scene);
+typedef XrResult (*PFN_xrComputeNewSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrNewSceneComputeInfoMSFT* computeInfo);
+typedef XrResult (*PFN_xrGetSceneComputeStateMSFT)(XrSceneObserverMSFT sceneObserver, XrSceneComputeStateMSFT* state);
+typedef XrResult (*PFN_xrGetSceneComponentsMSFT)(XrSceneMSFT scene, const XrSceneComponentsGetInfoMSFT* getInfo, XrSceneComponentsMSFT* components);
+typedef XrResult (*PFN_xrLocateSceneComponentsMSFT)(XrSceneMSFT scene, const XrSceneComponentsLocateInfoMSFT* locateInfo, XrSceneComponentLocationsMSFT* locations);
+typedef XrResult (*PFN_xrGetSceneMeshBuffersMSFT)(XrSceneMSFT scene, const XrSceneMeshBuffersGetInfoMSFT* getInfo, XrSceneMeshBuffersMSFT* buffers);
+XrResult  xrEnumerateSceneComputeFeaturesMSFT(XrInstance                                  instance,     XrSystemId                                  systemId,     uint32_t                                    featureCapacityInput,     uint32_t*                                   featureCountOutput,     XrSceneComputeFeatureMSFT*                  features);
+XrResult  xrCreateSceneObserverMSFT(XrSession                                   session,     const XrSceneObserverCreateInfoMSFT*        createInfo,     XrSceneObserverMSFT*                        sceneObserver);
+XrResult  xrDestroySceneObserverMSFT(XrSceneObserverMSFT                         sceneObserver);
+XrResult  xrCreateSceneMSFT(XrSceneObserverMSFT                         sceneObserver,     const XrSceneCreateInfoMSFT*                createInfo,     XrSceneMSFT*                                scene);
+XrResult  xrDestroySceneMSFT(XrSceneMSFT                                 scene);
+XrResult  xrComputeNewSceneMSFT(XrSceneObserverMSFT                         sceneObserver,     const XrNewSceneComputeInfoMSFT*            computeInfo);
+XrResult  xrGetSceneComputeStateMSFT(XrSceneObserverMSFT                         sceneObserver,     XrSceneComputeStateMSFT*                    state);
+XrResult  xrGetSceneComponentsMSFT(XrSceneMSFT                                 scene,     const XrSceneComponentsGetInfoMSFT*         getInfo,     XrSceneComponentsMSFT*                      components);
+XrResult  xrLocateSceneComponentsMSFT(XrSceneMSFT                                 scene,     const XrSceneComponentsLocateInfoMSFT*      locateInfo,     XrSceneComponentLocationsMSFT*              locations);
+XrResult  xrGetSceneMeshBuffersMSFT(XrSceneMSFT                                 scene,     const XrSceneMeshBuffersGetInfoMSFT*        getInfo,     XrSceneMeshBuffersMSFT*                     buffers);
+#line 3685 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3686 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_scene_understanding_serialization is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_scene_understanding_serialization 1
-#define XR_MSFT_scene_understanding_serialization_SPEC_VERSION 2
-#define XR_MSFT_SCENE_UNDERSTANDING_SERIALIZATION_EXTENSION_NAME "XR_MSFT_scene_understanding_serialization"
+
+
+
+
 typedef struct XrSerializedSceneFragmentDataGetInfoMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidMSFT                  sceneFragmentId;
 } XrSerializedSceneFragmentDataGetInfoMSFT;
 
@@ -3701,111 +9575,80 @@ typedef struct XrDeserializeSceneFragmentMSFT {
 
 typedef struct XrSceneDeserializeInfoMSFT {
     XrStructureType                          type;
-    const void* XR_MAY_ALIAS                 next;
+    const void*                  next;
     uint32_t                                 fragmentCount;
     const XrDeserializeSceneFragmentMSFT*    fragments;
 } XrSceneDeserializeInfoMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrDeserializeSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrSceneDeserializeInfoMSFT* deserializeInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSerializedSceneFragmentDataMSFT)(XrSceneMSFT scene, const XrSerializedSceneFragmentDataGetInfoMSFT* getInfo, uint32_t countInput, uint32_t* readOutput, uint8_t* buffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrDeserializeSceneMSFT(
-    XrSceneObserverMSFT                         sceneObserver,
-    const XrSceneDeserializeInfoMSFT*           deserializeInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSerializedSceneFragmentDataMSFT(
-    XrSceneMSFT                                 scene,
-    const XrSerializedSceneFragmentDataGetInfoMSFT* getInfo,
-    uint32_t                                    countInput,
-    uint32_t*                                   readOutput,
-    uint8_t*                                    buffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrDeserializeSceneMSFT)(XrSceneObserverMSFT sceneObserver, const XrSceneDeserializeInfoMSFT* deserializeInfo);
+typedef XrResult (*PFN_xrGetSerializedSceneFragmentDataMSFT)(XrSceneMSFT scene, const XrSerializedSceneFragmentDataGetInfoMSFT* getInfo, uint32_t countInput, uint32_t* readOutput, uint8_t* buffer);
+XrResult  xrDeserializeSceneMSFT(XrSceneObserverMSFT                         sceneObserver,     const XrSceneDeserializeInfoMSFT*           deserializeInfo);
+XrResult  xrGetSerializedSceneFragmentDataMSFT(XrSceneMSFT                                 scene,     const XrSerializedSceneFragmentDataGetInfoMSFT* getInfo,     uint32_t                                    countInput,     uint32_t*                                   readOutput,     uint8_t*                                    buffer);
+#line 3726 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3727 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_display_refresh_rate is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_display_refresh_rate 1
-#define XR_FB_display_refresh_rate_SPEC_VERSION 1
-#define XR_FB_DISPLAY_REFRESH_RATE_EXTENSION_NAME "XR_FB_display_refresh_rate"
+
+
+
+
 typedef struct XrEventDataDisplayRefreshRateChangedFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       fromDisplayRefreshRate;
     float                       toDisplayRefreshRate;
 } XrEventDataDisplayRefreshRateChangedFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateDisplayRefreshRatesFB)(XrSession session, uint32_t displayRefreshRateCapacityInput, uint32_t* displayRefreshRateCountOutput, float* displayRefreshRates);
-typedef XrResult (XRAPI_PTR *PFN_xrGetDisplayRefreshRateFB)(XrSession session, float* displayRefreshRate);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestDisplayRefreshRateFB)(XrSession session, float displayRefreshRate);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateDisplayRefreshRatesFB(
-    XrSession                                   session,
-    uint32_t                                    displayRefreshRateCapacityInput,
-    uint32_t*                                   displayRefreshRateCountOutput,
-    float*                                      displayRefreshRates);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetDisplayRefreshRateFB(
-    XrSession                                   session,
-    float*                                      displayRefreshRate);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestDisplayRefreshRateFB(
-    XrSession                                   session,
-    float                                       displayRefreshRate);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateDisplayRefreshRatesFB)(XrSession session, uint32_t displayRefreshRateCapacityInput, uint32_t* displayRefreshRateCountOutput, float* displayRefreshRates);
+typedef XrResult (*PFN_xrGetDisplayRefreshRateFB)(XrSession session, float* displayRefreshRate);
+typedef XrResult (*PFN_xrRequestDisplayRefreshRateFB)(XrSession session, float displayRefreshRate);
+XrResult  xrEnumerateDisplayRefreshRatesFB(XrSession                                   session,     uint32_t                                    displayRefreshRateCapacityInput,     uint32_t*                                   displayRefreshRateCountOutput,     float*                                      displayRefreshRates);
+XrResult  xrGetDisplayRefreshRateFB(XrSession                                   session,     float*                                      displayRefreshRate);
+XrResult  xrRequestDisplayRefreshRateFB(XrSession                                   session,     float                                       displayRefreshRate);
+#line 3760 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3761 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_vive_cosmos_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_vive_cosmos_controller_interaction 1
-#define XR_HTC_vive_cosmos_controller_interaction_SPEC_VERSION 1
-#define XR_HTC_VIVE_COSMOS_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_HTC_vive_cosmos_controller_interaction"
 
 
-// XR_HTCX_vive_tracker_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTCX_vive_tracker_interaction 1
-#define XR_HTCX_vive_tracker_interaction_SPEC_VERSION 3
-#define XR_HTCX_VIVE_TRACKER_INTERACTION_EXTENSION_NAME "XR_HTCX_vive_tracker_interaction"
+
+
+
+
+
+
+
+
 typedef struct XrViveTrackerPathsHTCX {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrPath                persistentPath;
     XrPath                rolePath;
 } XrViveTrackerPathsHTCX;
 
 typedef struct XrEventDataViveTrackerConnectedHTCX {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrViveTrackerPathsHTCX*     paths;
 } XrEventDataViveTrackerConnectedHTCX;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateViveTrackerPathsHTCX)(XrInstance instance, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrViveTrackerPathsHTCX* paths);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateViveTrackerPathsHTCX(
-    XrInstance                                  instance,
-    uint32_t                                    pathCapacityInput,
-    uint32_t*                                   pathCountOutput,
-    XrViveTrackerPathsHTCX*                     paths);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateViveTrackerPathsHTCX)(XrInstance instance, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrViveTrackerPathsHTCX* paths);
+XrResult  xrEnumerateViveTrackerPathsHTCX(XrInstance                                  instance,     uint32_t                                    pathCapacityInput,     uint32_t*                                   pathCountOutput,     XrViveTrackerPathsHTCX*                     paths);
+#line 3796 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3797 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_facial_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_facial_tracking 1
-
-#define XR_FACIAL_EXPRESSION_EYE_COUNT_HTC 14
 
 
-#define XR_FACIAL_EXPRESSION_LIP_COUNT_HTC 37
 
-typedef uint64_t XrFacialTrackerHTC;
-#define XR_HTC_facial_tracking_SPEC_VERSION 3
-#define XR_HTC_FACIAL_TRACKING_EXTENSION_NAME "XR_HTC_facial_tracking"
+
+
+
+
+
+typedef struct XrFacialTrackerHTC_T* XrFacialTrackerHTC;
+
+
 
 typedef enum XrEyeExpressionHTC {
     XR_EYE_EXPRESSION_LEFT_BLINK_HTC = 0,
@@ -3875,17 +9718,17 @@ typedef enum XrFacialTrackingTypeHTC {
     XR_FACIAL_TRACKING_TYPE_LIP_DEFAULT_HTC = 2,
     XR_FACIAL_TRACKING_TYPE_MAX_ENUM_HTC = 0x7FFFFFFF
 } XrFacialTrackingTypeHTC;
-// XrSystemFacialTrackingPropertiesHTC extends XrSystemProperties
+
 typedef struct XrSystemFacialTrackingPropertiesHTC {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportEyeFacialTracking;
     XrBool32              supportLipFacialTracking;
 } XrSystemFacialTrackingPropertiesHTC;
 
 typedef struct XrFacialExpressionsHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    isActive;
     XrTime                      sampleTime;
     uint32_t                    expressionCount;
@@ -3894,53 +9737,42 @@ typedef struct XrFacialExpressionsHTC {
 
 typedef struct XrFacialTrackerCreateInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFacialTrackingTypeHTC     facialTrackingType;
 } XrFacialTrackerCreateInfoHTC;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateFacialTrackerHTC)(XrSession session, const XrFacialTrackerCreateInfoHTC* createInfo, XrFacialTrackerHTC* facialTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyFacialTrackerHTC)(XrFacialTrackerHTC facialTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrGetFacialExpressionsHTC)(XrFacialTrackerHTC facialTracker, XrFacialExpressionsHTC* facialExpressions);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateFacialTrackerHTC(
-    XrSession                                   session,
-    const XrFacialTrackerCreateInfoHTC*         createInfo,
-    XrFacialTrackerHTC*                         facialTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyFacialTrackerHTC(
-    XrFacialTrackerHTC                          facialTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetFacialExpressionsHTC(
-    XrFacialTrackerHTC                          facialTracker,
-    XrFacialExpressionsHTC*                     facialExpressions);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateFacialTrackerHTC)(XrSession session, const XrFacialTrackerCreateInfoHTC* createInfo, XrFacialTrackerHTC* facialTracker);
+typedef XrResult (*PFN_xrDestroyFacialTrackerHTC)(XrFacialTrackerHTC facialTracker);
+typedef XrResult (*PFN_xrGetFacialExpressionsHTC)(XrFacialTrackerHTC facialTracker, XrFacialExpressionsHTC* facialExpressions);
+XrResult  xrCreateFacialTrackerHTC(XrSession                                   session,     const XrFacialTrackerCreateInfoHTC*         createInfo,     XrFacialTrackerHTC*                         facialTracker);
+XrResult  xrDestroyFacialTrackerHTC(XrFacialTrackerHTC                          facialTracker);
+XrResult  xrGetFacialExpressionsHTC(XrFacialTrackerHTC                          facialTracker,     XrFacialExpressionsHTC*                     facialExpressions);
+#line 3920 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3921 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_vive_focus3_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_vive_focus3_controller_interaction 1
-#define XR_HTC_vive_focus3_controller_interaction_SPEC_VERSION 2
-#define XR_HTC_VIVE_FOCUS3_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_HTC_vive_focus3_controller_interaction"
 
 
-// XR_HTC_hand_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_hand_interaction 1
-#define XR_HTC_hand_interaction_SPEC_VERSION 1
-#define XR_HTC_HAND_INTERACTION_EXTENSION_NAME "XR_HTC_hand_interaction"
 
 
-// XR_HTC_vive_wrist_tracker_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_vive_wrist_tracker_interaction 1
-#define XR_HTC_vive_wrist_tracker_interaction_SPEC_VERSION 1
-#define XR_HTC_VIVE_WRIST_TRACKER_INTERACTION_EXTENSION_NAME "XR_HTC_vive_wrist_tracker_interaction"
 
 
-// XR_FB_color_space is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_color_space 1
-#define XR_FB_color_space_SPEC_VERSION    3
-#define XR_FB_COLOR_SPACE_EXTENSION_NAME  "XR_FB_color_space"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 typedef enum XrColorSpaceFB {
     XR_COLOR_SPACE_UNMANAGED_FB = 0,
@@ -3953,35 +9785,25 @@ typedef enum XrColorSpaceFB {
     XR_COLOR_SPACE_ADOBE_RGB_FB = 7,
     XR_COLOR_SPACE_MAX_ENUM_FB = 0x7FFFFFFF
 } XrColorSpaceFB;
-// XrSystemColorSpacePropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemColorSpacePropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrColorSpaceFB        colorSpace;
 } XrSystemColorSpacePropertiesFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateColorSpacesFB)(XrSession session, uint32_t colorSpaceCapacityInput, uint32_t* colorSpaceCountOutput, XrColorSpaceFB* colorSpaces);
-typedef XrResult (XRAPI_PTR *PFN_xrSetColorSpaceFB)(XrSession session, const XrColorSpaceFB colorSpace);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateColorSpacesFB(
-    XrSession                                   session,
-    uint32_t                                    colorSpaceCapacityInput,
-    uint32_t*                                   colorSpaceCountOutput,
-    XrColorSpaceFB*                             colorSpaces);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetColorSpaceFB(
-    XrSession                                   session,
-    const XrColorSpaceFB                        colorSpace);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateColorSpacesFB)(XrSession session, uint32_t colorSpaceCapacityInput, uint32_t* colorSpaceCountOutput, XrColorSpaceFB* colorSpaces);
+typedef XrResult (*PFN_xrSetColorSpaceFB)(XrSession session, const XrColorSpaceFB colorSpace);
+XrResult  xrEnumerateColorSpacesFB(XrSession                                   session,     uint32_t                                    colorSpaceCapacityInput,     uint32_t*                                   colorSpaceCountOutput,     XrColorSpaceFB*                             colorSpaces);
+XrResult  xrSetColorSpaceFB(XrSession                                   session,     const XrColorSpaceFB                        colorSpace);
+#line 3979 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 3980 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_hand_tracking_mesh is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_hand_tracking_mesh 1
-#define XR_FB_hand_tracking_mesh_SPEC_VERSION 3
-#define XR_FB_HAND_TRACKING_MESH_EXTENSION_NAME "XR_FB_hand_tracking_mesh"
+
+
+
+
 typedef struct XrVector4sFB {
     int16_t    x;
     int16_t    y;
@@ -3991,7 +9813,7 @@ typedef struct XrVector4sFB {
 
 typedef struct XrHandTrackingMeshFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              jointCapacityInput;
     uint32_t              jointCountOutput;
     XrPosef*              jointBindPoses;
@@ -4009,34 +9831,29 @@ typedef struct XrHandTrackingMeshFB {
     int16_t*              indices;
 } XrHandTrackingMeshFB;
 
-// XrHandTrackingScaleFB extends XrHandJointLocationsEXT
+
 typedef struct XrHandTrackingScaleFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     float                 sensorOutput;
     float                 currentOutput;
     XrBool32              overrideHandScale;
     float                 overrideValueInput;
 } XrHandTrackingScaleFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetHandMeshFB)(XrHandTrackerEXT handTracker, XrHandTrackingMeshFB* mesh);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetHandMeshFB(
-    XrHandTrackerEXT                            handTracker,
-    XrHandTrackingMeshFB*                       mesh);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetHandMeshFB)(XrHandTrackerEXT handTracker, XrHandTrackingMeshFB* mesh);
+XrResult  xrGetHandMeshFB(XrHandTrackerEXT                            handTracker,     XrHandTrackingMeshFB*                       mesh);
+#line 4031 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4032 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_hand_tracking_aim is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_hand_tracking_aim 1
-#define XR_FB_hand_tracking_aim_SPEC_VERSION 2
-#define XR_FB_HAND_TRACKING_AIM_EXTENSION_NAME "XR_FB_hand_tracking_aim"
+
+
+
+
 typedef XrFlags64 XrHandTrackingAimFlagsFB;
 
-// Flag bits for XrHandTrackingAimFlagsFB
+
 static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_COMPUTED_BIT_FB = 0x00000001;
 static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_VALID_BIT_FB = 0x00000002;
 static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_INDEX_PINCHING_BIT_FB = 0x00000004;
@@ -4047,10 +9864,10 @@ static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_SYSTEM_GESTURE_BIT_FB
 static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_DOMINANT_HAND_BIT_FB = 0x00000080;
 static const XrHandTrackingAimFlagsFB XR_HAND_TRACKING_AIM_MENU_PRESSED_BIT_FB = 0x00000100;
 
-// XrHandTrackingAimStateFB extends XrHandJointLocationsEXT
+
 typedef struct XrHandTrackingAimStateFB {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrHandTrackingAimFlagsFB    status;
     XrPosef                     aimPose;
     float                       pinchStrengthIndex;
@@ -4061,34 +9878,34 @@ typedef struct XrHandTrackingAimStateFB {
 
 
 
-// XR_FB_hand_tracking_capsules is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_hand_tracking_capsules 1
-#define XR_HAND_TRACKING_CAPSULE_POINT_COUNT_FB 2
-#define XR_HAND_TRACKING_CAPSULE_COUNT_FB 19
-#define XR_FB_hand_tracking_capsules_SPEC_VERSION 3
-#define XR_FB_HAND_TRACKING_CAPSULES_EXTENSION_NAME "XR_FB_hand_tracking_capsules"
-#define XR_FB_HAND_TRACKING_CAPSULE_POINT_COUNT XR_HAND_TRACKING_CAPSULE_POINT_COUNT_FB
-#define XR_FB_HAND_TRACKING_CAPSULE_COUNT XR_HAND_TRACKING_CAPSULE_COUNT_FB
+
+
+
+
+
+
+
+
 typedef struct XrHandCapsuleFB {
-    XrVector3f        points[XR_HAND_TRACKING_CAPSULE_POINT_COUNT_FB];
+    XrVector3f        points[2];
     float             radius;
     XrHandJointEXT    joint;
 } XrHandCapsuleFB;
 
-// XrHandTrackingCapsulesStateFB extends XrHandJointLocationsEXT
+
 typedef struct XrHandTrackingCapsulesStateFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
-    XrHandCapsuleFB       capsules[XR_HAND_TRACKING_CAPSULE_COUNT_FB];
+    void*     next;
+    XrHandCapsuleFB       capsules[19];
 } XrHandTrackingCapsulesStateFB;
 
 
 
-// XR_FB_spatial_entity is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity 1
+
+
 typedef uint64_t XrAsyncRequestIdFB;
-#define XR_FB_spatial_entity_SPEC_VERSION 3
-#define XR_FB_SPATIAL_ENTITY_EXTENSION_NAME "XR_FB_spatial_entity"
+
+
 
 typedef enum XrSpaceComponentTypeFB {
     XR_SPACE_COMPONENT_TYPE_LOCATABLE_FB = 0,
@@ -4102,16 +9919,16 @@ typedef enum XrSpaceComponentTypeFB {
     XR_SPACE_COMPONENT_TYPE_TRIANGLE_MESH_META = 1000269000,
     XR_SPACE_COMPONENT_TYPE_MAX_ENUM_FB = 0x7FFFFFFF
 } XrSpaceComponentTypeFB;
-// XrSystemSpatialEntityPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemSpatialEntityPropertiesFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    supportsSpatialEntity;
 } XrSystemSpatialEntityPropertiesFB;
 
 typedef struct XrSpatialAnchorCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrPosef                     poseInSpace;
     XrTime                      time;
@@ -4119,7 +9936,7 @@ typedef struct XrSpatialAnchorCreateInfoFB {
 
 typedef struct XrSpaceComponentStatusSetInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpaceComponentTypeFB      componentType;
     XrBool32                    enabled;
     XrDuration                  timeout;
@@ -4127,7 +9944,7 @@ typedef struct XrSpaceComponentStatusSetInfoFB {
 
 typedef struct XrSpaceComponentStatusFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              enabled;
     XrBool32              changePending;
 } XrSpaceComponentStatusFB;
@@ -4136,7 +9953,7 @@ typedef XrUuid XrUuidEXT;
 
 typedef struct XrEventDataSpatialAnchorCreateCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
     XrSpace                     space;
@@ -4145,7 +9962,7 @@ typedef struct XrEventDataSpatialAnchorCreateCompleteFB {
 
 typedef struct XrEventDataSpaceSetStatusCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
     XrSpace                     space;
@@ -4154,96 +9971,66 @@ typedef struct XrEventDataSpaceSetStatusCompleteFB {
     XrBool32                    enabled;
 } XrEventDataSpaceSetStatusCompleteFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorFB)(XrSession session, const XrSpatialAnchorCreateInfoFB* info, XrAsyncRequestIdFB* requestId);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceUuidFB)(XrSpace space, XrUuidEXT* uuid);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpaceSupportedComponentsFB)(XrSpace space, uint32_t componentTypeCapacityInput, uint32_t* componentTypeCountOutput, XrSpaceComponentTypeFB* componentTypes);
-typedef XrResult (XRAPI_PTR *PFN_xrSetSpaceComponentStatusFB)(XrSpace space, const XrSpaceComponentStatusSetInfoFB* info, XrAsyncRequestIdFB* requestId);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceComponentStatusFB)(XrSpace space, XrSpaceComponentTypeFB componentType, XrSpaceComponentStatusFB* status);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorFB(
-    XrSession                                   session,
-    const XrSpatialAnchorCreateInfoFB*          info,
-    XrAsyncRequestIdFB*                         requestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceUuidFB(
-    XrSpace                                     space,
-    XrUuidEXT*                                  uuid);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpaceSupportedComponentsFB(
-    XrSpace                                     space,
-    uint32_t                                    componentTypeCapacityInput,
-    uint32_t*                                   componentTypeCountOutput,
-    XrSpaceComponentTypeFB*                     componentTypes);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetSpaceComponentStatusFB(
-    XrSpace                                     space,
-    const XrSpaceComponentStatusSetInfoFB*      info,
-    XrAsyncRequestIdFB*                         requestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceComponentStatusFB(
-    XrSpace                                     space,
-    XrSpaceComponentTypeFB                      componentType,
-    XrSpaceComponentStatusFB*                   status);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorFB)(XrSession session, const XrSpatialAnchorCreateInfoFB* info, XrAsyncRequestIdFB* requestId);
+typedef XrResult (*PFN_xrGetSpaceUuidFB)(XrSpace space, XrUuidEXT* uuid);
+typedef XrResult (*PFN_xrEnumerateSpaceSupportedComponentsFB)(XrSpace space, uint32_t componentTypeCapacityInput, uint32_t* componentTypeCountOutput, XrSpaceComponentTypeFB* componentTypes);
+typedef XrResult (*PFN_xrSetSpaceComponentStatusFB)(XrSpace space, const XrSpaceComponentStatusSetInfoFB* info, XrAsyncRequestIdFB* requestId);
+typedef XrResult (*PFN_xrGetSpaceComponentStatusFB)(XrSpace space, XrSpaceComponentTypeFB componentType, XrSpaceComponentStatusFB* status);
+XrResult  xrCreateSpatialAnchorFB(XrSession                                   session,     const XrSpatialAnchorCreateInfoFB*          info,     XrAsyncRequestIdFB*                         requestId);
+XrResult  xrGetSpaceUuidFB(XrSpace                                     space,     XrUuidEXT*                                  uuid);
+XrResult  xrEnumerateSpaceSupportedComponentsFB(XrSpace                                     space,     uint32_t                                    componentTypeCapacityInput,     uint32_t*                                   componentTypeCountOutput,     XrSpaceComponentTypeFB*                     componentTypes);
+XrResult  xrSetSpaceComponentStatusFB(XrSpace                                     space,     const XrSpaceComponentStatusSetInfoFB*      info,     XrAsyncRequestIdFB*                         requestId);
+XrResult  xrGetSpaceComponentStatusFB(XrSpace                                     space,     XrSpaceComponentTypeFB                      componentType,     XrSpaceComponentStatusFB*                   status);
+#line 4191 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4192 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_foveation is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_foveation 1
-typedef uint64_t XrFoveationProfileFB;
-#define XR_FB_foveation_SPEC_VERSION      1
-#define XR_FB_FOVEATION_EXTENSION_NAME    "XR_FB_foveation"
+
+
+typedef struct XrFoveationProfileFB_T* XrFoveationProfileFB;
+
+
 typedef XrFlags64 XrSwapchainCreateFoveationFlagsFB;
 
-// Flag bits for XrSwapchainCreateFoveationFlagsFB
+
 static const XrSwapchainCreateFoveationFlagsFB XR_SWAPCHAIN_CREATE_FOVEATION_SCALED_BIN_BIT_FB = 0x00000001;
 static const XrSwapchainCreateFoveationFlagsFB XR_SWAPCHAIN_CREATE_FOVEATION_FRAGMENT_DENSITY_MAP_BIT_FB = 0x00000002;
 
 typedef XrFlags64 XrSwapchainStateFoveationFlagsFB;
 
-// Flag bits for XrSwapchainStateFoveationFlagsFB
+
 
 typedef struct XrFoveationProfileCreateInfoFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
 } XrFoveationProfileCreateInfoFB;
 
-// XrSwapchainCreateInfoFoveationFB extends XrSwapchainCreateInfo
+
 typedef struct XrSwapchainCreateInfoFoveationFB {
     XrStructureType                      type;
-    void* XR_MAY_ALIAS                   next;
+    void*                    next;
     XrSwapchainCreateFoveationFlagsFB    flags;
 } XrSwapchainCreateInfoFoveationFB;
 
 typedef struct XrSwapchainStateFoveationFB {
     XrStructureType                     type;
-    void* XR_MAY_ALIAS                  next;
+    void*                   next;
     XrSwapchainStateFoveationFlagsFB    flags;
     XrFoveationProfileFB                profile;
 } XrSwapchainStateFoveationFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateFoveationProfileFB)(XrSession session, const XrFoveationProfileCreateInfoFB* createInfo, XrFoveationProfileFB* profile);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyFoveationProfileFB)(XrFoveationProfileFB profile);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateFoveationProfileFB(
-    XrSession                                   session,
-    const XrFoveationProfileCreateInfoFB*       createInfo,
-    XrFoveationProfileFB*                       profile);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyFoveationProfileFB(
-    XrFoveationProfileFB                        profile);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateFoveationProfileFB)(XrSession session, const XrFoveationProfileCreateInfoFB* createInfo, XrFoveationProfileFB* profile);
+typedef XrResult (*PFN_xrDestroyFoveationProfileFB)(XrFoveationProfileFB profile);
+XrResult  xrCreateFoveationProfileFB(XrSession                                   session,     const XrFoveationProfileCreateInfoFB*       createInfo,     XrFoveationProfileFB*                       profile);
+XrResult  xrDestroyFoveationProfileFB(XrFoveationProfileFB                        profile);
+#line 4241 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4242 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_foveation_configuration is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_foveation_configuration 1
-#define XR_FB_foveation_configuration_SPEC_VERSION 1
-#define XR_FB_FOVEATION_CONFIGURATION_EXTENSION_NAME "XR_FB_foveation_configuration"
+
+
+
+
 
 typedef enum XrFoveationLevelFB {
     XR_FOVEATION_LEVEL_NONE_FB = 0,
@@ -4258,10 +10045,10 @@ typedef enum XrFoveationDynamicFB {
     XR_FOVEATION_DYNAMIC_LEVEL_ENABLED_FB = 1,
     XR_FOVEATION_DYNAMIC_MAX_ENUM_FB = 0x7FFFFFFF
 } XrFoveationDynamicFB;
-// XrFoveationLevelProfileCreateInfoFB extends XrFoveationProfileCreateInfoFB
+
 typedef struct XrFoveationLevelProfileCreateInfoFB {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrFoveationLevelFB      level;
     float                   verticalOffset;
     XrFoveationDynamicFB    dynamic;
@@ -4269,14 +10056,14 @@ typedef struct XrFoveationLevelProfileCreateInfoFB {
 
 
 
-// XR_FB_keyboard_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_keyboard_tracking 1
-#define XR_MAX_KEYBOARD_TRACKING_NAME_SIZE_FB 128
-#define XR_FB_keyboard_tracking_SPEC_VERSION 1
-#define XR_FB_KEYBOARD_TRACKING_EXTENSION_NAME "XR_FB_keyboard_tracking"
+
+
+
+
+
 typedef XrFlags64 XrKeyboardTrackingFlagsFB;
 
-// Flag bits for XrKeyboardTrackingFlagsFB
+
 static const XrKeyboardTrackingFlagsFB XR_KEYBOARD_TRACKING_EXISTS_BIT_FB = 0x00000001;
 static const XrKeyboardTrackingFlagsFB XR_KEYBOARD_TRACKING_LOCAL_BIT_FB = 0x00000002;
 static const XrKeyboardTrackingFlagsFB XR_KEYBOARD_TRACKING_REMOTE_BIT_FB = 0x00000004;
@@ -4284,14 +10071,14 @@ static const XrKeyboardTrackingFlagsFB XR_KEYBOARD_TRACKING_CONNECTED_BIT_FB = 0
 
 typedef XrFlags64 XrKeyboardTrackingQueryFlagsFB;
 
-// Flag bits for XrKeyboardTrackingQueryFlagsFB
+
 static const XrKeyboardTrackingQueryFlagsFB XR_KEYBOARD_TRACKING_QUERY_LOCAL_BIT_FB = 0x00000002;
 static const XrKeyboardTrackingQueryFlagsFB XR_KEYBOARD_TRACKING_QUERY_REMOTE_BIT_FB = 0x00000004;
 
-// XrSystemKeyboardTrackingPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemKeyboardTrackingPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsKeyboardTracking;
 } XrSystemKeyboardTrackingPropertiesFB;
 
@@ -4299,44 +10086,34 @@ typedef struct XrKeyboardTrackingDescriptionFB {
     uint64_t                     trackedKeyboardId;
     XrVector3f                   size;
     XrKeyboardTrackingFlagsFB    flags;
-    char                         name[XR_MAX_KEYBOARD_TRACKING_NAME_SIZE_FB];
+    char                         name[128];
 } XrKeyboardTrackingDescriptionFB;
 
 typedef struct XrKeyboardSpaceCreateInfoFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint64_t              trackedKeyboardId;
 } XrKeyboardSpaceCreateInfoFB;
 
 typedef struct XrKeyboardTrackingQueryFB {
     XrStructureType                   type;
-    void* XR_MAY_ALIAS                next;
+    void*                 next;
     XrKeyboardTrackingQueryFlagsFB    flags;
 } XrKeyboardTrackingQueryFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySystemTrackedKeyboardFB)(XrSession session, const XrKeyboardTrackingQueryFB* queryInfo, XrKeyboardTrackingDescriptionFB* keyboard);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateKeyboardSpaceFB)(XrSession session, const XrKeyboardSpaceCreateInfoFB* createInfo, XrSpace* keyboardSpace);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySystemTrackedKeyboardFB(
-    XrSession                                   session,
-    const XrKeyboardTrackingQueryFB*            queryInfo,
-    XrKeyboardTrackingDescriptionFB*            keyboard);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateKeyboardSpaceFB(
-    XrSession                                   session,
-    const XrKeyboardSpaceCreateInfoFB*          createInfo,
-    XrSpace*                                    keyboardSpace);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrQuerySystemTrackedKeyboardFB)(XrSession session, const XrKeyboardTrackingQueryFB* queryInfo, XrKeyboardTrackingDescriptionFB* keyboard);
+typedef XrResult (*PFN_xrCreateKeyboardSpaceFB)(XrSession session, const XrKeyboardSpaceCreateInfoFB* createInfo, XrSpace* keyboardSpace);
+XrResult  xrQuerySystemTrackedKeyboardFB(XrSession                                   session,     const XrKeyboardTrackingQueryFB*            queryInfo,     XrKeyboardTrackingDescriptionFB*            keyboard);
+XrResult  xrCreateKeyboardSpaceFB(XrSession                                   session,     const XrKeyboardSpaceCreateInfoFB*          createInfo,     XrSpace*                                    keyboardSpace);
+#line 4333 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4334 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_triangle_mesh is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_triangle_mesh 1
-typedef uint64_t XrTriangleMeshFB;
-#define XR_FB_triangle_mesh_SPEC_VERSION  2
-#define XR_FB_TRIANGLE_MESH_EXTENSION_NAME "XR_FB_triangle_mesh"
+
+
+typedef struct XrTriangleMeshFB_T* XrTriangleMeshFB;
+
+
 
 typedef enum XrWindingOrderFB {
     XR_WINDING_ORDER_UNKNOWN_FB = 0,
@@ -4346,12 +10123,12 @@ typedef enum XrWindingOrderFB {
 } XrWindingOrderFB;
 typedef XrFlags64 XrTriangleMeshFlagsFB;
 
-// Flag bits for XrTriangleMeshFlagsFB
+
 static const XrTriangleMeshFlagsFB XR_TRIANGLE_MESH_MUTABLE_BIT_FB = 0x00000001;
 
 typedef struct XrTriangleMeshCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTriangleMeshFlagsFB       flags;
     XrWindingOrderFB            windingOrder;
     uint32_t                    vertexCount;
@@ -4360,59 +10137,34 @@ typedef struct XrTriangleMeshCreateInfoFB {
     const uint32_t*             indexBuffer;
 } XrTriangleMeshCreateInfoFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateTriangleMeshFB)(XrSession session, const XrTriangleMeshCreateInfoFB* createInfo, XrTriangleMeshFB* outTriangleMesh);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyTriangleMeshFB)(XrTriangleMeshFB mesh);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshGetVertexBufferFB)(XrTriangleMeshFB mesh, XrVector3f** outVertexBuffer);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshGetIndexBufferFB)(XrTriangleMeshFB mesh, uint32_t** outIndexBuffer);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshBeginUpdateFB)(XrTriangleMeshFB mesh);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshEndUpdateFB)(XrTriangleMeshFB mesh, uint32_t vertexCount, uint32_t triangleCount);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshBeginVertexBufferUpdateFB)(XrTriangleMeshFB mesh, uint32_t* outVertexCount);
-typedef XrResult (XRAPI_PTR *PFN_xrTriangleMeshEndVertexBufferUpdateFB)(XrTriangleMeshFB mesh);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateTriangleMeshFB(
-    XrSession                                   session,
-    const XrTriangleMeshCreateInfoFB*           createInfo,
-    XrTriangleMeshFB*                           outTriangleMesh);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyTriangleMeshFB(
-    XrTriangleMeshFB                            mesh);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshGetVertexBufferFB(
-    XrTriangleMeshFB                            mesh,
-    XrVector3f**                                outVertexBuffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshGetIndexBufferFB(
-    XrTriangleMeshFB                            mesh,
-    uint32_t**                                  outIndexBuffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshBeginUpdateFB(
-    XrTriangleMeshFB                            mesh);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshEndUpdateFB(
-    XrTriangleMeshFB                            mesh,
-    uint32_t                                    vertexCount,
-    uint32_t                                    triangleCount);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshBeginVertexBufferUpdateFB(
-    XrTriangleMeshFB                            mesh,
-    uint32_t*                                   outVertexCount);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshEndVertexBufferUpdateFB(
-    XrTriangleMeshFB                            mesh);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateTriangleMeshFB)(XrSession session, const XrTriangleMeshCreateInfoFB* createInfo, XrTriangleMeshFB* outTriangleMesh);
+typedef XrResult (*PFN_xrDestroyTriangleMeshFB)(XrTriangleMeshFB mesh);
+typedef XrResult (*PFN_xrTriangleMeshGetVertexBufferFB)(XrTriangleMeshFB mesh, XrVector3f** outVertexBuffer);
+typedef XrResult (*PFN_xrTriangleMeshGetIndexBufferFB)(XrTriangleMeshFB mesh, uint32_t** outIndexBuffer);
+typedef XrResult (*PFN_xrTriangleMeshBeginUpdateFB)(XrTriangleMeshFB mesh);
+typedef XrResult (*PFN_xrTriangleMeshEndUpdateFB)(XrTriangleMeshFB mesh, uint32_t vertexCount, uint32_t triangleCount);
+typedef XrResult (*PFN_xrTriangleMeshBeginVertexBufferUpdateFB)(XrTriangleMeshFB mesh, uint32_t* outVertexCount);
+typedef XrResult (*PFN_xrTriangleMeshEndVertexBufferUpdateFB)(XrTriangleMeshFB mesh);
+XrResult  xrCreateTriangleMeshFB(XrSession                                   session,     const XrTriangleMeshCreateInfoFB*           createInfo,     XrTriangleMeshFB*                           outTriangleMesh);
+XrResult  xrDestroyTriangleMeshFB(XrTriangleMeshFB                            mesh);
+XrResult  xrTriangleMeshGetVertexBufferFB(XrTriangleMeshFB                            mesh,     XrVector3f**                                outVertexBuffer);
+XrResult  xrTriangleMeshGetIndexBufferFB(XrTriangleMeshFB                            mesh,     uint32_t**                                  outIndexBuffer);
+XrResult  xrTriangleMeshBeginUpdateFB(XrTriangleMeshFB                            mesh);
+XrResult  xrTriangleMeshEndUpdateFB(XrTriangleMeshFB                            mesh,     uint32_t                                    vertexCount,     uint32_t                                    triangleCount);
+XrResult  xrTriangleMeshBeginVertexBufferUpdateFB(XrTriangleMeshFB                            mesh,     uint32_t*                                   outVertexCount);
+XrResult  xrTriangleMeshEndVertexBufferUpdateFB(XrTriangleMeshFB                            mesh);
+#line 4406 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4407 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_passthrough is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_passthrough 1
-typedef uint64_t XrPassthroughFB;
-typedef uint64_t XrPassthroughLayerFB;
-typedef uint64_t XrGeometryInstanceFB;
-#define XR_PASSTHROUGH_COLOR_MAP_MONO_SIZE_FB 256
-#define XR_FB_passthrough_SPEC_VERSION    4
-#define XR_FB_PASSTHROUGH_EXTENSION_NAME  "XR_FB_passthrough"
+
+
+typedef struct XrPassthroughFB_T* XrPassthroughFB;
+typedef struct XrPassthroughLayerFB_T* XrPassthroughLayerFB;
+typedef struct XrGeometryInstanceFB_T* XrGeometryInstanceFB;
+
+
+
 
 typedef enum XrPassthroughLayerPurposeFB {
     XR_PASSTHROUGH_LAYER_PURPOSE_RECONSTRUCTION_FB = 0,
@@ -4423,48 +10175,48 @@ typedef enum XrPassthroughLayerPurposeFB {
 } XrPassthroughLayerPurposeFB;
 typedef XrFlags64 XrPassthroughCapabilityFlagsFB;
 
-// Flag bits for XrPassthroughCapabilityFlagsFB
+
 static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_BIT_FB = 0x00000001;
 static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_COLOR_BIT_FB = 0x00000002;
 static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_LAYER_DEPTH_BIT_FB = 0x00000004;
 
 typedef XrFlags64 XrPassthroughFlagsFB;
 
-// Flag bits for XrPassthroughFlagsFB
+
 static const XrPassthroughFlagsFB XR_PASSTHROUGH_IS_RUNNING_AT_CREATION_BIT_FB = 0x00000001;
 static const XrPassthroughFlagsFB XR_PASSTHROUGH_LAYER_DEPTH_BIT_FB = 0x00000002;
 
 typedef XrFlags64 XrPassthroughStateChangedFlagsFB;
 
-// Flag bits for XrPassthroughStateChangedFlagsFB
+
 static const XrPassthroughStateChangedFlagsFB XR_PASSTHROUGH_STATE_CHANGED_REINIT_REQUIRED_BIT_FB = 0x00000001;
 static const XrPassthroughStateChangedFlagsFB XR_PASSTHROUGH_STATE_CHANGED_NON_RECOVERABLE_ERROR_BIT_FB = 0x00000002;
 static const XrPassthroughStateChangedFlagsFB XR_PASSTHROUGH_STATE_CHANGED_RECOVERABLE_ERROR_BIT_FB = 0x00000004;
 static const XrPassthroughStateChangedFlagsFB XR_PASSTHROUGH_STATE_CHANGED_RESTORED_ERROR_BIT_FB = 0x00000008;
 
-// XrSystemPassthroughPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemPassthroughPropertiesFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    supportsPassthrough;
 } XrSystemPassthroughPropertiesFB;
 
-// XrSystemPassthroughProperties2FB extends XrSystemProperties
+
 typedef struct XrSystemPassthroughProperties2FB {
     XrStructureType                   type;
-    const void* XR_MAY_ALIAS          next;
+    const void*           next;
     XrPassthroughCapabilityFlagsFB    capabilities;
 } XrSystemPassthroughProperties2FB;
 
 typedef struct XrPassthroughCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPassthroughFlagsFB        flags;
 } XrPassthroughCreateInfoFB;
 
 typedef struct XrPassthroughLayerCreateInfoFB {
     XrStructureType                type;
-    const void* XR_MAY_ALIAS       next;
+    const void*        next;
     XrPassthroughFB                passthrough;
     XrPassthroughFlagsFB           flags;
     XrPassthroughLayerPurposeFB    purpose;
@@ -4472,7 +10224,7 @@ typedef struct XrPassthroughLayerCreateInfoFB {
 
 typedef struct XrCompositionLayerPassthroughFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     flags;
     XrSpace                     space;
     XrPassthroughLayerFB        layerHandle;
@@ -4480,7 +10232,7 @@ typedef struct XrCompositionLayerPassthroughFB {
 
 typedef struct XrGeometryInstanceCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPassthroughLayerFB        layer;
     XrTriangleMeshFB            mesh;
     XrSpace                     baseSpace;
@@ -4490,7 +10242,7 @@ typedef struct XrGeometryInstanceCreateInfoFB {
 
 typedef struct XrGeometryInstanceTransformFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     XrPosef                     pose;
@@ -4499,29 +10251,29 @@ typedef struct XrGeometryInstanceTransformFB {
 
 typedef struct XrPassthroughStyleFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       textureOpacityFactor;
     XrColor4f                   edgeColor;
 } XrPassthroughStyleFB;
 
-// XrPassthroughColorMapMonoToRgbaFB extends XrPassthroughStyleFB
+
 typedef struct XrPassthroughColorMapMonoToRgbaFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
-    XrColor4f                   textureColorMap[XR_PASSTHROUGH_COLOR_MAP_MONO_SIZE_FB];
+    const void*     next;
+    XrColor4f                   textureColorMap[256];
 } XrPassthroughColorMapMonoToRgbaFB;
 
-// XrPassthroughColorMapMonoToMonoFB extends XrPassthroughStyleFB
+
 typedef struct XrPassthroughColorMapMonoToMonoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
-    uint8_t                     textureColorMap[XR_PASSTHROUGH_COLOR_MAP_MONO_SIZE_FB];
+    const void*     next;
+    uint8_t                     textureColorMap[256];
 } XrPassthroughColorMapMonoToMonoFB;
 
-// XrPassthroughBrightnessContrastSaturationFB extends XrPassthroughStyleFB
+
 typedef struct XrPassthroughBrightnessContrastSaturationFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       brightness;
     float                       contrast;
     float                       saturation;
@@ -4529,98 +10281,64 @@ typedef struct XrPassthroughBrightnessContrastSaturationFB {
 
 typedef struct XrEventDataPassthroughStateChangedFB {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrPassthroughStateChangedFlagsFB    flags;
 } XrEventDataPassthroughStateChangedFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreatePassthroughFB)(XrSession session, const XrPassthroughCreateInfoFB* createInfo, XrPassthroughFB* outPassthrough);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyPassthroughFB)(XrPassthroughFB passthrough);
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughStartFB)(XrPassthroughFB passthrough);
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughPauseFB)(XrPassthroughFB passthrough);
-typedef XrResult (XRAPI_PTR *PFN_xrCreatePassthroughLayerFB)(XrSession session, const XrPassthroughLayerCreateInfoFB* createInfo, XrPassthroughLayerFB* outLayer);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyPassthroughLayerFB)(XrPassthroughLayerFB layer);
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughLayerPauseFB)(XrPassthroughLayerFB layer);
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughLayerResumeFB)(XrPassthroughLayerFB layer);
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughLayerSetStyleFB)(XrPassthroughLayerFB layer, const XrPassthroughStyleFB* style);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateGeometryInstanceFB)(XrSession session, const XrGeometryInstanceCreateInfoFB* createInfo, XrGeometryInstanceFB* outGeometryInstance);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyGeometryInstanceFB)(XrGeometryInstanceFB instance);
-typedef XrResult (XRAPI_PTR *PFN_xrGeometryInstanceSetTransformFB)(XrGeometryInstanceFB instance, const XrGeometryInstanceTransformFB* transformation);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreatePassthroughFB(
-    XrSession                                   session,
-    const XrPassthroughCreateInfoFB*            createInfo,
-    XrPassthroughFB*                            outPassthrough);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyPassthroughFB(
-    XrPassthroughFB                             passthrough);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughStartFB(
-    XrPassthroughFB                             passthrough);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughPauseFB(
-    XrPassthroughFB                             passthrough);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreatePassthroughLayerFB(
-    XrSession                                   session,
-    const XrPassthroughLayerCreateInfoFB*       createInfo,
-    XrPassthroughLayerFB*                       outLayer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyPassthroughLayerFB(
-    XrPassthroughLayerFB                        layer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughLayerPauseFB(
-    XrPassthroughLayerFB                        layer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughLayerResumeFB(
-    XrPassthroughLayerFB                        layer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughLayerSetStyleFB(
-    XrPassthroughLayerFB                        layer,
-    const XrPassthroughStyleFB*                 style);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateGeometryInstanceFB(
-    XrSession                                   session,
-    const XrGeometryInstanceCreateInfoFB*       createInfo,
-    XrGeometryInstanceFB*                       outGeometryInstance);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyGeometryInstanceFB(
-    XrGeometryInstanceFB                        instance);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGeometryInstanceSetTransformFB(
-    XrGeometryInstanceFB                        instance,
-    const XrGeometryInstanceTransformFB*        transformation);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreatePassthroughFB)(XrSession session, const XrPassthroughCreateInfoFB* createInfo, XrPassthroughFB* outPassthrough);
+typedef XrResult (*PFN_xrDestroyPassthroughFB)(XrPassthroughFB passthrough);
+typedef XrResult (*PFN_xrPassthroughStartFB)(XrPassthroughFB passthrough);
+typedef XrResult (*PFN_xrPassthroughPauseFB)(XrPassthroughFB passthrough);
+typedef XrResult (*PFN_xrCreatePassthroughLayerFB)(XrSession session, const XrPassthroughLayerCreateInfoFB* createInfo, XrPassthroughLayerFB* outLayer);
+typedef XrResult (*PFN_xrDestroyPassthroughLayerFB)(XrPassthroughLayerFB layer);
+typedef XrResult (*PFN_xrPassthroughLayerPauseFB)(XrPassthroughLayerFB layer);
+typedef XrResult (*PFN_xrPassthroughLayerResumeFB)(XrPassthroughLayerFB layer);
+typedef XrResult (*PFN_xrPassthroughLayerSetStyleFB)(XrPassthroughLayerFB layer, const XrPassthroughStyleFB* style);
+typedef XrResult (*PFN_xrCreateGeometryInstanceFB)(XrSession session, const XrGeometryInstanceCreateInfoFB* createInfo, XrGeometryInstanceFB* outGeometryInstance);
+typedef XrResult (*PFN_xrDestroyGeometryInstanceFB)(XrGeometryInstanceFB instance);
+typedef XrResult (*PFN_xrGeometryInstanceSetTransformFB)(XrGeometryInstanceFB instance, const XrGeometryInstanceTransformFB* transformation);
+XrResult  xrCreatePassthroughFB(XrSession                                   session,     const XrPassthroughCreateInfoFB*            createInfo,     XrPassthroughFB*                            outPassthrough);
+XrResult  xrDestroyPassthroughFB(XrPassthroughFB                             passthrough);
+XrResult  xrPassthroughStartFB(XrPassthroughFB                             passthrough);
+XrResult  xrPassthroughPauseFB(XrPassthroughFB                             passthrough);
+XrResult  xrCreatePassthroughLayerFB(XrSession                                   session,     const XrPassthroughLayerCreateInfoFB*       createInfo,     XrPassthroughLayerFB*                       outLayer);
+XrResult  xrDestroyPassthroughLayerFB(XrPassthroughLayerFB                        layer);
+XrResult  xrPassthroughLayerPauseFB(XrPassthroughLayerFB                        layer);
+XrResult  xrPassthroughLayerResumeFB(XrPassthroughLayerFB                        layer);
+XrResult  xrPassthroughLayerSetStyleFB(XrPassthroughLayerFB                        layer,     const XrPassthroughStyleFB*                 style);
+XrResult  xrCreateGeometryInstanceFB(XrSession                                   session,     const XrGeometryInstanceCreateInfoFB*       createInfo,     XrGeometryInstanceFB*                       outGeometryInstance);
+XrResult  xrDestroyGeometryInstanceFB(XrGeometryInstanceFB                        instance);
+XrResult  xrGeometryInstanceSetTransformFB(XrGeometryInstanceFB                        instance,     const XrGeometryInstanceTransformFB*        transformation);
+#line 4596 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4597 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_render_model is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_render_model 1
 
-#define XR_NULL_RENDER_MODEL_KEY_FB 0
+
+
+
 
 typedef uint64_t XrRenderModelKeyFB;
-#define XR_MAX_RENDER_MODEL_NAME_SIZE_FB  64
-#define XR_FB_render_model_SPEC_VERSION   4
-#define XR_FB_RENDER_MODEL_EXTENSION_NAME "XR_FB_render_model"
+
+
+
 typedef XrFlags64 XrRenderModelFlagsFB;
 
-// Flag bits for XrRenderModelFlagsFB
+
 static const XrRenderModelFlagsFB XR_RENDER_MODEL_SUPPORTS_GLTF_2_0_SUBSET_1_BIT_FB = 0x00000001;
 static const XrRenderModelFlagsFB XR_RENDER_MODEL_SUPPORTS_GLTF_2_0_SUBSET_2_BIT_FB = 0x00000002;
 
 typedef struct XrRenderModelPathInfoFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrPath                path;
 } XrRenderModelPathInfoFB;
 
 typedef struct XrRenderModelPropertiesFB {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     uint32_t                vendorId;
-    char                    modelName[XR_MAX_RENDER_MODEL_NAME_SIZE_FB];
+    char                    modelName[64];
     XrRenderModelKeyFB      modelKey;
     uint32_t                modelVersion;
     XrRenderModelFlagsFB    flags;
@@ -4628,7 +10346,7 @@ typedef struct XrRenderModelPropertiesFB {
 
 typedef struct XrRenderModelBufferFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              bufferCapacityInput;
     uint32_t              bufferCountOutput;
     uint8_t*              buffer;
@@ -4636,119 +10354,99 @@ typedef struct XrRenderModelBufferFB {
 
 typedef struct XrRenderModelLoadInfoFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrRenderModelKeyFB    modelKey;
 } XrRenderModelLoadInfoFB;
 
-// XrSystemRenderModelPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemRenderModelPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsRenderModelLoading;
 } XrSystemRenderModelPropertiesFB;
 
-// XrRenderModelCapabilitiesRequestFB extends XrRenderModelPropertiesFB
+
 typedef struct XrRenderModelCapabilitiesRequestFB {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrRenderModelFlagsFB    flags;
 } XrRenderModelCapabilitiesRequestFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateRenderModelPathsFB)(XrSession session, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrRenderModelPathInfoFB* paths);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelPropertiesFB)(XrSession session, XrPath path, XrRenderModelPropertiesFB* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrLoadRenderModelFB)(XrSession session, const XrRenderModelLoadInfoFB* info, XrRenderModelBufferFB* buffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateRenderModelPathsFB(
-    XrSession                                   session,
-    uint32_t                                    pathCapacityInput,
-    uint32_t*                                   pathCountOutput,
-    XrRenderModelPathInfoFB*                    paths);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelPropertiesFB(
-    XrSession                                   session,
-    XrPath                                      path,
-    XrRenderModelPropertiesFB*                  properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLoadRenderModelFB(
-    XrSession                                   session,
-    const XrRenderModelLoadInfoFB*              info,
-    XrRenderModelBufferFB*                      buffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateRenderModelPathsFB)(XrSession session, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrRenderModelPathInfoFB* paths);
+typedef XrResult (*PFN_xrGetRenderModelPropertiesFB)(XrSession session, XrPath path, XrRenderModelPropertiesFB* properties);
+typedef XrResult (*PFN_xrLoadRenderModelFB)(XrSession session, const XrRenderModelLoadInfoFB* info, XrRenderModelBufferFB* buffer);
+XrResult  xrEnumerateRenderModelPathsFB(XrSession                                   session,     uint32_t                                    pathCapacityInput,     uint32_t*                                   pathCountOutput,     XrRenderModelPathInfoFB*                    paths);
+XrResult  xrGetRenderModelPropertiesFB(XrSession                                   session,     XrPath                                      path,     XrRenderModelPropertiesFB*                  properties);
+XrResult  xrLoadRenderModelFB(XrSession                                   session,     const XrRenderModelLoadInfoFB*              info,     XrRenderModelBufferFB*                      buffer);
+#line 4680 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4681 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_VARJO_foveated_rendering is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_foveated_rendering 1
-#define XR_VARJO_foveated_rendering_SPEC_VERSION 3
-#define XR_VARJO_FOVEATED_RENDERING_EXTENSION_NAME "XR_VARJO_foveated_rendering"
-// XrViewLocateFoveatedRenderingVARJO extends XrViewLocateInfo
+
+
+
+
+
 typedef struct XrViewLocateFoveatedRenderingVARJO {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    foveatedRenderingActive;
 } XrViewLocateFoveatedRenderingVARJO;
 
-// XrFoveatedViewConfigurationViewVARJO extends XrViewConfigurationView
+
 typedef struct XrFoveatedViewConfigurationViewVARJO {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              foveatedRenderingActive;
 } XrFoveatedViewConfigurationViewVARJO;
 
-// XrSystemFoveatedRenderingPropertiesVARJO extends XrSystemProperties
+
 typedef struct XrSystemFoveatedRenderingPropertiesVARJO {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsFoveatedRendering;
 } XrSystemFoveatedRenderingPropertiesVARJO;
 
 
 
-// XR_VARJO_composition_layer_depth_test is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_composition_layer_depth_test 1
-#define XR_VARJO_composition_layer_depth_test_SPEC_VERSION 2
-#define XR_VARJO_COMPOSITION_LAYER_DEPTH_TEST_EXTENSION_NAME "XR_VARJO_composition_layer_depth_test"
-// XrCompositionLayerDepthTestVARJO extends XrCompositionLayerProjection
+
+
+
+
+
 typedef struct XrCompositionLayerDepthTestVARJO {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       depthTestRangeNearZ;
     float                       depthTestRangeFarZ;
 } XrCompositionLayerDepthTestVARJO;
 
 
 
-// XR_VARJO_environment_depth_estimation is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_environment_depth_estimation 1
-#define XR_VARJO_environment_depth_estimation_SPEC_VERSION 1
-#define XR_VARJO_ENVIRONMENT_DEPTH_ESTIMATION_EXTENSION_NAME "XR_VARJO_environment_depth_estimation"
-typedef XrResult (XRAPI_PTR *PFN_xrSetEnvironmentDepthEstimationVARJO)(XrSession session, XrBool32 enabled);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetEnvironmentDepthEstimationVARJO(
-    XrSession                                   session,
-    XrBool32                                    enabled);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
 
-// XR_VARJO_marker_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_marker_tracking 1
-#define XR_VARJO_marker_tracking_SPEC_VERSION 1
-#define XR_VARJO_MARKER_TRACKING_EXTENSION_NAME "XR_VARJO_marker_tracking"
-// XrSystemMarkerTrackingPropertiesVARJO extends XrSystemProperties
+
+
+typedef XrResult (*PFN_xrSetEnvironmentDepthEstimationVARJO)(XrSession session, XrBool32 enabled);
+XrResult  xrSetEnvironmentDepthEstimationVARJO(XrSession                                   session,     XrBool32                                    enabled);
+#line 4736 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4737 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+
+
+
+
+
+
+
 typedef struct XrSystemMarkerTrackingPropertiesVARJO {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsMarkerTracking;
 } XrSystemMarkerTrackingPropertiesVARJO;
 
 typedef struct XrEventDataMarkerTrackingUpdateVARJO {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint64_t                    markerId;
     XrBool32                    isActive;
     XrBool32                    isPredicted;
@@ -4757,118 +10455,92 @@ typedef struct XrEventDataMarkerTrackingUpdateVARJO {
 
 typedef struct XrMarkerSpaceCreateInfoVARJO {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint64_t                    markerId;
     XrPosef                     poseInMarkerSpace;
 } XrMarkerSpaceCreateInfoVARJO;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSetMarkerTrackingVARJO)(XrSession session, XrBool32 enabled);
-typedef XrResult (XRAPI_PTR *PFN_xrSetMarkerTrackingTimeoutVARJO)(XrSession session, uint64_t markerId, XrDuration timeout);
-typedef XrResult (XRAPI_PTR *PFN_xrSetMarkerTrackingPredictionVARJO)(XrSession session, uint64_t markerId, XrBool32 enable);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerSizeVARJO)(XrSession session, uint64_t markerId, XrExtent2Df* size);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateMarkerSpaceVARJO)(XrSession session, const XrMarkerSpaceCreateInfoVARJO* createInfo, XrSpace* space);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetMarkerTrackingVARJO(
-    XrSession                                   session,
-    XrBool32                                    enabled);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetMarkerTrackingTimeoutVARJO(
-    XrSession                                   session,
-    uint64_t                                    markerId,
-    XrDuration                                  timeout);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetMarkerTrackingPredictionVARJO(
-    XrSession                                   session,
-    uint64_t                                    markerId,
-    XrBool32                                    enable);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerSizeVARJO(
-    XrSession                                   session,
-    uint64_t                                    markerId,
-    XrExtent2Df*                                size);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateMarkerSpaceVARJO(
-    XrSession                                   session,
-    const XrMarkerSpaceCreateInfoVARJO*         createInfo,
-    XrSpace*                                    space);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSetMarkerTrackingVARJO)(XrSession session, XrBool32 enabled);
+typedef XrResult (*PFN_xrSetMarkerTrackingTimeoutVARJO)(XrSession session, uint64_t markerId, XrDuration timeout);
+typedef XrResult (*PFN_xrSetMarkerTrackingPredictionVARJO)(XrSession session, uint64_t markerId, XrBool32 enable);
+typedef XrResult (*PFN_xrGetMarkerSizeVARJO)(XrSession session, uint64_t markerId, XrExtent2Df* size);
+typedef XrResult (*PFN_xrCreateMarkerSpaceVARJO)(XrSession session, const XrMarkerSpaceCreateInfoVARJO* createInfo, XrSpace* space);
+XrResult  xrSetMarkerTrackingVARJO(XrSession                                   session,     XrBool32                                    enabled);
+XrResult  xrSetMarkerTrackingTimeoutVARJO(XrSession                                   session,     uint64_t                                    markerId,     XrDuration                                  timeout);
+XrResult  xrSetMarkerTrackingPredictionVARJO(XrSession                                   session,     uint64_t                                    markerId,     XrBool32                                    enable);
+XrResult  xrGetMarkerSizeVARJO(XrSession                                   session,     uint64_t                                    markerId,     XrExtent2Df*                                size);
+XrResult  xrCreateMarkerSpaceVARJO(XrSession                                   session,     const XrMarkerSpaceCreateInfoVARJO*         createInfo,     XrSpace*                                    space);
+#line 4798 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4799 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_VARJO_view_offset is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_view_offset 1
-#define XR_VARJO_view_offset_SPEC_VERSION 1
-#define XR_VARJO_VIEW_OFFSET_EXTENSION_NAME "XR_VARJO_view_offset"
-typedef XrResult (XRAPI_PTR *PFN_xrSetViewOffsetVARJO)(XrSession session, float offset);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetViewOffsetVARJO(
-    XrSession                                   session,
-    float                                       offset);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
 
-// XR_VARJO_xr4_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_VARJO_xr4_controller_interaction 1
-#define XR_VARJO_xr4_controller_interaction_SPEC_VERSION 2
-#define XR_VARJO_XR4_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_VARJO_xr4_controller_interaction"
 
 
-// XR_ML_ml2_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_ml2_controller_interaction 1
-#define XR_ML_ml2_controller_interaction_SPEC_VERSION 1
-#define XR_ML_ML2_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_ML_ml2_controller_interaction"
+typedef XrResult (*PFN_xrSetViewOffsetVARJO)(XrSession session, float offset);
+XrResult  xrSetViewOffsetVARJO(XrSession                                   session,     float                                       offset);
+#line 4813 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 4814 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_frame_end_info is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_frame_end_info 1
-#define XR_ML_frame_end_info_SPEC_VERSION 1
-#define XR_ML_FRAME_END_INFO_EXTENSION_NAME "XR_ML_frame_end_info"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 typedef XrFlags64 XrFrameEndInfoFlagsML;
 
-// Flag bits for XrFrameEndInfoFlagsML
+
 static const XrFrameEndInfoFlagsML XR_FRAME_END_INFO_PROTECTED_BIT_ML = 0x00000001;
 static const XrFrameEndInfoFlagsML XR_FRAME_END_INFO_VIGNETTE_BIT_ML = 0x00000002;
 
-// XrFrameEndInfoML extends XrFrameEndInfo
+
 typedef struct XrFrameEndInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       focusDistance;
     XrFrameEndInfoFlagsML       flags;
 } XrFrameEndInfoML;
 
 
 
-// XR_ML_global_dimmer is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_global_dimmer 1
-#define XR_ML_global_dimmer_SPEC_VERSION  1
-#define XR_ML_GLOBAL_DIMMER_EXTENSION_NAME "XR_ML_global_dimmer"
+
+
+
+
 typedef XrFlags64 XrGlobalDimmerFrameEndInfoFlagsML;
 
-// Flag bits for XrGlobalDimmerFrameEndInfoFlagsML
+
 static const XrGlobalDimmerFrameEndInfoFlagsML XR_GLOBAL_DIMMER_FRAME_END_INFO_ENABLED_BIT_ML = 0x00000001;
 
-// XrGlobalDimmerFrameEndInfoML extends XrFrameEndInfo
+
 typedef struct XrGlobalDimmerFrameEndInfoML {
     XrStructureType                      type;
-    const void* XR_MAY_ALIAS             next;
+    const void*              next;
     float                                dimmerValue;
     XrGlobalDimmerFrameEndInfoFlagsML    flags;
 } XrGlobalDimmerFrameEndInfoML;
 
 
 
-// XR_ML_marker_understanding is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_marker_understanding 1
+
+
 typedef uint64_t XrMarkerML;
-typedef uint64_t XrMarkerDetectorML;
-#define XR_ML_marker_understanding_SPEC_VERSION 1
-#define XR_ML_MARKER_UNDERSTANDING_EXTENSION_NAME "XR_ML_marker_understanding"
+typedef struct XrMarkerDetectorML_T* XrMarkerDetectorML;
+
+
 
 typedef enum XrMarkerDetectorProfileML {
     XR_MARKER_DETECTOR_PROFILE_DEFAULT_ML = 0,
@@ -4961,45 +10633,45 @@ typedef enum XrMarkerDetectorStatusML {
     XR_MARKER_DETECTOR_STATUS_ERROR_ML = 2,
     XR_MARKER_DETECTOR_STATUS_MAX_ENUM_ML = 0x7FFFFFFF
 } XrMarkerDetectorStatusML;
-// XrSystemMarkerUnderstandingPropertiesML extends XrSystemProperties
+
 typedef struct XrSystemMarkerUnderstandingPropertiesML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsMarkerUnderstanding;
 } XrSystemMarkerUnderstandingPropertiesML;
 
 typedef struct XrMarkerDetectorCreateInfoML {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrMarkerDetectorProfileML    profile;
     XrMarkerTypeML               markerType;
 } XrMarkerDetectorCreateInfoML;
 
-// XrMarkerDetectorArucoInfoML extends XrMarkerDetectorCreateInfoML
+
 typedef struct XrMarkerDetectorArucoInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrMarkerArucoDictML         arucoDict;
 } XrMarkerDetectorArucoInfoML;
 
-// XrMarkerDetectorSizeInfoML extends XrMarkerDetectorCreateInfoML
+
 typedef struct XrMarkerDetectorSizeInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       markerLength;
 } XrMarkerDetectorSizeInfoML;
 
-// XrMarkerDetectorAprilTagInfoML extends XrMarkerDetectorCreateInfoML
+
 typedef struct XrMarkerDetectorAprilTagInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrMarkerAprilTagDictML      aprilTagDict;
 } XrMarkerDetectorAprilTagInfoML;
 
-// XrMarkerDetectorCustomProfileInfoML extends XrMarkerDetectorCreateInfoML
+
 typedef struct XrMarkerDetectorCustomProfileInfoML {
     XrStructureType                           type;
-    const void* XR_MAY_ALIAS                  next;
+    const void*                   next;
     XrMarkerDetectorFpsML                     fpsHint;
     XrMarkerDetectorResolutionML              resolutionHint;
     XrMarkerDetectorCameraML                  cameraHint;
@@ -5010,94 +10682,53 @@ typedef struct XrMarkerDetectorCustomProfileInfoML {
 
 typedef struct XrMarkerDetectorSnapshotInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrMarkerDetectorSnapshotInfoML;
 
 typedef struct XrMarkerDetectorStateML {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrMarkerDetectorStatusML    state;
 } XrMarkerDetectorStateML;
 
 typedef struct XrMarkerSpaceCreateInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrMarkerDetectorML          markerDetector;
     XrMarkerML                  marker;
     XrPosef                     poseInMarkerSpace;
 } XrMarkerSpaceCreateInfoML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateMarkerDetectorML)(XrSession session, const XrMarkerDetectorCreateInfoML* createInfo, XrMarkerDetectorML* markerDetector);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyMarkerDetectorML)(XrMarkerDetectorML markerDetector);
-typedef XrResult (XRAPI_PTR *PFN_xrSnapshotMarkerDetectorML)(XrMarkerDetectorML markerDetector, XrMarkerDetectorSnapshotInfoML* snapshotInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerDetectorStateML)(XrMarkerDetectorML markerDetector, XrMarkerDetectorStateML* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkersML)(XrMarkerDetectorML markerDetector, uint32_t markerCapacityInput, uint32_t* markerCountOutput, XrMarkerML* markers);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerReprojectionErrorML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, float* reprojectionErrorMeters);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerLengthML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, float* meters);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerNumberML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, uint64_t* number);
-typedef XrResult (XRAPI_PTR *PFN_xrGetMarkerStringML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateMarkerSpaceML)(XrSession session, const XrMarkerSpaceCreateInfoML* createInfo, XrSpace* space);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateMarkerDetectorML(
-    XrSession                                   session,
-    const XrMarkerDetectorCreateInfoML*         createInfo,
-    XrMarkerDetectorML*                         markerDetector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyMarkerDetectorML(
-    XrMarkerDetectorML                          markerDetector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSnapshotMarkerDetectorML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerDetectorSnapshotInfoML*             snapshotInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerDetectorStateML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerDetectorStateML*                    state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkersML(
-    XrMarkerDetectorML                          markerDetector,
-    uint32_t                                    markerCapacityInput,
-    uint32_t*                                   markerCountOutput,
-    XrMarkerML*                                 markers);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerReprojectionErrorML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerML                                  marker,
-    float*                                      reprojectionErrorMeters);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerLengthML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerML                                  marker,
-    float*                                      meters);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerNumberML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerML                                  marker,
-    uint64_t*                                   number);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetMarkerStringML(
-    XrMarkerDetectorML                          markerDetector,
-    XrMarkerML                                  marker,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateMarkerSpaceML(
-    XrSession                                   session,
-    const XrMarkerSpaceCreateInfoML*            createInfo,
-    XrSpace*                                    space);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateMarkerDetectorML)(XrSession session, const XrMarkerDetectorCreateInfoML* createInfo, XrMarkerDetectorML* markerDetector);
+typedef XrResult (*PFN_xrDestroyMarkerDetectorML)(XrMarkerDetectorML markerDetector);
+typedef XrResult (*PFN_xrSnapshotMarkerDetectorML)(XrMarkerDetectorML markerDetector, XrMarkerDetectorSnapshotInfoML* snapshotInfo);
+typedef XrResult (*PFN_xrGetMarkerDetectorStateML)(XrMarkerDetectorML markerDetector, XrMarkerDetectorStateML* state);
+typedef XrResult (*PFN_xrGetMarkersML)(XrMarkerDetectorML markerDetector, uint32_t markerCapacityInput, uint32_t* markerCountOutput, XrMarkerML* markers);
+typedef XrResult (*PFN_xrGetMarkerReprojectionErrorML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, float* reprojectionErrorMeters);
+typedef XrResult (*PFN_xrGetMarkerLengthML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, float* meters);
+typedef XrResult (*PFN_xrGetMarkerNumberML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, uint64_t* number);
+typedef XrResult (*PFN_xrGetMarkerStringML)(XrMarkerDetectorML markerDetector, XrMarkerML marker, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+typedef XrResult (*PFN_xrCreateMarkerSpaceML)(XrSession session, const XrMarkerSpaceCreateInfoML* createInfo, XrSpace* space);
+XrResult  xrCreateMarkerDetectorML(XrSession                                   session,     const XrMarkerDetectorCreateInfoML*         createInfo,     XrMarkerDetectorML*                         markerDetector);
+XrResult  xrDestroyMarkerDetectorML(XrMarkerDetectorML                          markerDetector);
+XrResult  xrSnapshotMarkerDetectorML(XrMarkerDetectorML                          markerDetector,     XrMarkerDetectorSnapshotInfoML*             snapshotInfo);
+XrResult  xrGetMarkerDetectorStateML(XrMarkerDetectorML                          markerDetector,     XrMarkerDetectorStateML*                    state);
+XrResult  xrGetMarkersML(XrMarkerDetectorML                          markerDetector,     uint32_t                                    markerCapacityInput,     uint32_t*                                   markerCountOutput,     XrMarkerML*                                 markers);
+XrResult  xrGetMarkerReprojectionErrorML(XrMarkerDetectorML                          markerDetector,     XrMarkerML                                  marker,     float*                                      reprojectionErrorMeters);
+XrResult  xrGetMarkerLengthML(XrMarkerDetectorML                          markerDetector,     XrMarkerML                                  marker,     float*                                      meters);
+XrResult  xrGetMarkerNumberML(XrMarkerDetectorML                          markerDetector,     XrMarkerML                                  marker,     uint64_t*                                   number);
+XrResult  xrGetMarkerStringML(XrMarkerDetectorML                          markerDetector,     XrMarkerML                                  marker,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+XrResult  xrCreateMarkerSpaceML(XrSession                                   session,     const XrMarkerSpaceCreateInfoML*            createInfo,     XrSpace*                                    space);
+#line 5093 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5094 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_localization_map is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_localization_map 1
-typedef uint64_t XrExportedLocalizationMapML;
-#define XR_MAX_LOCALIZATION_MAP_NAME_LENGTH_ML 64
-#define XR_ML_localization_map_SPEC_VERSION 1
-#define XR_ML_LOCALIZATION_MAP_EXTENSION_NAME "XR_ML_localization_map"
+
+
+typedef struct XrExportedLocalizationMapML_T* XrExportedLocalizationMapML;
+
+
+
 
 typedef enum XrLocalizationMapStateML {
     XR_LOCALIZATION_MAP_STATE_NOT_LOCALIZED_ML = 0,
@@ -5122,7 +10753,7 @@ typedef enum XrLocalizationMapConfidenceML {
 } XrLocalizationMapConfidenceML;
 typedef XrFlags64 XrLocalizationMapErrorFlagsML;
 
-// Flag bits for XrLocalizationMapErrorFlagsML
+
 static const XrLocalizationMapErrorFlagsML XR_LOCALIZATION_MAP_ERROR_UNKNOWN_BIT_ML = 0x00000001;
 static const XrLocalizationMapErrorFlagsML XR_LOCALIZATION_MAP_ERROR_OUT_OF_MAPPED_AREA_BIT_ML = 0x00000002;
 static const XrLocalizationMapErrorFlagsML XR_LOCALIZATION_MAP_ERROR_LOW_FEATURE_COUNT_BIT_ML = 0x00000004;
@@ -5132,15 +10763,15 @@ static const XrLocalizationMapErrorFlagsML XR_LOCALIZATION_MAP_ERROR_HEADPOSE_BI
 
 typedef struct XrLocalizationMapML {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
-    char                       name[XR_MAX_LOCALIZATION_MAP_NAME_LENGTH_ML];
+    void*          next;
+    char                       name[64];
     XrUuidEXT                  mapUuid;
     XrLocalizationMapTypeML    mapType;
 } XrLocalizationMapML;
 
 typedef struct XrEventDataLocalizationChangedML {
      XrStructureType                 type;
-    const void* XR_MAY_ALIAS         next;
+    const void*          next;
     XrSession                        session;
     XrLocalizationMapStateML         state;
     XrLocalizationMapML              map;
@@ -5150,80 +10781,51 @@ typedef struct XrEventDataLocalizationChangedML {
 
 typedef struct XrLocalizationMapQueryInfoBaseHeaderML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrLocalizationMapQueryInfoBaseHeaderML;
 
 typedef struct XrMapLocalizationRequestInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidEXT                   mapUuid;
 } XrMapLocalizationRequestInfoML;
 
 typedef struct XrLocalizationMapImportInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    size;
     char*                       data;
 } XrLocalizationMapImportInfoML;
 
 typedef struct XrLocalizationEnableEventsInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    enabled;
 } XrLocalizationEnableEventsInfoML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnableLocalizationEventsML)(XrSession session, const XrLocalizationEnableEventsInfoML * info);
-typedef XrResult (XRAPI_PTR *PFN_xrQueryLocalizationMapsML)(XrSession session, const XrLocalizationMapQueryInfoBaseHeaderML* queryInfo, uint32_t mapCapacityInput, uint32_t * mapCountOutput, XrLocalizationMapML* maps);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestMapLocalizationML)(XrSession session, const XrMapLocalizationRequestInfoML* requestInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrImportLocalizationMapML)(XrSession session, const XrLocalizationMapImportInfoML* importInfo, XrUuidEXT* mapUuid);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateExportedLocalizationMapML)(XrSession session, const XrUuidEXT* mapUuid, XrExportedLocalizationMapML* map);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyExportedLocalizationMapML)(XrExportedLocalizationMapML map);
-typedef XrResult (XRAPI_PTR *PFN_xrGetExportedLocalizationMapDataML)(XrExportedLocalizationMapML map, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnableLocalizationEventsML(
-    XrSession                                   session,
-    const XrLocalizationEnableEventsInfoML *    info);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQueryLocalizationMapsML(
-    XrSession                                   session,
-    const XrLocalizationMapQueryInfoBaseHeaderML* queryInfo,
-    uint32_t                                    mapCapacityInput,
-    uint32_t *                                  mapCountOutput,
-    XrLocalizationMapML*                        maps);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestMapLocalizationML(
-    XrSession                                   session,
-    const XrMapLocalizationRequestInfoML*       requestInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrImportLocalizationMapML(
-    XrSession                                   session,
-    const XrLocalizationMapImportInfoML*        importInfo,
-    XrUuidEXT*                                  mapUuid);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateExportedLocalizationMapML(
-    XrSession                                   session,
-    const XrUuidEXT*                            mapUuid,
-    XrExportedLocalizationMapML*                map);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyExportedLocalizationMapML(
-    XrExportedLocalizationMapML                 map);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetExportedLocalizationMapDataML(
-    XrExportedLocalizationMapML                 map,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnableLocalizationEventsML)(XrSession session, const XrLocalizationEnableEventsInfoML * info);
+typedef XrResult (*PFN_xrQueryLocalizationMapsML)(XrSession session, const XrLocalizationMapQueryInfoBaseHeaderML* queryInfo, uint32_t mapCapacityInput, uint32_t * mapCountOutput, XrLocalizationMapML* maps);
+typedef XrResult (*PFN_xrRequestMapLocalizationML)(XrSession session, const XrMapLocalizationRequestInfoML* requestInfo);
+typedef XrResult (*PFN_xrImportLocalizationMapML)(XrSession session, const XrLocalizationMapImportInfoML* importInfo, XrUuidEXT* mapUuid);
+typedef XrResult (*PFN_xrCreateExportedLocalizationMapML)(XrSession session, const XrUuidEXT* mapUuid, XrExportedLocalizationMapML* map);
+typedef XrResult (*PFN_xrDestroyExportedLocalizationMapML)(XrExportedLocalizationMapML map);
+typedef XrResult (*PFN_xrGetExportedLocalizationMapDataML)(XrExportedLocalizationMapML map, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+XrResult  xrEnableLocalizationEventsML(XrSession                                   session,     const XrLocalizationEnableEventsInfoML *    info);
+XrResult  xrQueryLocalizationMapsML(XrSession                                   session,     const XrLocalizationMapQueryInfoBaseHeaderML* queryInfo,     uint32_t                                    mapCapacityInput,     uint32_t *                                  mapCountOutput,     XrLocalizationMapML*                        maps);
+XrResult  xrRequestMapLocalizationML(XrSession                                   session,     const XrMapLocalizationRequestInfoML*       requestInfo);
+XrResult  xrImportLocalizationMapML(XrSession                                   session,     const XrLocalizationMapImportInfoML*        importInfo,     XrUuidEXT*                                  mapUuid);
+XrResult  xrCreateExportedLocalizationMapML(XrSession                                   session,     const XrUuidEXT*                            mapUuid,     XrExportedLocalizationMapML*                map);
+XrResult  xrDestroyExportedLocalizationMapML(XrExportedLocalizationMapML                 map);
+XrResult  xrGetExportedLocalizationMapDataML(XrExportedLocalizationMapML                 map,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+#line 5220 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5221 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_spatial_anchors is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_spatial_anchors 1
-typedef uint64_t XrFutureEXT;
-#define XR_ML_spatial_anchors_SPEC_VERSION 1
-#define XR_ML_SPATIAL_ANCHORS_EXTENSION_NAME "XR_ML_spatial_anchors"
+
+
+typedef struct XrFutureEXT_T* XrFutureEXT;
+
+
 
 typedef enum XrSpatialAnchorConfidenceML {
     XR_SPATIAL_ANCHOR_CONFIDENCE_LOW_ML = 0,
@@ -5231,14 +10833,14 @@ typedef enum XrSpatialAnchorConfidenceML {
     XR_SPATIAL_ANCHOR_CONFIDENCE_HIGH_ML = 2,
     XR_SPATIAL_ANCHOR_CONFIDENCE_MAX_ENUM_ML = 0x7FFFFFFF
 } XrSpatialAnchorConfidenceML;
-typedef struct XR_MAY_ALIAS XrSpatialAnchorsCreateInfoBaseHeaderML {
+typedef struct  XrSpatialAnchorsCreateInfoBaseHeaderML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpatialAnchorsCreateInfoBaseHeaderML;
 
 typedef struct XrSpatialAnchorsCreateInfoFromPoseML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrPosef                     poseInBaseSpace;
     XrTime                      time;
@@ -5246,7 +10848,7 @@ typedef struct XrSpatialAnchorsCreateInfoFromPoseML {
 
 typedef struct XrCreateSpatialAnchorsCompletionML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
     uint32_t              spaceCount;
     XrSpace*              spaces;
@@ -5254,51 +10856,38 @@ typedef struct XrCreateSpatialAnchorsCompletionML {
 
 typedef struct XrSpatialAnchorStateML {
     XrStructureType                type;
-    void* XR_MAY_ALIAS             next;
+    void*              next;
     XrSpatialAnchorConfidenceML    confidence;
 } XrSpatialAnchorStateML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorsAsyncML)(XrSession session, const XrSpatialAnchorsCreateInfoBaseHeaderML* createInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorsCompleteML)(XrSession session, XrFutureEXT future, XrCreateSpatialAnchorsCompletionML* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialAnchorStateML)(XrSpace anchor, XrSpatialAnchorStateML* state);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorsAsyncML(
-    XrSession                                   session,
-    const XrSpatialAnchorsCreateInfoBaseHeaderML* createInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorsCompleteML(
-    XrSession                                   session,
-    XrFutureEXT                                 future,
-    XrCreateSpatialAnchorsCompletionML*         completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialAnchorStateML(
-    XrSpace                                     anchor,
-    XrSpatialAnchorStateML*                     state);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorsAsyncML)(XrSession session, const XrSpatialAnchorsCreateInfoBaseHeaderML* createInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCreateSpatialAnchorsCompleteML)(XrSession session, XrFutureEXT future, XrCreateSpatialAnchorsCompletionML* completion);
+typedef XrResult (*PFN_xrGetSpatialAnchorStateML)(XrSpace anchor, XrSpatialAnchorStateML* state);
+XrResult  xrCreateSpatialAnchorsAsyncML(XrSession                                   session,     const XrSpatialAnchorsCreateInfoBaseHeaderML* createInfo,     XrFutureEXT*                                future);
+XrResult  xrCreateSpatialAnchorsCompleteML(XrSession                                   session,     XrFutureEXT                                 future,     XrCreateSpatialAnchorsCompletionML*         completion);
+XrResult  xrGetSpatialAnchorStateML(XrSpace                                     anchor,     XrSpatialAnchorStateML*                     state);
+#line 5282 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5283 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_spatial_anchors_storage is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_spatial_anchors_storage 1
-typedef uint64_t XrSpatialAnchorsStorageML;
-#define XR_ML_spatial_anchors_storage_SPEC_VERSION 1
-#define XR_ML_SPATIAL_ANCHORS_STORAGE_EXTENSION_NAME "XR_ML_spatial_anchors_storage"
+
+
+typedef struct XrSpatialAnchorsStorageML_T* XrSpatialAnchorsStorageML;
+
+
 typedef struct XrSpatialAnchorsCreateStorageInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpatialAnchorsCreateStorageInfoML;
 
-typedef struct XR_MAY_ALIAS XrSpatialAnchorsQueryInfoBaseHeaderML {
+typedef struct  XrSpatialAnchorsQueryInfoBaseHeaderML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpatialAnchorsQueryInfoBaseHeaderML;
 
 typedef struct XrSpatialAnchorsQueryInfoRadiusML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrVector3f                  center;
     XrTime                      time;
@@ -5307,7 +10896,7 @@ typedef struct XrSpatialAnchorsQueryInfoRadiusML {
 
 typedef struct XrSpatialAnchorsQueryCompletionML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
     uint32_t              uuidCapacityInput;
     uint32_t              uuidCountOutput;
@@ -5316,7 +10905,7 @@ typedef struct XrSpatialAnchorsQueryCompletionML {
 
 typedef struct XrSpatialAnchorsCreateInfoFromUuidsML {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrSpatialAnchorsStorageML    storage;
     uint32_t                     uuidCount;
     const XrUuidEXT*             uuids;
@@ -5324,7 +10913,7 @@ typedef struct XrSpatialAnchorsCreateInfoFromUuidsML {
 
 typedef struct XrSpatialAnchorsPublishInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    anchorCount;
     const XrSpace*              anchors;
     uint64_t                    expiration;
@@ -5332,7 +10921,7 @@ typedef struct XrSpatialAnchorsPublishInfoML {
 
 typedef struct XrSpatialAnchorsPublishCompletionML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
     uint32_t              uuidCount;
     XrUuidEXT*            uuids;
@@ -5340,20 +10929,20 @@ typedef struct XrSpatialAnchorsPublishCompletionML {
 
 typedef struct XrSpatialAnchorsDeleteInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    uuidCount;
     const XrUuidEXT*            uuids;
 } XrSpatialAnchorsDeleteInfoML;
 
 typedef struct XrSpatialAnchorsDeleteCompletionML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
 } XrSpatialAnchorsDeleteCompletionML;
 
 typedef struct XrSpatialAnchorsUpdateExpirationInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    uuidCount;
     const XrUuidEXT*            uuids;
     uint64_t                    expiration;
@@ -5361,7 +10950,7 @@ typedef struct XrSpatialAnchorsUpdateExpirationInfoML {
 
 typedef struct XrSpatialAnchorsUpdateExpirationCompletionML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
 } XrSpatialAnchorsUpdateExpirationCompletionML;
 
@@ -5370,164 +10959,100 @@ typedef struct XrSpatialAnchorCompletionResultML {
     XrResult     result;
 } XrSpatialAnchorCompletionResultML;
 
-// XrSpatialAnchorsPublishCompletionDetailsML extends XrSpatialAnchorsPublishCompletionML
+
 typedef struct XrSpatialAnchorsPublishCompletionDetailsML {
     XrStructureType                       type;
-    void* XR_MAY_ALIAS                    next;
+    void*                     next;
     uint32_t                              resultCount;
     XrSpatialAnchorCompletionResultML*    results;
 } XrSpatialAnchorsPublishCompletionDetailsML;
 
-// XrSpatialAnchorsDeleteCompletionDetailsML extends XrSpatialAnchorsDeleteCompletionML
+
 typedef struct XrSpatialAnchorsDeleteCompletionDetailsML {
     XrStructureType                       type;
-    void* XR_MAY_ALIAS                    next;
+    void*                     next;
     uint32_t                              resultCount;
     XrSpatialAnchorCompletionResultML*    results;
 } XrSpatialAnchorsDeleteCompletionDetailsML;
 
-// XrSpatialAnchorsUpdateExpirationCompletionDetailsML extends XrSpatialAnchorsUpdateExpirationCompletionML
+
 typedef struct XrSpatialAnchorsUpdateExpirationCompletionDetailsML {
     XrStructureType                       type;
-    void* XR_MAY_ALIAS                    next;
+    void*                     next;
     uint32_t                              resultCount;
     XrSpatialAnchorCompletionResultML*    results;
 } XrSpatialAnchorsUpdateExpirationCompletionDetailsML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorsStorageML)(XrSession session, const XrSpatialAnchorsCreateStorageInfoML* createInfo, XrSpatialAnchorsStorageML* storage);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialAnchorsStorageML)(XrSpatialAnchorsStorageML storage);
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsQueryInfoBaseHeaderML* queryInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsQueryCompletionML* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrPublishSpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsPublishInfoML* publishInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrPublishSpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsPublishCompletionML* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrDeleteSpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsDeleteInfoML* deleteInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrDeleteSpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsDeleteCompletionML* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrUpdateSpatialAnchorsExpirationAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsUpdateExpirationInfoML* updateInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrUpdateSpatialAnchorsExpirationCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsUpdateExpirationCompletionML* completion);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorsStorageML(
-    XrSession                                   session,
-    const XrSpatialAnchorsCreateStorageInfoML*  createInfo,
-    XrSpatialAnchorsStorageML*                  storage);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialAnchorsStorageML(
-    XrSpatialAnchorsStorageML                   storage);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySpatialAnchorsAsyncML(
-    XrSpatialAnchorsStorageML                   storage,
-    const XrSpatialAnchorsQueryInfoBaseHeaderML* queryInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySpatialAnchorsCompleteML(
-    XrSpatialAnchorsStorageML                   storage,
-    XrFutureEXT                                 future,
-    XrSpatialAnchorsQueryCompletionML*          completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPublishSpatialAnchorsAsyncML(
-    XrSpatialAnchorsStorageML                   storage,
-    const XrSpatialAnchorsPublishInfoML*        publishInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPublishSpatialAnchorsCompleteML(
-    XrSpatialAnchorsStorageML                   storage,
-    XrFutureEXT                                 future,
-    XrSpatialAnchorsPublishCompletionML*        completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDeleteSpatialAnchorsAsyncML(
-    XrSpatialAnchorsStorageML                   storage,
-    const XrSpatialAnchorsDeleteInfoML*         deleteInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDeleteSpatialAnchorsCompleteML(
-    XrSpatialAnchorsStorageML                   storage,
-    XrFutureEXT                                 future,
-    XrSpatialAnchorsDeleteCompletionML*         completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUpdateSpatialAnchorsExpirationAsyncML(
-    XrSpatialAnchorsStorageML                   storage,
-    const XrSpatialAnchorsUpdateExpirationInfoML* updateInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUpdateSpatialAnchorsExpirationCompleteML(
-    XrSpatialAnchorsStorageML                   storage,
-    XrFutureEXT                                 future,
-    XrSpatialAnchorsUpdateExpirationCompletionML* completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorsStorageML)(XrSession session, const XrSpatialAnchorsCreateStorageInfoML* createInfo, XrSpatialAnchorsStorageML* storage);
+typedef XrResult (*PFN_xrDestroySpatialAnchorsStorageML)(XrSpatialAnchorsStorageML storage);
+typedef XrResult (*PFN_xrQuerySpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsQueryInfoBaseHeaderML* queryInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrQuerySpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsQueryCompletionML* completion);
+typedef XrResult (*PFN_xrPublishSpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsPublishInfoML* publishInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrPublishSpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsPublishCompletionML* completion);
+typedef XrResult (*PFN_xrDeleteSpatialAnchorsAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsDeleteInfoML* deleteInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrDeleteSpatialAnchorsCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsDeleteCompletionML* completion);
+typedef XrResult (*PFN_xrUpdateSpatialAnchorsExpirationAsyncML)(XrSpatialAnchorsStorageML storage, const XrSpatialAnchorsUpdateExpirationInfoML* updateInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrUpdateSpatialAnchorsExpirationCompleteML)(XrSpatialAnchorsStorageML storage, XrFutureEXT future, XrSpatialAnchorsUpdateExpirationCompletionML* completion);
+XrResult  xrCreateSpatialAnchorsStorageML(XrSession                                   session,     const XrSpatialAnchorsCreateStorageInfoML*  createInfo,     XrSpatialAnchorsStorageML*                  storage);
+XrResult  xrDestroySpatialAnchorsStorageML(XrSpatialAnchorsStorageML                   storage);
+XrResult  xrQuerySpatialAnchorsAsyncML(XrSpatialAnchorsStorageML                   storage,     const XrSpatialAnchorsQueryInfoBaseHeaderML* queryInfo,     XrFutureEXT*                                future);
+XrResult  xrQuerySpatialAnchorsCompleteML(XrSpatialAnchorsStorageML                   storage,     XrFutureEXT                                 future,     XrSpatialAnchorsQueryCompletionML*          completion);
+XrResult  xrPublishSpatialAnchorsAsyncML(XrSpatialAnchorsStorageML                   storage,     const XrSpatialAnchorsPublishInfoML*        publishInfo,     XrFutureEXT*                                future);
+XrResult  xrPublishSpatialAnchorsCompleteML(XrSpatialAnchorsStorageML                   storage,     XrFutureEXT                                 future,     XrSpatialAnchorsPublishCompletionML*        completion);
+XrResult  xrDeleteSpatialAnchorsAsyncML(XrSpatialAnchorsStorageML                   storage,     const XrSpatialAnchorsDeleteInfoML*         deleteInfo,     XrFutureEXT*                                future);
+XrResult  xrDeleteSpatialAnchorsCompleteML(XrSpatialAnchorsStorageML                   storage,     XrFutureEXT                                 future,     XrSpatialAnchorsDeleteCompletionML*         completion);
+XrResult  xrUpdateSpatialAnchorsExpirationAsyncML(XrSpatialAnchorsStorageML                   storage,     const XrSpatialAnchorsUpdateExpirationInfoML* updateInfo,     XrFutureEXT*                                future);
+XrResult  xrUpdateSpatialAnchorsExpirationCompleteML(XrSpatialAnchorsStorageML                   storage,     XrFutureEXT                                 future,     XrSpatialAnchorsUpdateExpirationCompletionML* completion);
+#line 5459 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5460 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_spatial_anchor_persistence is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_spatial_anchor_persistence 1
-typedef uint64_t XrSpatialAnchorStoreConnectionMSFT;
-#define XR_MAX_SPATIAL_ANCHOR_NAME_SIZE_MSFT 256
-#define XR_MSFT_spatial_anchor_persistence_SPEC_VERSION 2
-#define XR_MSFT_SPATIAL_ANCHOR_PERSISTENCE_EXTENSION_NAME "XR_MSFT_spatial_anchor_persistence"
+
+
+typedef struct XrSpatialAnchorStoreConnectionMSFT_T* XrSpatialAnchorStoreConnectionMSFT;
+
+
+
 typedef struct XrSpatialAnchorPersistenceNameMSFT {
-    char    name[XR_MAX_SPATIAL_ANCHOR_NAME_SIZE_MSFT];
+    char    name[256];
 } XrSpatialAnchorPersistenceNameMSFT;
 
 typedef struct XrSpatialAnchorPersistenceInfoMSFT {
     XrStructureType                       type;
-    const void* XR_MAY_ALIAS              next;
+    const void*               next;
     XrSpatialAnchorPersistenceNameMSFT    spatialAnchorPersistenceName;
     XrSpatialAnchorMSFT                   spatialAnchor;
 } XrSpatialAnchorPersistenceInfoMSFT;
 
 typedef struct XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT {
     XrStructureType                       type;
-    const void* XR_MAY_ALIAS              next;
+    const void*               next;
     XrSpatialAnchorStoreConnectionMSFT    spatialAnchorStore;
     XrSpatialAnchorPersistenceNameMSFT    spatialAnchorPersistenceName;
 } XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorStoreConnectionMSFT)(XrSession session, XrSpatialAnchorStoreConnectionMSFT* spatialAnchorStore);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialAnchorStoreConnectionMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
-typedef XrResult (XRAPI_PTR *PFN_xrPersistSpatialAnchorMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, const XrSpatialAnchorPersistenceInfoMSFT* spatialAnchorPersistenceInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumeratePersistedSpatialAnchorNamesMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, uint32_t spatialAnchorNameCapacityInput, uint32_t* spatialAnchorNameCountOutput, XrSpatialAnchorPersistenceNameMSFT* spatialAnchorNames);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorFromPersistedNameMSFT)(XrSession session, const XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo, XrSpatialAnchorMSFT* spatialAnchor);
-typedef XrResult (XRAPI_PTR *PFN_xrUnpersistSpatialAnchorMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, const XrSpatialAnchorPersistenceNameMSFT* spatialAnchorPersistenceName);
-typedef XrResult (XRAPI_PTR *PFN_xrClearSpatialAnchorStoreMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorStoreConnectionMSFT(
-    XrSession                                   session,
-    XrSpatialAnchorStoreConnectionMSFT*         spatialAnchorStore);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialAnchorStoreConnectionMSFT(
-    XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPersistSpatialAnchorMSFT(
-    XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,
-    const XrSpatialAnchorPersistenceInfoMSFT*   spatialAnchorPersistenceInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumeratePersistedSpatialAnchorNamesMSFT(
-    XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,
-    uint32_t                                    spatialAnchorNameCapacityInput,
-    uint32_t*                                   spatialAnchorNameCountOutput,
-    XrSpatialAnchorPersistenceNameMSFT*         spatialAnchorNames);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorFromPersistedNameMSFT(
-    XrSession                                   session,
-    const XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo,
-    XrSpatialAnchorMSFT*                        spatialAnchor);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUnpersistSpatialAnchorMSFT(
-    XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,
-    const XrSpatialAnchorPersistenceNameMSFT*   spatialAnchorPersistenceName);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrClearSpatialAnchorStoreMSFT(
-    XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorStoreConnectionMSFT)(XrSession session, XrSpatialAnchorStoreConnectionMSFT* spatialAnchorStore);
+typedef XrResult (*PFN_xrDestroySpatialAnchorStoreConnectionMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
+typedef XrResult (*PFN_xrPersistSpatialAnchorMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, const XrSpatialAnchorPersistenceInfoMSFT* spatialAnchorPersistenceInfo);
+typedef XrResult (*PFN_xrEnumeratePersistedSpatialAnchorNamesMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, uint32_t spatialAnchorNameCapacityInput, uint32_t* spatialAnchorNameCountOutput, XrSpatialAnchorPersistenceNameMSFT* spatialAnchorNames);
+typedef XrResult (*PFN_xrCreateSpatialAnchorFromPersistedNameMSFT)(XrSession session, const XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo, XrSpatialAnchorMSFT* spatialAnchor);
+typedef XrResult (*PFN_xrUnpersistSpatialAnchorMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, const XrSpatialAnchorPersistenceNameMSFT* spatialAnchorPersistenceName);
+typedef XrResult (*PFN_xrClearSpatialAnchorStoreMSFT)(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
+XrResult  xrCreateSpatialAnchorStoreConnectionMSFT(XrSession                                   session,     XrSpatialAnchorStoreConnectionMSFT*         spatialAnchorStore);
+XrResult  xrDestroySpatialAnchorStoreConnectionMSFT(XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore);
+XrResult  xrPersistSpatialAnchorMSFT(XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,     const XrSpatialAnchorPersistenceInfoMSFT*   spatialAnchorPersistenceInfo);
+XrResult  xrEnumeratePersistedSpatialAnchorNamesMSFT(XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,     uint32_t                                    spatialAnchorNameCapacityInput,     uint32_t*                                   spatialAnchorNameCountOutput,     XrSpatialAnchorPersistenceNameMSFT*         spatialAnchorNames);
+XrResult  xrCreateSpatialAnchorFromPersistedNameMSFT(XrSession                                   session,     const XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo,     XrSpatialAnchorMSFT*                        spatialAnchor);
+XrResult  xrUnpersistSpatialAnchorMSFT(XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore,     const XrSpatialAnchorPersistenceNameMSFT*   spatialAnchorPersistenceName);
+XrResult  xrClearSpatialAnchorStoreMSFT(XrSpatialAnchorStoreConnectionMSFT          spatialAnchorStore);
+#line 5525 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5526 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_MSFT_scene_marker is a preprocessor guard. Do not pass it to API calls.
-#define XR_MSFT_scene_marker 1
-#define XR_MSFT_scene_marker_SPEC_VERSION 1
-#define XR_MSFT_SCENE_MARKER_EXTENSION_NAME "XR_MSFT_scene_marker"
+
+
+
+
 
 typedef enum XrSceneMarkerTypeMSFT {
     XR_SCENE_MARKER_TYPE_QR_CODE_MSFT = 1,
@@ -5546,18 +11071,18 @@ typedef struct XrSceneMarkerMSFT {
     XrExtent2Df              size;
 } XrSceneMarkerMSFT;
 
-// XrSceneMarkersMSFT extends XrSceneComponentsMSFT
+
 typedef struct XrSceneMarkersMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    sceneMarkerCapacityInput;
     XrSceneMarkerMSFT*          sceneMarkers;
 } XrSceneMarkersMSFT;
 
-// XrSceneMarkerTypeFilterMSFT extends XrSceneComponentsGetInfoMSFT
+
 typedef struct XrSceneMarkerTypeFilterMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    markerTypeCount;
     XrSceneMarkerTypeMSFT*      markerTypes;
 } XrSceneMarkerTypeFilterMSFT;
@@ -5567,43 +11092,29 @@ typedef struct XrSceneMarkerQRCodeMSFT {
     uint8_t                              version;
 } XrSceneMarkerQRCodeMSFT;
 
-// XrSceneMarkerQRCodesMSFT extends XrSceneComponentsMSFT
+
 typedef struct XrSceneMarkerQRCodesMSFT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    qrCodeCapacityInput;
     XrSceneMarkerQRCodeMSFT*    qrCodes;
 } XrSceneMarkerQRCodesMSFT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetSceneMarkerRawDataMSFT)(XrSceneMSFT scene, const XrUuidMSFT* markerId, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSceneMarkerDecodedStringMSFT)(XrSceneMSFT scene, const XrUuidMSFT* markerId, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneMarkerRawDataMSFT(
-    XrSceneMSFT                                 scene,
-    const XrUuidMSFT*                           markerId,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    uint8_t*                                    buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneMarkerDecodedStringMSFT(
-    XrSceneMSFT                                 scene,
-    const XrUuidMSFT*                           markerId,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetSceneMarkerRawDataMSFT)(XrSceneMSFT scene, const XrUuidMSFT* markerId, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
+typedef XrResult (*PFN_xrGetSceneMarkerDecodedStringMSFT)(XrSceneMSFT scene, const XrUuidMSFT* markerId, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+XrResult  xrGetSceneMarkerRawDataMSFT(XrSceneMSFT                                 scene,     const XrUuidMSFT*                           markerId,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     uint8_t*                                    buffer);
+XrResult  xrGetSceneMarkerDecodedStringMSFT(XrSceneMSFT                                 scene,     const XrUuidMSFT*                           markerId,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+#line 5598 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5599 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ULTRALEAP_hand_tracking_forearm is a preprocessor guard. Do not pass it to API calls.
-#define XR_ULTRALEAP_hand_tracking_forearm 1
 
-#define XR_HAND_FOREARM_JOINT_COUNT_ULTRALEAP 27
 
-#define XR_ULTRALEAP_hand_tracking_forearm_SPEC_VERSION 1
-#define XR_ULTRALEAP_HAND_TRACKING_FOREARM_EXTENSION_NAME "XR_ULTRALEAP_hand_tracking_forearm"
+
+
+
+
+
 
 typedef enum XrHandForearmJointULTRALEAP {
     XR_HAND_FOREARM_JOINT_PALM_ULTRALEAP = 0,
@@ -5637,10 +11148,10 @@ typedef enum XrHandForearmJointULTRALEAP {
 } XrHandForearmJointULTRALEAP;
 
 
-// XR_FB_spatial_entity_query is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_query 1
-#define XR_FB_spatial_entity_query_SPEC_VERSION 1
-#define XR_FB_SPATIAL_ENTITY_QUERY_EXTENSION_NAME "XR_FB_spatial_entity_query"
+
+
+
+
 
 typedef enum XrSpaceQueryActionFB {
     XR_SPACE_QUERY_ACTION_LOAD_FB = 0,
@@ -5653,19 +11164,19 @@ typedef enum XrSpaceStorageLocationFB {
     XR_SPACE_STORAGE_LOCATION_CLOUD_FB = 2,
     XR_SPACE_STORAGE_LOCATION_MAX_ENUM_FB = 0x7FFFFFFF
 } XrSpaceStorageLocationFB;
-typedef struct XR_MAY_ALIAS XrSpaceQueryInfoBaseHeaderFB {
+typedef struct  XrSpaceQueryInfoBaseHeaderFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpaceQueryInfoBaseHeaderFB;
 
-typedef struct XR_MAY_ALIAS XrSpaceFilterInfoBaseHeaderFB {
+typedef struct  XrSpaceFilterInfoBaseHeaderFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpaceFilterInfoBaseHeaderFB;
 
 typedef struct XrSpaceQueryInfoFB {
     XrStructureType                         type;
-    const void* XR_MAY_ALIAS                next;
+    const void*                 next;
     XrSpaceQueryActionFB                    queryAction;
     uint32_t                                maxResultCount;
     XrDuration                              timeout;
@@ -5673,23 +11184,23 @@ typedef struct XrSpaceQueryInfoFB {
     const XrSpaceFilterInfoBaseHeaderFB*    excludeFilter;
 } XrSpaceQueryInfoFB;
 
-// XrSpaceStorageLocationFilterInfoFB extends XrSpaceFilterInfoBaseHeaderFB
+
 typedef struct XrSpaceStorageLocationFilterInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpaceStorageLocationFB    location;
 } XrSpaceStorageLocationFilterInfoFB;
 
 typedef struct XrSpaceUuidFilterInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    uuidCount;
     XrUuidEXT*                  uuids;
 } XrSpaceUuidFilterInfoFB;
 
 typedef struct XrSpaceComponentFilterInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpaceComponentTypeFB      componentType;
 } XrSpaceComponentFilterInfoFB;
 
@@ -5700,7 +11211,7 @@ typedef struct XrSpaceQueryResultFB {
 
 typedef struct XrSpaceQueryResultsFB {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     uint32_t                 resultCapacityInput;
     uint32_t                 resultCountOutput;
     XrSpaceQueryResultFB*    results;
@@ -5708,39 +11219,29 @@ typedef struct XrSpaceQueryResultsFB {
 
 typedef struct XrEventDataSpaceQueryResultsAvailableFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
 } XrEventDataSpaceQueryResultsAvailableFB;
 
 typedef struct XrEventDataSpaceQueryCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataSpaceQueryCompleteFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySpacesFB)(XrSession session, const XrSpaceQueryInfoBaseHeaderFB* info, XrAsyncRequestIdFB* requestId);
-typedef XrResult (XRAPI_PTR *PFN_xrRetrieveSpaceQueryResultsFB)(XrSession session, XrAsyncRequestIdFB requestId, XrSpaceQueryResultsFB* results);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySpacesFB(
-    XrSession                                   session,
-    const XrSpaceQueryInfoBaseHeaderFB*         info,
-    XrAsyncRequestIdFB*                         requestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRetrieveSpaceQueryResultsFB(
-    XrSession                                   session,
-    XrAsyncRequestIdFB                          requestId,
-    XrSpaceQueryResultsFB*                      results);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrQuerySpacesFB)(XrSession session, const XrSpaceQueryInfoBaseHeaderFB* info, XrAsyncRequestIdFB* requestId);
+typedef XrResult (*PFN_xrRetrieveSpaceQueryResultsFB)(XrSession session, XrAsyncRequestIdFB requestId, XrSpaceQueryResultsFB* results);
+XrResult  xrQuerySpacesFB(XrSession                                   session,     const XrSpaceQueryInfoBaseHeaderFB*         info,     XrAsyncRequestIdFB*                         requestId);
+XrResult  xrRetrieveSpaceQueryResultsFB(XrSession                                   session,     XrAsyncRequestIdFB                          requestId,     XrSpaceQueryResultsFB*                      results);
+#line 5738 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5739 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_spatial_entity_storage is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_storage 1
-#define XR_FB_spatial_entity_storage_SPEC_VERSION 1
-#define XR_FB_SPATIAL_ENTITY_STORAGE_EXTENSION_NAME "XR_FB_spatial_entity_storage"
+
+
+
+
 
 typedef enum XrSpacePersistenceModeFB {
     XR_SPACE_PERSISTENCE_MODE_INVALID_FB = 0,
@@ -5749,7 +11250,7 @@ typedef enum XrSpacePersistenceModeFB {
 } XrSpacePersistenceModeFB;
 typedef struct XrSpaceSaveInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrSpaceStorageLocationFB    location;
     XrSpacePersistenceModeFB    persistenceMode;
@@ -5757,14 +11258,14 @@ typedef struct XrSpaceSaveInfoFB {
 
 typedef struct XrSpaceEraseInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrSpaceStorageLocationFB    location;
 } XrSpaceEraseInfoFB;
 
 typedef struct XrEventDataSpaceSaveCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
     XrSpace                     space;
@@ -5774,7 +11275,7 @@ typedef struct XrEventDataSpaceSaveCompleteFB {
 
 typedef struct XrEventDataSpaceEraseCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
     XrSpace                     space;
@@ -5782,38 +11283,28 @@ typedef struct XrEventDataSpaceEraseCompleteFB {
     XrSpaceStorageLocationFB    location;
 } XrEventDataSpaceEraseCompleteFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSaveSpaceFB)(XrSession session, const XrSpaceSaveInfoFB* info, XrAsyncRequestIdFB* requestId);
-typedef XrResult (XRAPI_PTR *PFN_xrEraseSpaceFB)(XrSession session, const XrSpaceEraseInfoFB* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSaveSpaceFB(
-    XrSession                                   session,
-    const XrSpaceSaveInfoFB*                    info,
-    XrAsyncRequestIdFB*                         requestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEraseSpaceFB(
-    XrSession                                   session,
-    const XrSpaceEraseInfoFB*                   info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSaveSpaceFB)(XrSession session, const XrSpaceSaveInfoFB* info, XrAsyncRequestIdFB* requestId);
+typedef XrResult (*PFN_xrEraseSpaceFB)(XrSession session, const XrSpaceEraseInfoFB* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrSaveSpaceFB(XrSession                                   session,     const XrSpaceSaveInfoFB*                    info,     XrAsyncRequestIdFB*                         requestId);
+XrResult  xrEraseSpaceFB(XrSession                                   session,     const XrSpaceEraseInfoFB*                   info,     XrAsyncRequestIdFB*                         requestId);
+#line 5801 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5802 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_touch_controller_pro is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_touch_controller_pro 1
-#define XR_FB_touch_controller_pro_SPEC_VERSION 1
-#define XR_FB_TOUCH_CONTROLLER_PRO_EXTENSION_NAME "XR_FB_touch_controller_pro"
 
 
-// XR_FB_spatial_entity_sharing is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_sharing 1
-typedef uint64_t XrSpaceUserFB;
-#define XR_FB_spatial_entity_sharing_SPEC_VERSION 1
-#define XR_FB_SPATIAL_ENTITY_SHARING_EXTENSION_NAME "XR_FB_spatial_entity_sharing"
+
+
+
+
+
+
+typedef struct XrSpaceUserFB_T* XrSpaceUserFB;
+
+
 typedef struct XrSpaceShareInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    spaceCount;
     XrSpace*                    spaces;
     uint32_t                    userCount;
@@ -5822,36 +11313,30 @@ typedef struct XrSpaceShareInfoFB {
 
 typedef struct XrEventDataSpaceShareCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataSpaceShareCompleteFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrShareSpacesFB)(XrSession session, const XrSpaceShareInfoFB* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrShareSpacesFB(
-    XrSession                                   session,
-    const XrSpaceShareInfoFB*                   info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrShareSpacesFB)(XrSession session, const XrSpaceShareInfoFB* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrShareSpacesFB(XrSession                                   session,     const XrSpaceShareInfoFB*                   info,     XrAsyncRequestIdFB*                         requestId);
+#line 5840 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5841 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_space_warp is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_space_warp 1
-#define XR_FB_space_warp_SPEC_VERSION     2
-#define XR_FB_SPACE_WARP_EXTENSION_NAME   "XR_FB_space_warp"
+
+
+
+
 typedef XrFlags64 XrCompositionLayerSpaceWarpInfoFlagsFB;
 
-// Flag bits for XrCompositionLayerSpaceWarpInfoFlagsFB
+
 static const XrCompositionLayerSpaceWarpInfoFlagsFB XR_COMPOSITION_LAYER_SPACE_WARP_INFO_FRAME_SKIP_BIT_FB = 0x00000001;
 
-// XrCompositionLayerSpaceWarpInfoFB extends XrCompositionLayerProjectionView
+
 typedef struct XrCompositionLayerSpaceWarpInfoFB {
     XrStructureType                           type;
-    const void* XR_MAY_ALIAS                  next;
+    const void*                   next;
     XrCompositionLayerSpaceWarpInfoFlagsFB    layerFlags;
     XrSwapchainSubImage                       motionVectorSubImage;
     XrPosef                                   appSpaceDeltaPose;
@@ -5862,26 +11347,26 @@ typedef struct XrCompositionLayerSpaceWarpInfoFB {
     float                                     farZ;
 } XrCompositionLayerSpaceWarpInfoFB;
 
-// XrSystemSpaceWarpPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemSpaceWarpPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              recommendedMotionVectorImageRectWidth;
     uint32_t              recommendedMotionVectorImageRectHeight;
 } XrSystemSpaceWarpPropertiesFB;
 
 
 
-// XR_FB_haptic_amplitude_envelope is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_haptic_amplitude_envelope 1
 
-#define XR_MAX_HAPTIC_AMPLITUDE_ENVELOPE_SAMPLES_FB 4000u
 
-#define XR_FB_haptic_amplitude_envelope_SPEC_VERSION 1
-#define XR_FB_HAPTIC_AMPLITUDE_ENVELOPE_EXTENSION_NAME "XR_FB_haptic_amplitude_envelope"
+
+
+
+
+
 typedef struct XrHapticAmplitudeEnvelopeVibrationFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrDuration                  duration;
     uint32_t                    amplitudeCount;
     const float*                amplitudes;
@@ -5889,13 +11374,13 @@ typedef struct XrHapticAmplitudeEnvelopeVibrationFB {
 
 
 
-// XR_FB_scene is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_scene 1
-#define XR_FB_scene_SPEC_VERSION          4
-#define XR_FB_SCENE_EXTENSION_NAME        "XR_FB_scene"
+
+
+
+
 typedef XrFlags64 XrSemanticLabelsSupportFlagsFB;
 
-// Flag bits for XrSemanticLabelsSupportFlagsFB
+
 static const XrSemanticLabelsSupportFlagsFB XR_SEMANTIC_LABELS_SUPPORT_MULTIPLE_SEMANTIC_LABELS_BIT_FB = 0x00000001;
 static const XrSemanticLabelsSupportFlagsFB XR_SEMANTIC_LABELS_SUPPORT_ACCEPT_DESK_TO_TABLE_MIGRATION_BIT_FB = 0x00000002;
 static const XrSemanticLabelsSupportFlagsFB XR_SEMANTIC_LABELS_SUPPORT_ACCEPT_INVISIBLE_WALL_FACE_BIT_FB = 0x00000004;
@@ -5915,7 +11400,7 @@ typedef struct XrRect3DfFB {
 
 typedef struct XrSemanticLabelsFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    bufferCapacityInput;
     uint32_t                    bufferCountOutput;
     char*                       buffer;
@@ -5923,7 +11408,7 @@ typedef struct XrSemanticLabelsFB {
 
 typedef struct XrRoomLayoutFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidEXT                   floorUuid;
     XrUuidEXT                   ceilingUuid;
     uint32_t                    wallUuidCapacityInput;
@@ -5933,7 +11418,7 @@ typedef struct XrRoomLayoutFB {
 
 typedef struct XrBoundary2DFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    vertexCapacityInput;
     uint32_t                    vertexCountOutput;
     XrVector2f*                 vertices;
@@ -5941,187 +11426,143 @@ typedef struct XrBoundary2DFB {
 
 typedef struct XrSemanticLabelsSupportInfoFB {
     XrStructureType                   type;
-    const void* XR_MAY_ALIAS          next;
+    const void*           next;
     XrSemanticLabelsSupportFlagsFB    flags;
     const char*                       recognizedLabels;
 } XrSemanticLabelsSupportInfoFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceBoundingBox2DFB)(XrSession session, XrSpace space, XrRect2Df* boundingBox2DOutput);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceBoundingBox3DFB)(XrSession session, XrSpace space, XrRect3DfFB* boundingBox3DOutput);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceSemanticLabelsFB)(XrSession session, XrSpace space, XrSemanticLabelsFB* semanticLabelsOutput);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceBoundary2DFB)(XrSession session, XrSpace space, XrBoundary2DFB* boundary2DOutput);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceRoomLayoutFB)(XrSession session, XrSpace space, XrRoomLayoutFB* roomLayoutOutput);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceBoundingBox2DFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrRect2Df*                                  boundingBox2DOutput);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceBoundingBox3DFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrRect3DfFB*                                boundingBox3DOutput);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceSemanticLabelsFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrSemanticLabelsFB*                         semanticLabelsOutput);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceBoundary2DFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrBoundary2DFB*                             boundary2DOutput);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceRoomLayoutFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrRoomLayoutFB*                             roomLayoutOutput);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetSpaceBoundingBox2DFB)(XrSession session, XrSpace space, XrRect2Df* boundingBox2DOutput);
+typedef XrResult (*PFN_xrGetSpaceBoundingBox3DFB)(XrSession session, XrSpace space, XrRect3DfFB* boundingBox3DOutput);
+typedef XrResult (*PFN_xrGetSpaceSemanticLabelsFB)(XrSession session, XrSpace space, XrSemanticLabelsFB* semanticLabelsOutput);
+typedef XrResult (*PFN_xrGetSpaceBoundary2DFB)(XrSession session, XrSpace space, XrBoundary2DFB* boundary2DOutput);
+typedef XrResult (*PFN_xrGetSpaceRoomLayoutFB)(XrSession session, XrSpace space, XrRoomLayoutFB* roomLayoutOutput);
+XrResult  xrGetSpaceBoundingBox2DFB(XrSession                                   session,     XrSpace                                     space,     XrRect2Df*                                  boundingBox2DOutput);
+XrResult  xrGetSpaceBoundingBox3DFB(XrSession                                   session,     XrSpace                                     space,     XrRect3DfFB*                                boundingBox3DOutput);
+XrResult  xrGetSpaceSemanticLabelsFB(XrSession                                   session,     XrSpace                                     space,     XrSemanticLabelsFB*                         semanticLabelsOutput);
+XrResult  xrGetSpaceBoundary2DFB(XrSession                                   session,     XrSpace                                     space,     XrBoundary2DFB*                             boundary2DOutput);
+XrResult  xrGetSpaceRoomLayoutFB(XrSession                                   session,     XrSpace                                     space,     XrRoomLayoutFB*                             roomLayoutOutput);
+#line 5983 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 5984 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_palm_pose is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_palm_pose 1
-#define XR_EXT_palm_pose_SPEC_VERSION     3
-#define XR_EXT_PALM_POSE_EXTENSION_NAME   "XR_EXT_palm_pose"
 
 
-// XR_ALMALENCE_digital_lens_control is a preprocessor guard. Do not pass it to API calls.
-#define XR_ALMALENCE_digital_lens_control 1
-#define XR_ALMALENCE_digital_lens_control_SPEC_VERSION 1
-#define XR_ALMALENCE_DIGITAL_LENS_CONTROL_EXTENSION_NAME "XR_ALMALENCE_digital_lens_control"
+
+
+
+
+
+
+
+
 typedef XrFlags64 XrDigitalLensControlFlagsALMALENCE;
 
-// Flag bits for XrDigitalLensControlFlagsALMALENCE
+
 static const XrDigitalLensControlFlagsALMALENCE XR_DIGITAL_LENS_CONTROL_PROCESSING_DISABLE_BIT_ALMALENCE = 0x00000001;
 
 typedef struct XrDigitalLensControlALMALENCE {
     XrStructureType                       type;
-    const void* XR_MAY_ALIAS              next;
+    const void*               next;
     XrDigitalLensControlFlagsALMALENCE    flags;
 } XrDigitalLensControlALMALENCE;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSetDigitalLensControlALMALENCE)(XrSession session, const XrDigitalLensControlALMALENCE* digitalLensControl);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetDigitalLensControlALMALENCE(
-    XrSession                                   session,
-    const XrDigitalLensControlALMALENCE*        digitalLensControl);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSetDigitalLensControlALMALENCE)(XrSession session, const XrDigitalLensControlALMALENCE* digitalLensControl);
+XrResult  xrSetDigitalLensControlALMALENCE(XrSession                                   session,     const XrDigitalLensControlALMALENCE*        digitalLensControl);
+#line 6015 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6016 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_scene_capture is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_scene_capture 1
-#define XR_FB_scene_capture_SPEC_VERSION  1
-#define XR_FB_SCENE_CAPTURE_EXTENSION_NAME "XR_FB_scene_capture"
+
+
+
+
 typedef struct XrEventDataSceneCaptureCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataSceneCaptureCompleteFB;
 
 typedef struct XrSceneCaptureRequestInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    requestByteCount;
     const char*                 request;
 } XrSceneCaptureRequestInfoFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrRequestSceneCaptureFB)(XrSession session, const XrSceneCaptureRequestInfoFB* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestSceneCaptureFB(
-    XrSession                                   session,
-    const XrSceneCaptureRequestInfoFB*          info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrRequestSceneCaptureFB)(XrSession session, const XrSceneCaptureRequestInfoFB* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrRequestSceneCaptureFB(XrSession                                   session,     const XrSceneCaptureRequestInfoFB*          info,     XrAsyncRequestIdFB*                         requestId);
+#line 6045 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6046 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_spatial_entity_container is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_container 1
-#define XR_FB_spatial_entity_container_SPEC_VERSION 2
-#define XR_FB_SPATIAL_ENTITY_CONTAINER_EXTENSION_NAME "XR_FB_spatial_entity_container"
+
+
+
+
 typedef struct XrSpaceContainerFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    uuidCapacityInput;
     uint32_t                    uuidCountOutput;
     XrUuidEXT*                  uuids;
 } XrSpaceContainerFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceContainerFB)(XrSession session, XrSpace space, XrSpaceContainerFB* spaceContainerOutput);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceContainerFB(
-    XrSession                                   session,
-    XrSpace                                     space,
-    XrSpaceContainerFB*                         spaceContainerOutput);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetSpaceContainerFB)(XrSession session, XrSpace space, XrSpaceContainerFB* spaceContainerOutput);
+XrResult  xrGetSpaceContainerFB(XrSession                                   session,     XrSpace                                     space,     XrSpaceContainerFB*                         spaceContainerOutput);
+#line 6069 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6070 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_foveation_eye_tracked is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_foveation_eye_tracked 1
-#define XR_FOVEATION_CENTER_SIZE_META     2
-#define XR_META_foveation_eye_tracked_SPEC_VERSION 1
-#define XR_META_FOVEATION_EYE_TRACKED_EXTENSION_NAME "XR_META_foveation_eye_tracked"
+
+
+
+
+
 typedef XrFlags64 XrFoveationEyeTrackedProfileCreateFlagsMETA;
 
-// Flag bits for XrFoveationEyeTrackedProfileCreateFlagsMETA
+
 
 typedef XrFlags64 XrFoveationEyeTrackedStateFlagsMETA;
 
-// Flag bits for XrFoveationEyeTrackedStateFlagsMETA
+
 static const XrFoveationEyeTrackedStateFlagsMETA XR_FOVEATION_EYE_TRACKED_STATE_VALID_BIT_META = 0x00000001;
 
-// XrFoveationEyeTrackedProfileCreateInfoMETA extends XrFoveationLevelProfileCreateInfoFB
+
 typedef struct XrFoveationEyeTrackedProfileCreateInfoMETA {
     XrStructureType                                type;
-    const void* XR_MAY_ALIAS                       next;
+    const void*                        next;
     XrFoveationEyeTrackedProfileCreateFlagsMETA    flags;
 } XrFoveationEyeTrackedProfileCreateInfoMETA;
 
 typedef struct XrFoveationEyeTrackedStateMETA {
     XrStructureType                        type;
-    void* XR_MAY_ALIAS                     next;
-    XrVector2f                             foveationCenter[XR_FOVEATION_CENTER_SIZE_META];
+    void*                      next;
+    XrVector2f                             foveationCenter[2];
     XrFoveationEyeTrackedStateFlagsMETA    flags;
 } XrFoveationEyeTrackedStateMETA;
 
-// XrSystemFoveationEyeTrackedPropertiesMETA extends XrSystemProperties
+
 typedef struct XrSystemFoveationEyeTrackedPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsFoveationEyeTracked;
 } XrSystemFoveationEyeTrackedPropertiesMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetFoveationEyeTrackedStateMETA)(XrSession session, XrFoveationEyeTrackedStateMETA* foveationState);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetFoveationEyeTrackedStateMETA(
-    XrSession                                   session,
-    XrFoveationEyeTrackedStateMETA*             foveationState);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetFoveationEyeTrackedStateMETA)(XrSession session, XrFoveationEyeTrackedStateMETA* foveationState);
+XrResult  xrGetFoveationEyeTrackedStateMETA(XrSession                                   session,     XrFoveationEyeTrackedStateMETA*             foveationState);
+#line 6115 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6116 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_face_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_face_tracking 1
 
-#define XR_FACE_EXPRESSSION_SET_DEFAULT_FB XR_FACE_EXPRESSION_SET_DEFAULT_FB
 
-typedef uint64_t XrFaceTrackerFB;
-#define XR_FB_face_tracking_SPEC_VERSION  1
-#define XR_FB_FACE_TRACKING_EXTENSION_NAME "XR_FB_face_tracking"
+
+
+
+typedef struct XrFaceTrackerFB_T* XrFaceTrackerFB;
+
+
 
 typedef enum XrFaceExpressionFB {
     XR_FACE_EXPRESSION_BROW_LOWERER_L_FB = 0,
@@ -6202,22 +11643,22 @@ typedef enum XrFaceConfidenceFB {
     XR_FACE_CONFIDENCE_COUNT_FB = 2,
     XR_FACE_CONFIDENCE_MAX_ENUM_FB = 0x7FFFFFFF
 } XrFaceConfidenceFB;
-// XrSystemFaceTrackingPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemFaceTrackingPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsFaceTracking;
 } XrSystemFaceTrackingPropertiesFB;
 
 typedef struct XrFaceTrackerCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFaceExpressionSetFB       faceExpressionSet;
 } XrFaceTrackerCreateInfoFB;
 
 typedef struct XrFaceExpressionInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTime                      time;
 } XrFaceExpressionInfoFB;
 
@@ -6228,7 +11669,7 @@ typedef struct XrFaceExpressionStatusFB {
 
 typedef struct XrFaceExpressionWeightsFB {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     uint32_t                    weightCount;
     float*                      weights;
     uint32_t                    confidenceCount;
@@ -6237,33 +11678,21 @@ typedef struct XrFaceExpressionWeightsFB {
     XrTime                      time;
 } XrFaceExpressionWeightsFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateFaceTrackerFB)(XrSession session, const XrFaceTrackerCreateInfoFB* createInfo, XrFaceTrackerFB* faceTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyFaceTrackerFB)(XrFaceTrackerFB faceTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrGetFaceExpressionWeightsFB)(XrFaceTrackerFB faceTracker, const XrFaceExpressionInfoFB* expressionInfo, XrFaceExpressionWeightsFB* expressionWeights);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateFaceTrackerFB(
-    XrSession                                   session,
-    const XrFaceTrackerCreateInfoFB*            createInfo,
-    XrFaceTrackerFB*                            faceTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyFaceTrackerFB(
-    XrFaceTrackerFB                             faceTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetFaceExpressionWeightsFB(
-    XrFaceTrackerFB                             faceTracker,
-    const XrFaceExpressionInfoFB*               expressionInfo,
-    XrFaceExpressionWeightsFB*                  expressionWeights);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateFaceTrackerFB)(XrSession session, const XrFaceTrackerCreateInfoFB* createInfo, XrFaceTrackerFB* faceTracker);
+typedef XrResult (*PFN_xrDestroyFaceTrackerFB)(XrFaceTrackerFB faceTracker);
+typedef XrResult (*PFN_xrGetFaceExpressionWeightsFB)(XrFaceTrackerFB faceTracker, const XrFaceExpressionInfoFB* expressionInfo, XrFaceExpressionWeightsFB* expressionWeights);
+XrResult  xrCreateFaceTrackerFB(XrSession                                   session,     const XrFaceTrackerCreateInfoFB*            createInfo,     XrFaceTrackerFB*                            faceTracker);
+XrResult  xrDestroyFaceTrackerFB(XrFaceTrackerFB                             faceTracker);
+XrResult  xrGetFaceExpressionWeightsFB(XrFaceTrackerFB                             faceTracker,     const XrFaceExpressionInfoFB*               expressionInfo,     XrFaceExpressionWeightsFB*                  expressionWeights);
+#line 6260 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6261 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_eye_tracking_social is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_eye_tracking_social 1
-typedef uint64_t XrEyeTrackerFB;
-#define XR_FB_eye_tracking_social_SPEC_VERSION 1
-#define XR_FB_EYE_TRACKING_SOCIAL_EXTENSION_NAME "XR_FB_eye_tracking_social"
+
+
+typedef struct XrEyeTrackerFB_T* XrEyeTrackerFB;
+
+
 
 typedef enum XrEyePositionFB {
     XR_EYE_POSITION_LEFT_FB = 0,
@@ -6279,112 +11708,95 @@ typedef struct XrEyeGazeFB {
 
 typedef struct XrEyeTrackerCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrEyeTrackerCreateInfoFB;
 
 typedef struct XrEyeGazesInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrEyeGazesInfoFB;
 
-// XrSystemEyeTrackingPropertiesFB extends XrSystemProperties
+
 typedef struct XrSystemEyeTrackingPropertiesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsEyeTracking;
 } XrSystemEyeTrackingPropertiesFB;
 
 typedef struct XrEyeGazesFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrEyeGazeFB           gaze[XR_EYE_POSITION_COUNT_FB];
     XrTime                time;
 } XrEyeGazesFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateEyeTrackerFB)(XrSession session, const XrEyeTrackerCreateInfoFB* createInfo, XrEyeTrackerFB* eyeTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyEyeTrackerFB)(XrEyeTrackerFB eyeTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrGetEyeGazesFB)(XrEyeTrackerFB eyeTracker, const XrEyeGazesInfoFB* gazeInfo, XrEyeGazesFB* eyeGazes);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateEyeTrackerFB(
-    XrSession                                   session,
-    const XrEyeTrackerCreateInfoFB*             createInfo,
-    XrEyeTrackerFB*                             eyeTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyEyeTrackerFB(
-    XrEyeTrackerFB                              eyeTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetEyeGazesFB(
-    XrEyeTrackerFB                              eyeTracker,
-    const XrEyeGazesInfoFB*                     gazeInfo,
-    XrEyeGazesFB*                               eyeGazes);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateEyeTrackerFB)(XrSession session, const XrEyeTrackerCreateInfoFB* createInfo, XrEyeTrackerFB* eyeTracker);
+typedef XrResult (*PFN_xrDestroyEyeTrackerFB)(XrEyeTrackerFB eyeTracker);
+typedef XrResult (*PFN_xrGetEyeGazesFB)(XrEyeTrackerFB eyeTracker, const XrEyeGazesInfoFB* gazeInfo, XrEyeGazesFB* eyeGazes);
+XrResult  xrCreateEyeTrackerFB(XrSession                                   session,     const XrEyeTrackerCreateInfoFB*             createInfo,     XrEyeTrackerFB*                             eyeTracker);
+XrResult  xrDestroyEyeTrackerFB(XrEyeTrackerFB                              eyeTracker);
+XrResult  xrGetEyeGazesFB(XrEyeTrackerFB                              eyeTracker,     const XrEyeGazesInfoFB*                     gazeInfo,     XrEyeGazesFB*                               eyeGazes);
+#line 6326 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6327 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_passthrough_keyboard_hands is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_passthrough_keyboard_hands 1
-#define XR_FB_passthrough_keyboard_hands_SPEC_VERSION 2
-#define XR_FB_PASSTHROUGH_KEYBOARD_HANDS_EXTENSION_NAME "XR_FB_passthrough_keyboard_hands"
+
+
+
+
 typedef struct XrPassthroughKeyboardHandsIntensityFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       leftHandIntensity;
     float                       rightHandIntensity;
 } XrPassthroughKeyboardHandsIntensityFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrPassthroughLayerSetKeyboardHandsIntensityFB)(XrPassthroughLayerFB layer, const XrPassthroughKeyboardHandsIntensityFB* intensity);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrPassthroughLayerSetKeyboardHandsIntensityFB(
-    XrPassthroughLayerFB                        layer,
-    const XrPassthroughKeyboardHandsIntensityFB* intensity);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrPassthroughLayerSetKeyboardHandsIntensityFB)(XrPassthroughLayerFB layer, const XrPassthroughKeyboardHandsIntensityFB* intensity);
+XrResult  xrPassthroughLayerSetKeyboardHandsIntensityFB(XrPassthroughLayerFB                        layer,     const XrPassthroughKeyboardHandsIntensityFB* intensity);
+#line 6348 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6349 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_composition_layer_settings is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_composition_layer_settings 1
-#define XR_FB_composition_layer_settings_SPEC_VERSION 1
-#define XR_FB_COMPOSITION_LAYER_SETTINGS_EXTENSION_NAME "XR_FB_composition_layer_settings"
+
+
+
+
 typedef XrFlags64 XrCompositionLayerSettingsFlagsFB;
 
-// Flag bits for XrCompositionLayerSettingsFlagsFB
+
 static const XrCompositionLayerSettingsFlagsFB XR_COMPOSITION_LAYER_SETTINGS_NORMAL_SUPER_SAMPLING_BIT_FB = 0x00000001;
 static const XrCompositionLayerSettingsFlagsFB XR_COMPOSITION_LAYER_SETTINGS_QUALITY_SUPER_SAMPLING_BIT_FB = 0x00000002;
 static const XrCompositionLayerSettingsFlagsFB XR_COMPOSITION_LAYER_SETTINGS_NORMAL_SHARPENING_BIT_FB = 0x00000004;
 static const XrCompositionLayerSettingsFlagsFB XR_COMPOSITION_LAYER_SETTINGS_QUALITY_SHARPENING_BIT_FB = 0x00000008;
 static const XrCompositionLayerSettingsFlagsFB XR_COMPOSITION_LAYER_SETTINGS_AUTO_LAYER_FILTER_BIT_META = 0x00000020;
 
-// XrCompositionLayerSettingsFB extends XrCompositionLayerBaseHeader
+
 typedef struct XrCompositionLayerSettingsFB {
     XrStructureType                      type;
-    const void* XR_MAY_ALIAS             next;
+    const void*              next;
     XrCompositionLayerSettingsFlagsFB    layerFlags;
 } XrCompositionLayerSettingsFB;
 
 
 
-// XR_FB_touch_controller_proximity is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_touch_controller_proximity 1
-#define XR_FB_touch_controller_proximity_SPEC_VERSION 1
-#define XR_FB_TOUCH_CONTROLLER_PROXIMITY_EXTENSION_NAME "XR_FB_touch_controller_proximity"
 
 
-// XR_FB_haptic_pcm is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_haptic_pcm 1
 
-#define XR_MAX_HAPTIC_PCM_BUFFER_SIZE_FB 4000
 
-#define XR_FB_haptic_pcm_SPEC_VERSION     1
-#define XR_FB_HAPTIC_PCM_EXTENSION_NAME   "XR_FB_haptic_pcm"
+
+
+
+
+
+
+
+
+
 typedef struct XrHapticPcmVibrationFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    bufferSize;
     const float*                buffer;
     float                       sampleRate;
@@ -6394,38 +11806,32 @@ typedef struct XrHapticPcmVibrationFB {
 
 typedef struct XrDevicePcmSampleRateStateFB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     float                 sampleRate;
 } XrDevicePcmSampleRateStateFB;
 
 typedef XrDevicePcmSampleRateStateFB XrDevicePcmSampleRateGetInfoFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetDeviceSampleRateFB)(XrSession session, const XrHapticActionInfo* hapticActionInfo, XrDevicePcmSampleRateGetInfoFB* deviceSampleRate);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetDeviceSampleRateFB(
-    XrSession                                   session,
-    const XrHapticActionInfo*                   hapticActionInfo,
-    XrDevicePcmSampleRateGetInfoFB*             deviceSampleRate);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetDeviceSampleRateFB)(XrSession session, const XrHapticActionInfo* hapticActionInfo, XrDevicePcmSampleRateGetInfoFB* deviceSampleRate);
+XrResult  xrGetDeviceSampleRateFB(XrSession                                   session,     const XrHapticActionInfo*                   hapticActionInfo,     XrDevicePcmSampleRateGetInfoFB*             deviceSampleRate);
+#line 6413 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6414 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_frame_synthesis is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_frame_synthesis 1
-#define XR_EXT_frame_synthesis_SPEC_VERSION 1
-#define XR_EXT_FRAME_SYNTHESIS_EXTENSION_NAME "XR_EXT_frame_synthesis"
+
+
+
+
 typedef XrFlags64 XrFrameSynthesisInfoFlagsEXT;
 
-// Flag bits for XrFrameSynthesisInfoFlagsEXT
+
 static const XrFrameSynthesisInfoFlagsEXT XR_FRAME_SYNTHESIS_INFO_USE_2D_MOTION_VECTOR_BIT_EXT = 0x00000001;
 static const XrFrameSynthesisInfoFlagsEXT XR_FRAME_SYNTHESIS_INFO_REQUEST_RELAXED_FRAME_INTERVAL_BIT_EXT = 0x00000002;
 
-// XrFrameSynthesisInfoEXT extends XrCompositionLayerProjectionView
+
 typedef struct XrFrameSynthesisInfoEXT {
     XrStructureType                 type;
-    const void* XR_MAY_ALIAS        next;
+    const void*         next;
     XrFrameSynthesisInfoFlagsEXT    layerFlags;
     XrSwapchainSubImage             motionVectorSubImage;
     XrVector4f                      motionVectorScale;
@@ -6438,20 +11844,20 @@ typedef struct XrFrameSynthesisInfoEXT {
     float                           farZ;
 } XrFrameSynthesisInfoEXT;
 
-// XrFrameSynthesisConfigViewEXT extends XrViewConfigurationView
+
 typedef struct XrFrameSynthesisConfigViewEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              recommendedMotionVectorImageRectWidth;
     uint32_t              recommendedMotionVectorImageRectHeight;
 } XrFrameSynthesisConfigViewEXT;
 
 
 
-// XR_FB_composition_layer_depth_test is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_composition_layer_depth_test 1
-#define XR_FB_composition_layer_depth_test_SPEC_VERSION 1
-#define XR_FB_COMPOSITION_LAYER_DEPTH_TEST_EXTENSION_NAME "XR_FB_composition_layer_depth_test"
+
+
+
+
 
 typedef enum XrCompareOpFB {
     XR_COMPARE_OP_NEVER_FB = 0,
@@ -6464,67 +11870,62 @@ typedef enum XrCompareOpFB {
     XR_COMPARE_OP_ALWAYS_FB = 7,
     XR_COMPARE_OP_MAX_ENUM_FB = 0x7FFFFFFF
 } XrCompareOpFB;
-// XrCompositionLayerDepthTestFB extends XrCompositionLayerBaseHeader
+
 typedef struct XrCompositionLayerDepthTestFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    depthMask;
     XrCompareOpFB               compareOp;
 } XrCompositionLayerDepthTestFB;
 
 
 
-// XR_META_local_dimming is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_local_dimming 1
-#define XR_META_local_dimming_SPEC_VERSION 1
-#define XR_META_LOCAL_DIMMING_EXTENSION_NAME "XR_META_local_dimming"
+
+
+
+
 
 typedef enum XrLocalDimmingModeMETA {
     XR_LOCAL_DIMMING_MODE_OFF_META = 0,
     XR_LOCAL_DIMMING_MODE_ON_META = 1,
     XR_LOCAL_DIMMING_MODE_MAX_ENUM_META = 0x7FFFFFFF
 } XrLocalDimmingModeMETA;
-// XrLocalDimmingFrameEndInfoMETA extends XrFrameEndInfo
+
 typedef struct XrLocalDimmingFrameEndInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrLocalDimmingModeMETA      localDimmingMode;
 } XrLocalDimmingFrameEndInfoMETA;
 
 
 
-// XR_META_passthrough_preferences is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_passthrough_preferences 1
-#define XR_META_passthrough_preferences_SPEC_VERSION 1
-#define XR_META_PASSTHROUGH_PREFERENCES_EXTENSION_NAME "XR_META_passthrough_preferences"
+
+
+
+
 typedef XrFlags64 XrPassthroughPreferenceFlagsMETA;
 
-// Flag bits for XrPassthroughPreferenceFlagsMETA
+
 static const XrPassthroughPreferenceFlagsMETA XR_PASSTHROUGH_PREFERENCE_DEFAULT_TO_ACTIVE_BIT_META = 0x00000001;
 
 typedef struct XrPassthroughPreferencesMETA {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrPassthroughPreferenceFlagsMETA    flags;
 } XrPassthroughPreferencesMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetPassthroughPreferencesMETA)(XrSession session, XrPassthroughPreferencesMETA* preferences);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetPassthroughPreferencesMETA(
-    XrSession                                   session,
-    XrPassthroughPreferencesMETA*               preferences);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetPassthroughPreferencesMETA)(XrSession session, XrPassthroughPreferencesMETA* preferences);
+XrResult  xrGetPassthroughPreferencesMETA(XrSession                                   session,     XrPassthroughPreferencesMETA*               preferences);
+#line 6520 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6521 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_virtual_keyboard is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_virtual_keyboard 1
-typedef uint64_t XrVirtualKeyboardMETA;
-#define XR_MAX_VIRTUAL_KEYBOARD_COMMIT_TEXT_SIZE_META 3992
-#define XR_META_virtual_keyboard_SPEC_VERSION 1
-#define XR_META_VIRTUAL_KEYBOARD_EXTENSION_NAME "XR_META_virtual_keyboard"
+
+
+typedef struct XrVirtualKeyboardMETA_T* XrVirtualKeyboardMETA;
+
+
+
 
 typedef enum XrVirtualKeyboardLocationTypeMETA {
     XR_VIRTUAL_KEYBOARD_LOCATION_TYPE_CUSTOM_META = 0,
@@ -6546,24 +11947,24 @@ typedef enum XrVirtualKeyboardInputSourceMETA {
 } XrVirtualKeyboardInputSourceMETA;
 typedef XrFlags64 XrVirtualKeyboardInputStateFlagsMETA;
 
-// Flag bits for XrVirtualKeyboardInputStateFlagsMETA
+
 static const XrVirtualKeyboardInputStateFlagsMETA XR_VIRTUAL_KEYBOARD_INPUT_STATE_PRESSED_BIT_META = 0x00000001;
 
-// XrSystemVirtualKeyboardPropertiesMETA extends XrSystemProperties
+
 typedef struct XrSystemVirtualKeyboardPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsVirtualKeyboard;
 } XrSystemVirtualKeyboardPropertiesMETA;
 
 typedef struct XrVirtualKeyboardCreateInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrVirtualKeyboardCreateInfoMETA;
 
 typedef struct XrVirtualKeyboardSpaceCreateInfoMETA {
     XrStructureType                      type;
-    const void* XR_MAY_ALIAS             next;
+    const void*              next;
     XrVirtualKeyboardLocationTypeMETA    locationType;
     XrSpace                              space;
     XrPosef                              poseInSpace;
@@ -6571,7 +11972,7 @@ typedef struct XrVirtualKeyboardSpaceCreateInfoMETA {
 
 typedef struct XrVirtualKeyboardLocationInfoMETA {
     XrStructureType                      type;
-    const void* XR_MAY_ALIAS             next;
+    const void*              next;
     XrVirtualKeyboardLocationTypeMETA    locationType;
     XrSpace                              space;
     XrPosef                              poseInSpace;
@@ -6580,20 +11981,20 @@ typedef struct XrVirtualKeyboardLocationInfoMETA {
 
 typedef struct XrVirtualKeyboardModelVisibilitySetInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    visible;
 } XrVirtualKeyboardModelVisibilitySetInfoMETA;
 
 typedef struct XrVirtualKeyboardAnimationStateMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     int32_t               animationIndex;
     float                 fraction;
 } XrVirtualKeyboardAnimationStateMETA;
 
 typedef struct XrVirtualKeyboardModelAnimationStatesMETA {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     uint32_t                                stateCapacityInput;
     uint32_t                                stateCountOutput;
     XrVirtualKeyboardAnimationStateMETA*    states;
@@ -6601,7 +12002,7 @@ typedef struct XrVirtualKeyboardModelAnimationStatesMETA {
 
 typedef struct XrVirtualKeyboardTextureDataMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              textureWidth;
     uint32_t              textureHeight;
     uint32_t              bufferCapacityInput;
@@ -6611,7 +12012,7 @@ typedef struct XrVirtualKeyboardTextureDataMETA {
 
 typedef struct XrVirtualKeyboardInputInfoMETA {
     XrStructureType                         type;
-    const void* XR_MAY_ALIAS                next;
+    const void*                 next;
     XrVirtualKeyboardInputSourceMETA        inputSource;
     XrSpace                                 inputSpace;
     XrPosef                                 inputPoseInSpace;
@@ -6620,113 +12021,72 @@ typedef struct XrVirtualKeyboardInputInfoMETA {
 
 typedef struct XrVirtualKeyboardTextContextChangeInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     const char*                 textContext;
 } XrVirtualKeyboardTextContextChangeInfoMETA;
 
 typedef struct XrEventDataVirtualKeyboardCommitTextMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVirtualKeyboardMETA       keyboard;
-    char                        text[XR_MAX_VIRTUAL_KEYBOARD_COMMIT_TEXT_SIZE_META];
+    char                        text[3992];
 } XrEventDataVirtualKeyboardCommitTextMETA;
 
 typedef struct XrEventDataVirtualKeyboardBackspaceMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVirtualKeyboardMETA       keyboard;
 } XrEventDataVirtualKeyboardBackspaceMETA;
 
 typedef struct XrEventDataVirtualKeyboardEnterMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVirtualKeyboardMETA       keyboard;
 } XrEventDataVirtualKeyboardEnterMETA;
 
 typedef struct XrEventDataVirtualKeyboardShownMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVirtualKeyboardMETA       keyboard;
 } XrEventDataVirtualKeyboardShownMETA;
 
 typedef struct XrEventDataVirtualKeyboardHiddenMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrVirtualKeyboardMETA       keyboard;
 } XrEventDataVirtualKeyboardHiddenMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateVirtualKeyboardMETA)(XrSession session, const XrVirtualKeyboardCreateInfoMETA* createInfo, XrVirtualKeyboardMETA* keyboard);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyVirtualKeyboardMETA)(XrVirtualKeyboardMETA keyboard);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateVirtualKeyboardSpaceMETA)(XrSession session, XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardSpaceCreateInfoMETA* createInfo, XrSpace* keyboardSpace);
-typedef XrResult (XRAPI_PTR *PFN_xrSuggestVirtualKeyboardLocationMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardLocationInfoMETA* locationInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetVirtualKeyboardScaleMETA)(XrVirtualKeyboardMETA keyboard, float* scale);
-typedef XrResult (XRAPI_PTR *PFN_xrSetVirtualKeyboardModelVisibilityMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility);
-typedef XrResult (XRAPI_PTR *PFN_xrGetVirtualKeyboardModelAnimationStatesMETA)(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelAnimationStatesMETA* animationStates);
-typedef XrResult (XRAPI_PTR *PFN_xrGetVirtualKeyboardDirtyTexturesMETA)(XrVirtualKeyboardMETA keyboard, uint32_t textureIdCapacityInput, uint32_t* textureIdCountOutput, uint64_t* textureIds);
-typedef XrResult (XRAPI_PTR *PFN_xrGetVirtualKeyboardTextureDataMETA)(XrVirtualKeyboardMETA keyboard, uint64_t textureId, XrVirtualKeyboardTextureDataMETA* textureData);
-typedef XrResult (XRAPI_PTR *PFN_xrSendVirtualKeyboardInputMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardInputInfoMETA* info, XrPosef* interactorRootPose);
-typedef XrResult (XRAPI_PTR *PFN_xrChangeVirtualKeyboardTextContextMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateVirtualKeyboardMETA(
-    XrSession                                   session,
-    const XrVirtualKeyboardCreateInfoMETA*      createInfo,
-    XrVirtualKeyboardMETA*                      keyboard);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyVirtualKeyboardMETA(
-    XrVirtualKeyboardMETA                       keyboard);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateVirtualKeyboardSpaceMETA(
-    XrSession                                   session,
-    XrVirtualKeyboardMETA                       keyboard,
-    const XrVirtualKeyboardSpaceCreateInfoMETA* createInfo,
-    XrSpace*                                    keyboardSpace);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSuggestVirtualKeyboardLocationMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    const XrVirtualKeyboardLocationInfoMETA*    locationInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetVirtualKeyboardScaleMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    float*                                      scale);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetVirtualKeyboardModelVisibilityMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    const XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetVirtualKeyboardModelAnimationStatesMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    XrVirtualKeyboardModelAnimationStatesMETA*  animationStates);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetVirtualKeyboardDirtyTexturesMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    uint32_t                                    textureIdCapacityInput,
-    uint32_t*                                   textureIdCountOutput,
-    uint64_t*                                   textureIds);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetVirtualKeyboardTextureDataMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    uint64_t                                    textureId,
-    XrVirtualKeyboardTextureDataMETA*           textureData);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSendVirtualKeyboardInputMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    const XrVirtualKeyboardInputInfoMETA*       info,
-    XrPosef*                                    interactorRootPose);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrChangeVirtualKeyboardTextContextMETA(
-    XrVirtualKeyboardMETA                       keyboard,
-    const XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateVirtualKeyboardMETA)(XrSession session, const XrVirtualKeyboardCreateInfoMETA* createInfo, XrVirtualKeyboardMETA* keyboard);
+typedef XrResult (*PFN_xrDestroyVirtualKeyboardMETA)(XrVirtualKeyboardMETA keyboard);
+typedef XrResult (*PFN_xrCreateVirtualKeyboardSpaceMETA)(XrSession session, XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardSpaceCreateInfoMETA* createInfo, XrSpace* keyboardSpace);
+typedef XrResult (*PFN_xrSuggestVirtualKeyboardLocationMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardLocationInfoMETA* locationInfo);
+typedef XrResult (*PFN_xrGetVirtualKeyboardScaleMETA)(XrVirtualKeyboardMETA keyboard, float* scale);
+typedef XrResult (*PFN_xrSetVirtualKeyboardModelVisibilityMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility);
+typedef XrResult (*PFN_xrGetVirtualKeyboardModelAnimationStatesMETA)(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelAnimationStatesMETA* animationStates);
+typedef XrResult (*PFN_xrGetVirtualKeyboardDirtyTexturesMETA)(XrVirtualKeyboardMETA keyboard, uint32_t textureIdCapacityInput, uint32_t* textureIdCountOutput, uint64_t* textureIds);
+typedef XrResult (*PFN_xrGetVirtualKeyboardTextureDataMETA)(XrVirtualKeyboardMETA keyboard, uint64_t textureId, XrVirtualKeyboardTextureDataMETA* textureData);
+typedef XrResult (*PFN_xrSendVirtualKeyboardInputMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardInputInfoMETA* info, XrPosef* interactorRootPose);
+typedef XrResult (*PFN_xrChangeVirtualKeyboardTextContextMETA)(XrVirtualKeyboardMETA keyboard, const XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo);
+XrResult  xrCreateVirtualKeyboardMETA(XrSession                                   session,     const XrVirtualKeyboardCreateInfoMETA*      createInfo,     XrVirtualKeyboardMETA*                      keyboard);
+XrResult  xrDestroyVirtualKeyboardMETA(XrVirtualKeyboardMETA                       keyboard);
+XrResult  xrCreateVirtualKeyboardSpaceMETA(XrSession                                   session,     XrVirtualKeyboardMETA                       keyboard,     const XrVirtualKeyboardSpaceCreateInfoMETA* createInfo,     XrSpace*                                    keyboardSpace);
+XrResult  xrSuggestVirtualKeyboardLocationMETA(XrVirtualKeyboardMETA                       keyboard,     const XrVirtualKeyboardLocationInfoMETA*    locationInfo);
+XrResult  xrGetVirtualKeyboardScaleMETA(XrVirtualKeyboardMETA                       keyboard,     float*                                      scale);
+XrResult  xrSetVirtualKeyboardModelVisibilityMETA(XrVirtualKeyboardMETA                       keyboard,     const XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility);
+XrResult  xrGetVirtualKeyboardModelAnimationStatesMETA(XrVirtualKeyboardMETA                       keyboard,     XrVirtualKeyboardModelAnimationStatesMETA*  animationStates);
+XrResult  xrGetVirtualKeyboardDirtyTexturesMETA(XrVirtualKeyboardMETA                       keyboard,     uint32_t                                    textureIdCapacityInput,     uint32_t*                                   textureIdCountOutput,     uint64_t*                                   textureIds);
+XrResult  xrGetVirtualKeyboardTextureDataMETA(XrVirtualKeyboardMETA                       keyboard,     uint64_t                                    textureId,     XrVirtualKeyboardTextureDataMETA*           textureData);
+XrResult  xrSendVirtualKeyboardInputMETA(XrVirtualKeyboardMETA                       keyboard,     const XrVirtualKeyboardInputInfoMETA*       info,     XrPosef*                                    interactorRootPose);
+XrResult  xrChangeVirtualKeyboardTextContextMETA(XrVirtualKeyboardMETA                       keyboard,     const XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo);
+#line 6723 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6724 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_OCULUS_external_camera is a preprocessor guard. Do not pass it to API calls.
-#define XR_OCULUS_external_camera 1
-#define XR_MAX_EXTERNAL_CAMERA_NAME_SIZE_OCULUS 32
-#define XR_OCULUS_external_camera_SPEC_VERSION 1
-#define XR_OCULUS_EXTERNAL_CAMERA_EXTENSION_NAME "XR_OCULUS_external_camera"
+
+
+
+
+
 
 typedef enum XrExternalCameraAttachedToDeviceOCULUS {
     XR_EXTERNAL_CAMERA_ATTACHED_TO_DEVICE_NONE_OCULUS = 0,
@@ -6737,7 +12097,7 @@ typedef enum XrExternalCameraAttachedToDeviceOCULUS {
 } XrExternalCameraAttachedToDeviceOCULUS;
 typedef XrFlags64 XrExternalCameraStatusFlagsOCULUS;
 
-// Flag bits for XrExternalCameraStatusFlagsOCULUS
+
 static const XrExternalCameraStatusFlagsOCULUS XR_EXTERNAL_CAMERA_STATUS_CONNECTED_BIT_OCULUS = 0x00000001;
 static const XrExternalCameraStatusFlagsOCULUS XR_EXTERNAL_CAMERA_STATUS_CALIBRATING_BIT_OCULUS = 0x00000002;
 static const XrExternalCameraStatusFlagsOCULUS XR_EXTERNAL_CAMERA_STATUS_CALIBRATION_FAILED_BIT_OCULUS = 0x00000004;
@@ -6761,29 +12121,22 @@ typedef struct XrExternalCameraExtrinsicsOCULUS {
 
 typedef struct XrExternalCameraOCULUS {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
-    char                                name[XR_MAX_EXTERNAL_CAMERA_NAME_SIZE_OCULUS];
+    const void*             next;
+    char                                name[32];
     XrExternalCameraIntrinsicsOCULUS    intrinsics;
     XrExternalCameraExtrinsicsOCULUS    extrinsics;
 } XrExternalCameraOCULUS;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateExternalCamerasOCULUS)(XrSession session, uint32_t cameraCapacityInput, uint32_t* cameraCountOutput, XrExternalCameraOCULUS* cameras);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateExternalCamerasOCULUS(
-    XrSession                                   session,
-    uint32_t                                    cameraCapacityInput,
-    uint32_t*                                   cameraCountOutput,
-    XrExternalCameraOCULUS*                     cameras);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateExternalCamerasOCULUS)(XrSession session, uint32_t cameraCapacityInput, uint32_t* cameraCountOutput, XrExternalCameraOCULUS* cameras);
+XrResult  xrEnumerateExternalCamerasOCULUS(XrSession                                   session,     uint32_t                                    cameraCapacityInput,     uint32_t*                                   cameraCountOutput,     XrExternalCameraOCULUS*                     cameras);
+#line 6781 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6782 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_performance_metrics is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_performance_metrics 1
-#define XR_META_performance_metrics_SPEC_VERSION 2
-#define XR_META_PERFORMANCE_METRICS_EXTENSION_NAME "XR_META_performance_metrics"
+
+
+
+
 
 typedef enum XrPerformanceMetricsCounterUnitMETA {
     XR_PERFORMANCE_METRICS_COUNTER_UNIT_GENERIC_META = 0,
@@ -6795,62 +12148,45 @@ typedef enum XrPerformanceMetricsCounterUnitMETA {
 } XrPerformanceMetricsCounterUnitMETA;
 typedef XrFlags64 XrPerformanceMetricsCounterFlagsMETA;
 
-// Flag bits for XrPerformanceMetricsCounterFlagsMETA
+
 static const XrPerformanceMetricsCounterFlagsMETA XR_PERFORMANCE_METRICS_COUNTER_ANY_VALUE_VALID_BIT_META = 0x00000001;
 static const XrPerformanceMetricsCounterFlagsMETA XR_PERFORMANCE_METRICS_COUNTER_UINT_VALUE_VALID_BIT_META = 0x00000002;
 static const XrPerformanceMetricsCounterFlagsMETA XR_PERFORMANCE_METRICS_COUNTER_FLOAT_VALUE_VALID_BIT_META = 0x00000004;
 
 typedef struct XrPerformanceMetricsStateMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    enabled;
 } XrPerformanceMetricsStateMETA;
 
 typedef struct XrPerformanceMetricsCounterMETA {
     XrStructureType                         type;
-    const void* XR_MAY_ALIAS                next;
+    const void*                 next;
     XrPerformanceMetricsCounterFlagsMETA    counterFlags;
     XrPerformanceMetricsCounterUnitMETA     counterUnit;
     uint32_t                                uintValue;
     float                                   floatValue;
 } XrPerformanceMetricsCounterMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumeratePerformanceMetricsCounterPathsMETA)(XrInstance instance, uint32_t counterPathCapacityInput, uint32_t* counterPathCountOutput, XrPath* counterPaths);
-typedef XrResult (XRAPI_PTR *PFN_xrSetPerformanceMetricsStateMETA)(XrSession session, const XrPerformanceMetricsStateMETA* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetPerformanceMetricsStateMETA)(XrSession session, XrPerformanceMetricsStateMETA* state);
-typedef XrResult (XRAPI_PTR *PFN_xrQueryPerformanceMetricsCounterMETA)(XrSession session, XrPath counterPath, XrPerformanceMetricsCounterMETA* counter);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumeratePerformanceMetricsCounterPathsMETA(
-    XrInstance                                  instance,
-    uint32_t                                    counterPathCapacityInput,
-    uint32_t*                                   counterPathCountOutput,
-    XrPath*                                     counterPaths);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetPerformanceMetricsStateMETA(
-    XrSession                                   session,
-    const XrPerformanceMetricsStateMETA*        state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetPerformanceMetricsStateMETA(
-    XrSession                                   session,
-    XrPerformanceMetricsStateMETA*              state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQueryPerformanceMetricsCounterMETA(
-    XrSession                                   session,
-    XrPath                                      counterPath,
-    XrPerformanceMetricsCounterMETA*            counter);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumeratePerformanceMetricsCounterPathsMETA)(XrInstance instance, uint32_t counterPathCapacityInput, uint32_t* counterPathCountOutput, XrPath* counterPaths);
+typedef XrResult (*PFN_xrSetPerformanceMetricsStateMETA)(XrSession session, const XrPerformanceMetricsStateMETA* state);
+typedef XrResult (*PFN_xrGetPerformanceMetricsStateMETA)(XrSession session, XrPerformanceMetricsStateMETA* state);
+typedef XrResult (*PFN_xrQueryPerformanceMetricsCounterMETA)(XrSession session, XrPath counterPath, XrPerformanceMetricsCounterMETA* counter);
+XrResult  xrEnumeratePerformanceMetricsCounterPathsMETA(XrInstance                                  instance,     uint32_t                                    counterPathCapacityInput,     uint32_t*                                   counterPathCountOutput,     XrPath*                                     counterPaths);
+XrResult  xrSetPerformanceMetricsStateMETA(XrSession                                   session,     const XrPerformanceMetricsStateMETA*        state);
+XrResult  xrGetPerformanceMetricsStateMETA(XrSession                                   session,     XrPerformanceMetricsStateMETA*              state);
+XrResult  xrQueryPerformanceMetricsCounterMETA(XrSession                                   session,     XrPath                                      counterPath,     XrPerformanceMetricsCounterMETA*            counter);
+#line 6845 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6846 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_FB_spatial_entity_storage_batch is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_storage_batch 1
-#define XR_FB_spatial_entity_storage_batch_SPEC_VERSION 1
-#define XR_FB_SPATIAL_ENTITY_STORAGE_BATCH_EXTENSION_NAME "XR_FB_spatial_entity_storage_batch"
+
+
+
+
 typedef struct XrSpaceListSaveInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    spaceCount;
     XrSpace*                    spaces;
     XrSpaceStorageLocationFB    location;
@@ -6858,115 +12194,92 @@ typedef struct XrSpaceListSaveInfoFB {
 
 typedef struct XrEventDataSpaceListSaveCompleteFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataSpaceListSaveCompleteFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSaveSpaceListFB)(XrSession session, const XrSpaceListSaveInfoFB* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSaveSpaceListFB(
-    XrSession                                   session,
-    const XrSpaceListSaveInfoFB*                info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSaveSpaceListFB)(XrSession session, const XrSpaceListSaveInfoFB* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrSaveSpaceListFB(XrSession                                   session,     const XrSpaceListSaveInfoFB*                info,     XrAsyncRequestIdFB*                         requestId);
+#line 6876 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6877 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_detached_controllers is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_detached_controllers 1
-#define XR_META_detached_controllers_SPEC_VERSION 1
-#define XR_META_DETACHED_CONTROLLERS_EXTENSION_NAME "XR_META_detached_controllers"
 
 
-// XR_FB_spatial_entity_user is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_spatial_entity_user 1
+
+
+
+
+
+
 typedef uint64_t XrSpaceUserIdFB;
-#define XR_FB_spatial_entity_user_SPEC_VERSION 1
-#define XR_FB_SPATIAL_ENTITY_USER_EXTENSION_NAME "XR_FB_spatial_entity_user"
+
+
 typedef struct XrSpaceUserCreateInfoFB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpaceUserIdFB             userId;
 } XrSpaceUserCreateInfoFB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpaceUserFB)(XrSession session, const XrSpaceUserCreateInfoFB* info, XrSpaceUserFB* user);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceUserIdFB)(XrSpaceUserFB user, XrSpaceUserIdFB* userId);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpaceUserFB)(XrSpaceUserFB user);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpaceUserFB(
-    XrSession                                   session,
-    const XrSpaceUserCreateInfoFB*              info,
-    XrSpaceUserFB*                              user);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceUserIdFB(
-    XrSpaceUserFB                               user,
-    XrSpaceUserIdFB*                            userId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpaceUserFB(
-    XrSpaceUserFB                               user);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpaceUserFB)(XrSession session, const XrSpaceUserCreateInfoFB* info, XrSpaceUserFB* user);
+typedef XrResult (*PFN_xrGetSpaceUserIdFB)(XrSpaceUserFB user, XrSpaceUserIdFB* userId);
+typedef XrResult (*PFN_xrDestroySpaceUserFB)(XrSpaceUserFB user);
+XrResult  xrCreateSpaceUserFB(XrSession                                   session,     const XrSpaceUserCreateInfoFB*              info,     XrSpaceUserFB*                              user);
+XrResult  xrGetSpaceUserIdFB(XrSpaceUserFB                               user,     XrSpaceUserIdFB*                            userId);
+XrResult  xrDestroySpaceUserFB(XrSpaceUserFB                               user);
+#line 6914 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6915 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_headset_id is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_headset_id 1
-#define XR_META_headset_id_SPEC_VERSION   2
-#define XR_META_HEADSET_ID_EXTENSION_NAME "XR_META_headset_id"
-// XrSystemHeadsetIdPropertiesMETA extends XrSystemProperties
+
+
+
+
+
 typedef struct XrSystemHeadsetIdPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrUuidEXT             id;
 } XrSystemHeadsetIdPropertiesMETA;
 
 
 
-// XR_META_hand_tracking_microgestures is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_hand_tracking_microgestures 1
-#define XR_META_hand_tracking_microgestures_SPEC_VERSION 1
-#define XR_META_HAND_TRACKING_MICROGESTURES_EXTENSION_NAME "XR_META_hand_tracking_microgestures"
 
 
-// XR_META_recommended_layer_resolution is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_recommended_layer_resolution 1
-#define XR_META_recommended_layer_resolution_SPEC_VERSION 1
-#define XR_META_RECOMMENDED_LAYER_RESOLUTION_EXTENSION_NAME "XR_META_recommended_layer_resolution"
+
+
+
+
+
+
+
+
 typedef struct XrRecommendedLayerResolutionMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrExtent2Di           recommendedImageDimensions;
     XrBool32              isValid;
 } XrRecommendedLayerResolutionMETA;
 
 typedef struct XrRecommendedLayerResolutionGetInfoMETA {
     XrStructureType                        type;
-    const void* XR_MAY_ALIAS               next;
+    const void*                next;
     const XrCompositionLayerBaseHeader*    layer;
     XrTime                                 predictedDisplayTime;
 } XrRecommendedLayerResolutionGetInfoMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetRecommendedLayerResolutionMETA)(XrSession session, const XrRecommendedLayerResolutionGetInfoMETA* info, XrRecommendedLayerResolutionMETA* resolution);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRecommendedLayerResolutionMETA(
-    XrSession                                   session,
-    const XrRecommendedLayerResolutionGetInfoMETA* info,
-    XrRecommendedLayerResolutionMETA*           resolution);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetRecommendedLayerResolutionMETA)(XrSession session, const XrRecommendedLayerResolutionGetInfoMETA* info, XrRecommendedLayerResolutionMETA* resolution);
+XrResult  xrGetRecommendedLayerResolutionMETA(XrSession                                   session,     const XrRecommendedLayerResolutionGetInfoMETA* info,     XrRecommendedLayerResolutionMETA*           resolution);
+#line 6963 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 6964 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_passthrough_color_lut is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_passthrough_color_lut 1
-typedef uint64_t XrPassthroughColorLutMETA;
-#define XR_META_passthrough_color_lut_SPEC_VERSION 1
-#define XR_META_PASSTHROUGH_COLOR_LUT_EXTENSION_NAME "XR_META_passthrough_color_lut"
+
+
+typedef struct XrPassthroughColorLutMETA_T* XrPassthroughColorLutMETA;
+
+
 
 typedef enum XrPassthroughColorLutChannelsMETA {
     XR_PASSTHROUGH_COLOR_LUT_CHANNELS_RGB_META = 1,
@@ -6980,7 +12293,7 @@ typedef struct XrPassthroughColorLutDataMETA {
 
 typedef struct XrPassthroughColorLutCreateInfoMETA {
     XrStructureType                      type;
-    const void* XR_MAY_ALIAS             next;
+    const void*              next;
     XrPassthroughColorLutChannelsMETA    channels;
     uint32_t                             resolution;
     XrPassthroughColorLutDataMETA        data;
@@ -6988,67 +12301,56 @@ typedef struct XrPassthroughColorLutCreateInfoMETA {
 
 typedef struct XrPassthroughColorLutUpdateInfoMETA {
     XrStructureType                  type;
-    const void* XR_MAY_ALIAS         next;
+    const void*          next;
     XrPassthroughColorLutDataMETA    data;
 } XrPassthroughColorLutUpdateInfoMETA;
 
-// XrPassthroughColorMapLutMETA extends XrPassthroughStyleFB
+
 typedef struct XrPassthroughColorMapLutMETA {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrPassthroughColorLutMETA    colorLut;
     float                        weight;
 } XrPassthroughColorMapLutMETA;
 
-// XrPassthroughColorMapInterpolatedLutMETA extends XrPassthroughStyleFB
+
 typedef struct XrPassthroughColorMapInterpolatedLutMETA {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrPassthroughColorLutMETA    sourceColorLut;
     XrPassthroughColorLutMETA    targetColorLut;
     float                        weight;
 } XrPassthroughColorMapInterpolatedLutMETA;
 
-// XrSystemPassthroughColorLutPropertiesMETA extends XrSystemProperties
+
 typedef struct XrSystemPassthroughColorLutPropertiesMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    maxColorLutResolution;
 } XrSystemPassthroughColorLutPropertiesMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreatePassthroughColorLutMETA)(XrPassthroughFB passthrough, const XrPassthroughColorLutCreateInfoMETA* createInfo, XrPassthroughColorLutMETA* colorLut);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyPassthroughColorLutMETA)(XrPassthroughColorLutMETA colorLut);
-typedef XrResult (XRAPI_PTR *PFN_xrUpdatePassthroughColorLutMETA)(XrPassthroughColorLutMETA colorLut, const XrPassthroughColorLutUpdateInfoMETA* updateInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreatePassthroughColorLutMETA(
-    XrPassthroughFB                             passthrough,
-    const XrPassthroughColorLutCreateInfoMETA*  createInfo,
-    XrPassthroughColorLutMETA*                  colorLut);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyPassthroughColorLutMETA(
-    XrPassthroughColorLutMETA                   colorLut);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUpdatePassthroughColorLutMETA(
-    XrPassthroughColorLutMETA                   colorLut,
-    const XrPassthroughColorLutUpdateInfoMETA*  updateInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreatePassthroughColorLutMETA)(XrPassthroughFB passthrough, const XrPassthroughColorLutCreateInfoMETA* createInfo, XrPassthroughColorLutMETA* colorLut);
+typedef XrResult (*PFN_xrDestroyPassthroughColorLutMETA)(XrPassthroughColorLutMETA colorLut);
+typedef XrResult (*PFN_xrUpdatePassthroughColorLutMETA)(XrPassthroughColorLutMETA colorLut, const XrPassthroughColorLutUpdateInfoMETA* updateInfo);
+XrResult  xrCreatePassthroughColorLutMETA(XrPassthroughFB                             passthrough,     const XrPassthroughColorLutCreateInfoMETA*  createInfo,     XrPassthroughColorLutMETA*                  colorLut);
+XrResult  xrDestroyPassthroughColorLutMETA(XrPassthroughColorLutMETA                   colorLut);
+XrResult  xrUpdatePassthroughColorLutMETA(XrPassthroughColorLutMETA                   colorLut,     const XrPassthroughColorLutUpdateInfoMETA*  updateInfo);
+#line 7038 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7039 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_spatial_entity_mesh is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_spatial_entity_mesh 1
-#define XR_META_spatial_entity_mesh_SPEC_VERSION 1
-#define XR_META_SPATIAL_ENTITY_MESH_EXTENSION_NAME "XR_META_spatial_entity_mesh"
+
+
+
+
 typedef struct XrSpaceTriangleMeshGetInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSpaceTriangleMeshGetInfoMETA;
 
 typedef struct XrSpaceTriangleMeshMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector3f*           vertices;
@@ -7057,28 +12359,22 @@ typedef struct XrSpaceTriangleMeshMETA {
     uint32_t*             indices;
 } XrSpaceTriangleMeshMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpaceTriangleMeshMETA)(XrSpace space, const XrSpaceTriangleMeshGetInfoMETA* getInfo, XrSpaceTriangleMeshMETA* triangleMeshOutput);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpaceTriangleMeshMETA(
-    XrSpace                                     space,
-    const XrSpaceTriangleMeshGetInfoMETA*       getInfo,
-    XrSpaceTriangleMeshMETA*                    triangleMeshOutput);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrGetSpaceTriangleMeshMETA)(XrSpace space, const XrSpaceTriangleMeshGetInfoMETA* getInfo, XrSpaceTriangleMeshMETA* triangleMeshOutput);
+XrResult  xrGetSpaceTriangleMeshMETA(XrSpace                                     space,     const XrSpaceTriangleMeshGetInfoMETA*       getInfo,     XrSpaceTriangleMeshMETA*                    triangleMeshOutput);
+#line 7070 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7071 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_automatic_layer_filter is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_automatic_layer_filter 1
-#define XR_META_automatic_layer_filter_SPEC_VERSION 1
-#define XR_META_AUTOMATIC_LAYER_FILTER_EXTENSION_NAME "XR_META_automatic_layer_filter"
 
 
-// XR_META_body_tracking_full_body is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_body_tracking_full_body 1
-#define XR_META_body_tracking_full_body_SPEC_VERSION 1
-#define XR_META_BODY_TRACKING_FULL_BODY_EXTENSION_NAME "XR_META_body_tracking_full_body"
+
+
+
+
+
+
+
+
 
 typedef enum XrFullBodyJointMETA {
     XR_FULL_BODY_JOINT_ROOT_META = 0,
@@ -7169,38 +12465,38 @@ typedef enum XrFullBodyJointMETA {
     XR_FULL_BODY_JOINT_NONE_META = 85,
     XR_FULL_BODY_JOINT_MAX_ENUM_META = 0x7FFFFFFF
 } XrFullBodyJointMETA;
-// XrSystemPropertiesBodyTrackingFullBodyMETA extends XrSystemProperties
+
 typedef struct XrSystemPropertiesBodyTrackingFullBodyMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsFullBodyTracking;
 } XrSystemPropertiesBodyTrackingFullBodyMETA;
 
 
 
-// XR_META_touch_controller_plus is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_touch_controller_plus 1
-#define XR_META_touch_controller_plus_SPEC_VERSION 1
-#define XR_META_TOUCH_CONTROLLER_PLUS_EXTENSION_NAME "XR_META_touch_controller_plus"
 
 
-// XR_META_passthrough_layer_resumed_event is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_passthrough_layer_resumed_event 1
-#define XR_META_passthrough_layer_resumed_event_SPEC_VERSION 1
-#define XR_META_PASSTHROUGH_LAYER_RESUMED_EVENT_EXTENSION_NAME "XR_META_passthrough_layer_resumed_event"
+
+
+
+
+
+
+
+
 typedef struct XrEventDataPassthroughLayerResumedMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPassthroughLayerFB        layer;
 } XrEventDataPassthroughLayerResumedMETA;
 
 
 
-// XR_FB_face_tracking2 is a preprocessor guard. Do not pass it to API calls.
-#define XR_FB_face_tracking2 1
-typedef uint64_t XrFaceTracker2FB;
-#define XR_FB_face_tracking2_SPEC_VERSION 1
-#define XR_FB_FACE_TRACKING2_EXTENSION_NAME "XR_FB_face_tracking2"
+
+
+typedef struct XrFaceTracker2FB_T* XrFaceTracker2FB;
+
+
 
 typedef enum XrFaceExpression2FB {
     XR_FACE_EXPRESSION2_BROW_LOWERER_L_FB = 0,
@@ -7294,17 +12590,17 @@ typedef enum XrFaceConfidence2FB {
     XR_FACE_CONFIDENCE2_COUNT_FB = 2,
     XR_FACE_CONFIDENCE_2FB_MAX_ENUM_FB = 0x7FFFFFFF
 } XrFaceConfidence2FB;
-// XrSystemFaceTrackingProperties2FB extends XrSystemProperties
+
 typedef struct XrSystemFaceTrackingProperties2FB {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsVisualFaceTracking;
     XrBool32              supportsAudioFaceTracking;
 } XrSystemFaceTrackingProperties2FB;
 
 typedef struct XrFaceTrackerCreateInfo2FB {
     XrStructureType                 type;
-    const void* XR_MAY_ALIAS        next;
+    const void*         next;
     XrFaceExpressionSet2FB          faceExpressionSet;
     uint32_t                        requestedDataSourceCount;
     XrFaceTrackingDataSource2FB*    requestedDataSources;
@@ -7312,13 +12608,13 @@ typedef struct XrFaceTrackerCreateInfo2FB {
 
 typedef struct XrFaceExpressionInfo2FB {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTime                      time;
 } XrFaceExpressionInfo2FB;
 
 typedef struct XrFaceExpressionWeights2FB {
     XrStructureType                type;
-    void* XR_MAY_ALIAS             next;
+    void*              next;
     uint32_t                       weightCount;
     float*                         weights;
     uint32_t                       confidenceCount;
@@ -7329,48 +12625,36 @@ typedef struct XrFaceExpressionWeights2FB {
     XrTime                         time;
 } XrFaceExpressionWeights2FB;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateFaceTracker2FB)(XrSession session, const XrFaceTrackerCreateInfo2FB* createInfo, XrFaceTracker2FB* faceTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyFaceTracker2FB)(XrFaceTracker2FB faceTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrGetFaceExpressionWeights2FB)(XrFaceTracker2FB faceTracker, const XrFaceExpressionInfo2FB* expressionInfo, XrFaceExpressionWeights2FB* expressionWeights);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateFaceTracker2FB(
-    XrSession                                   session,
-    const XrFaceTrackerCreateInfo2FB*           createInfo,
-    XrFaceTracker2FB*                           faceTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyFaceTracker2FB(
-    XrFaceTracker2FB                            faceTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetFaceExpressionWeights2FB(
-    XrFaceTracker2FB                            faceTracker,
-    const XrFaceExpressionInfo2FB*              expressionInfo,
-    XrFaceExpressionWeights2FB*                 expressionWeights);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateFaceTracker2FB)(XrSession session, const XrFaceTrackerCreateInfo2FB* createInfo, XrFaceTracker2FB* faceTracker);
+typedef XrResult (*PFN_xrDestroyFaceTracker2FB)(XrFaceTracker2FB faceTracker);
+typedef XrResult (*PFN_xrGetFaceExpressionWeights2FB)(XrFaceTracker2FB faceTracker, const XrFaceExpressionInfo2FB* expressionInfo, XrFaceExpressionWeights2FB* expressionWeights);
+XrResult  xrCreateFaceTracker2FB(XrSession                                   session,     const XrFaceTrackerCreateInfo2FB*           createInfo,     XrFaceTracker2FB*                           faceTracker);
+XrResult  xrDestroyFaceTracker2FB(XrFaceTracker2FB                            faceTracker);
+XrResult  xrGetFaceExpressionWeights2FB(XrFaceTracker2FB                            faceTracker,     const XrFaceExpressionInfo2FB*              expressionInfo,     XrFaceExpressionWeights2FB*                 expressionWeights);
+#line 7352 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7353 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_spatial_entity_sharing is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_spatial_entity_sharing 1
-#define XR_META_spatial_entity_sharing_SPEC_VERSION 1
-#define XR_META_SPATIAL_ENTITY_SHARING_EXTENSION_NAME "XR_META_spatial_entity_sharing"
-#define XR_MAX_SPACES_PER_SHARE_REQUEST_META 32
-// XrSystemSpatialEntitySharingPropertiesMETA extends XrSystemProperties
+
+
+
+
+
+
 typedef struct XrSystemSpatialEntitySharingPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialEntitySharing;
 } XrSystemSpatialEntitySharingPropertiesMETA;
 
-typedef struct XR_MAY_ALIAS XrShareSpacesRecipientBaseHeaderMETA {
+typedef struct  XrShareSpacesRecipientBaseHeaderMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrShareSpacesRecipientBaseHeaderMETA;
 
 typedef struct XrShareSpacesInfoMETA {
     XrStructureType                                type;
-    const void* XR_MAY_ALIAS                       next;
+    const void*                        next;
     uint32_t                                       spaceCount;
     XrSpace*                                       spaces;
     const XrShareSpacesRecipientBaseHeaderMETA*    recipientInfo;
@@ -7378,73 +12662,67 @@ typedef struct XrShareSpacesInfoMETA {
 
 typedef struct XrEventDataShareSpacesCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataShareSpacesCompleteMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrShareSpacesMETA)(XrSession session, const XrShareSpacesInfoMETA* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrShareSpacesMETA(
-    XrSession                                   session,
-    const XrShareSpacesInfoMETA*                info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrShareSpacesMETA)(XrSession session, const XrShareSpacesInfoMETA* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrShareSpacesMETA(XrSession                                   session,     const XrShareSpacesInfoMETA*                info,     XrAsyncRequestIdFB*                         requestId);
+#line 7396 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7397 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_environment_depth is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_environment_depth 1
-typedef uint64_t XrEnvironmentDepthProviderMETA;
-typedef uint64_t XrEnvironmentDepthSwapchainMETA;
-#define XR_META_environment_depth_SPEC_VERSION 1
-#define XR_META_ENVIRONMENT_DEPTH_EXTENSION_NAME "XR_META_environment_depth"
+
+
+typedef struct XrEnvironmentDepthProviderMETA_T* XrEnvironmentDepthProviderMETA;
+typedef struct XrEnvironmentDepthSwapchainMETA_T* XrEnvironmentDepthSwapchainMETA;
+
+
 typedef XrFlags64 XrEnvironmentDepthProviderCreateFlagsMETA;
 
-// Flag bits for XrEnvironmentDepthProviderCreateFlagsMETA
+
 
 typedef XrFlags64 XrEnvironmentDepthSwapchainCreateFlagsMETA;
 
-// Flag bits for XrEnvironmentDepthSwapchainCreateFlagsMETA
+
 
 typedef struct XrEnvironmentDepthProviderCreateInfoMETA {
     XrStructureType                              type;
-    const void* XR_MAY_ALIAS                     next;
+    const void*                      next;
     XrEnvironmentDepthProviderCreateFlagsMETA    createFlags;
 } XrEnvironmentDepthProviderCreateInfoMETA;
 
 typedef struct XrEnvironmentDepthSwapchainCreateInfoMETA {
     XrStructureType                               type;
-    const void* XR_MAY_ALIAS                      next;
+    const void*                       next;
     XrEnvironmentDepthSwapchainCreateFlagsMETA    createFlags;
 } XrEnvironmentDepthSwapchainCreateInfoMETA;
 
 typedef struct XrEnvironmentDepthSwapchainStateMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              width;
     uint32_t              height;
 } XrEnvironmentDepthSwapchainStateMETA;
 
 typedef struct XrEnvironmentDepthImageAcquireInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrTime                      displayTime;
 } XrEnvironmentDepthImageAcquireInfoMETA;
 
 typedef struct XrEnvironmentDepthImageViewMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFovf                      fov;
     XrPosef                     pose;
 } XrEnvironmentDepthImageViewMETA;
 
 typedef struct XrEnvironmentDepthImageMETA {
     XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
+    const void*            next;
     uint32_t                           swapchainIndex;
     float                              nearZ;
     float                              farZ;
@@ -7453,94 +12731,61 @@ typedef struct XrEnvironmentDepthImageMETA {
 
 typedef struct XrEnvironmentDepthHandRemovalSetInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    enabled;
 } XrEnvironmentDepthHandRemovalSetInfoMETA;
 
-// XrSystemEnvironmentDepthPropertiesMETA extends XrSystemProperties
+
 typedef struct XrSystemEnvironmentDepthPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsEnvironmentDepth;
     XrBool32              supportsHandRemoval;
 } XrSystemEnvironmentDepthPropertiesMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateEnvironmentDepthProviderMETA)(XrSession session, const XrEnvironmentDepthProviderCreateInfoMETA* createInfo, XrEnvironmentDepthProviderMETA* environmentDepthProvider);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
-typedef XrResult (XRAPI_PTR *PFN_xrStartEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
-typedef XrResult (XRAPI_PTR *PFN_xrStopEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateEnvironmentDepthSwapchainMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthSwapchainCreateInfoMETA* createInfo, XrEnvironmentDepthSwapchainMETA* swapchain);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyEnvironmentDepthSwapchainMETA)(XrEnvironmentDepthSwapchainMETA swapchain);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateEnvironmentDepthSwapchainImagesMETA)(XrEnvironmentDepthSwapchainMETA swapchain, uint32_t imageCapacityInput, uint32_t* imageCountOutput, XrSwapchainImageBaseHeader* images);
-typedef XrResult (XRAPI_PTR *PFN_xrGetEnvironmentDepthSwapchainStateMETA)(XrEnvironmentDepthSwapchainMETA swapchain, XrEnvironmentDepthSwapchainStateMETA* state);
-typedef XrResult (XRAPI_PTR *PFN_xrAcquireEnvironmentDepthImageMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthImageAcquireInfoMETA* acquireInfo, XrEnvironmentDepthImageMETA* environmentDepthImage);
-typedef XrResult (XRAPI_PTR *PFN_xrSetEnvironmentDepthHandRemovalMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthHandRemovalSetInfoMETA* setInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateEnvironmentDepthProviderMETA(
-    XrSession                                   session,
-    const XrEnvironmentDepthProviderCreateInfoMETA* createInfo,
-    XrEnvironmentDepthProviderMETA*             environmentDepthProvider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyEnvironmentDepthProviderMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStartEnvironmentDepthProviderMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStopEnvironmentDepthProviderMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateEnvironmentDepthSwapchainMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider,
-    const XrEnvironmentDepthSwapchainCreateInfoMETA* createInfo,
-    XrEnvironmentDepthSwapchainMETA*            swapchain);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyEnvironmentDepthSwapchainMETA(
-    XrEnvironmentDepthSwapchainMETA             swapchain);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateEnvironmentDepthSwapchainImagesMETA(
-    XrEnvironmentDepthSwapchainMETA             swapchain,
-    uint32_t                                    imageCapacityInput,
-    uint32_t*                                   imageCountOutput,
-    XrSwapchainImageBaseHeader*                 images);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetEnvironmentDepthSwapchainStateMETA(
-    XrEnvironmentDepthSwapchainMETA             swapchain,
-    XrEnvironmentDepthSwapchainStateMETA*       state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrAcquireEnvironmentDepthImageMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider,
-    const XrEnvironmentDepthImageAcquireInfoMETA* acquireInfo,
-    XrEnvironmentDepthImageMETA*                environmentDepthImage);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrSetEnvironmentDepthHandRemovalMETA(
-    XrEnvironmentDepthProviderMETA              environmentDepthProvider,
-    const XrEnvironmentDepthHandRemovalSetInfoMETA* setInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateEnvironmentDepthProviderMETA)(XrSession session, const XrEnvironmentDepthProviderCreateInfoMETA* createInfo, XrEnvironmentDepthProviderMETA* environmentDepthProvider);
+typedef XrResult (*PFN_xrDestroyEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
+typedef XrResult (*PFN_xrStartEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
+typedef XrResult (*PFN_xrStopEnvironmentDepthProviderMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider);
+typedef XrResult (*PFN_xrCreateEnvironmentDepthSwapchainMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthSwapchainCreateInfoMETA* createInfo, XrEnvironmentDepthSwapchainMETA* swapchain);
+typedef XrResult (*PFN_xrDestroyEnvironmentDepthSwapchainMETA)(XrEnvironmentDepthSwapchainMETA swapchain);
+typedef XrResult (*PFN_xrEnumerateEnvironmentDepthSwapchainImagesMETA)(XrEnvironmentDepthSwapchainMETA swapchain, uint32_t imageCapacityInput, uint32_t* imageCountOutput, XrSwapchainImageBaseHeader* images);
+typedef XrResult (*PFN_xrGetEnvironmentDepthSwapchainStateMETA)(XrEnvironmentDepthSwapchainMETA swapchain, XrEnvironmentDepthSwapchainStateMETA* state);
+typedef XrResult (*PFN_xrAcquireEnvironmentDepthImageMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthImageAcquireInfoMETA* acquireInfo, XrEnvironmentDepthImageMETA* environmentDepthImage);
+typedef XrResult (*PFN_xrSetEnvironmentDepthHandRemovalMETA)(XrEnvironmentDepthProviderMETA environmentDepthProvider, const XrEnvironmentDepthHandRemovalSetInfoMETA* setInfo);
+XrResult  xrCreateEnvironmentDepthProviderMETA(XrSession                                   session,     const XrEnvironmentDepthProviderCreateInfoMETA* createInfo,     XrEnvironmentDepthProviderMETA*             environmentDepthProvider);
+XrResult  xrDestroyEnvironmentDepthProviderMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider);
+XrResult  xrStartEnvironmentDepthProviderMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider);
+XrResult  xrStopEnvironmentDepthProviderMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider);
+XrResult  xrCreateEnvironmentDepthSwapchainMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider,     const XrEnvironmentDepthSwapchainCreateInfoMETA* createInfo,     XrEnvironmentDepthSwapchainMETA*            swapchain);
+XrResult  xrDestroyEnvironmentDepthSwapchainMETA(XrEnvironmentDepthSwapchainMETA             swapchain);
+XrResult  xrEnumerateEnvironmentDepthSwapchainImagesMETA(XrEnvironmentDepthSwapchainMETA             swapchain,     uint32_t                                    imageCapacityInput,     uint32_t*                                   imageCountOutput,     XrSwapchainImageBaseHeader*                 images);
+XrResult  xrGetEnvironmentDepthSwapchainStateMETA(XrEnvironmentDepthSwapchainMETA             swapchain,     XrEnvironmentDepthSwapchainStateMETA*       state);
+XrResult  xrAcquireEnvironmentDepthImageMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider,     const XrEnvironmentDepthImageAcquireInfoMETA* acquireInfo,     XrEnvironmentDepthImageMETA*                environmentDepthImage);
+XrResult  xrSetEnvironmentDepthHandRemovalMETA(XrEnvironmentDepthProviderMETA              environmentDepthProvider,     const XrEnvironmentDepthHandRemovalSetInfoMETA* setInfo);
+#line 7523 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7524 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_uuid is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_uuid 1
-#define XR_EXT_uuid_SPEC_VERSION          1
-#define XR_EXT_UUID_EXTENSION_NAME        "XR_EXT_uuid"
-#define XR_UUID_SIZE_EXT                  16
 
 
-// XR_EXT_render_model is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_render_model 1
+
+
+
+
+
+
+
 typedef uint64_t XrRenderModelIdEXT;
-typedef uint64_t XrRenderModelEXT;
-typedef uint64_t XrRenderModelAssetEXT;
-#define XR_MAX_RENDER_MODEL_ASSET_NODE_NAME_SIZE_EXT 64
-#define XR_EXT_render_model_SPEC_VERSION  1
-#define XR_EXT_RENDER_MODEL_EXTENSION_NAME "XR_EXT_render_model"
-#define XR_NULL_RENDER_MODEL_ID_EXT       0
+typedef struct XrRenderModelEXT_T* XrRenderModelEXT;
+typedef struct XrRenderModelAssetEXT_T* XrRenderModelAssetEXT;
+
+
+
+
 typedef struct XrRenderModelCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrRenderModelIdEXT          renderModelId;
     uint32_t                    gltfExtensionCount;
     const char* const*          gltfExtensions;
@@ -7548,25 +12793,25 @@ typedef struct XrRenderModelCreateInfoEXT {
 
 typedef struct XrRenderModelPropertiesGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrRenderModelPropertiesGetInfoEXT;
 
 typedef struct XrRenderModelPropertiesEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrUuidEXT             cacheId;
     uint32_t              animatableNodeCount;
 } XrRenderModelPropertiesEXT;
 
 typedef struct XrRenderModelSpaceCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrRenderModelEXT            renderModel;
 } XrRenderModelSpaceCreateInfoEXT;
 
 typedef struct XrRenderModelStateGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrTime                      displayTime;
 } XrRenderModelStateGetInfoEXT;
 
@@ -7577,25 +12822,25 @@ typedef struct XrRenderModelNodeStateEXT {
 
 typedef struct XrRenderModelStateEXT {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     uint32_t                      nodeStateCount;
     XrRenderModelNodeStateEXT*    nodeStates;
 } XrRenderModelStateEXT;
 
 typedef struct XrRenderModelAssetCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidEXT                   cacheId;
 } XrRenderModelAssetCreateInfoEXT;
 
 typedef struct XrRenderModelAssetDataGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrRenderModelAssetDataGetInfoEXT;
 
 typedef struct XrRenderModelAssetDataEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              bufferCapacityInput;
     uint32_t              bufferCountOutput;
     uint8_t*              buffer;
@@ -7603,140 +12848,88 @@ typedef struct XrRenderModelAssetDataEXT {
 
 typedef struct XrRenderModelAssetPropertiesGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrRenderModelAssetPropertiesGetInfoEXT;
 
 typedef struct XrRenderModelAssetNodePropertiesEXT {
-    char    uniqueName[XR_MAX_RENDER_MODEL_ASSET_NODE_NAME_SIZE_EXT];
+    char    uniqueName[64];
 } XrRenderModelAssetNodePropertiesEXT;
 
 typedef struct XrRenderModelAssetPropertiesEXT {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     uint32_t                                nodePropertyCount;
     XrRenderModelAssetNodePropertiesEXT*    nodeProperties;
 } XrRenderModelAssetPropertiesEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateRenderModelEXT)(XrSession session, const XrRenderModelCreateInfoEXT* createInfo, XrRenderModelEXT* renderModel);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyRenderModelEXT)(XrRenderModelEXT renderModel);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelPropertiesEXT)(XrRenderModelEXT renderModel, const XrRenderModelPropertiesGetInfoEXT* getInfo, XrRenderModelPropertiesEXT* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateRenderModelSpaceEXT)(XrSession session, const XrRenderModelSpaceCreateInfoEXT* createInfo, XrSpace* space);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateRenderModelAssetEXT)(XrSession session, const XrRenderModelAssetCreateInfoEXT* createInfo, XrRenderModelAssetEXT* asset);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyRenderModelAssetEXT)(XrRenderModelAssetEXT asset);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelAssetDataEXT)(XrRenderModelAssetEXT asset, const XrRenderModelAssetDataGetInfoEXT* getInfo, XrRenderModelAssetDataEXT* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelAssetPropertiesEXT)(XrRenderModelAssetEXT asset, const XrRenderModelAssetPropertiesGetInfoEXT* getInfo, XrRenderModelAssetPropertiesEXT* properties);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelStateEXT)(XrRenderModelEXT renderModel, const XrRenderModelStateGetInfoEXT* getInfo, XrRenderModelStateEXT* state);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateRenderModelEXT(
-    XrSession                                   session,
-    const XrRenderModelCreateInfoEXT*           createInfo,
-    XrRenderModelEXT*                           renderModel);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyRenderModelEXT(
-    XrRenderModelEXT                            renderModel);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelPropertiesEXT(
-    XrRenderModelEXT                            renderModel,
-    const XrRenderModelPropertiesGetInfoEXT*    getInfo,
-    XrRenderModelPropertiesEXT*                 properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateRenderModelSpaceEXT(
-    XrSession                                   session,
-    const XrRenderModelSpaceCreateInfoEXT*      createInfo,
-    XrSpace*                                    space);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateRenderModelAssetEXT(
-    XrSession                                   session,
-    const XrRenderModelAssetCreateInfoEXT*      createInfo,
-    XrRenderModelAssetEXT*                      asset);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyRenderModelAssetEXT(
-    XrRenderModelAssetEXT                       asset);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelAssetDataEXT(
-    XrRenderModelAssetEXT                       asset,
-    const XrRenderModelAssetDataGetInfoEXT*     getInfo,
-    XrRenderModelAssetDataEXT*                  buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelAssetPropertiesEXT(
-    XrRenderModelAssetEXT                       asset,
-    const XrRenderModelAssetPropertiesGetInfoEXT* getInfo,
-    XrRenderModelAssetPropertiesEXT*            properties);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelStateEXT(
-    XrRenderModelEXT                            renderModel,
-    const XrRenderModelStateGetInfoEXT*         getInfo,
-    XrRenderModelStateEXT*                      state);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateRenderModelEXT)(XrSession session, const XrRenderModelCreateInfoEXT* createInfo, XrRenderModelEXT* renderModel);
+typedef XrResult (*PFN_xrDestroyRenderModelEXT)(XrRenderModelEXT renderModel);
+typedef XrResult (*PFN_xrGetRenderModelPropertiesEXT)(XrRenderModelEXT renderModel, const XrRenderModelPropertiesGetInfoEXT* getInfo, XrRenderModelPropertiesEXT* properties);
+typedef XrResult (*PFN_xrCreateRenderModelSpaceEXT)(XrSession session, const XrRenderModelSpaceCreateInfoEXT* createInfo, XrSpace* space);
+typedef XrResult (*PFN_xrCreateRenderModelAssetEXT)(XrSession session, const XrRenderModelAssetCreateInfoEXT* createInfo, XrRenderModelAssetEXT* asset);
+typedef XrResult (*PFN_xrDestroyRenderModelAssetEXT)(XrRenderModelAssetEXT asset);
+typedef XrResult (*PFN_xrGetRenderModelAssetDataEXT)(XrRenderModelAssetEXT asset, const XrRenderModelAssetDataGetInfoEXT* getInfo, XrRenderModelAssetDataEXT* buffer);
+typedef XrResult (*PFN_xrGetRenderModelAssetPropertiesEXT)(XrRenderModelAssetEXT asset, const XrRenderModelAssetPropertiesGetInfoEXT* getInfo, XrRenderModelAssetPropertiesEXT* properties);
+typedef XrResult (*PFN_xrGetRenderModelStateEXT)(XrRenderModelEXT renderModel, const XrRenderModelStateGetInfoEXT* getInfo, XrRenderModelStateEXT* state);
+XrResult  xrCreateRenderModelEXT(XrSession                                   session,     const XrRenderModelCreateInfoEXT*           createInfo,     XrRenderModelEXT*                           renderModel);
+XrResult  xrDestroyRenderModelEXT(XrRenderModelEXT                            renderModel);
+XrResult  xrGetRenderModelPropertiesEXT(XrRenderModelEXT                            renderModel,     const XrRenderModelPropertiesGetInfoEXT*    getInfo,     XrRenderModelPropertiesEXT*                 properties);
+XrResult  xrCreateRenderModelSpaceEXT(XrSession                                   session,     const XrRenderModelSpaceCreateInfoEXT*      createInfo,     XrSpace*                                    space);
+XrResult  xrCreateRenderModelAssetEXT(XrSession                                   session,     const XrRenderModelAssetCreateInfoEXT*      createInfo,     XrRenderModelAssetEXT*                      asset);
+XrResult  xrDestroyRenderModelAssetEXT(XrRenderModelAssetEXT                       asset);
+XrResult  xrGetRenderModelAssetDataEXT(XrRenderModelAssetEXT                       asset,     const XrRenderModelAssetDataGetInfoEXT*     getInfo,     XrRenderModelAssetDataEXT*                  buffer);
+XrResult  xrGetRenderModelAssetPropertiesEXT(XrRenderModelAssetEXT                       asset,     const XrRenderModelAssetPropertiesGetInfoEXT* getInfo,     XrRenderModelAssetPropertiesEXT*            properties);
+XrResult  xrGetRenderModelStateEXT(XrRenderModelEXT                            renderModel,     const XrRenderModelStateGetInfoEXT*         getInfo,     XrRenderModelStateEXT*                      state);
+#line 7674 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7675 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_interaction_render_model is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_interaction_render_model 1
-#define XR_EXT_interaction_render_model_SPEC_VERSION 1
-#define XR_EXT_INTERACTION_RENDER_MODEL_EXTENSION_NAME "XR_EXT_interaction_render_model"
+
+
+
+
 typedef struct XrInteractionRenderModelIdsEnumerateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrInteractionRenderModelIdsEnumerateInfoEXT;
 
 typedef struct XrInteractionRenderModelSubactionPathInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrInteractionRenderModelSubactionPathInfoEXT;
 
 typedef struct XrInteractionRenderModelTopLevelUserPathGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    topLevelUserPathCount;
     const XrPath*               topLevelUserPaths;
 } XrInteractionRenderModelTopLevelUserPathGetInfoEXT;
 
 typedef struct XrEventDataInteractionRenderModelsChangedEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrEventDataInteractionRenderModelsChangedEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateInteractionRenderModelIdsEXT)(XrSession session, const XrInteractionRenderModelIdsEnumerateInfoEXT* getInfo, uint32_t renderModelIdCapacityInput, uint32_t* renderModelIdCountOutput, XrRenderModelIdEXT* renderModelIds);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateRenderModelSubactionPathsEXT)(XrRenderModelEXT renderModel, const XrInteractionRenderModelSubactionPathInfoEXT* info, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrPath* paths);
-typedef XrResult (XRAPI_PTR *PFN_xrGetRenderModelPoseTopLevelUserPathEXT)(XrRenderModelEXT renderModel, const XrInteractionRenderModelTopLevelUserPathGetInfoEXT* info, XrPath* topLevelUserPath);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateInteractionRenderModelIdsEXT(
-    XrSession                                   session,
-    const XrInteractionRenderModelIdsEnumerateInfoEXT* getInfo,
-    uint32_t                                    renderModelIdCapacityInput,
-    uint32_t*                                   renderModelIdCountOutput,
-    XrRenderModelIdEXT*                         renderModelIds);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateRenderModelSubactionPathsEXT(
-    XrRenderModelEXT                            renderModel,
-    const XrInteractionRenderModelSubactionPathInfoEXT* info,
-    uint32_t                                    pathCapacityInput,
-    uint32_t*                                   pathCountOutput,
-    XrPath*                                     paths);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetRenderModelPoseTopLevelUserPathEXT(
-    XrRenderModelEXT                            renderModel,
-    const XrInteractionRenderModelTopLevelUserPathGetInfoEXT* info,
-    XrPath*                                     topLevelUserPath);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateInteractionRenderModelIdsEXT)(XrSession session, const XrInteractionRenderModelIdsEnumerateInfoEXT* getInfo, uint32_t renderModelIdCapacityInput, uint32_t* renderModelIdCountOutput, XrRenderModelIdEXT* renderModelIds);
+typedef XrResult (*PFN_xrEnumerateRenderModelSubactionPathsEXT)(XrRenderModelEXT renderModel, const XrInteractionRenderModelSubactionPathInfoEXT* info, uint32_t pathCapacityInput, uint32_t* pathCountOutput, XrPath* paths);
+typedef XrResult (*PFN_xrGetRenderModelPoseTopLevelUserPathEXT)(XrRenderModelEXT renderModel, const XrInteractionRenderModelTopLevelUserPathGetInfoEXT* info, XrPath* topLevelUserPath);
+XrResult  xrEnumerateInteractionRenderModelIdsEXT(XrSession                                   session,     const XrInteractionRenderModelIdsEnumerateInfoEXT* getInfo,     uint32_t                                    renderModelIdCapacityInput,     uint32_t*                                   renderModelIdCountOutput,     XrRenderModelIdEXT*                         renderModelIds);
+XrResult  xrEnumerateRenderModelSubactionPathsEXT(XrRenderModelEXT                            renderModel,     const XrInteractionRenderModelSubactionPathInfoEXT* info,     uint32_t                                    pathCapacityInput,     uint32_t*                                   pathCountOutput,     XrPath*                                     paths);
+XrResult  xrGetRenderModelPoseTopLevelUserPathEXT(XrRenderModelEXT                            renderModel,     const XrInteractionRenderModelTopLevelUserPathGetInfoEXT* info,     XrPath*                                     topLevelUserPath);
+#line 7728 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7729 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_hand_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_hand_interaction 1
-#define XR_EXT_hand_interaction_SPEC_VERSION 1
-#define XR_EXT_HAND_INTERACTION_EXTENSION_NAME "XR_EXT_hand_interaction"
 
 
-// XR_QCOM_tracking_optimization_settings is a preprocessor guard. Do not pass it to API calls.
-#define XR_QCOM_tracking_optimization_settings 1
-#define XR_QCOM_tracking_optimization_settings_SPEC_VERSION 1
-#define XR_QCOM_TRACKING_OPTIMIZATION_SETTINGS_EXTENSION_NAME "XR_QCOM_tracking_optimization_settings"
+
+
+
+
+
+
+
+
 
 typedef enum XrTrackingOptimizationSettingsDomainQCOM {
     XR_TRACKING_OPTIMIZATION_SETTINGS_DOMAIN_ALL_QCOM = 1,
@@ -7751,23 +12944,17 @@ typedef enum XrTrackingOptimizationSettingsHintQCOM {
     XR_TRACKING_OPTIMIZATION_SETTINGS_HINT_HIGH_POWER_PRIORIZATION_QCOM = 4,
     XR_TRACKING_OPTIMIZATION_SETTINGS_HINT_MAX_ENUM_QCOM = 0x7FFFFFFF
 } XrTrackingOptimizationSettingsHintQCOM;
-typedef XrResult (XRAPI_PTR *PFN_xrSetTrackingOptimizationSettingsHintQCOM)(XrSession session, XrTrackingOptimizationSettingsDomainQCOM domain, XrTrackingOptimizationSettingsHintQCOM hint);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetTrackingOptimizationSettingsHintQCOM(
-    XrSession                                   session,
-    XrTrackingOptimizationSettingsDomainQCOM    domain,
-    XrTrackingOptimizationSettingsHintQCOM      hint);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSetTrackingOptimizationSettingsHintQCOM)(XrSession session, XrTrackingOptimizationSettingsDomainQCOM domain, XrTrackingOptimizationSettingsHintQCOM hint);
+XrResult  xrSetTrackingOptimizationSettingsHintQCOM(XrSession                                   session,     XrTrackingOptimizationSettingsDomainQCOM    domain,     XrTrackingOptimizationSettingsHintQCOM      hint);
+#line 7764 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7765 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_passthrough is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_passthrough 1
-typedef uint64_t XrPassthroughHTC;
-#define XR_HTC_passthrough_SPEC_VERSION   1
-#define XR_HTC_PASSTHROUGH_EXTENSION_NAME "XR_HTC_passthrough"
+
+
+typedef struct XrPassthroughHTC_T* XrPassthroughHTC;
+
+
 
 typedef enum XrPassthroughFormHTC {
     XR_PASSTHROUGH_FORM_PLANAR_HTC = 0,
@@ -7776,20 +12963,20 @@ typedef enum XrPassthroughFormHTC {
 } XrPassthroughFormHTC;
 typedef struct XrPassthroughCreateInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPassthroughFormHTC        form;
 } XrPassthroughCreateInfoHTC;
 
 typedef struct XrPassthroughColorHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       alpha;
 } XrPassthroughColorHTC;
 
-// XrPassthroughMeshTransformInfoHTC extends XrCompositionLayerPassthroughHTC
+
 typedef struct XrPassthroughMeshTransformInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    vertexCount;
     const XrVector3f*           vertices;
     uint32_t                    indexCount;
@@ -7802,33 +12989,25 @@ typedef struct XrPassthroughMeshTransformInfoHTC {
 
 typedef struct XrCompositionLayerPassthroughHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrCompositionLayerFlags     layerFlags;
     XrSpace                     space;
     XrPassthroughHTC            passthrough;
     XrPassthroughColorHTC       color;
 } XrCompositionLayerPassthroughHTC;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreatePassthroughHTC)(XrSession session, const XrPassthroughCreateInfoHTC* createInfo, XrPassthroughHTC* passthrough);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyPassthroughHTC)(XrPassthroughHTC passthrough);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreatePassthroughHTC(
-    XrSession                                   session,
-    const XrPassthroughCreateInfoHTC*           createInfo,
-    XrPassthroughHTC*                           passthrough);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyPassthroughHTC(
-    XrPassthroughHTC                            passthrough);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreatePassthroughHTC)(XrSession session, const XrPassthroughCreateInfoHTC* createInfo, XrPassthroughHTC* passthrough);
+typedef XrResult (*PFN_xrDestroyPassthroughHTC)(XrPassthroughHTC passthrough);
+XrResult  xrCreatePassthroughHTC(XrSession                                   session,     const XrPassthroughCreateInfoHTC*           createInfo,     XrPassthroughHTC*                           passthrough);
+XrResult  xrDestroyPassthroughHTC(XrPassthroughHTC                            passthrough);
+#line 7826 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7827 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_foveation is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_foveation 1
-#define XR_HTC_foveation_SPEC_VERSION     1
-#define XR_HTC_FOVEATION_EXTENSION_NAME   "XR_HTC_foveation"
+
+
+
+
 
 typedef enum XrFoveationModeHTC {
     XR_FOVEATION_MODE_DISABLE_HTC = 0,
@@ -7847,14 +13026,14 @@ typedef enum XrFoveationLevelHTC {
 } XrFoveationLevelHTC;
 typedef XrFlags64 XrFoveationDynamicFlagsHTC;
 
-// Flag bits for XrFoveationDynamicFlagsHTC
+
 static const XrFoveationDynamicFlagsHTC XR_FOVEATION_DYNAMIC_LEVEL_ENABLED_BIT_HTC = 0x00000001;
 static const XrFoveationDynamicFlagsHTC XR_FOVEATION_DYNAMIC_CLEAR_FOV_ENABLED_BIT_HTC = 0x00000002;
 static const XrFoveationDynamicFlagsHTC XR_FOVEATION_DYNAMIC_FOCAL_CENTER_OFFSET_ENABLED_BIT_HTC = 0x00000004;
 
 typedef struct XrFoveationApplyInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFoveationModeHTC          mode;
     uint32_t                    subImageCount;
     XrSwapchainSubImage*        subImages;
@@ -7866,81 +13045,67 @@ typedef struct XrFoveationConfigurationHTC {
     XrVector2f             focalCenterOffset;
 } XrFoveationConfigurationHTC;
 
-// XrFoveationDynamicModeInfoHTC extends XrFoveationApplyInfoHTC
+
 typedef struct XrFoveationDynamicModeInfoHTC {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrFoveationDynamicFlagsHTC    dynamicFlags;
 } XrFoveationDynamicModeInfoHTC;
 
-// XrFoveationCustomModeInfoHTC extends XrFoveationApplyInfoHTC
+
 typedef struct XrFoveationCustomModeInfoHTC {
     XrStructureType                       type;
-    const void* XR_MAY_ALIAS              next;
+    const void*               next;
     uint32_t                              configCount;
     const XrFoveationConfigurationHTC*    configs;
 } XrFoveationCustomModeInfoHTC;
 
-typedef XrResult (XRAPI_PTR *PFN_xrApplyFoveationHTC)(XrSession session, const XrFoveationApplyInfoHTC* applyInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrApplyFoveationHTC(
-    XrSession                                   session,
-    const XrFoveationApplyInfoHTC*              applyInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrApplyFoveationHTC)(XrSession session, const XrFoveationApplyInfoHTC* applyInfo);
+XrResult  xrApplyFoveationHTC(XrSession                                   session,     const XrFoveationApplyInfoHTC*              applyInfo);
+#line 7893 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7894 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_anchor is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_anchor 1
-#define XR_MAX_SPATIAL_ANCHOR_NAME_SIZE_HTC 256
-#define XR_HTC_anchor_SPEC_VERSION        1
-#define XR_HTC_ANCHOR_EXTENSION_NAME      "XR_HTC_anchor"
-// XrSystemAnchorPropertiesHTC extends XrSystemProperties
+
+
+
+
+
+
 typedef struct XrSystemAnchorPropertiesHTC {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsAnchor;
 } XrSystemAnchorPropertiesHTC;
 
 typedef struct XrSpatialAnchorNameHTC {
-    char    name[XR_MAX_SPATIAL_ANCHOR_NAME_SIZE_HTC];
+    char    name[256];
 } XrSpatialAnchorNameHTC;
 
 typedef struct XrSpatialAnchorCreateInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrPosef                     poseInSpace;
     XrSpatialAnchorNameHTC      name;
 } XrSpatialAnchorCreateInfoHTC;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorHTC)(XrSession session, const XrSpatialAnchorCreateInfoHTC* createInfo, XrSpace* anchor);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialAnchorNameHTC)(XrSpace anchor, XrSpatialAnchorNameHTC* name);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorHTC(
-    XrSession                                   session,
-    const XrSpatialAnchorCreateInfoHTC*         createInfo,
-    XrSpace*                                    anchor);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialAnchorNameHTC(
-    XrSpace                                     anchor,
-    XrSpatialAnchorNameHTC*                     name);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorHTC)(XrSession session, const XrSpatialAnchorCreateInfoHTC* createInfo, XrSpace* anchor);
+typedef XrResult (*PFN_xrGetSpatialAnchorNameHTC)(XrSpace anchor, XrSpatialAnchorNameHTC* name);
+XrResult  xrCreateSpatialAnchorHTC(XrSession                                   session,     const XrSpatialAnchorCreateInfoHTC*         createInfo,     XrSpace*                                    anchor);
+XrResult  xrGetSpatialAnchorNameHTC(XrSpace                                     anchor,     XrSpatialAnchorNameHTC*                     name);
+#line 7934 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 7935 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_HTC_body_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_HTC_body_tracking 1
 
-#define XR_BODY_JOINT_COUNT_HTC 26
 
-typedef uint64_t XrBodyTrackerHTC;
-#define XR_HTC_body_tracking_SPEC_VERSION 1
-#define XR_HTC_BODY_TRACKING_EXTENSION_NAME "XR_HTC_body_tracking"
+
+
+
+typedef struct XrBodyTrackerHTC_T* XrBodyTrackerHTC;
+
+
 
 typedef enum XrBodyJointHTC {
     XR_BODY_JOINT_PELVIS_HTC = 0,
@@ -7983,22 +13148,22 @@ typedef enum XrBodyJointConfidenceHTC {
     XR_BODY_JOINT_CONFIDENCE_HIGH_HTC = 2,
     XR_BODY_JOINT_CONFIDENCE_MAX_ENUM_HTC = 0x7FFFFFFF
 } XrBodyJointConfidenceHTC;
-// XrSystemBodyTrackingPropertiesHTC extends XrSystemProperties
+
 typedef struct XrSystemBodyTrackingPropertiesHTC {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsBodyTracking;
 } XrSystemBodyTrackingPropertiesHTC;
 
 typedef struct XrBodyTrackerCreateInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBodyJointSetHTC           bodyJointSet;
 } XrBodyTrackerCreateInfoHTC;
 
 typedef struct XrBodyJointsLocateInfoHTC {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrBodyJointsLocateInfoHTC;
@@ -8010,7 +13175,7 @@ typedef struct XrBodyJointLocationHTC {
 
 typedef struct XrBodyJointLocationsHTC {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrSpaceLocationFlags        combinedLocationFlags;
     XrBodyJointConfidenceHTC    confidenceLevel;
     uint32_t                    jointLocationCount;
@@ -8024,63 +13189,46 @@ typedef struct XrBodySkeletonJointHTC {
 
 typedef struct XrBodySkeletonHTC {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     uint32_t                   jointCount;
     XrBodySkeletonJointHTC*    joints;
 } XrBodySkeletonHTC;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateBodyTrackerHTC)(XrSession session, const XrBodyTrackerCreateInfoHTC* createInfo, XrBodyTrackerHTC* bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyBodyTrackerHTC)(XrBodyTrackerHTC bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateBodyJointsHTC)(XrBodyTrackerHTC bodyTracker, const XrBodyJointsLocateInfoHTC* locateInfo, XrBodyJointLocationsHTC* locations);
-typedef XrResult (XRAPI_PTR *PFN_xrGetBodySkeletonHTC)(XrBodyTrackerHTC bodyTracker, XrSpace baseSpace, uint32_t skeletonGenerationId, XrBodySkeletonHTC* skeleton);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateBodyTrackerHTC(
-    XrSession                                   session,
-    const XrBodyTrackerCreateInfoHTC*           createInfo,
-    XrBodyTrackerHTC*                           bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyBodyTrackerHTC(
-    XrBodyTrackerHTC                            bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateBodyJointsHTC(
-    XrBodyTrackerHTC                            bodyTracker,
-    const XrBodyJointsLocateInfoHTC*            locateInfo,
-    XrBodyJointLocationsHTC*                    locations);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetBodySkeletonHTC(
-    XrBodyTrackerHTC                            bodyTracker,
-    XrSpace                                     baseSpace,
-    uint32_t                                    skeletonGenerationId,
-    XrBodySkeletonHTC*                          skeleton);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateBodyTrackerHTC)(XrSession session, const XrBodyTrackerCreateInfoHTC* createInfo, XrBodyTrackerHTC* bodyTracker);
+typedef XrResult (*PFN_xrDestroyBodyTrackerHTC)(XrBodyTrackerHTC bodyTracker);
+typedef XrResult (*PFN_xrLocateBodyJointsHTC)(XrBodyTrackerHTC bodyTracker, const XrBodyJointsLocateInfoHTC* locateInfo, XrBodyJointLocationsHTC* locations);
+typedef XrResult (*PFN_xrGetBodySkeletonHTC)(XrBodyTrackerHTC bodyTracker, XrSpace baseSpace, uint32_t skeletonGenerationId, XrBodySkeletonHTC* skeleton);
+XrResult  xrCreateBodyTrackerHTC(XrSession                                   session,     const XrBodyTrackerCreateInfoHTC*           createInfo,     XrBodyTrackerHTC*                           bodyTracker);
+XrResult  xrDestroyBodyTrackerHTC(XrBodyTrackerHTC                            bodyTracker);
+XrResult  xrLocateBodyJointsHTC(XrBodyTrackerHTC                            bodyTracker,     const XrBodyJointsLocateInfoHTC*            locateInfo,     XrBodyJointLocationsHTC*                    locations);
+XrResult  xrGetBodySkeletonHTC(XrBodyTrackerHTC                            bodyTracker,     XrSpace                                     baseSpace,     uint32_t                                    skeletonGenerationId,     XrBodySkeletonHTC*                          skeleton);
+#line 8059 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8060 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_active_action_set_priority is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_active_action_set_priority 1
-#define XR_EXT_active_action_set_priority_SPEC_VERSION 1
-#define XR_EXT_ACTIVE_ACTION_SET_PRIORITY_EXTENSION_NAME "XR_EXT_active_action_set_priority"
+
+
+
+
 typedef struct XrActiveActionSetPriorityEXT {
     XrActionSet    actionSet;
     uint32_t       priorityOverride;
 } XrActiveActionSetPriorityEXT;
 
-// XrActiveActionSetPrioritiesEXT extends XrActionsSyncInfo
+
 typedef struct XrActiveActionSetPrioritiesEXT {
     XrStructureType                        type;
-    const void* XR_MAY_ALIAS               next;
+    const void*                next;
     uint32_t                               actionSetPriorityCount;
     const XrActiveActionSetPriorityEXT*    actionSetPriorities;
 } XrActiveActionSetPrioritiesEXT;
 
 
 
-// XR_MNDX_force_feedback_curl is a preprocessor guard. Do not pass it to API calls.
-#define XR_MNDX_force_feedback_curl 1
-#define XR_MNDX_force_feedback_curl_SPEC_VERSION 1
-#define XR_MNDX_FORCE_FEEDBACK_CURL_EXTENSION_NAME "XR_MNDX_force_feedback_curl"
+
+
+
+
 
 typedef enum XrForceFeedbackCurlLocationMNDX {
     XR_FORCE_FEEDBACK_CURL_LOCATION_THUMB_CURL_MNDX = 0,
@@ -8090,10 +13238,10 @@ typedef enum XrForceFeedbackCurlLocationMNDX {
     XR_FORCE_FEEDBACK_CURL_LOCATION_LITTLE_CURL_MNDX = 4,
     XR_FORCE_FEEDBACK_CURL_LOCATION_MAX_ENUM_MNDX = 0x7FFFFFFF
 } XrForceFeedbackCurlLocationMNDX;
-// XrSystemForceFeedbackCurlPropertiesMNDX extends XrSystemProperties
+
 typedef struct XrSystemForceFeedbackCurlPropertiesMNDX {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsForceFeedbackCurl;
 } XrSystemForceFeedbackCurlPropertiesMNDX;
 
@@ -8104,39 +13252,34 @@ typedef struct XrForceFeedbackCurlApplyLocationMNDX {
 
 typedef struct XrForceFeedbackCurlApplyLocationsMNDX {
     XrStructureType                          type;
-    const void* XR_MAY_ALIAS                 next;
+    const void*                  next;
     uint32_t                                 locationCount;
     XrForceFeedbackCurlApplyLocationMNDX*    locations;
 } XrForceFeedbackCurlApplyLocationsMNDX;
 
-typedef XrResult (XRAPI_PTR *PFN_xrApplyForceFeedbackCurlMNDX)(XrHandTrackerEXT handTracker, const XrForceFeedbackCurlApplyLocationsMNDX* locations);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrApplyForceFeedbackCurlMNDX(
-    XrHandTrackerEXT                            handTracker,
-    const XrForceFeedbackCurlApplyLocationsMNDX* locations);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrApplyForceFeedbackCurlMNDX)(XrHandTrackerEXT handTracker, const XrForceFeedbackCurlApplyLocationsMNDX* locations);
+XrResult  xrApplyForceFeedbackCurlMNDX(XrHandTrackerEXT                            handTracker,     const XrForceFeedbackCurlApplyLocationsMNDX* locations);
+#line 8121 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8122 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_controller_interaction 1
-#define XR_BD_controller_interaction_SPEC_VERSION 2
-#define XR_BD_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_BD_controller_interaction"
 
 
-// XR_BD_body_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_body_tracking 1
-
-#define XR_BODY_JOINT_COUNT_BD 24
 
 
-#define XR_BODY_JOINT_WITHOUT_ARM_COUNT_BD 16
 
-typedef uint64_t XrBodyTrackerBD;
-#define XR_BD_body_tracking_SPEC_VERSION  1
-#define XR_BD_BODY_TRACKING_EXTENSION_NAME "XR_BD_body_tracking"
+
+
+
+
+
+
+
+
+
+typedef struct XrBodyTrackerBD_T* XrBodyTrackerBD;
+
+
 
 typedef enum XrBodyJointBD {
     XR_BODY_JOINT_PELVIS_BD = 0,
@@ -8171,22 +13314,22 @@ typedef enum XrBodyJointSetBD {
     XR_BODY_JOINT_SET_FULL_BODY_JOINTS_BD = 2,
     XR_BODY_JOINT_SET_MAX_ENUM_BD = 0x7FFFFFFF
 } XrBodyJointSetBD;
-// XrSystemBodyTrackingPropertiesBD extends XrSystemProperties
+
 typedef struct XrSystemBodyTrackingPropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsBodyTracking;
 } XrSystemBodyTrackingPropertiesBD;
 
 typedef struct XrBodyTrackerCreateInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBodyJointSetBD            jointSet;
 } XrBodyTrackerCreateInfoBD;
 
 typedef struct XrBodyJointsLocateInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrBodyJointsLocateInfoBD;
@@ -8198,42 +13341,30 @@ typedef struct XrBodyJointLocationBD {
 
 typedef struct XrBodyJointLocationsBD {
     XrStructureType           type;
-    void* XR_MAY_ALIAS        next;
+    void*         next;
     XrBool32                  allJointPosesTracked;
     uint32_t                  jointLocationCount;
     XrBodyJointLocationBD*    jointLocations;
 } XrBodyJointLocationsBD;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateBodyTrackerBD)(XrSession session, const XrBodyTrackerCreateInfoBD* createInfo, XrBodyTrackerBD* bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyBodyTrackerBD)(XrBodyTrackerBD bodyTracker);
-typedef XrResult (XRAPI_PTR *PFN_xrLocateBodyJointsBD)(XrBodyTrackerBD bodyTracker, const XrBodyJointsLocateInfoBD* locateInfo, XrBodyJointLocationsBD* locations);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateBodyTrackerBD(
-    XrSession                                   session,
-    const XrBodyTrackerCreateInfoBD*            createInfo,
-    XrBodyTrackerBD*                            bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyBodyTrackerBD(
-    XrBodyTrackerBD                             bodyTracker);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrLocateBodyJointsBD(
-    XrBodyTrackerBD                             bodyTracker,
-    const XrBodyJointsLocateInfoBD*             locateInfo,
-    XrBodyJointLocationsBD*                     locations);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateBodyTrackerBD)(XrSession session, const XrBodyTrackerCreateInfoBD* createInfo, XrBodyTrackerBD* bodyTracker);
+typedef XrResult (*PFN_xrDestroyBodyTrackerBD)(XrBodyTrackerBD bodyTracker);
+typedef XrResult (*PFN_xrLocateBodyJointsBD)(XrBodyTrackerBD bodyTracker, const XrBodyJointsLocateInfoBD* locateInfo, XrBodyJointLocationsBD* locations);
+XrResult  xrCreateBodyTrackerBD(XrSession                                   session,     const XrBodyTrackerCreateInfoBD*            createInfo,     XrBodyTrackerBD*                            bodyTracker);
+XrResult  xrDestroyBodyTrackerBD(XrBodyTrackerBD                             bodyTracker);
+XrResult  xrLocateBodyJointsBD(XrBodyTrackerBD                             bodyTracker,     const XrBodyJointsLocateInfoBD*             locateInfo,     XrBodyJointLocationsBD*                     locations);
+#line 8227 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8228 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_spatial_sensing is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_sensing 1
+
+
 typedef uint64_t XrSpatialEntityIdBD;
-typedef uint64_t XrSenseDataProviderBD;
-typedef uint64_t XrSenseDataSnapshotBD;
-typedef uint64_t XrAnchorBD;
-#define XR_BD_spatial_sensing_SPEC_VERSION 1
-#define XR_BD_SPATIAL_SENSING_EXTENSION_NAME "XR_BD_spatial_sensing"
+typedef struct XrSenseDataProviderBD_T* XrSenseDataProviderBD;
+typedef struct XrSenseDataSnapshotBD_T* XrSenseDataSnapshotBD;
+typedef struct XrAnchorBD_T* XrAnchorBD;
+
+
 
 typedef enum XrSpatialEntityComponentTypeBD {
     XR_SPATIAL_ENTITY_COMPONENT_TYPE_LOCATION_BD = 0,
@@ -8289,74 +13420,74 @@ typedef enum XrSenseDataProviderStateBD {
     XR_SENSE_DATA_PROVIDER_STATE_STOPPED_BD = 2,
     XR_SENSE_DATA_PROVIDER_STATE_MAX_ENUM_BD = 0x7FFFFFFF
 } XrSenseDataProviderStateBD;
-// XrSystemSpatialSensingPropertiesBD extends XrSystemProperties
+
 typedef struct XrSystemSpatialSensingPropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialSensing;
 } XrSystemSpatialSensingPropertiesBD;
 
 typedef struct XrSpatialEntityComponentGetInfoBD {
     XrStructureType                   type;
-    const void* XR_MAY_ALIAS          next;
+    const void*           next;
     XrSpatialEntityIdBD               entityId;
     XrSpatialEntityComponentTypeBD    componentType;
 } XrSpatialEntityComponentGetInfoBD;
 
 typedef struct XrSpatialEntityComponentDataBaseHeaderBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
 } XrSpatialEntityComponentDataBaseHeaderBD;
 
 typedef struct XrSpatialEntityLocationGetInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
 } XrSpatialEntityLocationGetInfoBD;
 
-// XrSpatialEntityComponentDataLocationBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataLocationBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrSpaceLocation       location;
 } XrSpatialEntityComponentDataLocationBD;
 
-// XrSpatialEntityComponentDataSemanticBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataSemanticBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              labelCapacityInput;
     uint32_t              labelCountOutput;
     XrSemanticLabelBD*    labels;
 } XrSpatialEntityComponentDataSemanticBD;
 
-// XrSpatialEntityComponentDataBoundingBox2DBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataBoundingBox2DBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrRect2Df             boundingBox2D;
 } XrSpatialEntityComponentDataBoundingBox2DBD;
 
-// XrSpatialEntityComponentDataPolygonBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataPolygonBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector2f*           vertices;
 } XrSpatialEntityComponentDataPolygonBD;
 
-// XrSpatialEntityComponentDataBoundingBox3DBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataBoundingBox3DBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBoxf                boundingBox3D;
 } XrSpatialEntityComponentDataBoundingBox3DBD;
 
-// XrSpatialEntityComponentDataTriangleMeshBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataTriangleMeshBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector3f*           vertices;
@@ -8367,48 +13498,48 @@ typedef struct XrSpatialEntityComponentDataTriangleMeshBD {
 
 typedef struct XrSenseDataProviderCreateInfoBD {
     XrStructureType              type;
-    const void* XR_MAY_ALIAS     next;
+    const void*      next;
     XrSenseDataProviderTypeBD    providerType;
 } XrSenseDataProviderCreateInfoBD;
 
 typedef struct XrSenseDataProviderStartInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSenseDataProviderStartInfoBD;
 
 typedef struct XrEventDataSenseDataProviderStateChangedBD {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrSenseDataProviderBD         provider;
     XrSenseDataProviderStateBD    newState;
 } XrEventDataSenseDataProviderStateChangedBD;
 
 typedef struct XrEventDataSenseDataUpdatedBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSenseDataProviderBD       provider;
 } XrEventDataSenseDataUpdatedBD;
 
 typedef struct XrSenseDataQueryInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSenseDataQueryInfoBD;
 
 typedef struct XrSenseDataQueryCompletionBD {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     XrResult                 futureResult;
     XrSenseDataSnapshotBD    snapshot;
 } XrSenseDataQueryCompletionBD;
 
 typedef struct XrQueriedSenseDataGetInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrQueriedSenseDataGetInfoBD;
 
 typedef struct XrSpatialEntityStateBD {
     XrStructureType        type;
-    void* XR_MAY_ALIAS     next;
+    void*      next;
     XrSpatialEntityIdBD    entityId;
     XrTime                 lastUpdateTime;
     XrUuidEXT              uuid;
@@ -8416,167 +13547,105 @@ typedef struct XrSpatialEntityStateBD {
 
 typedef struct XrQueriedSenseDataBD {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     uint32_t                   stateCapacityInput;
     uint32_t                   stateCountOutput;
     XrSpatialEntityStateBD*    states;
 } XrQueriedSenseDataBD;
 
-// XrSenseDataFilterUuidBD extends XrSenseDataQueryInfoBD
+
 typedef struct XrSenseDataFilterUuidBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    uuidCount;
     const XrUuidEXT*            uuids;
 } XrSenseDataFilterUuidBD;
 
-// XrSenseDataFilterSemanticBD extends XrSenseDataQueryInfoBD
+
 typedef struct XrSenseDataFilterSemanticBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    labelCount;
     const XrSemanticLabelBD*    labels;
 } XrSenseDataFilterSemanticBD;
 
 typedef struct XrSpatialEntityAnchorCreateInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSenseDataSnapshotBD       snapshot;
     XrSpatialEntityIdBD         entityId;
 } XrSpatialEntityAnchorCreateInfoBD;
 
 typedef struct XrAnchorSpaceCreateInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAnchorBD                  anchor;
     XrPosef                     poseInAnchorSpace;
 } XrAnchorSpaceCreateInfoBD;
 
 typedef struct XrFutureCompletionEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
 } XrFutureCompletionEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpatialEntityComponentTypesBD)(XrSenseDataSnapshotBD snapshot, XrSpatialEntityIdBD entityId, uint32_t componentTypeCapacityInput, uint32_t* componentTypeCountOutput, XrSpatialEntityComponentTypeBD* componentTypes);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialEntityUuidBD)(XrSenseDataSnapshotBD snapshot, XrSpatialEntityIdBD entityId, XrUuidEXT* uuid);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialEntityComponentDataBD)(XrSenseDataSnapshotBD snapshot, const XrSpatialEntityComponentGetInfoBD* getInfo, XrSpatialEntityComponentDataBaseHeaderBD* componentData);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSenseDataProviderBD)(XrSession session, const XrSenseDataProviderCreateInfoBD* createInfo, XrSenseDataProviderBD* provider);
-typedef XrResult (XRAPI_PTR *PFN_xrStartSenseDataProviderAsyncBD)(XrSenseDataProviderBD provider, const XrSenseDataProviderStartInfoBD* startInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrStartSenseDataProviderCompleteBD)(XrSession session, XrFutureEXT future, XrFutureCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSenseDataProviderStateBD)(XrSenseDataProviderBD provider, XrSenseDataProviderStateBD* state);
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySenseDataAsyncBD)(XrSenseDataProviderBD provider, const XrSenseDataQueryInfoBD* queryInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySenseDataCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrSenseDataQueryCompletionBD* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySenseDataSnapshotBD)(XrSenseDataSnapshotBD snapshot);
-typedef XrResult (XRAPI_PTR *PFN_xrGetQueriedSenseDataBD)(XrSenseDataSnapshotBD snapshot, XrQueriedSenseDataGetInfoBD* getInfo, XrQueriedSenseDataBD* queriedSenseData);
-typedef XrResult (XRAPI_PTR *PFN_xrStopSenseDataProviderBD)(XrSenseDataProviderBD provider);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySenseDataProviderBD)(XrSenseDataProviderBD provider);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialEntityAnchorBD)(XrSenseDataProviderBD provider, const XrSpatialEntityAnchorCreateInfoBD* createInfo, XrAnchorBD* anchor);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyAnchorBD)(XrAnchorBD anchor);
-typedef XrResult (XRAPI_PTR *PFN_xrGetAnchorUuidBD)(XrAnchorBD anchor, XrUuidEXT* uuid);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateAnchorSpaceBD)(XrSession session, const XrAnchorSpaceCreateInfoBD* createInfo, XrSpace* space);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpatialEntityComponentTypesBD(
-    XrSenseDataSnapshotBD                       snapshot,
-    XrSpatialEntityIdBD                         entityId,
-    uint32_t                                    componentTypeCapacityInput,
-    uint32_t*                                   componentTypeCountOutput,
-    XrSpatialEntityComponentTypeBD*             componentTypes);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialEntityUuidBD(
-    XrSenseDataSnapshotBD                       snapshot,
-    XrSpatialEntityIdBD                         entityId,
-    XrUuidEXT*                                  uuid);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialEntityComponentDataBD(
-    XrSenseDataSnapshotBD                       snapshot,
-    const XrSpatialEntityComponentGetInfoBD*    getInfo,
-    XrSpatialEntityComponentDataBaseHeaderBD*   componentData);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSenseDataProviderBD(
-    XrSession                                   session,
-    const XrSenseDataProviderCreateInfoBD*      createInfo,
-    XrSenseDataProviderBD*                      provider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStartSenseDataProviderAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSenseDataProviderStartInfoBD*       startInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStartSenseDataProviderCompleteBD(
-    XrSession                                   session,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSenseDataProviderStateBD(
-    XrSenseDataProviderBD                       provider,
-    XrSenseDataProviderStateBD*                 state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySenseDataAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSenseDataQueryInfoBD*               queryInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySenseDataCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrSenseDataQueryCompletionBD*               completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySenseDataSnapshotBD(
-    XrSenseDataSnapshotBD                       snapshot);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetQueriedSenseDataBD(
-    XrSenseDataSnapshotBD                       snapshot,
-    XrQueriedSenseDataGetInfoBD*                getInfo,
-    XrQueriedSenseDataBD*                       queriedSenseData);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStopSenseDataProviderBD(
-    XrSenseDataProviderBD                       provider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySenseDataProviderBD(
-    XrSenseDataProviderBD                       provider);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialEntityAnchorBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSpatialEntityAnchorCreateInfoBD*    createInfo,
-    XrAnchorBD*                                 anchor);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyAnchorBD(
-    XrAnchorBD                                  anchor);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetAnchorUuidBD(
-    XrAnchorBD                                  anchor,
-    XrUuidEXT*                                  uuid);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateAnchorSpaceBD(
-    XrSession                                   session,
-    const XrAnchorSpaceCreateInfoBD*            createInfo,
-    XrSpace*                                    space);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateSpatialEntityComponentTypesBD)(XrSenseDataSnapshotBD snapshot, XrSpatialEntityIdBD entityId, uint32_t componentTypeCapacityInput, uint32_t* componentTypeCountOutput, XrSpatialEntityComponentTypeBD* componentTypes);
+typedef XrResult (*PFN_xrGetSpatialEntityUuidBD)(XrSenseDataSnapshotBD snapshot, XrSpatialEntityIdBD entityId, XrUuidEXT* uuid);
+typedef XrResult (*PFN_xrGetSpatialEntityComponentDataBD)(XrSenseDataSnapshotBD snapshot, const XrSpatialEntityComponentGetInfoBD* getInfo, XrSpatialEntityComponentDataBaseHeaderBD* componentData);
+typedef XrResult (*PFN_xrCreateSenseDataProviderBD)(XrSession session, const XrSenseDataProviderCreateInfoBD* createInfo, XrSenseDataProviderBD* provider);
+typedef XrResult (*PFN_xrStartSenseDataProviderAsyncBD)(XrSenseDataProviderBD provider, const XrSenseDataProviderStartInfoBD* startInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrStartSenseDataProviderCompleteBD)(XrSession session, XrFutureEXT future, XrFutureCompletionEXT* completion);
+typedef XrResult (*PFN_xrGetSenseDataProviderStateBD)(XrSenseDataProviderBD provider, XrSenseDataProviderStateBD* state);
+typedef XrResult (*PFN_xrQuerySenseDataAsyncBD)(XrSenseDataProviderBD provider, const XrSenseDataQueryInfoBD* queryInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrQuerySenseDataCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrSenseDataQueryCompletionBD* completion);
+typedef XrResult (*PFN_xrDestroySenseDataSnapshotBD)(XrSenseDataSnapshotBD snapshot);
+typedef XrResult (*PFN_xrGetQueriedSenseDataBD)(XrSenseDataSnapshotBD snapshot, XrQueriedSenseDataGetInfoBD* getInfo, XrQueriedSenseDataBD* queriedSenseData);
+typedef XrResult (*PFN_xrStopSenseDataProviderBD)(XrSenseDataProviderBD provider);
+typedef XrResult (*PFN_xrDestroySenseDataProviderBD)(XrSenseDataProviderBD provider);
+typedef XrResult (*PFN_xrCreateSpatialEntityAnchorBD)(XrSenseDataProviderBD provider, const XrSpatialEntityAnchorCreateInfoBD* createInfo, XrAnchorBD* anchor);
+typedef XrResult (*PFN_xrDestroyAnchorBD)(XrAnchorBD anchor);
+typedef XrResult (*PFN_xrGetAnchorUuidBD)(XrAnchorBD anchor, XrUuidEXT* uuid);
+typedef XrResult (*PFN_xrCreateAnchorSpaceBD)(XrSession session, const XrAnchorSpaceCreateInfoBD* createInfo, XrSpace* space);
+XrResult  xrEnumerateSpatialEntityComponentTypesBD(XrSenseDataSnapshotBD                       snapshot,     XrSpatialEntityIdBD                         entityId,     uint32_t                                    componentTypeCapacityInput,     uint32_t*                                   componentTypeCountOutput,     XrSpatialEntityComponentTypeBD*             componentTypes);
+XrResult  xrGetSpatialEntityUuidBD(XrSenseDataSnapshotBD                       snapshot,     XrSpatialEntityIdBD                         entityId,     XrUuidEXT*                                  uuid);
+XrResult  xrGetSpatialEntityComponentDataBD(XrSenseDataSnapshotBD                       snapshot,     const XrSpatialEntityComponentGetInfoBD*    getInfo,     XrSpatialEntityComponentDataBaseHeaderBD*   componentData);
+XrResult  xrCreateSenseDataProviderBD(XrSession                                   session,     const XrSenseDataProviderCreateInfoBD*      createInfo,     XrSenseDataProviderBD*                      provider);
+XrResult  xrStartSenseDataProviderAsyncBD(XrSenseDataProviderBD                       provider,     const XrSenseDataProviderStartInfoBD*       startInfo,     XrFutureEXT*                                future);
+XrResult  xrStartSenseDataProviderCompleteBD(XrSession                                   session,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+XrResult  xrGetSenseDataProviderStateBD(XrSenseDataProviderBD                       provider,     XrSenseDataProviderStateBD*                 state);
+XrResult  xrQuerySenseDataAsyncBD(XrSenseDataProviderBD                       provider,     const XrSenseDataQueryInfoBD*               queryInfo,     XrFutureEXT*                                future);
+XrResult  xrQuerySenseDataCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrSenseDataQueryCompletionBD*               completion);
+XrResult  xrDestroySenseDataSnapshotBD(XrSenseDataSnapshotBD                       snapshot);
+XrResult  xrGetQueriedSenseDataBD(XrSenseDataSnapshotBD                       snapshot,     XrQueriedSenseDataGetInfoBD*                getInfo,     XrQueriedSenseDataBD*                       queriedSenseData);
+XrResult  xrStopSenseDataProviderBD(XrSenseDataProviderBD                       provider);
+XrResult  xrDestroySenseDataProviderBD(XrSenseDataProviderBD                       provider);
+XrResult  xrCreateSpatialEntityAnchorBD(XrSenseDataProviderBD                       provider,     const XrSpatialEntityAnchorCreateInfoBD*    createInfo,     XrAnchorBD*                                 anchor);
+XrResult  xrDestroyAnchorBD(XrAnchorBD                                  anchor);
+XrResult  xrGetAnchorUuidBD(XrAnchorBD                                  anchor,     XrUuidEXT*                                  uuid);
+XrResult  xrCreateAnchorSpaceBD(XrSession                                   session,     const XrAnchorSpaceCreateInfoBD*            createInfo,     XrSpace*                                    space);
+#line 8559 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8560 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_spatial_anchor is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_anchor 1
-#define XR_BD_spatial_anchor_SPEC_VERSION 1
-#define XR_BD_SPATIAL_ANCHOR_EXTENSION_NAME "XR_BD_spatial_anchor"
+
+
+
+
 
 typedef enum XrPersistenceLocationBD {
     XR_PERSISTENCE_LOCATION_LOCAL_BD = 0,
     XR_PERSISTENCE_LOCATION_MAX_ENUM_BD = 0x7FFFFFFF
 } XrPersistenceLocationBD;
-// XrSystemSpatialAnchorPropertiesBD extends XrSystemProperties
+
 typedef struct XrSystemSpatialAnchorPropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialAnchor;
 } XrSystemSpatialAnchorPropertiesBD;
 
 typedef struct XrSpatialAnchorCreateInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     space;
     XrPosef                     pose;
     XrTime                      time;
@@ -8584,7 +13653,7 @@ typedef struct XrSpatialAnchorCreateInfoBD {
 
 typedef struct XrSpatialAnchorCreateCompletionBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
     XrAnchorBD            anchor;
     XrUuidEXT             uuid;
@@ -8592,151 +13661,97 @@ typedef struct XrSpatialAnchorCreateCompletionBD {
 
 typedef struct XrSpatialAnchorPersistInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPersistenceLocationBD     location;
     XrAnchorBD                  anchor;
 } XrSpatialAnchorPersistInfoBD;
 
 typedef struct XrSpatialAnchorUnpersistInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPersistenceLocationBD     location;
     XrAnchorBD                  anchor;
 } XrSpatialAnchorUnpersistInfoBD;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorCreateInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrSpatialAnchorCreateCompletionBD* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrPersistSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorPersistInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrPersistSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrUnpersistSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorUnpersistInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrUnpersistSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSpatialAnchorCreateInfoBD*          info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrSpatialAnchorCreateCompletionBD*          completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPersistSpatialAnchorAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSpatialAnchorPersistInfoBD*         info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPersistSpatialAnchorCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUnpersistSpatialAnchorAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSpatialAnchorUnpersistInfoBD*       info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrUnpersistSpatialAnchorCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorCreateInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCreateSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrSpatialAnchorCreateCompletionBD* completion);
+typedef XrResult (*PFN_xrPersistSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorPersistInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrPersistSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
+typedef XrResult (*PFN_xrUnpersistSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorUnpersistInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrUnpersistSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
+XrResult  xrCreateSpatialAnchorAsyncBD(XrSenseDataProviderBD                       provider,     const XrSpatialAnchorCreateInfoBD*          info,     XrFutureEXT*                                future);
+XrResult  xrCreateSpatialAnchorCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrSpatialAnchorCreateCompletionBD*          completion);
+XrResult  xrPersistSpatialAnchorAsyncBD(XrSenseDataProviderBD                       provider,     const XrSpatialAnchorPersistInfoBD*         info,     XrFutureEXT*                                future);
+XrResult  xrPersistSpatialAnchorCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+XrResult  xrUnpersistSpatialAnchorAsyncBD(XrSenseDataProviderBD                       provider,     const XrSpatialAnchorUnpersistInfoBD*       info,     XrFutureEXT*                                future);
+XrResult  xrUnpersistSpatialAnchorCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+#line 8647 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8648 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_spatial_anchor_sharing is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_anchor_sharing 1
-#define XR_BD_spatial_anchor_sharing_SPEC_VERSION 2
-#define XR_BD_SPATIAL_ANCHOR_SHARING_EXTENSION_NAME "XR_BD_spatial_anchor_sharing"
-// XrSystemSpatialAnchorSharingPropertiesBD extends XrSystemProperties
+
+
+
+
+
 typedef struct XrSystemSpatialAnchorSharingPropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialAnchorSharing;
 } XrSystemSpatialAnchorSharingPropertiesBD;
 
 typedef struct XrSpatialAnchorShareInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAnchorBD                  anchor;
 } XrSpatialAnchorShareInfoBD;
 
 typedef struct XrSharedSpatialAnchorDownloadInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuidEXT                   uuid;
 } XrSharedSpatialAnchorDownloadInfoBD;
 
-typedef XrResult (XRAPI_PTR *PFN_xrShareSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorShareInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrShareSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrDownloadSharedSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSharedSpatialAnchorDownloadInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrDownloadSharedSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT*  completion);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrShareSpatialAnchorAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSpatialAnchorShareInfoBD*           info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrShareSpatialAnchorCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDownloadSharedSpatialAnchorAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSharedSpatialAnchorDownloadInfoBD*  info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDownloadSharedSpatialAnchorCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrShareSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSpatialAnchorShareInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrShareSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
+typedef XrResult (*PFN_xrDownloadSharedSpatialAnchorAsyncBD)(XrSenseDataProviderBD provider, const XrSharedSpatialAnchorDownloadInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrDownloadSharedSpatialAnchorCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT*  completion);
+XrResult  xrShareSpatialAnchorAsyncBD(XrSenseDataProviderBD                       provider,     const XrSpatialAnchorShareInfoBD*           info,     XrFutureEXT*                                future);
+XrResult  xrShareSpatialAnchorCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+XrResult  xrDownloadSharedSpatialAnchorAsyncBD(XrSenseDataProviderBD                       provider,     const XrSharedSpatialAnchorDownloadInfoBD*  info,     XrFutureEXT*                                future);
+XrResult  xrDownloadSharedSpatialAnchorCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+#line 8700 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8701 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_spatial_scene is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_scene 1
-#define XR_BD_spatial_scene_SPEC_VERSION  1
-#define XR_BD_SPATIAL_SCENE_EXTENSION_NAME "XR_BD_spatial_scene"
-// XrSystemSpatialScenePropertiesBD extends XrSystemProperties
+
+
+
+
+
 typedef struct XrSystemSpatialScenePropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialScene;
 } XrSystemSpatialScenePropertiesBD;
 
 typedef struct XrSceneCaptureInfoBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSceneCaptureInfoBD;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCaptureSceneAsyncBD)(XrSenseDataProviderBD provider, const XrSceneCaptureInfoBD* info, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCaptureSceneCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCaptureSceneAsyncBD(
-    XrSenseDataProviderBD                       provider,
-    const XrSceneCaptureInfoBD*                 info,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCaptureSceneCompleteBD(
-    XrSenseDataProviderBD                       provider,
-    XrFutureEXT                                 future,
-    XrFutureCompletionEXT*                      completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCaptureSceneAsyncBD)(XrSenseDataProviderBD provider, const XrSceneCaptureInfoBD* info, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCaptureSceneCompleteBD)(XrSenseDataProviderBD provider, XrFutureEXT future, XrFutureCompletionEXT* completion);
+XrResult  xrCaptureSceneAsyncBD(XrSenseDataProviderBD                       provider,     const XrSceneCaptureInfoBD*                 info,     XrFutureEXT*                                future);
+XrResult  xrCaptureSceneCompleteBD(XrSenseDataProviderBD                       provider,     XrFutureEXT                                 future,     XrFutureCompletionEXT*                      completion);
+#line 8734 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 8735 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_BD_spatial_mesh is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_mesh 1
-#define XR_BD_spatial_mesh_SPEC_VERSION   1
-#define XR_BD_SPATIAL_MESH_EXTENSION_NAME "XR_BD_spatial_mesh"
+
+
+
+
 
 typedef enum XrSpatialMeshLodBD {
     XR_SPATIAL_MESH_LOD_COARSE_BD = 0,
@@ -8746,45 +13761,45 @@ typedef enum XrSpatialMeshLodBD {
 } XrSpatialMeshLodBD;
 typedef XrFlags64 XrSpatialMeshConfigFlagsBD;
 
-// Flag bits for XrSpatialMeshConfigFlagsBD
+
 static const XrSpatialMeshConfigFlagsBD XR_SPATIAL_MESH_CONFIG_SEMANTIC_BIT_BD = 0x00000001;
 static const XrSpatialMeshConfigFlagsBD XR_SPATIAL_MESH_CONFIG_ALIGN_SEMANTIC_WITH_VERTEX_BIT_BD = 0x00000002;
 
-// XrSystemSpatialMeshPropertiesBD extends XrSystemProperties
+
 typedef struct XrSystemSpatialMeshPropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialMesh;
 } XrSystemSpatialMeshPropertiesBD;
 
-// XrSenseDataProviderCreateInfoSpatialMeshBD extends XrSenseDataProviderCreateInfoBD
+
 typedef struct XrSenseDataProviderCreateInfoSpatialMeshBD {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrSpatialMeshConfigFlagsBD    configFlags;
     XrSpatialMeshLodBD            lod;
 } XrSenseDataProviderCreateInfoSpatialMeshBD;
 
 
 
-// XR_BD_future_progress is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_future_progress 1
-#define XR_BD_future_progress_SPEC_VERSION 1
-#define XR_BD_FUTURE_PROGRESS_EXTENSION_NAME "XR_BD_future_progress"
-// XrFuturePollResultProgressBD extends XrFuturePollResultEXT
+
+
+
+
+
 typedef struct XrFuturePollResultProgressBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              isSupported;
     uint32_t              progressPercentage;
 } XrFuturePollResultProgressBD;
 
 
 
-// XR_BD_spatial_plane is a preprocessor guard. Do not pass it to API calls.
-#define XR_BD_spatial_plane 1
-#define XR_BD_spatial_plane_SPEC_VERSION  1
-#define XR_BD_SPATIAL_PLANE_EXTENSION_NAME "XR_BD_spatial_plane"
+
+
+
+
 
 typedef enum XrPlaneOrientationBD {
     XR_PLANE_ORIENTATION_HORIZONTAL_UPWARD_BD = 0,
@@ -8793,69 +13808,69 @@ typedef enum XrPlaneOrientationBD {
     XR_PLANE_ORIENTATION_ARBITRARY_BD = 3,
     XR_PLANE_ORIENTATION_MAX_ENUM_BD = 0x7FFFFFFF
 } XrPlaneOrientationBD;
-// XrSystemSpatialPlanePropertiesBD extends XrSystemProperties
+
 typedef struct XrSystemSpatialPlanePropertiesBD {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialPlane;
 } XrSystemSpatialPlanePropertiesBD;
 
-// XrSpatialEntityComponentDataPlaneOrientationBD extends XrSpatialEntityComponentDataBaseHeaderBD
+
 typedef struct XrSpatialEntityComponentDataPlaneOrientationBD {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrPlaneOrientationBD    orientation;
 } XrSpatialEntityComponentDataPlaneOrientationBD;
 
-// XrSenseDataFilterPlaneOrientationBD extends XrSenseDataQueryInfoBD
+
 typedef struct XrSenseDataFilterPlaneOrientationBD {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    orientationCount;
     XrPlaneOrientationBD*       orientations;
 } XrSenseDataFilterPlaneOrientationBD;
 
 
 
-// XR_EXT_local_floor is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_local_floor 1
-#define XR_EXT_local_floor_SPEC_VERSION   1
-#define XR_EXT_LOCAL_FLOOR_EXTENSION_NAME "XR_EXT_local_floor"
 
 
-// XR_EXT_hand_tracking_data_source is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_hand_tracking_data_source 1
-#define XR_EXT_hand_tracking_data_source_SPEC_VERSION 1
-#define XR_EXT_HAND_TRACKING_DATA_SOURCE_EXTENSION_NAME "XR_EXT_hand_tracking_data_source"
+
+
+
+
+
+
+
+
 
 typedef enum XrHandTrackingDataSourceEXT {
     XR_HAND_TRACKING_DATA_SOURCE_UNOBSTRUCTED_EXT = 1,
     XR_HAND_TRACKING_DATA_SOURCE_CONTROLLER_EXT = 2,
     XR_HAND_TRACKING_DATA_SOURCE_MAX_ENUM_EXT = 0x7FFFFFFF
 } XrHandTrackingDataSourceEXT;
-// XrHandTrackingDataSourceInfoEXT extends XrHandTrackerCreateInfoEXT
+
 typedef struct XrHandTrackingDataSourceInfoEXT {
     XrStructureType                 type;
-    const void* XR_MAY_ALIAS        next;
+    const void*         next;
     uint32_t                        requestedDataSourceCount;
     XrHandTrackingDataSourceEXT*    requestedDataSources;
 } XrHandTrackingDataSourceInfoEXT;
 
-// XrHandTrackingDataSourceStateEXT extends XrHandJointLocationsEXT
+
 typedef struct XrHandTrackingDataSourceStateEXT {
     XrStructureType                type;
-    void* XR_MAY_ALIAS             next;
+    void*              next;
     XrBool32                       isActive;
     XrHandTrackingDataSourceEXT    dataSource;
 } XrHandTrackingDataSourceStateEXT;
 
 
 
-// XR_EXT_plane_detection is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_plane_detection 1
-typedef uint64_t XrPlaneDetectorEXT;
-#define XR_EXT_plane_detection_SPEC_VERSION 2
-#define XR_EXT_PLANE_DETECTION_EXTENSION_NAME "XR_EXT_plane_detection"
+
+
+typedef struct XrPlaneDetectorEXT_T* XrPlaneDetectorEXT;
+
+
 
 typedef enum XrPlaneDetectorOrientationEXT {
     XR_PLANE_DETECTOR_ORIENTATION_HORIZONTAL_UPWARD_EXT = 0,
@@ -8884,7 +13899,7 @@ typedef enum XrPlaneDetectionStateEXT {
 } XrPlaneDetectionStateEXT;
 typedef XrFlags64 XrPlaneDetectionCapabilityFlagsEXT;
 
-// Flag bits for XrPlaneDetectionCapabilityFlagsEXT
+
 static const XrPlaneDetectionCapabilityFlagsEXT XR_PLANE_DETECTION_CAPABILITY_PLANE_DETECTION_BIT_EXT = 0x00000001;
 static const XrPlaneDetectionCapabilityFlagsEXT XR_PLANE_DETECTION_CAPABILITY_PLANE_HOLES_BIT_EXT = 0x00000002;
 static const XrPlaneDetectionCapabilityFlagsEXT XR_PLANE_DETECTION_CAPABILITY_SEMANTIC_CEILING_BIT_EXT = 0x00000004;
@@ -8895,19 +13910,19 @@ static const XrPlaneDetectionCapabilityFlagsEXT XR_PLANE_DETECTION_CAPABILITY_OR
 
 typedef XrFlags64 XrPlaneDetectorFlagsEXT;
 
-// Flag bits for XrPlaneDetectorFlagsEXT
+
 static const XrPlaneDetectorFlagsEXT XR_PLANE_DETECTOR_ENABLE_CONTOUR_BIT_EXT = 0x00000001;
 
-// XrSystemPlaneDetectionPropertiesEXT extends XrSystemProperties
+
 typedef struct XrSystemPlaneDetectionPropertiesEXT {
     XrStructureType                       type;
-    void* XR_MAY_ALIAS                    next;
+    void*                     next;
     XrPlaneDetectionCapabilityFlagsEXT    supportedFeatures;
 } XrSystemPlaneDetectionPropertiesEXT;
 
 typedef struct XrPlaneDetectorCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrPlaneDetectorFlagsEXT     flags;
 } XrPlaneDetectorCreateInfoEXT;
 
@@ -8915,7 +13930,7 @@ typedef XrExtent3Df XrExtent3DfEXT;
 
 typedef struct XrPlaneDetectorBeginInfoEXT {
     XrStructureType                          type;
-    const void* XR_MAY_ALIAS                 next;
+    const void*                  next;
     XrSpace                                  baseSpace;
     XrTime                                   time;
     uint32_t                                 orientationCount;
@@ -8930,14 +13945,14 @@ typedef struct XrPlaneDetectorBeginInfoEXT {
 
 typedef struct XrPlaneDetectorGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
 } XrPlaneDetectorGetInfoEXT;
 
 typedef struct XrPlaneDetectorLocationEXT {
     XrStructureType                   type;
-    void* XR_MAY_ALIAS                next;
+    void*                 next;
     uint64_t                          planeId;
     XrSpaceLocationFlags              locationFlags;
     XrPosef                           pose;
@@ -8949,7 +13964,7 @@ typedef struct XrPlaneDetectorLocationEXT {
 
 typedef struct XrPlaneDetectorLocationsEXT {
     XrStructureType                type;
-    void* XR_MAY_ALIAS             next;
+    void*              next;
     uint32_t                       planeLocationCapacityInput;
     uint32_t                       planeLocationCountOutput;
     XrPlaneDetectorLocationEXT*    planeLocations;
@@ -8957,62 +13972,39 @@ typedef struct XrPlaneDetectorLocationsEXT {
 
 typedef struct XrPlaneDetectorPolygonBufferEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              vertexCapacityInput;
     uint32_t              vertexCountOutput;
     XrVector2f*           vertices;
 } XrPlaneDetectorPolygonBufferEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreatePlaneDetectorEXT)(XrSession session, const XrPlaneDetectorCreateInfoEXT*  createInfo, XrPlaneDetectorEXT* planeDetector);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyPlaneDetectorEXT)(XrPlaneDetectorEXT planeDetector);
-typedef XrResult (XRAPI_PTR *PFN_xrBeginPlaneDetectionEXT)(XrPlaneDetectorEXT planeDetector, const XrPlaneDetectorBeginInfoEXT* beginInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrGetPlaneDetectionStateEXT)(XrPlaneDetectorEXT planeDetector, XrPlaneDetectionStateEXT* state);
-typedef XrResult (XRAPI_PTR *PFN_xrGetPlaneDetectionsEXT)(XrPlaneDetectorEXT planeDetector, const XrPlaneDetectorGetInfoEXT* info, XrPlaneDetectorLocationsEXT* locations);
-typedef XrResult (XRAPI_PTR *PFN_xrGetPlanePolygonBufferEXT)(XrPlaneDetectorEXT planeDetector, uint64_t planeId, uint32_t polygonBufferIndex, XrPlaneDetectorPolygonBufferEXT* polygonBuffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreatePlaneDetectorEXT(
-    XrSession                                   session,
-    const XrPlaneDetectorCreateInfoEXT*         createInfo,
-    XrPlaneDetectorEXT*                         planeDetector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyPlaneDetectorEXT(
-    XrPlaneDetectorEXT                          planeDetector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrBeginPlaneDetectionEXT(
-    XrPlaneDetectorEXT                          planeDetector,
-    const XrPlaneDetectorBeginInfoEXT*          beginInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetPlaneDetectionStateEXT(
-    XrPlaneDetectorEXT                          planeDetector,
-    XrPlaneDetectionStateEXT*                   state);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetPlaneDetectionsEXT(
-    XrPlaneDetectorEXT                          planeDetector,
-    const XrPlaneDetectorGetInfoEXT*            info,
-    XrPlaneDetectorLocationsEXT*                locations);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetPlanePolygonBufferEXT(
-    XrPlaneDetectorEXT                          planeDetector,
-    uint64_t                                    planeId,
-    uint32_t                                    polygonBufferIndex,
-    XrPlaneDetectorPolygonBufferEXT*            polygonBuffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreatePlaneDetectorEXT)(XrSession session, const XrPlaneDetectorCreateInfoEXT*  createInfo, XrPlaneDetectorEXT* planeDetector);
+typedef XrResult (*PFN_xrDestroyPlaneDetectorEXT)(XrPlaneDetectorEXT planeDetector);
+typedef XrResult (*PFN_xrBeginPlaneDetectionEXT)(XrPlaneDetectorEXT planeDetector, const XrPlaneDetectorBeginInfoEXT* beginInfo);
+typedef XrResult (*PFN_xrGetPlaneDetectionStateEXT)(XrPlaneDetectorEXT planeDetector, XrPlaneDetectionStateEXT* state);
+typedef XrResult (*PFN_xrGetPlaneDetectionsEXT)(XrPlaneDetectorEXT planeDetector, const XrPlaneDetectorGetInfoEXT* info, XrPlaneDetectorLocationsEXT* locations);
+typedef XrResult (*PFN_xrGetPlanePolygonBufferEXT)(XrPlaneDetectorEXT planeDetector, uint64_t planeId, uint32_t polygonBufferIndex, XrPlaneDetectorPolygonBufferEXT* polygonBuffer);
+XrResult  xrCreatePlaneDetectorEXT(XrSession                                   session,     const XrPlaneDetectorCreateInfoEXT*         createInfo,     XrPlaneDetectorEXT*                         planeDetector);
+XrResult  xrDestroyPlaneDetectorEXT(XrPlaneDetectorEXT                          planeDetector);
+XrResult  xrBeginPlaneDetectionEXT(XrPlaneDetectorEXT                          planeDetector,     const XrPlaneDetectorBeginInfoEXT*          beginInfo);
+XrResult  xrGetPlaneDetectionStateEXT(XrPlaneDetectorEXT                          planeDetector,     XrPlaneDetectionStateEXT*                   state);
+XrResult  xrGetPlaneDetectionsEXT(XrPlaneDetectorEXT                          planeDetector,     const XrPlaneDetectorGetInfoEXT*            info,     XrPlaneDetectorLocationsEXT*                locations);
+XrResult  xrGetPlanePolygonBufferEXT(XrPlaneDetectorEXT                          planeDetector,     uint64_t                                    planeId,     uint32_t                                    polygonBufferIndex,     XrPlaneDetectorPolygonBufferEXT*            polygonBuffer);
+#line 9003 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9004 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_OPPO_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_OPPO_controller_interaction 1
-#define XR_OPPO_controller_interaction_SPEC_VERSION 1
-#define XR_OPPO_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_OPPO_controller_interaction"
 
 
-// XR_EXT_future is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_future 1
-#define XR_EXT_future_SPEC_VERSION        1
-#define XR_EXT_FUTURE_EXTENSION_NAME      "XR_EXT_future"
-#define XR_NULL_FUTURE_EXT                0
+
+
+
+
+
+
+
+
+
 
 typedef enum XrFutureStateEXT {
     XR_FUTURE_STATE_PENDING_EXT = 1,
@@ -9021,69 +14013,60 @@ typedef enum XrFutureStateEXT {
 } XrFutureStateEXT;
 typedef struct XrFutureCancelInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFutureEXT                 future;
 } XrFutureCancelInfoEXT;
 
 typedef struct XrFuturePollInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrFutureEXT                 future;
 } XrFuturePollInfoEXT;
 
-typedef struct XR_MAY_ALIAS XrFutureCompletionBaseHeaderEXT {
+typedef struct  XrFutureCompletionBaseHeaderEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrResult              futureResult;
 } XrFutureCompletionBaseHeaderEXT;
 
 typedef struct XrFuturePollResultEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrFutureStateEXT      state;
 } XrFuturePollResultEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrPollFutureEXT)(XrInstance instance, const XrFuturePollInfoEXT* pollInfo, XrFuturePollResultEXT* pollResult);
-typedef XrResult (XRAPI_PTR *PFN_xrCancelFutureEXT)(XrInstance instance, const XrFutureCancelInfoEXT* cancelInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrPollFutureEXT(
-    XrInstance                                  instance,
-    const XrFuturePollInfoEXT*                  pollInfo,
-    XrFuturePollResultEXT*                      pollResult);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCancelFutureEXT(
-    XrInstance                                  instance,
-    const XrFutureCancelInfoEXT*                cancelInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrPollFutureEXT)(XrInstance instance, const XrFuturePollInfoEXT* pollInfo, XrFuturePollResultEXT* pollResult);
+typedef XrResult (*PFN_xrCancelFutureEXT)(XrInstance instance, const XrFutureCancelInfoEXT* cancelInfo);
+XrResult  xrPollFutureEXT(XrInstance                                  instance,     const XrFuturePollInfoEXT*                  pollInfo,     XrFuturePollResultEXT*                      pollResult);
+XrResult  xrCancelFutureEXT(XrInstance                                  instance,     const XrFutureCancelInfoEXT*                cancelInfo);
+#line 9061 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9062 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_user_presence is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_user_presence 1
-#define XR_EXT_user_presence_SPEC_VERSION 1
-#define XR_EXT_USER_PRESENCE_EXTENSION_NAME "XR_EXT_user_presence"
+
+
+
+
 typedef struct XrEventDataUserPresenceChangedEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSession                   session;
     XrBool32                    isUserPresent;
 } XrEventDataUserPresenceChangedEXT;
 
-// XrSystemUserPresencePropertiesEXT extends XrSystemProperties
+
 typedef struct XrSystemUserPresencePropertiesEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsUserPresence;
 } XrSystemUserPresencePropertiesEXT;
 
 
 
-// XR_ML_user_calibration is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_user_calibration 1
-#define XR_ML_user_calibration_SPEC_VERSION 1
-#define XR_ML_USER_CALIBRATION_EXTENSION_NAME "XR_ML_user_calibration"
+
+
+
+
 
 typedef enum XrHeadsetFitStatusML {
     XR_HEADSET_FIT_STATUS_UNKNOWN_ML = 0,
@@ -9102,60 +14085,50 @@ typedef enum XrEyeCalibrationStatusML {
 } XrEyeCalibrationStatusML;
 typedef struct XrEventDataHeadsetFitChangedML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrHeadsetFitStatusML        status;
     XrTime                      time;
 } XrEventDataHeadsetFitChangedML;
 
 typedef struct XrEventDataEyeCalibrationChangedML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrEyeCalibrationStatusML    status;
 } XrEventDataEyeCalibrationChangedML;
 
 typedef struct XrUserCalibrationEnableEventsInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    enabled;
 } XrUserCalibrationEnableEventsInfoML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnableUserCalibrationEventsML)(XrInstance instance, const XrUserCalibrationEnableEventsInfoML* enableInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnableUserCalibrationEventsML(
-    XrInstance                                  instance,
-    const XrUserCalibrationEnableEventsInfoML*  enableInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnableUserCalibrationEventsML)(XrInstance instance, const XrUserCalibrationEnableEventsInfoML* enableInfo);
+XrResult  xrEnableUserCalibrationEventsML(XrInstance                                  instance,     const XrUserCalibrationEnableEventsInfoML*  enableInfo);
+#line 9131 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9132 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_system_notifications is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_system_notifications 1
-#define XR_ML_system_notifications_SPEC_VERSION 1
-#define XR_ML_SYSTEM_NOTIFICATIONS_EXTENSION_NAME "XR_ML_system_notifications"
+
+
+
+
 typedef struct XrSystemNotificationsSetInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    suppressNotifications;
 } XrSystemNotificationsSetInfoML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrSetSystemNotificationsML)(XrInstance instance, const XrSystemNotificationsSetInfoML* info);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrSetSystemNotificationsML(
-    XrInstance                                  instance,
-    const XrSystemNotificationsSetInfoML*       info);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrSetSystemNotificationsML)(XrInstance instance, const XrSystemNotificationsSetInfoML* info);
+XrResult  xrSetSystemNotificationsML(XrInstance                                  instance,     const XrSystemNotificationsSetInfoML*       info);
+#line 9152 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9153 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_world_mesh_detection is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_world_mesh_detection 1
-typedef uint64_t XrWorldMeshDetectorML;
-#define XR_ML_world_mesh_detection_SPEC_VERSION 1
-#define XR_ML_WORLD_MESH_DETECTION_EXTENSION_NAME "XR_ML_world_mesh_detection"
+
+
+typedef struct XrWorldMeshDetectorML_T* XrWorldMeshDetectorML;
+
+
 
 typedef enum XrWorldMeshDetectorLodML {
     XR_WORLD_MESH_DETECTOR_LOD_MINIMUM_ML = 0,
@@ -9181,7 +14154,7 @@ typedef enum XrWorldMeshBlockResultML {
 } XrWorldMeshBlockResultML;
 typedef XrFlags64 XrWorldMeshDetectorFlagsML;
 
-// Flag bits for XrWorldMeshDetectorFlagsML
+
 static const XrWorldMeshDetectorFlagsML XR_WORLD_MESH_DETECTOR_POINT_CLOUD_BIT_ML = 0x00000001;
 static const XrWorldMeshDetectorFlagsML XR_WORLD_MESH_DETECTOR_COMPUTE_NORMALS_BIT_ML = 0x00000002;
 static const XrWorldMeshDetectorFlagsML XR_WORLD_MESH_DETECTOR_COMPUTE_CONFIDENCE_BIT_ML = 0x00000004;
@@ -9191,12 +14164,12 @@ static const XrWorldMeshDetectorFlagsML XR_WORLD_MESH_DETECTOR_INDEX_ORDER_CW_BI
 
 typedef struct XrWorldMeshDetectorCreateInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrWorldMeshDetectorCreateInfoML;
 
 typedef struct XrWorldMeshBlockStateML {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrUuidEXT                   uuid;
     XrPosef                     meshBoundingBoxCenter;
     XrExtent3DfEXT              meshBoundingBoxExtents;
@@ -9206,7 +14179,7 @@ typedef struct XrWorldMeshBlockStateML {
 
 typedef struct XrWorldMeshStateRequestInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     XrPosef                     boundingBoxCenter;
@@ -9215,7 +14188,7 @@ typedef struct XrWorldMeshStateRequestInfoML {
 
 typedef struct XrWorldMeshStateRequestCompletionML {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrResult                    futureResult;
     XrTime                      timestamp;
     uint32_t                    meshBlockStateCapacityInput;
@@ -9225,33 +14198,33 @@ typedef struct XrWorldMeshStateRequestCompletionML {
 
 typedef struct XrWorldMeshBufferRecommendedSizeInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    maxBlockCount;
 } XrWorldMeshBufferRecommendedSizeInfoML;
 
 typedef struct XrWorldMeshBufferSizeML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              size;
 } XrWorldMeshBufferSizeML;
 
 typedef struct XrWorldMeshBufferML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              bufferSize;
-    void* XR_MAY_ALIAS    buffer;
+    void*     buffer;
 } XrWorldMeshBufferML;
 
 typedef struct XrWorldMeshBlockRequestML {
     XrStructureType             type;
-    void* XR_MAY_ALIAS          next;
+    void*           next;
     XrUuidEXT                   uuid;
     XrWorldMeshDetectorLodML    lod;
 } XrWorldMeshBlockRequestML;
 
 typedef struct XrWorldMeshGetInfoML {
     XrStructureType               type;
-    const void* XR_MAY_ALIAS      next;
+    const void*       next;
     XrWorldMeshDetectorFlagsML    flags;
     float                         fillHoleLength;
     float                         disconnectedComponentArea;
@@ -9261,7 +14234,7 @@ typedef struct XrWorldMeshGetInfoML {
 
 typedef struct XrWorldMeshBlockML {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     XrUuidEXT                     uuid;
     XrWorldMeshBlockResultML      blockResult;
     XrWorldMeshDetectorLodML      lod;
@@ -9278,83 +14251,46 @@ typedef struct XrWorldMeshBlockML {
 
 typedef struct XrWorldMeshRequestCompletionInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     meshSpace;
     XrTime                      meshSpaceLocateTime;
 } XrWorldMeshRequestCompletionInfoML;
 
 typedef struct XrWorldMeshRequestCompletionML {
     XrStructureType        type;
-    void* XR_MAY_ALIAS     next;
+    void*      next;
     XrResult               futureResult;
     uint32_t               blockCount;
     XrWorldMeshBlockML*    blocks;
 } XrWorldMeshRequestCompletionML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateWorldMeshDetectorML)(XrSession session, const XrWorldMeshDetectorCreateInfoML* createInfo, XrWorldMeshDetectorML* detector);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyWorldMeshDetectorML)(XrWorldMeshDetectorML detector);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestWorldMeshStateAsyncML)(XrWorldMeshDetectorML detector, const XrWorldMeshStateRequestInfoML* stateRequest, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestWorldMeshStateCompleteML)(XrWorldMeshDetectorML detector, XrFutureEXT future, XrWorldMeshStateRequestCompletionML* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrGetWorldMeshBufferRecommendSizeML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferRecommendedSizeInfoML* sizeInfo, XrWorldMeshBufferSizeML* size);
-typedef XrResult (XRAPI_PTR *PFN_xrAllocateWorldMeshBufferML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferSizeML* size, XrWorldMeshBufferML* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrFreeWorldMeshBufferML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferML* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestWorldMeshAsyncML)(XrWorldMeshDetectorML detector, const XrWorldMeshGetInfoML* getInfo, XrWorldMeshBufferML* buffer, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrRequestWorldMeshCompleteML)(XrWorldMeshDetectorML detector, const XrWorldMeshRequestCompletionInfoML* completionInfo, XrFutureEXT future, XrWorldMeshRequestCompletionML* completion);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateWorldMeshDetectorML(
-    XrSession                                   session,
-    const XrWorldMeshDetectorCreateInfoML*      createInfo,
-    XrWorldMeshDetectorML*                      detector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyWorldMeshDetectorML(
-    XrWorldMeshDetectorML                       detector);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestWorldMeshStateAsyncML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshStateRequestInfoML*        stateRequest,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestWorldMeshStateCompleteML(
-    XrWorldMeshDetectorML                       detector,
-    XrFutureEXT                                 future,
-    XrWorldMeshStateRequestCompletionML*        completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetWorldMeshBufferRecommendSizeML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshBufferRecommendedSizeInfoML* sizeInfo,
-    XrWorldMeshBufferSizeML*                    size);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrAllocateWorldMeshBufferML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshBufferSizeML*              size,
-    XrWorldMeshBufferML*                        buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrFreeWorldMeshBufferML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshBufferML*                  buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestWorldMeshAsyncML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshGetInfoML*                 getInfo,
-    XrWorldMeshBufferML*                        buffer,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrRequestWorldMeshCompleteML(
-    XrWorldMeshDetectorML                       detector,
-    const XrWorldMeshRequestCompletionInfoML*   completionInfo,
-    XrFutureEXT                                 future,
-    XrWorldMeshRequestCompletionML*             completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateWorldMeshDetectorML)(XrSession session, const XrWorldMeshDetectorCreateInfoML* createInfo, XrWorldMeshDetectorML* detector);
+typedef XrResult (*PFN_xrDestroyWorldMeshDetectorML)(XrWorldMeshDetectorML detector);
+typedef XrResult (*PFN_xrRequestWorldMeshStateAsyncML)(XrWorldMeshDetectorML detector, const XrWorldMeshStateRequestInfoML* stateRequest, XrFutureEXT* future);
+typedef XrResult (*PFN_xrRequestWorldMeshStateCompleteML)(XrWorldMeshDetectorML detector, XrFutureEXT future, XrWorldMeshStateRequestCompletionML* completion);
+typedef XrResult (*PFN_xrGetWorldMeshBufferRecommendSizeML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferRecommendedSizeInfoML* sizeInfo, XrWorldMeshBufferSizeML* size);
+typedef XrResult (*PFN_xrAllocateWorldMeshBufferML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferSizeML* size, XrWorldMeshBufferML* buffer);
+typedef XrResult (*PFN_xrFreeWorldMeshBufferML)(XrWorldMeshDetectorML detector, const XrWorldMeshBufferML* buffer);
+typedef XrResult (*PFN_xrRequestWorldMeshAsyncML)(XrWorldMeshDetectorML detector, const XrWorldMeshGetInfoML* getInfo, XrWorldMeshBufferML* buffer, XrFutureEXT* future);
+typedef XrResult (*PFN_xrRequestWorldMeshCompleteML)(XrWorldMeshDetectorML detector, const XrWorldMeshRequestCompletionInfoML* completionInfo, XrFutureEXT future, XrWorldMeshRequestCompletionML* completion);
+XrResult  xrCreateWorldMeshDetectorML(XrSession                                   session,     const XrWorldMeshDetectorCreateInfoML*      createInfo,     XrWorldMeshDetectorML*                      detector);
+XrResult  xrDestroyWorldMeshDetectorML(XrWorldMeshDetectorML                       detector);
+XrResult  xrRequestWorldMeshStateAsyncML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshStateRequestInfoML*        stateRequest,     XrFutureEXT*                                future);
+XrResult  xrRequestWorldMeshStateCompleteML(XrWorldMeshDetectorML                       detector,     XrFutureEXT                                 future,     XrWorldMeshStateRequestCompletionML*        completion);
+XrResult  xrGetWorldMeshBufferRecommendSizeML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshBufferRecommendedSizeInfoML* sizeInfo,     XrWorldMeshBufferSizeML*                    size);
+XrResult  xrAllocateWorldMeshBufferML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshBufferSizeML*              size,     XrWorldMeshBufferML*                        buffer);
+XrResult  xrFreeWorldMeshBufferML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshBufferML*                  buffer);
+XrResult  xrRequestWorldMeshAsyncML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshGetInfoML*                 getInfo,     XrWorldMeshBufferML*                        buffer,     XrFutureEXT*                                future);
+XrResult  xrRequestWorldMeshCompleteML(XrWorldMeshDetectorML                       detector,     const XrWorldMeshRequestCompletionInfoML*   completionInfo,     XrFutureEXT                                 future,     XrWorldMeshRequestCompletionML*             completion);
+#line 9351 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9352 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_facial_expression is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_facial_expression 1
-typedef uint64_t XrFacialExpressionClientML;
-#define XR_ML_facial_expression_SPEC_VERSION 1
-#define XR_ML_FACIAL_EXPRESSION_EXTENSION_NAME "XR_ML_facial_expression"
+
+
+typedef struct XrFacialExpressionClientML_T* XrFacialExpressionClientML;
+
+
 
 typedef enum XrFacialBlendShapeML {
     XR_FACIAL_BLEND_SHAPE_BROW_LOWERER_L_ML = 0,
@@ -9407,146 +14343,125 @@ typedef enum XrFacialBlendShapeML {
 } XrFacialBlendShapeML;
 typedef XrFlags64 XrFacialExpressionBlendShapePropertiesFlagsML;
 
-// Flag bits for XrFacialExpressionBlendShapePropertiesFlagsML
+
 static const XrFacialExpressionBlendShapePropertiesFlagsML XR_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_VALID_BIT_ML = 0x00000001;
 static const XrFacialExpressionBlendShapePropertiesFlagsML XR_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_TRACKED_BIT_ML = 0x00000002;
 
-// XrSystemFacialExpressionPropertiesML extends XrSystemProperties
+
 typedef struct XrSystemFacialExpressionPropertiesML {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsFacialExpression;
 } XrSystemFacialExpressionPropertiesML;
 
 typedef struct XrFacialExpressionClientCreateInfoML {
     XrStructureType                type;
-    const void* XR_MAY_ALIAS       next;
+    const void*        next;
     uint32_t                       requestedCount;
     const XrFacialBlendShapeML*    requestedFacialBlendShapes;
 } XrFacialExpressionClientCreateInfoML;
 
 typedef struct XrFacialExpressionBlendShapeGetInfoML {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrFacialExpressionBlendShapeGetInfoML;
 
 typedef struct XrFacialExpressionBlendShapePropertiesML {
     XrStructureType                                  type;
-    void* XR_MAY_ALIAS                               next;
+    void*                                next;
     XrFacialBlendShapeML                             requestedFacialBlendShape;
     float                                            weight;
     XrFacialExpressionBlendShapePropertiesFlagsML    flags;
     XrTime                                           time;
 } XrFacialExpressionBlendShapePropertiesML;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateFacialExpressionClientML)(XrSession session, const XrFacialExpressionClientCreateInfoML* createInfo, XrFacialExpressionClientML* facialExpressionClient);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroyFacialExpressionClientML)(XrFacialExpressionClientML facialExpressionClient);
-typedef XrResult (XRAPI_PTR *PFN_xrGetFacialExpressionBlendShapePropertiesML)(XrFacialExpressionClientML facialExpressionClient, const XrFacialExpressionBlendShapeGetInfoML* blendShapeGetInfo, uint32_t blendShapeCount, XrFacialExpressionBlendShapePropertiesML* blendShapes);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateFacialExpressionClientML(
-    XrSession                                   session,
-    const XrFacialExpressionClientCreateInfoML* createInfo,
-    XrFacialExpressionClientML*                 facialExpressionClient);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroyFacialExpressionClientML(
-    XrFacialExpressionClientML                  facialExpressionClient);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetFacialExpressionBlendShapePropertiesML(
-    XrFacialExpressionClientML                  facialExpressionClient,
-    const XrFacialExpressionBlendShapeGetInfoML* blendShapeGetInfo,
-    uint32_t                                    blendShapeCount,
-    XrFacialExpressionBlendShapePropertiesML*   blendShapes);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateFacialExpressionClientML)(XrSession session, const XrFacialExpressionClientCreateInfoML* createInfo, XrFacialExpressionClientML* facialExpressionClient);
+typedef XrResult (*PFN_xrDestroyFacialExpressionClientML)(XrFacialExpressionClientML facialExpressionClient);
+typedef XrResult (*PFN_xrGetFacialExpressionBlendShapePropertiesML)(XrFacialExpressionClientML facialExpressionClient, const XrFacialExpressionBlendShapeGetInfoML* blendShapeGetInfo, uint32_t blendShapeCount, XrFacialExpressionBlendShapePropertiesML* blendShapes);
+XrResult  xrCreateFacialExpressionClientML(XrSession                                   session,     const XrFacialExpressionClientCreateInfoML* createInfo,     XrFacialExpressionClientML*                 facialExpressionClient);
+XrResult  xrDestroyFacialExpressionClientML(XrFacialExpressionClientML                  facialExpressionClient);
+XrResult  xrGetFacialExpressionBlendShapePropertiesML(XrFacialExpressionClientML                  facialExpressionClient,     const XrFacialExpressionBlendShapeGetInfoML* blendShapeGetInfo,     uint32_t                                    blendShapeCount,     XrFacialExpressionBlendShapePropertiesML*   blendShapes);
+#line 9463 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9464 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_ML_view_configuration_depth_range_change is a preprocessor guard. Do not pass it to API calls.
-#define XR_ML_view_configuration_depth_range_change 1
-#define XR_ML_view_configuration_depth_range_change_SPEC_VERSION 1
-#define XR_ML_VIEW_CONFIGURATION_DEPTH_RANGE_CHANGE_EXTENSION_NAME "XR_ML_view_configuration_depth_range_change"
 
 
-// XR_YVR_controller_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_YVR_controller_interaction 1
-#define XR_YVR_controller_interaction_SPEC_VERSION 1
-#define XR_YVR_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_YVR_controller_interaction"
 
 
-// XR_META_simultaneous_hands_and_controllers is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_simultaneous_hands_and_controllers 1
-#define XR_META_simultaneous_hands_and_controllers_SPEC_VERSION 1
-#define XR_META_SIMULTANEOUS_HANDS_AND_CONTROLLERS_EXTENSION_NAME "XR_META_simultaneous_hands_and_controllers"
-// XrSystemSimultaneousHandsAndControllersPropertiesMETA extends XrSystemProperties
+
+
+
+
+
+
+
+
+
+
+
+
+
 typedef struct XrSystemSimultaneousHandsAndControllersPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSimultaneousHandsAndControllers;
 } XrSystemSimultaneousHandsAndControllersPropertiesMETA;
 
 typedef struct XrSimultaneousHandsAndControllersTrackingResumeInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSimultaneousHandsAndControllersTrackingResumeInfoMETA;
 
 typedef struct XrSimultaneousHandsAndControllersTrackingPauseInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrSimultaneousHandsAndControllersTrackingPauseInfoMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrResumeSimultaneousHandsAndControllersTrackingMETA)(XrSession session, const XrSimultaneousHandsAndControllersTrackingResumeInfoMETA* resumeInfo);
-typedef XrResult (XRAPI_PTR *PFN_xrPauseSimultaneousHandsAndControllersTrackingMETA)(XrSession session, const XrSimultaneousHandsAndControllersTrackingPauseInfoMETA* pauseInfo);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrResumeSimultaneousHandsAndControllersTrackingMETA(
-    XrSession                                   session,
-    const XrSimultaneousHandsAndControllersTrackingResumeInfoMETA* resumeInfo);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrPauseSimultaneousHandsAndControllersTrackingMETA(
-    XrSession                                   session,
-    const XrSimultaneousHandsAndControllersTrackingPauseInfoMETA* pauseInfo);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrResumeSimultaneousHandsAndControllersTrackingMETA)(XrSession session, const XrSimultaneousHandsAndControllersTrackingResumeInfoMETA* resumeInfo);
+typedef XrResult (*PFN_xrPauseSimultaneousHandsAndControllersTrackingMETA)(XrSession session, const XrSimultaneousHandsAndControllersTrackingPauseInfoMETA* pauseInfo);
+XrResult  xrResumeSimultaneousHandsAndControllersTrackingMETA(XrSession                                   session,     const XrSimultaneousHandsAndControllersTrackingResumeInfoMETA* resumeInfo);
+XrResult  xrPauseSimultaneousHandsAndControllersTrackingMETA(XrSession                                   session,     const XrSimultaneousHandsAndControllersTrackingPauseInfoMETA* pauseInfo);
+#line 9512 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9513 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_composition_layer_inverted_alpha is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_composition_layer_inverted_alpha 1
-#define XR_EXT_composition_layer_inverted_alpha_SPEC_VERSION 1
-#define XR_EXT_COMPOSITION_LAYER_INVERTED_ALPHA_EXTENSION_NAME "XR_EXT_composition_layer_inverted_alpha"
 
 
-// XR_META_colocation_discovery is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_colocation_discovery 1
-#define XR_MAX_COLOCATION_DISCOVERY_BUFFER_SIZE_META 1024
-#define XR_META_colocation_discovery_SPEC_VERSION 1
-#define XR_META_COLOCATION_DISCOVERY_EXTENSION_NAME "XR_META_colocation_discovery"
+
+
+
+
+
+
+
+
+
 typedef struct XrColocationDiscoveryStartInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrColocationDiscoveryStartInfoMETA;
 
 typedef struct XrColocationDiscoveryStopInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrColocationDiscoveryStopInfoMETA;
 
 typedef struct XrColocationAdvertisementStartInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    bufferSize;
     uint8_t*                    buffer;
 } XrColocationAdvertisementStartInfoMETA;
 
 typedef struct XrColocationAdvertisementStopInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
 } XrColocationAdvertisementStopInfoMETA;
 
 typedef struct XrEventDataStartColocationAdvertisementCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          advertisementRequestId;
     XrResult                    result;
     XrUuid                      advertisementUuid;
@@ -9554,126 +14469,108 @@ typedef struct XrEventDataStartColocationAdvertisementCompleteMETA {
 
 typedef struct XrEventDataStopColocationAdvertisementCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataStopColocationAdvertisementCompleteMETA;
 
 typedef struct XrEventDataColocationAdvertisementCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          advertisementRequestId;
     XrResult                    result;
 } XrEventDataColocationAdvertisementCompleteMETA;
 
 typedef struct XrEventDataStartColocationDiscoveryCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          discoveryRequestId;
     XrResult                    result;
 } XrEventDataStartColocationDiscoveryCompleteMETA;
 
 typedef struct XrEventDataColocationDiscoveryResultMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          discoveryRequestId;
     XrUuid                      advertisementUuid;
     uint32_t                    bufferSize;
-    uint8_t                     buffer[XR_MAX_COLOCATION_DISCOVERY_BUFFER_SIZE_META];
+    uint8_t                     buffer[1024];
 } XrEventDataColocationDiscoveryResultMETA;
 
 typedef struct XrEventDataColocationDiscoveryCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          discoveryRequestId;
     XrResult                    result;
 } XrEventDataColocationDiscoveryCompleteMETA;
 
 typedef struct XrEventDataStopColocationDiscoveryCompleteMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrAsyncRequestIdFB          requestId;
     XrResult                    result;
 } XrEventDataStopColocationDiscoveryCompleteMETA;
 
-// XrSystemColocationDiscoveryPropertiesMETA extends XrSystemProperties
+
 typedef struct XrSystemColocationDiscoveryPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsColocationDiscovery;
 } XrSystemColocationDiscoveryPropertiesMETA;
 
-typedef XrResult (XRAPI_PTR *PFN_xrStartColocationDiscoveryMETA)(XrSession session, const XrColocationDiscoveryStartInfoMETA* info, XrAsyncRequestIdFB* discoveryRequestId);
-typedef XrResult (XRAPI_PTR *PFN_xrStopColocationDiscoveryMETA)(XrSession session, const XrColocationDiscoveryStopInfoMETA* info, XrAsyncRequestIdFB* requestId);
-typedef XrResult (XRAPI_PTR *PFN_xrStartColocationAdvertisementMETA)(XrSession session, const XrColocationAdvertisementStartInfoMETA* info, XrAsyncRequestIdFB* advertisementRequestId);
-typedef XrResult (XRAPI_PTR *PFN_xrStopColocationAdvertisementMETA)(XrSession session, const XrColocationAdvertisementStopInfoMETA* info, XrAsyncRequestIdFB* requestId);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrStartColocationDiscoveryMETA(
-    XrSession                                   session,
-    const XrColocationDiscoveryStartInfoMETA*   info,
-    XrAsyncRequestIdFB*                         discoveryRequestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStopColocationDiscoveryMETA(
-    XrSession                                   session,
-    const XrColocationDiscoveryStopInfoMETA*    info,
-    XrAsyncRequestIdFB*                         requestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStartColocationAdvertisementMETA(
-    XrSession                                   session,
-    const XrColocationAdvertisementStartInfoMETA* info,
-    XrAsyncRequestIdFB*                         advertisementRequestId);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrStopColocationAdvertisementMETA(
-    XrSession                                   session,
-    const XrColocationAdvertisementStopInfoMETA* info,
-    XrAsyncRequestIdFB*                         requestId);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrStartColocationDiscoveryMETA)(XrSession session, const XrColocationDiscoveryStartInfoMETA* info, XrAsyncRequestIdFB* discoveryRequestId);
+typedef XrResult (*PFN_xrStopColocationDiscoveryMETA)(XrSession session, const XrColocationDiscoveryStopInfoMETA* info, XrAsyncRequestIdFB* requestId);
+typedef XrResult (*PFN_xrStartColocationAdvertisementMETA)(XrSession session, const XrColocationAdvertisementStartInfoMETA* info, XrAsyncRequestIdFB* advertisementRequestId);
+typedef XrResult (*PFN_xrStopColocationAdvertisementMETA)(XrSession session, const XrColocationAdvertisementStopInfoMETA* info, XrAsyncRequestIdFB* requestId);
+XrResult  xrStartColocationDiscoveryMETA(XrSession                                   session,     const XrColocationDiscoveryStartInfoMETA*   info,     XrAsyncRequestIdFB*                         discoveryRequestId);
+XrResult  xrStopColocationDiscoveryMETA(XrSession                                   session,     const XrColocationDiscoveryStopInfoMETA*    info,     XrAsyncRequestIdFB*                         requestId);
+XrResult  xrStartColocationAdvertisementMETA(XrSession                                   session,     const XrColocationAdvertisementStartInfoMETA* info,     XrAsyncRequestIdFB*                         advertisementRequestId);
+XrResult  xrStopColocationAdvertisementMETA(XrSession                                   session,     const XrColocationAdvertisementStopInfoMETA* info,     XrAsyncRequestIdFB*                         requestId);
+#line 9634 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 9635 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_META_spatial_entity_group_sharing is a preprocessor guard. Do not pass it to API calls.
-#define XR_META_spatial_entity_group_sharing 1
-#define XR_META_spatial_entity_group_sharing_SPEC_VERSION 1
-#define XR_META_SPATIAL_ENTITY_GROUP_SHARING_EXTENSION_NAME "XR_META_spatial_entity_group_sharing"
-// XrSystemSpatialEntityGroupSharingPropertiesMETA extends XrSystemProperties
+
+
+
+
+
 typedef struct XrSystemSpatialEntityGroupSharingPropertiesMETA {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     XrBool32              supportsSpatialEntityGroupSharing;
 } XrSystemSpatialEntityGroupSharingPropertiesMETA;
 
 typedef struct XrShareSpacesRecipientGroupsMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    groupCount;
     XrUuid*                     groups;
 } XrShareSpacesRecipientGroupsMETA;
 
 typedef struct XrSpaceGroupUuidFilterInfoMETA {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuid                      groupUuid;
 } XrSpaceGroupUuidFilterInfoMETA;
 
 
 
-// XR_EXT_spatial_entity is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_entity 1
-
-#define XR_NULL_SPATIAL_ENTITY_ID_EXT 0
 
 
-#define XR_NULL_SPATIAL_BUFFER_ID_EXT 0
+
+
+
+
+
 
 typedef uint64_t XrSpatialEntityIdEXT;
 typedef uint64_t XrSpatialBufferIdEXT;
-typedef uint64_t XrSpatialEntityEXT;
-typedef uint64_t XrSpatialContextEXT;
-typedef uint64_t XrSpatialSnapshotEXT;
-#define XR_EXT_spatial_entity_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_ENTITY_EXTENSION_NAME "XR_EXT_spatial_entity"
+typedef struct XrSpatialEntityEXT_T* XrSpatialEntityEXT;
+typedef struct XrSpatialContextEXT_T* XrSpatialContextEXT;
+typedef struct XrSpatialSnapshotEXT_T* XrSpatialSnapshotEXT;
+
+
 
 typedef enum XrSpatialCapabilityEXT {
     XR_SPATIAL_CAPABILITY_PLANE_TRACKING_EXT = 1000741000,
@@ -9726,15 +14623,15 @@ typedef enum XrSpatialBufferTypeEXT {
 } XrSpatialBufferTypeEXT;
 typedef struct XrSpatialCapabilityComponentTypesEXT {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     uint32_t                      componentTypeCapacityInput;
     uint32_t                      componentTypeCountOutput;
     XrSpatialComponentTypeEXT*    componentTypes;
 } XrSpatialCapabilityComponentTypesEXT;
 
-typedef struct XR_MAY_ALIAS XrSpatialCapabilityConfigurationBaseHeaderEXT {
+typedef struct  XrSpatialCapabilityConfigurationBaseHeaderEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
@@ -9742,28 +14639,28 @@ typedef struct XR_MAY_ALIAS XrSpatialCapabilityConfigurationBaseHeaderEXT {
 
 typedef struct XrSpatialContextCreateInfoEXT {
     XrStructureType                                                type;
-    const void* XR_MAY_ALIAS                                       next;
+    const void*                                        next;
     uint32_t                                                       capabilityConfigCount;
     const XrSpatialCapabilityConfigurationBaseHeaderEXT* const*    capabilityConfigs;
 } XrSpatialContextCreateInfoEXT;
 
 typedef struct XrCreateSpatialContextCompletionEXT {
     XrStructureType        type;
-    void* XR_MAY_ALIAS     next;
+    void*      next;
     XrResult               futureResult;
     XrSpatialContextEXT    spatialContext;
 } XrCreateSpatialContextCompletionEXT;
 
 typedef struct XrSpatialDiscoverySnapshotCreateInfoEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     uint32_t                            componentTypeCount;
     const XrSpatialComponentTypeEXT*    componentTypes;
 } XrSpatialDiscoverySnapshotCreateInfoEXT;
 
 typedef struct XrCreateSpatialDiscoverySnapshotCompletionInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     XrFutureEXT                 future;
@@ -9771,21 +14668,21 @@ typedef struct XrCreateSpatialDiscoverySnapshotCompletionInfoEXT {
 
 typedef struct XrCreateSpatialDiscoverySnapshotCompletionEXT {
     XrStructureType         type;
-    void* XR_MAY_ALIAS      next;
+    void*       next;
     XrResult                futureResult;
     XrSpatialSnapshotEXT    snapshot;
 } XrCreateSpatialDiscoverySnapshotCompletionEXT;
 
 typedef struct XrSpatialComponentDataQueryConditionEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     uint32_t                            componentTypeCount;
     const XrSpatialComponentTypeEXT*    componentTypes;
 } XrSpatialComponentDataQueryConditionEXT;
 
 typedef struct XrSpatialComponentDataQueryResultEXT {
     XrStructureType                     type;
-    void* XR_MAY_ALIAS                  next;
+    void*                   next;
     uint32_t                            entityIdCapacityInput;
     uint32_t                            entityIdCountOutput;
     XrSpatialEntityIdEXT*               entityIds;
@@ -9801,7 +14698,7 @@ typedef struct XrSpatialBufferEXT {
 
 typedef struct XrSpatialBufferGetInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpatialBufferIdEXT        bufferId;
 } XrSpatialBufferGetInfoEXT;
 
@@ -9810,26 +14707,26 @@ typedef struct XrSpatialBounded2DDataEXT {
     XrExtent2Df    extents;
 } XrSpatialBounded2DDataEXT;
 
-// XrSpatialComponentBounded2DListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentBounded2DListEXT {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     uint32_t                      boundCount;
     XrSpatialBounded2DDataEXT*    bounds;
 } XrSpatialComponentBounded2DListEXT;
 
-// XrSpatialComponentBounded3DListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentBounded3DListEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              boundCount;
     XrBoxf*               bounds;
 } XrSpatialComponentBounded3DListEXT;
 
-// XrSpatialComponentParentListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentParentListEXT {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     uint32_t                 parentCount;
     XrSpatialEntityIdEXT*    parents;
 } XrSpatialComponentParentListEXT;
@@ -9840,23 +14737,23 @@ typedef struct XrSpatialMeshDataEXT {
     XrSpatialBufferEXT    indexBuffer;
 } XrSpatialMeshDataEXT;
 
-// XrSpatialComponentMesh3DListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentMesh3DListEXT {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     uint32_t                 meshCount;
     XrSpatialMeshDataEXT*    meshes;
 } XrSpatialComponentMesh3DListEXT;
 
 typedef struct XrSpatialEntityFromIdCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpatialEntityIdEXT        entityId;
 } XrSpatialEntityFromIdCreateInfoEXT;
 
 typedef struct XrSpatialUpdateSnapshotCreateInfoEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     uint32_t                            entityCount;
     const XrSpatialEntityEXT*           entities;
     uint32_t                            componentTypeCount;
@@ -9867,161 +14764,65 @@ typedef struct XrSpatialUpdateSnapshotCreateInfoEXT {
 
 typedef struct XrEventDataSpatialDiscoveryRecommendedEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpatialContextEXT         spatialContext;
 } XrEventDataSpatialDiscoveryRecommendedEXT;
 
-// XrSpatialFilterTrackingStateEXT extends XrSpatialDiscoverySnapshotCreateInfoEXT,XrSpatialComponentDataQueryConditionEXT
+
 typedef struct XrSpatialFilterTrackingStateEXT {
     XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
+    const void*            next;
     XrSpatialEntityTrackingStateEXT    trackingState;
 } XrSpatialFilterTrackingStateEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpatialCapabilitiesEXT)(XrInstance instance, XrSystemId systemId, uint32_t capabilityCapacityInput, uint32_t* capabilityCountOutput, XrSpatialCapabilityEXT* capabilities);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpatialCapabilityComponentTypesEXT)(XrInstance instance, XrSystemId systemId, XrSpatialCapabilityEXT capability, XrSpatialCapabilityComponentTypesEXT* capabilityComponents);
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpatialCapabilityFeaturesEXT)(XrInstance instance, XrSystemId systemId, XrSpatialCapabilityEXT capability, uint32_t capabilityFeatureCapacityInput, uint32_t* capabilityFeatureCountOutput, XrSpatialCapabilityFeatureEXT* capabilityFeatures);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialContextAsyncEXT)(XrSession session, const XrSpatialContextCreateInfoEXT* createInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialContextCompleteEXT)(XrSession session, XrFutureEXT future, XrCreateSpatialContextCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialContextEXT)(XrSpatialContextEXT spatialContext);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialDiscoverySnapshotAsyncEXT)(XrSpatialContextEXT spatialContext, const XrSpatialDiscoverySnapshotCreateInfoEXT* createInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialDiscoverySnapshotCompleteEXT)(XrSpatialContextEXT spatialContext, const XrCreateSpatialDiscoverySnapshotCompletionInfoEXT* createSnapshotCompletionInfo, XrCreateSpatialDiscoverySnapshotCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrQuerySpatialComponentDataEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialComponentDataQueryConditionEXT* queryCondition, XrSpatialComponentDataQueryResultEXT* queryResult);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialSnapshotEXT)(XrSpatialSnapshotEXT snapshot);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialEntityFromIdEXT)(XrSpatialContextEXT spatialContext, const XrSpatialEntityFromIdCreateInfoEXT* createInfo, XrSpatialEntityEXT* spatialEntity);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialEntityEXT)(XrSpatialEntityEXT spatialEntity);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialUpdateSnapshotEXT)(XrSpatialContextEXT spatialContext, const XrSpatialUpdateSnapshotCreateInfoEXT* createInfo, XrSpatialSnapshotEXT* snapshot);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferStringEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferUint8EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferUint16EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint16_t* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferUint32EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint32_t* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferFloatEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, float* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferVector2fEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, XrVector2f* buffer);
-typedef XrResult (XRAPI_PTR *PFN_xrGetSpatialBufferVector3fEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, XrVector3f* buffer);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpatialCapabilitiesEXT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    uint32_t                                    capabilityCapacityInput,
-    uint32_t*                                   capabilityCountOutput,
-    XrSpatialCapabilityEXT*                     capabilities);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpatialCapabilityComponentTypesEXT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrSpatialCapabilityEXT                      capability,
-    XrSpatialCapabilityComponentTypesEXT*       capabilityComponents);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpatialCapabilityFeaturesEXT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    XrSpatialCapabilityEXT                      capability,
-    uint32_t                                    capabilityFeatureCapacityInput,
-    uint32_t*                                   capabilityFeatureCountOutput,
-    XrSpatialCapabilityFeatureEXT*              capabilityFeatures);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialContextAsyncEXT(
-    XrSession                                   session,
-    const XrSpatialContextCreateInfoEXT*        createInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialContextCompleteEXT(
-    XrSession                                   session,
-    XrFutureEXT                                 future,
-    XrCreateSpatialContextCompletionEXT*        completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialContextEXT(
-    XrSpatialContextEXT                         spatialContext);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialDiscoverySnapshotAsyncEXT(
-    XrSpatialContextEXT                         spatialContext,
-    const XrSpatialDiscoverySnapshotCreateInfoEXT* createInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialDiscoverySnapshotCompleteEXT(
-    XrSpatialContextEXT                         spatialContext,
-    const XrCreateSpatialDiscoverySnapshotCompletionInfoEXT* createSnapshotCompletionInfo,
-    XrCreateSpatialDiscoverySnapshotCompletionEXT* completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrQuerySpatialComponentDataEXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialComponentDataQueryConditionEXT* queryCondition,
-    XrSpatialComponentDataQueryResultEXT*       queryResult);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialSnapshotEXT(
-    XrSpatialSnapshotEXT                        snapshot);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialEntityFromIdEXT(
-    XrSpatialContextEXT                         spatialContext,
-    const XrSpatialEntityFromIdCreateInfoEXT*   createInfo,
-    XrSpatialEntityEXT*                         spatialEntity);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialEntityEXT(
-    XrSpatialEntityEXT                          spatialEntity);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialUpdateSnapshotEXT(
-    XrSpatialContextEXT                         spatialContext,
-    const XrSpatialUpdateSnapshotCreateInfoEXT* createInfo,
-    XrSpatialSnapshotEXT*                       snapshot);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferStringEXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    char*                                       buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferUint8EXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    uint8_t*                                    buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferUint16EXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    uint16_t*                                   buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferUint32EXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    uint32_t*                                   buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferFloatEXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    float*                                      buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferVector2fEXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    XrVector2f*                                 buffer);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrGetSpatialBufferVector3fEXT(
-    XrSpatialSnapshotEXT                        snapshot,
-    const XrSpatialBufferGetInfoEXT*            info,
-    uint32_t                                    bufferCapacityInput,
-    uint32_t*                                   bufferCountOutput,
-    XrVector3f*                                 buffer);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateSpatialCapabilitiesEXT)(XrInstance instance, XrSystemId systemId, uint32_t capabilityCapacityInput, uint32_t* capabilityCountOutput, XrSpatialCapabilityEXT* capabilities);
+typedef XrResult (*PFN_xrEnumerateSpatialCapabilityComponentTypesEXT)(XrInstance instance, XrSystemId systemId, XrSpatialCapabilityEXT capability, XrSpatialCapabilityComponentTypesEXT* capabilityComponents);
+typedef XrResult (*PFN_xrEnumerateSpatialCapabilityFeaturesEXT)(XrInstance instance, XrSystemId systemId, XrSpatialCapabilityEXT capability, uint32_t capabilityFeatureCapacityInput, uint32_t* capabilityFeatureCountOutput, XrSpatialCapabilityFeatureEXT* capabilityFeatures);
+typedef XrResult (*PFN_xrCreateSpatialContextAsyncEXT)(XrSession session, const XrSpatialContextCreateInfoEXT* createInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCreateSpatialContextCompleteEXT)(XrSession session, XrFutureEXT future, XrCreateSpatialContextCompletionEXT* completion);
+typedef XrResult (*PFN_xrDestroySpatialContextEXT)(XrSpatialContextEXT spatialContext);
+typedef XrResult (*PFN_xrCreateSpatialDiscoverySnapshotAsyncEXT)(XrSpatialContextEXT spatialContext, const XrSpatialDiscoverySnapshotCreateInfoEXT* createInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCreateSpatialDiscoverySnapshotCompleteEXT)(XrSpatialContextEXT spatialContext, const XrCreateSpatialDiscoverySnapshotCompletionInfoEXT* createSnapshotCompletionInfo, XrCreateSpatialDiscoverySnapshotCompletionEXT* completion);
+typedef XrResult (*PFN_xrQuerySpatialComponentDataEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialComponentDataQueryConditionEXT* queryCondition, XrSpatialComponentDataQueryResultEXT* queryResult);
+typedef XrResult (*PFN_xrDestroySpatialSnapshotEXT)(XrSpatialSnapshotEXT snapshot);
+typedef XrResult (*PFN_xrCreateSpatialEntityFromIdEXT)(XrSpatialContextEXT spatialContext, const XrSpatialEntityFromIdCreateInfoEXT* createInfo, XrSpatialEntityEXT* spatialEntity);
+typedef XrResult (*PFN_xrDestroySpatialEntityEXT)(XrSpatialEntityEXT spatialEntity);
+typedef XrResult (*PFN_xrCreateSpatialUpdateSnapshotEXT)(XrSpatialContextEXT spatialContext, const XrSpatialUpdateSnapshotCreateInfoEXT* createInfo, XrSpatialSnapshotEXT* snapshot);
+typedef XrResult (*PFN_xrGetSpatialBufferStringEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, char* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferUint8EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint8_t* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferUint16EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint16_t* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferUint32EXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, uint32_t* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferFloatEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, float* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferVector2fEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, XrVector2f* buffer);
+typedef XrResult (*PFN_xrGetSpatialBufferVector3fEXT)(XrSpatialSnapshotEXT snapshot, const XrSpatialBufferGetInfoEXT* info, uint32_t bufferCapacityInput, uint32_t* bufferCountOutput, XrVector3f* buffer);
+XrResult  xrEnumerateSpatialCapabilitiesEXT(XrInstance                                  instance,     XrSystemId                                  systemId,     uint32_t                                    capabilityCapacityInput,     uint32_t*                                   capabilityCountOutput,     XrSpatialCapabilityEXT*                     capabilities);
+XrResult  xrEnumerateSpatialCapabilityComponentTypesEXT(XrInstance                                  instance,     XrSystemId                                  systemId,     XrSpatialCapabilityEXT                      capability,     XrSpatialCapabilityComponentTypesEXT*       capabilityComponents);
+XrResult  xrEnumerateSpatialCapabilityFeaturesEXT(XrInstance                                  instance,     XrSystemId                                  systemId,     XrSpatialCapabilityEXT                      capability,     uint32_t                                    capabilityFeatureCapacityInput,     uint32_t*                                   capabilityFeatureCountOutput,     XrSpatialCapabilityFeatureEXT*              capabilityFeatures);
+XrResult  xrCreateSpatialContextAsyncEXT(XrSession                                   session,     const XrSpatialContextCreateInfoEXT*        createInfo,     XrFutureEXT*                                future);
+XrResult  xrCreateSpatialContextCompleteEXT(XrSession                                   session,     XrFutureEXT                                 future,     XrCreateSpatialContextCompletionEXT*        completion);
+XrResult  xrDestroySpatialContextEXT(XrSpatialContextEXT                         spatialContext);
+XrResult  xrCreateSpatialDiscoverySnapshotAsyncEXT(XrSpatialContextEXT                         spatialContext,     const XrSpatialDiscoverySnapshotCreateInfoEXT* createInfo,     XrFutureEXT*                                future);
+XrResult  xrCreateSpatialDiscoverySnapshotCompleteEXT(XrSpatialContextEXT                         spatialContext,     const XrCreateSpatialDiscoverySnapshotCompletionInfoEXT* createSnapshotCompletionInfo,     XrCreateSpatialDiscoverySnapshotCompletionEXT* completion);
+XrResult  xrQuerySpatialComponentDataEXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialComponentDataQueryConditionEXT* queryCondition,     XrSpatialComponentDataQueryResultEXT*       queryResult);
+XrResult  xrDestroySpatialSnapshotEXT(XrSpatialSnapshotEXT                        snapshot);
+XrResult  xrCreateSpatialEntityFromIdEXT(XrSpatialContextEXT                         spatialContext,     const XrSpatialEntityFromIdCreateInfoEXT*   createInfo,     XrSpatialEntityEXT*                         spatialEntity);
+XrResult  xrDestroySpatialEntityEXT(XrSpatialEntityEXT                          spatialEntity);
+XrResult  xrCreateSpatialUpdateSnapshotEXT(XrSpatialContextEXT                         spatialContext,     const XrSpatialUpdateSnapshotCreateInfoEXT* createInfo,     XrSpatialSnapshotEXT*                       snapshot);
+XrResult  xrGetSpatialBufferStringEXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     char*                                       buffer);
+XrResult  xrGetSpatialBufferUint8EXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     uint8_t*                                    buffer);
+XrResult  xrGetSpatialBufferUint16EXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     uint16_t*                                   buffer);
+XrResult  xrGetSpatialBufferUint32EXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     uint32_t*                                   buffer);
+XrResult  xrGetSpatialBufferFloatEXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     float*                                      buffer);
+XrResult  xrGetSpatialBufferVector2fEXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     XrVector2f*                                 buffer);
+XrResult  xrGetSpatialBufferVector3fEXT(XrSpatialSnapshotEXT                        snapshot,     const XrSpatialBufferGetInfoEXT*            info,     uint32_t                                    bufferCapacityInput,     uint32_t*                                   bufferCountOutput,     XrVector3f*                                 buffer);
+#line 10019 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 10020 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_spatial_plane_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_plane_tracking 1
-#define XR_EXT_spatial_plane_tracking_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_PLANE_TRACKING_EXTENSION_NAME "XR_EXT_spatial_plane_tracking"
+
+
+
+
 
 typedef enum XrSpatialPlaneAlignmentEXT {
     XR_SPATIAL_PLANE_ALIGNMENT_HORIZONTAL_UPWARD_EXT = 0,
@@ -10041,24 +14842,24 @@ typedef enum XrSpatialPlaneSemanticLabelEXT {
 } XrSpatialPlaneSemanticLabelEXT;
 typedef struct XrSpatialCapabilityConfigurationPlaneTrackingEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
 } XrSpatialCapabilityConfigurationPlaneTrackingEXT;
 
-// XrSpatialComponentPlaneAlignmentListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentPlaneAlignmentListEXT {
     XrStructureType                type;
-    void* XR_MAY_ALIAS             next;
+    void*              next;
     uint32_t                       planeAlignmentCount;
     XrSpatialPlaneAlignmentEXT*    planeAlignments;
 } XrSpatialComponentPlaneAlignmentListEXT;
 
-// XrSpatialComponentMesh2DListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentMesh2DListEXT {
     XrStructureType          type;
-    void* XR_MAY_ALIAS       next;
+    void*        next;
     uint32_t                 meshCount;
     XrSpatialMeshDataEXT*    meshes;
 } XrSpatialComponentMesh2DListEXT;
@@ -10068,28 +14869,28 @@ typedef struct XrSpatialPolygon2DDataEXT {
     XrSpatialBufferEXT    vertexBuffer;
 } XrSpatialPolygon2DDataEXT;
 
-// XrSpatialComponentPolygon2DListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentPolygon2DListEXT {
     XrStructureType               type;
-    void* XR_MAY_ALIAS            next;
+    void*             next;
     uint32_t                      polygonCount;
     XrSpatialPolygon2DDataEXT*    polygons;
 } XrSpatialComponentPolygon2DListEXT;
 
-// XrSpatialComponentPlaneSemanticLabelListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentPlaneSemanticLabelListEXT {
     XrStructureType                    type;
-    void* XR_MAY_ALIAS                 next;
+    void*                  next;
     uint32_t                           semanticLabelCount;
     XrSpatialPlaneSemanticLabelEXT*    semanticLabels;
 } XrSpatialComponentPlaneSemanticLabelListEXT;
 
 
 
-// XR_EXT_spatial_marker_tracking is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_marker_tracking 1
-#define XR_EXT_spatial_marker_tracking_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_MARKER_TRACKING_EXTENSION_NAME "XR_EXT_spatial_marker_tracking"
+
+
+
+
 
 typedef enum XrSpatialMarkerArucoDictEXT {
     XR_SPATIAL_MARKER_ARUCO_DICT_4X4_50_EXT = 1,
@@ -10120,7 +14921,7 @@ typedef enum XrSpatialMarkerAprilTagDictEXT {
 } XrSpatialMarkerAprilTagDictEXT;
 typedef struct XrSpatialCapabilityConfigurationQrCodeEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
@@ -10128,7 +14929,7 @@ typedef struct XrSpatialCapabilityConfigurationQrCodeEXT {
 
 typedef struct XrSpatialCapabilityConfigurationMicroQrCodeEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
@@ -10136,7 +14937,7 @@ typedef struct XrSpatialCapabilityConfigurationMicroQrCodeEXT {
 
 typedef struct XrSpatialCapabilityConfigurationArucoMarkerEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
@@ -10145,24 +14946,24 @@ typedef struct XrSpatialCapabilityConfigurationArucoMarkerEXT {
 
 typedef struct XrSpatialCapabilityConfigurationAprilTagEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
     XrSpatialMarkerAprilTagDictEXT      aprilDict;
 } XrSpatialCapabilityConfigurationAprilTagEXT;
 
-// XrSpatialMarkerSizeEXT extends XrSpatialCapabilityConfigurationArucoMarkerEXT,XrSpatialCapabilityConfigurationAprilTagEXT,XrSpatialCapabilityConfigurationQrCodeEXT,XrSpatialCapabilityConfigurationMicroQrCodeEXT
+
 typedef struct XrSpatialMarkerSizeEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     float                       markerSideLength;
 } XrSpatialMarkerSizeEXT;
 
-// XrSpatialMarkerStaticOptimizationEXT extends XrSpatialCapabilityConfigurationArucoMarkerEXT,XrSpatialCapabilityConfigurationAprilTagEXT,XrSpatialCapabilityConfigurationQrCodeEXT,XrSpatialCapabilityConfigurationMicroQrCodeEXT
+
 typedef struct XrSpatialMarkerStaticOptimizationEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrBool32                    optimizeForStaticMarker;
 } XrSpatialMarkerStaticOptimizationEXT;
 
@@ -10172,68 +14973,61 @@ typedef struct XrSpatialMarkerDataEXT {
     XrSpatialBufferEXT        data;
 } XrSpatialMarkerDataEXT;
 
-// XrSpatialComponentMarkerListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentMarkerListEXT {
     XrStructureType            type;
-    void* XR_MAY_ALIAS         next;
+    void*          next;
     uint32_t                   markerCount;
     XrSpatialMarkerDataEXT*    markers;
 } XrSpatialComponentMarkerListEXT;
 
 
 
-// XR_LOGITECH_mx_ink_stylus_interaction is a preprocessor guard. Do not pass it to API calls.
-#define XR_LOGITECH_mx_ink_stylus_interaction 1
-#define XR_LOGITECH_mx_ink_stylus_interaction_SPEC_VERSION 1
-#define XR_LOGITECH_MX_INK_STYLUS_INTERACTION_EXTENSION_NAME "XR_LOGITECH_mx_ink_stylus_interaction"
 
 
-// XR_EXT_spatial_anchor is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_anchor 1
-#define XR_EXT_spatial_anchor_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_ANCHOR_EXTENSION_NAME "XR_EXT_spatial_anchor"
+
+
+
+
+
+
+
+
 typedef struct XrSpatialCapabilityConfigurationAnchorEXT {
     XrStructureType                     type;
-    const void* XR_MAY_ALIAS            next;
+    const void*             next;
     XrSpatialCapabilityEXT              capability;
     uint32_t                            enabledComponentCount;
     const XrSpatialComponentTypeEXT*    enabledComponents;
 } XrSpatialCapabilityConfigurationAnchorEXT;
 
-// XrSpatialComponentAnchorListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentAnchorListEXT {
     XrStructureType       type;
-    void* XR_MAY_ALIAS    next;
+    void*     next;
     uint32_t              locationCount;
     XrPosef*              locations;
 } XrSpatialComponentAnchorListEXT;
 
 typedef struct XrSpatialAnchorCreateInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpace                     baseSpace;
     XrTime                      time;
     XrPosef                     pose;
 } XrSpatialAnchorCreateInfoEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialAnchorEXT)(XrSpatialContextEXT spatialContext, const XrSpatialAnchorCreateInfoEXT* createInfo, XrSpatialEntityIdEXT* anchorEntityId, XrSpatialEntityEXT* anchorEntity);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialAnchorEXT(
-    XrSpatialContextEXT                         spatialContext,
-    const XrSpatialAnchorCreateInfoEXT*         createInfo,
-    XrSpatialEntityIdEXT*                       anchorEntityId,
-    XrSpatialEntityEXT*                         anchorEntity);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrCreateSpatialAnchorEXT)(XrSpatialContextEXT spatialContext, const XrSpatialAnchorCreateInfoEXT* createInfo, XrSpatialEntityIdEXT* anchorEntityId, XrSpatialEntityEXT* anchorEntity);
+XrResult  xrCreateSpatialAnchorEXT(XrSpatialContextEXT                         spatialContext,     const XrSpatialAnchorCreateInfoEXT*         createInfo,     XrSpatialEntityIdEXT*                       anchorEntityId,     XrSpatialEntityEXT*                         anchorEntity);
+#line 10230 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 10231 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_spatial_persistence is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_persistence 1
-typedef uint64_t XrSpatialPersistenceContextEXT;
-#define XR_EXT_spatial_persistence_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_PERSISTENCE_EXTENSION_NAME "XR_EXT_spatial_persistence"
+
+
+typedef struct XrSpatialPersistenceContextEXT_T* XrSpatialPersistenceContextEXT;
+
+
 
 typedef enum XrSpatialPersistenceScopeEXT {
     XR_SPATIAL_PERSISTENCE_SCOPE_SYSTEM_MANAGED_EXT = 1,
@@ -10255,30 +15049,30 @@ typedef enum XrSpatialPersistenceStateEXT {
 } XrSpatialPersistenceStateEXT;
 typedef struct XrSpatialPersistenceContextCreateInfoEXT {
     XrStructureType                 type;
-    const void* XR_MAY_ALIAS        next;
+    const void*         next;
     XrSpatialPersistenceScopeEXT    scope;
 } XrSpatialPersistenceContextCreateInfoEXT;
 
 typedef struct XrCreateSpatialPersistenceContextCompletionEXT {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     XrResult                                futureResult;
     XrSpatialPersistenceContextResultEXT    createResult;
     XrSpatialPersistenceContextEXT          persistenceContext;
 } XrCreateSpatialPersistenceContextCompletionEXT;
 
-// XrSpatialContextPersistenceConfigEXT extends XrSpatialContextCreateInfoEXT
+
 typedef struct XrSpatialContextPersistenceConfigEXT {
     XrStructureType                          type;
-    const void* XR_MAY_ALIAS                 next;
+    const void*                  next;
     uint32_t                                 persistenceContextCount;
     const XrSpatialPersistenceContextEXT*    persistenceContexts;
 } XrSpatialContextPersistenceConfigEXT;
 
-// XrSpatialDiscoveryPersistenceUuidFilterEXT extends XrSpatialDiscoverySnapshotCreateInfoEXT,XrSpatialComponentDataQueryConditionEXT
+
 typedef struct XrSpatialDiscoveryPersistenceUuidFilterEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     uint32_t                    persistedUuidCount;
     const XrUuid*               persistedUuids;
 } XrSpatialDiscoveryPersistenceUuidFilterEXT;
@@ -10288,58 +15082,40 @@ typedef struct XrSpatialPersistenceDataEXT {
     XrSpatialPersistenceStateEXT    persistState;
 } XrSpatialPersistenceDataEXT;
 
-// XrSpatialComponentPersistenceListEXT extends XrSpatialComponentDataQueryResultEXT
+
 typedef struct XrSpatialComponentPersistenceListEXT {
     XrStructureType                 type;
-    void* XR_MAY_ALIAS              next;
+    void*               next;
     uint32_t                        persistDataCount;
     XrSpatialPersistenceDataEXT*    persistData;
 } XrSpatialComponentPersistenceListEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrEnumerateSpatialPersistenceScopesEXT)(XrInstance instance, XrSystemId systemId, uint32_t persistenceScopeCapacityInput, uint32_t* persistenceScopeCountOutput, XrSpatialPersistenceScopeEXT* persistenceScopes);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialPersistenceContextAsyncEXT)(XrSession session, const XrSpatialPersistenceContextCreateInfoEXT* createInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrCreateSpatialPersistenceContextCompleteEXT)(XrSession session, XrFutureEXT future, XrCreateSpatialPersistenceContextCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrDestroySpatialPersistenceContextEXT)(XrSpatialPersistenceContextEXT persistenceContext);
-
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrEnumerateSpatialPersistenceScopesEXT(
-    XrInstance                                  instance,
-    XrSystemId                                  systemId,
-    uint32_t                                    persistenceScopeCapacityInput,
-    uint32_t*                                   persistenceScopeCountOutput,
-    XrSpatialPersistenceScopeEXT*               persistenceScopes);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialPersistenceContextAsyncEXT(
-    XrSession                                   session,
-    const XrSpatialPersistenceContextCreateInfoEXT* createInfo,
-    XrFutureEXT*                                future);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrCreateSpatialPersistenceContextCompleteEXT(
-    XrSession                                   session,
-    XrFutureEXT                                 future,
-    XrCreateSpatialPersistenceContextCompletionEXT* completion);
-
-XRAPI_ATTR XrResult XRAPI_CALL xrDestroySpatialPersistenceContextEXT(
-    XrSpatialPersistenceContextEXT              persistenceContext);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
+typedef XrResult (*PFN_xrEnumerateSpatialPersistenceScopesEXT)(XrInstance instance, XrSystemId systemId, uint32_t persistenceScopeCapacityInput, uint32_t* persistenceScopeCountOutput, XrSpatialPersistenceScopeEXT* persistenceScopes);
+typedef XrResult (*PFN_xrCreateSpatialPersistenceContextAsyncEXT)(XrSession session, const XrSpatialPersistenceContextCreateInfoEXT* createInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrCreateSpatialPersistenceContextCompleteEXT)(XrSession session, XrFutureEXT future, XrCreateSpatialPersistenceContextCompletionEXT* completion);
+typedef XrResult (*PFN_xrDestroySpatialPersistenceContextEXT)(XrSpatialPersistenceContextEXT persistenceContext);
+XrResult  xrEnumerateSpatialPersistenceScopesEXT(XrInstance                                  instance,     XrSystemId                                  systemId,     uint32_t                                    persistenceScopeCapacityInput,     uint32_t*                                   persistenceScopeCountOutput,     XrSpatialPersistenceScopeEXT*               persistenceScopes);
+XrResult  xrCreateSpatialPersistenceContextAsyncEXT(XrSession                                   session,     const XrSpatialPersistenceContextCreateInfoEXT* createInfo,     XrFutureEXT*                                future);
+XrResult  xrCreateSpatialPersistenceContextCompleteEXT(XrSession                                   session,     XrFutureEXT                                 future,     XrCreateSpatialPersistenceContextCompletionEXT* completion);
+XrResult  xrDestroySpatialPersistenceContextEXT(XrSpatialPersistenceContextEXT              persistenceContext);
+#line 10327 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 10328 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
 
-// XR_EXT_spatial_persistence_operations is a preprocessor guard. Do not pass it to API calls.
-#define XR_EXT_spatial_persistence_operations 1
-#define XR_EXT_spatial_persistence_operations_SPEC_VERSION 1
-#define XR_EXT_SPATIAL_PERSISTENCE_OPERATIONS_EXTENSION_NAME "XR_EXT_spatial_persistence_operations"
+
+
+
+
 typedef struct XrSpatialEntityPersistInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrSpatialContextEXT         spatialContext;
     XrSpatialEntityIdEXT        spatialEntityId;
 } XrSpatialEntityPersistInfoEXT;
 
 typedef struct XrPersistSpatialEntityCompletionEXT {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     XrResult                                futureResult;
     XrSpatialPersistenceContextResultEXT    persistResult;
     XrUuid                                  persistUuid;
@@ -10347,48 +15123,30 @@ typedef struct XrPersistSpatialEntityCompletionEXT {
 
 typedef struct XrSpatialEntityUnpersistInfoEXT {
     XrStructureType             type;
-    const void* XR_MAY_ALIAS    next;
+    const void*     next;
     XrUuid                      persistUuid;
 } XrSpatialEntityUnpersistInfoEXT;
 
 typedef struct XrUnpersistSpatialEntityCompletionEXT {
     XrStructureType                         type;
-    void* XR_MAY_ALIAS                      next;
+    void*                       next;
     XrResult                                futureResult;
     XrSpatialPersistenceContextResultEXT    unpersistResult;
 } XrUnpersistSpatialEntityCompletionEXT;
 
-typedef XrResult (XRAPI_PTR *PFN_xrPersistSpatialEntityAsyncEXT)(XrSpatialPersistenceContextEXT persistenceContext, const XrSpatialEntityPersistInfoEXT* persistInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrPersistSpatialEntityCompleteEXT)(XrSpatialPersistenceContextEXT persistenceContext, XrFutureEXT future, XrPersistSpatialEntityCompletionEXT* completion);
-typedef XrResult (XRAPI_PTR *PFN_xrUnpersistSpatialEntityAsyncEXT)(XrSpatialPersistenceContextEXT persistenceContext, const XrSpatialEntityUnpersistInfoEXT* unpersistInfo, XrFutureEXT* future);
-typedef XrResult (XRAPI_PTR *PFN_xrUnpersistSpatialEntityCompleteEXT)(XrSpatialPersistenceContextEXT persistenceContext, XrFutureEXT future, XrUnpersistSpatialEntityCompletionEXT* completion);
+typedef XrResult (*PFN_xrPersistSpatialEntityAsyncEXT)(XrSpatialPersistenceContextEXT persistenceContext, const XrSpatialEntityPersistInfoEXT* persistInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrPersistSpatialEntityCompleteEXT)(XrSpatialPersistenceContextEXT persistenceContext, XrFutureEXT future, XrPersistSpatialEntityCompletionEXT* completion);
+typedef XrResult (*PFN_xrUnpersistSpatialEntityAsyncEXT)(XrSpatialPersistenceContextEXT persistenceContext, const XrSpatialEntityUnpersistInfoEXT* unpersistInfo, XrFutureEXT* future);
+typedef XrResult (*PFN_xrUnpersistSpatialEntityCompleteEXT)(XrSpatialPersistenceContextEXT persistenceContext, XrFutureEXT future, XrUnpersistSpatialEntityCompletionEXT* completion);
+XrResult  xrPersistSpatialEntityAsyncEXT(XrSpatialPersistenceContextEXT              persistenceContext,     const XrSpatialEntityPersistInfoEXT*        persistInfo,     XrFutureEXT*                                future);
+XrResult  xrPersistSpatialEntityCompleteEXT(XrSpatialPersistenceContextEXT              persistenceContext,     XrFutureEXT                                 future,     XrPersistSpatialEntityCompletionEXT*        completion);
+XrResult  xrUnpersistSpatialEntityAsyncEXT(XrSpatialPersistenceContextEXT              persistenceContext,     const XrSpatialEntityUnpersistInfoEXT*      unpersistInfo,     XrFutureEXT*                                future);
+XrResult  xrUnpersistSpatialEntityCompleteEXT(XrSpatialPersistenceContextEXT              persistenceContext,     XrFutureEXT                                 future,     XrUnpersistSpatialEntityCompletionEXT*      completion);
+#line 10389 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
+#line 10390 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"
 
-#ifndef XR_NO_PROTOTYPES
-#ifdef XR_EXTENSION_PROTOTYPES
-XRAPI_ATTR XrResult XRAPI_CALL xrPersistSpatialEntityAsyncEXT(
-    XrSpatialPersistenceContextEXT              persistenceContext,
-    const XrSpatialEntityPersistInfoEXT*        persistInfo,
-    XrFutureEXT*                                future);
 
-XRAPI_ATTR XrResult XRAPI_CALL xrPersistSpatialEntityCompleteEXT(
-    XrSpatialPersistenceContextEXT              persistenceContext,
-    XrFutureEXT                                 future,
-    XrPersistSpatialEntityCompletionEXT*        completion);
 
-XRAPI_ATTR XrResult XRAPI_CALL xrUnpersistSpatialEntityAsyncEXT(
-    XrSpatialPersistenceContextEXT              persistenceContext,
-    const XrSpatialEntityUnpersistInfoEXT*      unpersistInfo,
-    XrFutureEXT*                                future);
 
-XRAPI_ATTR XrResult XRAPI_CALL xrUnpersistSpatialEntityCompleteEXT(
-    XrSpatialPersistenceContextEXT              persistenceContext,
-    XrFutureEXT                                 future,
-    XrUnpersistSpatialEntityCompletionEXT*      completion);
-#endif /* XR_EXTENSION_PROTOTYPES */
-#endif /* !XR_NO_PROTOTYPES */
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#line 10396 "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h"

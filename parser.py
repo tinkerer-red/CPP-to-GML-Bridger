@@ -1,36 +1,86 @@
 import os
 import re
+import sys
 import json
+import shutil
+import subprocess
+from pathlib import Path
 
 # ——— Module-scope regexes ———
 LINE_CONTINUATION_RE = re.compile(r'\\\r?\n\s*')
-MACRO_DEF_RE         = re.compile(r'^\s*#define\s+(\w+)\s*\((.*?)\)\s+(.*)$', re.MULTILINE)
-FUNC_PTR_RE          = re.compile(r'''
+# We no longer need MACRO_DEF_RE or manual expand_macros once we invoke cpp.
+FUNC_PTR_RE = re.compile(r'''
     typedef
-    \s+ (?P<ret>.*?)           # lazy return type
-    \(\s* (?:[^(]*?) \* \s*     # skip qualifiers, then "*"
-    (?P<alias>\w+) \)\s*       # alias name
-    \((?P<args>[^)]*)\) \s*;    # parameter list
+    \s+ (?P<ret>.*?)           # return type
+    \(\s* (?:[^(]*?) \* \s*     # skip qualifiers then "*"
+    (?P<alias>\w+)\)\s*        # alias name
+    \((?P<args>[^)]*)\)\s*;     # parameter list
 ''', re.VERBOSE | re.DOTALL)
-ENUM_RE              = re.compile(r'typedef\s+enum\s+(\w+)?\s*{([^}]+)}\s*(\w+)?\s*;', re.DOTALL)
-CONST_RE             = re.compile(r'^#define\s+([A-Za-z_]\w*)\s+("(?:[^"\\]|\\.)*"|-?\d+|0x[0-9A-Fa-f]+)\s*$', re.MULTILINE)
-TYPEDEF_RE           = re.compile(r'typedef\s+([^\s]+(?:\s+\w+)*)\s+(\w+)\s*;')
-HANDLE_RE            = re.compile(r'typedef\s+struct\s+(\w+)_T\s*\*\s*(\w+);')
-
-# STRUCT_RE now captures one level of nested braces in the body
-STRUCT_RE = re.compile(
-    r'\btypedef\s+struct\b'             # start with 'typedef struct'
-    r'(?:\s+[A-Za-z_]\w*)*'             # optional struct tag/name
-    r'\s*\{'                            # opening brace
-    r'(?P<body>(?:[^{}]|\{[^{}]*\})*)'  # body, allowing one nested { ... }
-    r'\}'                               # closing brace
-    r'\s*(?P<name>[A-Za-z_]\w*)\s*;'    # alias name
-, re.DOTALL)
-
-XRAPI_RE = re.compile(
-    r'XRAPI_ATTR\s+([^\s]+(?:\s+\w+)*)\s+XRAPI_CALL\s+(xr\w+)\((.*?)\);',
+ENUM_RE = re.compile(r'typedef\s+enum\s+(\w+)?\s*{([^}]+)}\s*(\w+)?\s*;', re.DOTALL)
+CONST_RE = re.compile(
+    r'^#define\s+([A-Za-z_]\w*)\s+("(?:[^"\\]|\\.)*"|-?\d+|0x[0-9A-Fa-f]+)\s*$',
+    re.MULTILINE
+)
+TYPEDEF_RE = re.compile(r'typedef\s+([^\s]+(?:\s+\w+)*)\s+(\w+)\s*;')
+USING_RE   = re.compile(r'using\s+(\w+)\s*=\s*([^;]+);')
+STRUCT_RE  = re.compile(
+    r'\btypedef\s+struct\b'
+    r'(?:\s+[A-Za-z_]\w*)*'
+    r'\s*\{(?P<body>(?:[^{}]|\{[^{}]*\})*)\}'
+    r'\s*(?P<name>[A-Za-z_]\w*)\s*;',
     re.DOTALL
 )
+
+# Generic function-declaration regex (drops XRAPI specifics)
+FUNC_RE = re.compile(
+    r'^\s*'                            # start of line, maybe whitespace
+    r'(?P<ret>[A-Za-z_]\w*(?:\s+[\w\*\:<>]+)*)'  # return type (no newlines!)
+    r'\s+'                             # at least one space
+    r'(?P<name>[A-Za-z_]\w*)'          # function name
+    r'\s*\('                           # opening paren
+    r'(?P<args>[^)]*)'                 # argument list (no parentheses inside)
+    r'\)\s*;'                          # closing paren + semicolon
+    , re.MULTILINE
+)
+
+def flatten_parse_data(all_results: dict) -> dict:
+    """
+    Merge multiple per-file parse results into one unified parse_result.
+    all_results is expected to have the shape:
+        { "files": { filename1: parse_result1, filename2: parse_result2, … } }
+    Returns a dict with keys:
+        "functions", "typedef_map", "struct_fields",
+        "function_ptr_aliases", "enums", "constants", "using_map"
+    """
+    unified = {
+        "functions":            [],
+        "typedef_map":          {},
+        "struct_fields":        {},
+        "function_ptr_aliases": [],
+        "enums":                {},
+        "constants":            {},
+        "using_map":            {}
+    }
+
+    for file_res in all_results.get("files", {}).values():
+        # 1) append all functions
+        unified["functions"].extend(file_res.get("functions", []))
+
+        # 2) merge all maps (later files win on name collisions)
+        unified["typedef_map"].update(file_res.get("typedef_map", {}))
+        unified["struct_fields"].update(file_res.get("struct_fields", {}))
+        unified["enums"].update(file_res.get("enums", {}))
+        unified["constants"].update(file_res.get("constants", {}))
+        unified["using_map"].update(file_res.get("using_map", {}))
+
+        # 3) collect all function‐pointer aliases
+        unified["function_ptr_aliases"].extend(file_res.get("function_ptr_aliases", []))
+
+    # dedupe & sort the aliases
+    unified["function_ptr_aliases"] = sorted(set(unified["function_ptr_aliases"]))
+
+    return unified
+
 
 def strip_common_prefix(enum_name, entries):
     parts = [k.split('_') for k in entries if '_' in k]
@@ -53,268 +103,354 @@ def get_enum_prefix_suffix_cleanup(enum_keys):
             suffix = f"_{sfx}"
     return prefix, suffix
 
-def expand_macros(text, macro_defs):
-    for name, macro in macro_defs.items():
-        params, body = macro["params"], macro["body"]
-        pattern = re.compile(rf'\b{name}\s*\((.*?)\)')
-        for match in reversed(list(pattern.finditer(text))):
-            args = [a.strip() for a in match.group(1).split(',')]
-            if len(args) != len(params):
-                continue
-            mapping = dict(zip(params, args))
-            expanded = body
-            for p, v in mapping.items():
-                expanded = expanded.replace(f"{p}##_T", f"{v}_T")
-                expanded = expanded.replace(p, v)
-            start, end = match.span()
-            text = text[:start] + expanded + text[end:]
-    return text
-
 def classify_c_type(parse_result, c_type, config):
-    namespace = config.get("namespace", "XR")
-    typedef_map = parse_result["typedef_map"]
-    # Use struct_fields keys instead of known_structs
-    known_structs = set(parse_result["struct_fields"].keys())
-    function_ptr_aliases = set(parse_result["function_ptr_aliases"])
-    enum_names = set(parse_result["enums"].keys())
+    """
+    Given a raw C type (possibly via typedef/using), classify it:
+    - is_ref: opaque handle
+    - is_unsupported_numeric: big integer round-trip
+    - is_standard_numeric: float/int32/bool
+    - extension_type: "string" or "double"
+    """
+    typedef_map      = parse_result["typedef_map"]
+    using_map        = parse_result["using_map"]
+    known_structs    = set(parse_result["struct_fields"].keys())
+    function_ptrs    = set(parse_result["function_ptr_aliases"])
+    enum_names       = set(parse_result["enums"].keys())
 
-    def resolve(t):
+    def resolve_full(name):
         seen = set()
-        while t in typedef_map and t not in seen:
-            seen.add(t)
-            t = typedef_map[t]
+        t = name
+        # chase using and typedef chains
+        while True:
+            if t in using_map and t not in seen:
+                seen.add(t)
+                t = using_map[t]
+                continue
+            if t in typedef_map and t not in seen:
+                seen.add(t)
+                t = typedef_map[t]
+                continue
+            break
         return t
 
-    declared_type = c_type.strip()
-    intermediate   = resolve(declared_type).strip()
-    bare           = re.sub(r'^const\s+', '', intermediate).rstrip('*').strip()
-    base_type      = bare
-    canonical_type = resolve(base_type).strip()
+    original = c_type.strip()
+    outer    = resolve_full(original)
+    # peel const & pointers
+    has_const   = outer.startswith("const ")
+    has_ptr     = outer.endswith("*")
+    no_const    = re.sub(r'^const\s+', '', outer).rstrip('*').strip()
+    canonical   = resolve_full(no_const).strip()
 
-    if base_type.lower().startswith(namespace.lower()):
-        culled_name = base_type[len(namespace):]
-    else:
-        culled_name = base_type
-
-    lc = canonical_type.lower()
-    is_string    = intermediate.lower() in ("string", "const char*")
-    is_primitive = lc in {
-        "double","float","int","bool",
-        "uint64_t","int64_t","uint32_t","int32_t",
-        "uint16_t","int16_t","uint8_t","int8_t"
+    rec = {
+        "declared_type": original,
+        "base_type":     no_const,
+        "canonical_type": canonical,
+        "has_const":     has_const,
+        "has_pointer":   has_ptr,
+        "is_enum":       no_const in enum_names,
+        "is_struct":     no_const in known_structs,
+        "is_function_ptr": outer in function_ptrs,
+        "is_standard_numeric": False,
+        "is_unsupported_numeric": False,
+        "is_ref": False,
+        "extension_type": ""
     }
-    is_enum = base_type in enum_names
-    if is_enum:
-        canonical_type = "int32_t"
-        is_primitive   = True
 
-    is_ref = (
-        base_type.lower() in function_ptr_aliases or
-        intermediate.endswith("*") or
-        (not intermediate.endswith("*") and base_type in known_structs)
-    )
+    # 1) Any pointer-to-struct or function-pointer is ref
+    if rec["has_pointer"] and (rec["is_struct"] or rec["is_function_ptr"]):
+        rec["is_ref"] = True
+        rec["extension_type"] = "string"
+        return rec
 
-    if is_string:
-        extension_type = "string"
-    elif is_primitive:
-        extension_type = "double"
-    elif is_ref:
-        extension_type = "string"
-    else:
-        extension_type = "unknown"
+    # 2) Any alias of a big integer *where the alias name differs* → handle
+    big_ints = {"int64_t","uint64_t","size_t","uintptr_t"}
+    if canonical in big_ints and original != canonical:
+        rec["is_ref"] = True
+        rec["extension_type"] = "string"
+        return rec
 
-    usage_category = "ref" if is_ref else extension_type
-    if config.get("treat_int64_as_ref", False) and canonical_type in ("int64_t","uint64_t"):
-        extension_type = "string"
-        usage_category = "ref"
+    # 3) Raw big integers → strings
+    if canonical in big_ints:
+        rec["is_unsupported_numeric"] = True
+        rec["extension_type"] = "string"
+        return rec
 
-    return {
-        "declared_type":  declared_type,
-        "base_type":      base_type,
-        "culled_name":    culled_name,
-        "canonical_type": canonical_type,
-        "usage_category": usage_category,
-        "extension_type": extension_type,
-    }
+    # 4) Enums → double
+    if rec["is_enum"]:
+        rec["is_standard_numeric"] = True
+        rec["extension_type"] = "double"
+        return rec
+
+    # 5) Everything else numeric → double
+    rec["is_standard_numeric"] = True
+    rec["extension_type"] = "double"
+    return rec
 
 def parse_header(config):
     """
-    Parse an OpenXR header into a unified parse_result dict.
+    Fully preprocesses and parses *any* C/C++ header.
     """
+    namespace = config.get("namespace", "")
     
-    header_path   = os.path.join(config["input_folder"], config["header"])
-    namespace = config.get("namespace", "XR")
-    debug = config.get("debug", True)
+    header_files = [Path(p).as_posix() for p in config["include_files"]]
+    # throw error for missing files
+    for hdr in header_files:
+        if not os.path.isfile(hdr):
+            raise FileNotFoundError(f"[GMBridge] include_files entry not found: '{hdr}'")
+
+    # Derive include paths purely from the headers we’re parsing:
+    include_files = [os.path.abspath(p) for p in header_files]
+    include_folders = [os.path.dirname(p) for p in include_files]
     
-    # 0) Prepare result
-    parse_result = {
-        "functions":            [],
-        "enums":                {},
-        "constants":            {},
-        "typedef_map":          {},
-        "struct_fields":        {},
-        "function_ptr_aliases": []
-    }
+    # --- gather any user‐requested defines ---
+    defines       = config.get("preprocessor_defines", [])
+    define_flags  = []
+    for d in defines:
+        if sys.platform.startswith("win"):
+            define_flags.append(f"/D{d}")
+        else:
+            define_flags.append(f"-D{d}")
 
-    # Helper to normalize C-style arrays to pointers
-    def normalize_array(tp, nm):
-        if '[' in nm and nm.endswith(']'):
-            idx  = nm.index('[')
-            size = nm[idx+1:-1]
-            nm   = nm[:idx]
-            tp   = tp + '*'
-            return tp.strip(), nm, size
-        return tp, nm, None
+    all_results = {"files": {}}
 
-    # 1) Read & collapse continuations
-    with open(header_path, "r", encoding="utf-8") as f:
-        content = f.read()
-    content = LINE_CONTINUATION_RE.sub(' ', content)
+    for hdr in header_files:
+        # 2) Pick a preprocessor (user override first, then platform defaults)
+        candidates = []
+        if "preprocessor" in config:
+            candidates.append(config["preprocessor"])
+        if sys.platform.startswith("win"):
+            candidates += [
+                ["clang", "-E", "-dD", "-P"],
+                ["gcc",   "-E", "-dD", "-P"],
+                ["cl", "/E", "/nologo"],
+            ]
+        else:
+            candidates += [
+                ["cpp", "-P", "-dD", "-std=c99"],   # <-- preserve conditionals
+                ["clang", "-E", "-dD", "-P"],
+                ["gcc", "-E", "-dD", "-P"]
+            ]
 
-    # 2) Expand macros
-    macro_defs = {
-        name: {"params": [p.strip() for p in params.split(',')], "body": body.strip()}
-        for name, params, body in MACRO_DEF_RE.findall(content)
-    }
-    content = expand_macros(content, macro_defs)
-    if debug:
-        with open("expanded_macros.h", "w", encoding="utf-8") as dbg:
-            dbg.write(content)
 
-    # 3) Function-pointer aliases
-    # collect into a set for uniqueness…
-    alias_set = {
-        m.group('alias').lower()
-        for m in FUNC_PTR_RE.finditer(content)
-    }
-    # …then expose as a sorted list (JSON-friendly)
-    parse_result["function_ptr_aliases"] = sorted(alias_set)
+        cpp_cmd = None
+        for cmd in candidates:
+            tool = cmd[0]
+            path = shutil.which(tool)
+            print(f"[GMBridge] Checking for preprocessor '{tool}': {path}")
+            if path:
+                cpp_cmd = cmd + define_flags
+                print(f"[GMBridge] → Using preprocessor: {cmd!r} (resolved to {path})")
+                break
 
-    # 4) Enums
-    for m in ENUM_RE.finditer(content):
-        raw, body, alias = m.group(1), m.group(2), m.group(3)
-        name = alias or raw or "unnamed_enum"
-        entries, val = {}, 0
-        for line in body.split(','):
-            line = line.strip()
-            if not line: continue
-            if '=' in line:
-                k,v = map(str.strip, line.split('=',1))
-                try: val = int(v,0)
-                except: val = 0
-            else:
-                k = line
-            entries[k] = val; val += 1
+        if cpp_cmd is None:
+            tried = ", ".join(c[0] for c in candidates)
+            raise RuntimeError(f"No C preprocessor found. Tried: {tried}")
 
-        # strip prefixes/suffixes
-        short = name[len(namespace):] if name.lower().startswith(namespace.lower()) else name
-        pre, suf = get_enum_prefix_suffix_cleanup(entries.keys())
-        cleaned = {}
-        for k,v in entries.items():
-            ck = (k[len(pre):] if pre and k.startswith(pre) else k)
-            if suf and ck.endswith(suf): ck = ck[:-len(suf)]
-            cleaned[ck] = v
-        cleaned["_meta"] = {"namespace":namespace,"short_name":short,"base_prefix":pre,"base_suffix":suf}
-        parse_result["enums"][name] = cleaned
+        # 3) Decide include-flag syntax
+        inc_flag = "/I" if cpp_cmd[0].lower() == "cl" else "-I"
 
-    # 5) #define constants
-    for n,v in CONST_RE.findall(content):
-        parse_result["constants"][n] = (v if v.startswith('"') else int(v,0))
+        # 4) Build and log the full command with absolute paths
+        full_cmd = cpp_cmd + [f"{inc_flag}{folder}" for folder in include_folders] + include_files
+        print(f"[GMBridge] Running preprocessor: {full_cmd!r}")
 
-    # 6) Typedef map
-    for full, alias in TYPEDEF_RE.findall(content):
-        parse_result["typedef_map"][alias] = full.strip()
-    for struct_name, alias in HANDLE_RE.findall(content):
-        parse_result["typedef_map"][alias] = f"ref {alias}"
+        # 5) Run it, capturing stdout for parsing
+        try:
+            proc = subprocess.run(
+                full_cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+                encoding="utf-8"
+            )
+            content = proc.stdout
 
-    # 7) Collect struct fields (with array sizes + type metadata)
-    for m in STRUCT_RE.finditer(content):
-        name = m.group("name")
-        body = m.group("body")
-        fields = []
-        for line in body.split(';'):
-            line = line.strip()
-            if not line:
-                continue
+        except subprocess.CalledProcessError as err:
+            print(f"[GMBridge] Preprocessor failed (exit {err.returncode}). stderr:\n{err.stderr}")
+            raise
 
-            # capture: 1=type, 2=name, optional 3=array_size
-            am = re.match(r'''
-                (.+?)             # group(1): the raw base type (e.g. "char", "XrVector3f")
-                \s+
-                (\**\w+)          # group(2): the field name (possibly pointer)
-                (?:\s*\[\s*       # optionally:
-                    ([^\]]+)      #   group(3): the array size expression
-                \s*\]            # closing bracket
-                )?                # array is optional
-                $                 # end of string
-            ''', line, re.VERBOSE)
-            if not am:
-                continue
 
-            raw_base, nm, sz = am.group(1).strip(), am.group(2).strip(), am.group(3)
-            # strip out all-caps macros from raw_base, leaving qualifiers like "const" and pointers
-            clean_base = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', '', raw_base)
-            clean_base = clean_base.replace('  ', ' ').strip()
 
-            # start building the field entry
-            field = {
-                "name": nm,
-                "type": clean_base,
-            }
-            # array size if present
-            if sz is not None:
-                try:
-                    field["array_size"] = int(sz)
-                except ValueError:
-                    field["array_size"] = sz  # keep macro name
+        # 2) Collapse continuations
+        content = LINE_CONTINUATION_RE.sub(' ', content)
 
-            # ==== NEW: resolve typedefs & classify ====
-            meta = classify_c_type(parse_result, clean_base, config)
-            field.update(meta)
-            # ========================================
+        parse_result = {
+            "functions":            [],
+            "enums":                {},
+            "constants":            {},
+            "typedef_map":          {},
+            "using_map":            {},
+            "struct_fields":        {},
+            "function_ptr_aliases": []
+        }
 
-            fields.append(field)
+        # 3) Function-pointer typedefs
+        ptr_aliases = {m.group("alias") for m in FUNC_PTR_RE.finditer(content)}
+        parse_result["function_ptr_aliases"] = sorted(ptr_aliases)
 
-        parse_result["struct_fields"][name] = fields
+        # 4) Enums
+        for m in ENUM_RE.finditer(content):
+            raw, body, alias = m.group(1), m.group(2), m.group(3)
+            name = alias or raw or "unnamed_enum"
+            entries, val = {}, 0
+            for line in body.split(','):
+                line = line.strip()
+                if not line: continue
+                if '=' in line:
+                    k,v = map(str.strip, line.split('=',1))
+                    try: val = int(v,0)
+                    except: val = 0
+                else:
+                    k = line
+                entries[k] = val; val += 1
 
-    # 7a) Promote typedef aliases into struct_fields
-    def _resolve_type(t):
-        seen = set()
-        while t in parse_result["typedef_map"] and t not in seen:
-            seen.add(t)
-            t = parse_result["typedef_map"][t]
-        return t
+            # strip prefixes/suffixes
+            short = name[len(namespace):] if name.lower().startswith(namespace.lower()) else name
+            pre, suf = get_enum_prefix_suffix_cleanup(entries.keys())
+            cleaned = {}
+            for k,v in entries.items():
+                ck = (k[len(pre):] if pre and k.startswith(pre) else k)
+                if suf and ck.endswith(suf): ck = ck[:-len(suf)]
+                cleaned[ck] = v
+            cleaned["_meta"] = {"namespace":namespace,"short_name":short,"base_prefix":pre,"base_suffix":suf}
+            parse_result["enums"][name] = cleaned
 
-    for alias in list(parse_result["typedef_map"]):
-        root = _resolve_type(alias)
-        if root in parse_result["struct_fields"]:
-            parse_result["struct_fields"][alias] = parse_result["struct_fields"][root]
+        # 5) Constants
+        for name, val in CONST_RE.findall(content):
+            parse_result["constants"][name] = (val if val.startswith('"') else int(val,0))
 
-    # 8) Parse XRAPI functions
-    for ret, name, args in XRAPI_RE.findall(content):
-        arg_list = []
-        for raw in [a.strip() for a in args.split(',') if a.strip()]:
-            m2 = re.match(r'(.+?)\s+(\**\w+(?:\[[^\]]+\])?)$', raw)
-            if not m2: continue
-            tp, nm = m2.group(1).strip(), m2.group(2).strip()
-            tp, nm, array_size = normalize_array(tp, nm)
+        # 6) Typedefs & usings
+        for full, alias in TYPEDEF_RE.findall(content):
+            parse_result["typedef_map"][alias] = full.strip()
+        for alias, target in USING_RE.findall(content):
+            parse_result["using_map"][alias] = target.strip()
 
-            meta = classify_c_type(parse_result, tp, config)
-            entry = {"name": nm, "type": tp, **meta}
-            if array_size: entry["array_size"] = array_size
-            arg_list.append(entry)
+        # 7) Structs
+        for m in STRUCT_RE.finditer(content):
+            name = m.group("name")
+            body = m.group("body")
+            fields = []
+            for line in body.split(';'):
+                line = line.strip()
+                if not line:
+                    continue
 
-        ret_meta = classify_c_type(parse_result, ret.strip(), config)
-        parse_result["functions"].append({
-            "name":        name,
-            "return_type": ret.strip(),
-            "return_meta": ret_meta,
-            "args":        arg_list
-        })
+                # capture: 1=type, 2=name, optional 3=array_size
+                am = re.match(r'''
+                    (.+?)             # group(1): the raw base type (e.g. "char", "XrVector3f")
+                    \s+
+                    (\**\w+)          # group(2): the field name (possibly pointer)
+                    (?:\s*\[\s*       # optionally:
+                        ([^\]]+)      #   group(3): the array size expression
+                    \s*\]            # closing bracket
+                    )?                # array is optional
+                    $                 # end of string
+                ''', line, re.VERBOSE)
+                if not am:
+                    continue
 
-    # 9) Debug dump
-    if debug:
-        with open("debug_parser.json", "w", encoding="utf-8") as dbg:
-            json.dump(parse_result, dbg, indent=4)
+                raw_base, nm, sz = am.group(1).strip(), am.group(2).strip(), am.group(3)
+                # strip out all-caps macros from raw_base, leaving qualifiers like "const" and pointers
+                clean_base = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', '', raw_base)
+                clean_base = clean_base.replace('  ', ' ').strip()
 
+                # start building the field entry
+                field = {
+                    "name": nm,
+                    "type": clean_base,
+                }
+                # array size if present
+                if sz is not None:
+                    try:
+                        field["array_size"] = int(sz)
+                    except ValueError:
+                        field["array_size"] = sz  # keep macro name
+
+                # ==== NEW: resolve typedefs & classify ====
+                meta = classify_c_type(parse_result, clean_base, config)
+                field.update(meta)
+                # ========================================
+
+                fields.append(field)
+
+            parse_result["struct_fields"][name] = fields
+
+        # 7a) Promote typedef aliases into struct_fields
+        def _resolve_type(t):
+            seen = set()
+            while t in parse_result["typedef_map"] and t not in seen:
+                seen.add(t)
+                t = parse_result["typedef_map"][t]
+            return t
+
+        for alias in list(parse_result["typedef_map"]):
+            root = _resolve_type(alias)
+            if root in parse_result["struct_fields"]:
+                parse_result["struct_fields"][alias] = parse_result["struct_fields"][root]
+
+        # 8) Cleanup
+        # Strip calling conventions
+        content = re.sub(r'\b__stdcall\b', '', content)
+        content = re.sub(r'\b__cdecl\b',   '', content)
+        content = re.sub(r'\b__fastcall\b','', content)
+        
+        # Collapse multi-line prototypes into single lines:
+        #   - join any lines that are inside parentheses
+        def _collapse_proto(match):
+            inner = match.group(1).replace('\n', ' ').strip()
+            return "(" + inner + ")"
+
+        # This will find the first "(" up to the matching ")" and flatten interior newlines
+        content = re.sub(r'\(\s*(.*?)\s*\)', _collapse_proto, content, flags=re.DOTALL)
+        
+        # Finally, ensure each prototype ends on its own line
+        content = re.sub(r'\)\s*;\s*', ');' + '\n', content)
+        
+        # 9) Functions
+        for m in FUNC_RE.finditer(content):
+            fn_name = m.group("name")
+            raw_args = m.group("args").strip()
+            # split args by commas *outside* nested angle brackets or parentheses:
+            args = re.split(r',\s*(?![^<]*>)', raw_args) if raw_args else []
+            arg_list = []
+            for a in args:
+                a = a.strip()
+                if not a or a.lower() == "void":
+                    continue
+                # split into type and name
+                parts = a.rsplit(' ', 1)
+                if len(parts) == 2:
+                    tp, nm = parts
+                else:
+                    tp, nm = parts[0], f"arg{len(arg_list)}"
+                meta = classify_c_type(parse_result, tp, config)
+                entry = {"name": nm, "type": tp, **meta}
+                arg_list.append(entry)
+
+            ret_meta = classify_c_type(parse_result, m.group("ret").strip(), config)
+            parse_result["functions"].append({
+                "name":        fn_name,
+                "return_type": m.group("ret").strip(),
+                "return_meta": ret_meta,
+                "args":        arg_list
+            })
+
+
+        # If debugging is enabled, dump the preprocessed content
+        if config.get("debug", False):
+            # Compute a safe filename: <originalbasename>_expanded.h
+            base_name = os.path.splitext(os.path.basename(hdr))[0]
+            dump_name = f"{base_name}_expanded.h"
+            with open(dump_name, "w", encoding="utf-8") as dbg_file:
+                dbg_file.write(content)
+            print(f"[GMBridge] Wrote expanded macros to: {dump_name}")
+
+        all_results["files"][hdr] = parse_result
+
+
+    parse_result = flatten_parse_data(all_results)
+
+    if config.get("debug"):
+        with open("debug_parser.json","w",encoding="utf-8") as f:
+            json.dump(parse_result, f, indent=2)
+            
     return parse_result
