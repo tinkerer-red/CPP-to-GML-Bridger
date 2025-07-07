@@ -23,10 +23,14 @@ def map_jsdoc_type(c_type, known_enums=None, namespace="", cull_enum=True):
         return "String"
     if t in ("float", "double"):
         return "Real"
+
+    # signed integers
     if t.startswith("int") or t in ("short", "long", "ssize_t", "intptr_t"):
         return "Real.Integer"
-    if t.startswith("uint") or "size_t" in t or "uintptr" in t:
+    # unsigned integers (catch both 'uint…' and full 'unsigned …')
+    if t.startswith("uint") or t.startswith("unsigned ") or "size_t" in t or "uintptr" in t:
         return "Real.Integer"
+
     if t == "void":
         return "Real"
     if t == "function":
@@ -226,9 +230,17 @@ def generate_gml_stub(functions_dict, config):
         for a, nm in zip(args, doc_args):
             js_t = map_jsdoc_type(a["type"], known_enum_map, namespace, cull_enums)
             lines.append(f"    /// @param {{{js_t}}} {nm}")
-        rt    = fn.get("return_type", "void")
-        js_rt = map_jsdoc_type(rt, known_enum_map, namespace, cull_enums)
-        lines.append(f"    /// @returns {{{js_rt}}}")
+        
+        # JsDoc return
+        ret_meta = fn["return_meta"]
+        if ret_meta.get("extension_type") == "void":
+            lines.append("    /// @returns {Undefined}")
+        else:
+            # use the declared_type from return_meta for accurate mapping
+            declared = fn["return_type"]
+            js_rt = map_jsdoc_type(declared, known_enum_map, namespace, cull_enums)
+            lines.append(f"    /// @returns {{{js_rt}}}")
+        
         lines.append("    #endregion")
 
         # Stub
@@ -245,16 +257,19 @@ def generate_gml_stub(functions_dict, config):
             else:
                 call_args.append(nm)
 
-        # 2) Invoke the real bridge
-        lines.append(
-            f"        var _res = __{orig}({', '.join(call_args)});"
-        )
-
-        # 3) Wrap big-number returns in int64(), otherwise pass through
-        if ret_meta.get("is_unsupported_numeric", False):
-            lines.append("        return int64(_res);")
+        # 2) Invoke the real bridge (or ignore its dummy return for void)
+        if ret_meta.get("extension_type") == "void":
+            # call it and then return undefined in GML
+            lines.append(f"        __{orig}({', '.join(call_args)});")
+            lines.append("        return undefined;")
         else:
-            lines.append("        return _res;")
+            lines.append(f"        var _res = __{orig}({', '.join(call_args)});")
+
+            # 3) Wrap big-number returns in int64(), otherwise pass through
+            if ret_meta.get("is_unsupported_numeric", False):
+                lines.append("        return int64(_res);")
+            else:
+                lines.append("        return _res;")
 
         lines.append("    };")
         lines.append("")

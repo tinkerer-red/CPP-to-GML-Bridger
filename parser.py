@@ -23,6 +23,7 @@ CONST_RE = re.compile(
 )
 TYPEDEF_RE = re.compile(r'typedef\s+([^\s]+(?:\s+\w+)*)\s+(\w+)\s*;')
 USING_RE   = re.compile(r'using\s+(\w+)\s*=\s*([^;]+);')
+HANDLE_RE = re.compile(r'typedef\s+struct\s+(\w+)_T\s*\*\s*(\w+);')
 STRUCT_RE  = re.compile(
     r'\btypedef\s+struct\b'
     r'(?:\s+[A-Za-z_]\w*)*'
@@ -133,7 +134,9 @@ def classify_c_type(parse_result, c_type, config):
             break
         return t
 
-    original = c_type.strip()
+    cleaned = re.sub(r'\bextern\b\s*', '', c_type, flags=re.IGNORECASE)
+
+    original = cleaned.strip()
     outer    = resolve_full(original)
     # peel const & pointers
     has_const   = outer.startswith("const ")
@@ -156,12 +159,12 @@ def classify_c_type(parse_result, c_type, config):
         "extension_type": ""
     }
 
-    # 1) Any pointer-to-struct or function-pointer is ref
-    if rec["has_pointer"] and (rec["is_struct"] or rec["is_function_ptr"]):
+    # 1) Pointers
+    if has_ptr:
         rec["is_ref"] = True
         rec["extension_type"] = "string"
         return rec
-
+    
     # 2) Any alias of a big integer *where the alias name differs* → handle
     big_ints = {"int64_t","uint64_t","size_t","uintptr_t"}
     if canonical in big_ints and original != canonical:
@@ -181,6 +184,11 @@ def classify_c_type(parse_result, c_type, config):
         rec["extension_type"] = "double"
         return rec
 
+    # 0) Void‐returning functions → no bridge return value
+    if canonical == "void":
+        rec["extension_type"] = "void"
+        return rec
+    
     # 5) Everything else numeric → double
     rec["is_standard_numeric"] = True
     rec["extension_type"] = "double"
@@ -318,12 +326,15 @@ def parse_header(config):
         for name, val in CONST_RE.findall(content):
             parse_result["constants"][name] = (val if val.startswith('"') else int(val,0))
 
-        # 6) Typedefs & usings
+        # 6) Typedefs & usings & struct‐handle typedefs
         for full, alias in TYPEDEF_RE.findall(content):
             parse_result["typedef_map"][alias] = full.strip()
         for alias, target in USING_RE.findall(content):
             parse_result["using_map"][alias] = target.strip()
-
+        for struct_name, alias in HANDLE_RE.findall(content):
+            # e.g. struct_name="XrSpace", alias="XrSpace"
+            parse_result["typedef_map"][alias] = f"struct {struct_name}_T *"
+            
         # 7) Structs
         for m in STRUCT_RE.finditer(content):
             name = m.group("name")
@@ -334,45 +345,51 @@ def parse_header(config):
                 if not line:
                     continue
 
-                # capture: 1=type, 2=name, optional 3=array_size
-                am = re.match(r'''
-                    (.+?)             # group(1): the raw base type (e.g. "char", "XrVector3f")
-                    \s+
-                    (\**\w+)          # group(2): the field name (possibly pointer)
-                    (?:\s*\[\s*       # optionally:
-                        ([^\]]+)      #   group(3): the array size expression
-                    \s*\]            # closing bracket
-                    )?                # array is optional
-                    $                 # end of string
-                ''', line, re.VERBOSE)
-                if not am:
-                    continue
+                # — Handle comma-separated declarations (e.g. "unsigned short _Byte, _State")
+                parts = [p.strip() for p in line.split(',')]
+                if len(parts) > 1:
+                    # first part has full “type name”
+                    decls = [parts[0]]
+                    # extract base type (everything before the last space)
+                    base, _ = parts[0].rsplit(None, 1)
+                    # rebuild the remaining names with that base
+                    for extra in parts[1:]:
+                        decls.append(f"{base} {extra}")
+                else:
+                    decls = [line]
 
-                raw_base, nm, sz = am.group(1).strip(), am.group(2).strip(), am.group(3)
-                # strip out all-caps macros from raw_base, leaving qualifiers like "const" and pointers
-                clean_base = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', '', raw_base)
-                clean_base = clean_base.replace('  ', ' ').strip()
+                # now parse each small declaration separately
+                for decl in decls:
+                    am = re.match(r'''
+                        (.+?)             # group(1): the raw base type
+                        \s+
+                        (\**\w+)          # group(2): the field name
+                        (?:\s*\[\s*       # optionally an array
+                            ([^\]]+)
+                        \s*\]
+                        )?
+                        $
+                    ''', decl, re.VERBOSE)
+                    if not am:
+                        continue
 
-                # start building the field entry
-                field = {
-                    "name": nm,
-                    "type": clean_base,
-                }
-                # array size if present
-                if sz is not None:
-                    try:
-                        field["array_size"] = int(sz)
-                    except ValueError:
-                        field["array_size"] = sz  # keep macro name
+                    raw_base, nm, sz = am.group(1).strip(), am.group(2).strip(), am.group(3)
+                    clean_base = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', '', raw_base).replace('  ', ' ').strip()
 
-                # ==== NEW: resolve typedefs & classify ====
-                meta = classify_c_type(parse_result, clean_base, config)
-                field.update(meta)
-                # ========================================
+                    field = {"name": nm, "type": clean_base}
+                    if sz is not None:
+                        try:
+                            field["array_size"] = int(sz)
+                        except ValueError:
+                            field["array_size"] = sz
 
-                fields.append(field)
+                    meta = classify_c_type(parse_result, clean_base, config)
+                    field.update(meta)
+
+                    fields.append(field)
 
             parse_result["struct_fields"][name] = fields
+
 
         # 7a) Promote typedef aliases into struct_fields
         def _resolve_type(t):
@@ -429,11 +446,23 @@ def parse_header(config):
             ret_meta = classify_c_type(parse_result, m.group("ret").strip(), config)
             parse_result["functions"].append({
                 "name":        fn_name,
-                "return_type": m.group("ret").strip(),
+                "return_type": ret_meta["canonical_type"],
                 "return_meta": ret_meta,
                 "args":        arg_list
             })
 
+        skip_prefixes = config.get("skip_function_prefixes", [])
+        if skip_prefixes:
+            filtered = []
+            for fn in parse_result["functions"]:
+                name = fn.get("name", "")
+                # if it matches any of the skip-prefixes, drop it
+                if any(name.startswith(pref) for pref in skip_prefixes):
+                    if config.get("debug", False):
+                        print(f"[GMBridge] Skipping function '{name}' (prefix filter)")
+                    continue
+                filtered.append(fn)
+            parse_result["functions"] = filtered
 
         # If debugging is enabled, dump the preprocessed content
         if config.get("debug", False):

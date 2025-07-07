@@ -292,11 +292,15 @@ extern "C" const char* __cpp_create_{name}() {{
         canon_rt = ret_meta["canonical_type"]
 
         # pick return signature and default error return
-        if ret_ext == "double":
+        if ret_ext == "void":
+            # we return a dummy double (GML will ignore it)
+            ret_sig, err_return = "double", "0.0"
+        elif ret_ext == "double":
             ret_sig, err_return = "double", "std::numeric_limits<double>::quiet_NaN()"
         elif ret_ext in ("ref", "string"):
             ret_sig, err_return = "const char*", "\"\""
         else:
+            # fallback – should rarely happen
             ret_sig, err_return = "const char*", "\"\""
 
 
@@ -328,11 +332,6 @@ extern "C" const char* __cpp_create_{name}() {{
                 decls.append(f"double {arg_name}")
                 call_args.append(arg_name)
 
-            # 3) Plain strings (const char*, std::string)
-            elif ext == "string":
-                decls.append(f"const char* {arg_name}")
-                call_args.append(arg_name)
-
             # 4) Refs (pointers to structs or function pointers)
             elif is_ref:
                 decls.append(f"const char* {arg_name}_ref")
@@ -342,9 +341,15 @@ extern "C" const char* __cpp_create_{name}() {{
                 converts.append(f"{base_type}* {arg_name} = static_cast<{base_type}*>({arg_name}_ptr);")
                 call_args.append(arg_name)
 
+            # 3) Plain strings (const char*, std::string)
+            elif ext == "string":
+                decls.append(f"const char* {arg_name}")
+                call_args.append(arg_name)
+            
             # 5) Fallback: treat as string
             else:
-                decls.append(f"const char* {arg_name}")
+                # we don’t know how to marshal this yet!
+                decls.append(f"// TODO: marshal argument '{arg_name}' of type {arg['type']}")
                 call_args.append(arg_name)
 
 
@@ -357,17 +362,26 @@ extern "C" const char* __cpp_create_{name}() {{
             fb.append(f'    std::cout << "[GMBridge] Called {fn_name}" << std::endl;')
 
         fb += [f"    {line}" for line in converts if line.strip()]
-        fb.append(f"\n    {canon_rt} result = {fn_name}({', '.join(call_args)});")
+        
+        # If it's not a void return set up it's result value
+        if ret_ext == "void":
+            fb.append(f"    {fn_name}({', '.join(call_args)});")
+        else:
+            fb.append(f"\n    {canon_rt} result = {fn_name}({', '.join(call_args)});")
 
+        if ret_ext == "void":
+            # just call it, then return our dummy
+            fb.append(f"    return 0.0;")
+        
         # 1) Unsupported-width integer returns → serialize to string
-        if ret_meta["is_unsupported_numeric"]:
+        elif ret_meta["is_unsupported_numeric"]:
             fb.append(
                 "    _tmp_str = std::to_string(result);\n"
                 "    return _tmp_str.c_str();"
             )
 
         # 2) Standard-number returns
-        elif ret_meta["extension_type"] == "double":
+        elif ret_ext == "double":
             fb.append("    return static_cast<double>(result);")
 
         # 3) Ref returns
@@ -378,7 +392,7 @@ extern "C" const char* __cpp_create_{name}() {{
             )
 
         # 4) Native-string returns
-        elif ret_meta["extension_type"] == "string":
+        elif ret_ext == "string":
             fb.append("    return result;")
 
         # 5) Fallback error

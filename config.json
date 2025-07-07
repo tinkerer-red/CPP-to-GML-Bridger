@@ -13,6 +13,7 @@
   "gml_stub": "GM_OpenXR.gml",
   "yy_extension": "GM_OpenXR.yy",
   
+  "skip_function_prefixes": ["_"],
   "cull_function_names": true,
   "cull_constant_names": true,
   "cull_enum_names": true,
