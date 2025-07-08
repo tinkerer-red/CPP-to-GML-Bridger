@@ -14,9 +14,14 @@ def generate_vs_project(config):
     output_folder = Path(config["output_folder"])
     src_dir       = output_folder / "src"
     include_dir   = src_dir / "include"
-    ext_name      = config["extension_name"]
-    dll_name      = config["dll_name"]
+
+    # derive everything from a single project_name
+    project_name  = config["project_name"]
+    dll_name      = f"{project_name}.dll"
     project_guid  = str(uuid.uuid4()).upper()
+
+    library_dirs  = config.get("library_dirs", [])
+    libraries     = config.get("libraries", [])
 
     # --- 1) Gather include_files from config and compute include_folders ---
     include_files = config.get("include_files", [])
@@ -30,15 +35,19 @@ def generate_vs_project(config):
     abs_include_files = [Path(p).resolve() for p in include_files]
     # Deduplicate their parent dirs
     include_folders = sorted({Path(p).parent for p in abs_include_files})
-    # --- 2) Deep-copy each include_folder (and all its subfolders) into src/include ---
-    for root_path in include_folders:
-        dest_root = include_dir / root_path.name
-        if dest_root.exists():
-            # merge into existing tree
-            shutil.copytree(root_path, dest_root, dirs_exist_ok=True)
+    
+    # --- 2) Clone entire input folder into src/ (preserves include/, lib/, etc) ---
+    input_root = Path("input").resolve()
+    if not input_root.exists():
+        raise RuntimeError(f"Input folder not found: {input_root}")
+    src_dir.mkdir(parents=True, exist_ok=True)
+    for item in input_root.iterdir():
+        dest = src_dir / item.name
+        if item.is_dir():
+            shutil.copytree(item, dest, dirs_exist_ok=True)
         else:
-            shutil.copytree(root_path, dest_root)
-
+            shutil.copy2(item, dest)
+    
     # --- 3) Copy internal bridge deps as before ---
     internal_deps_src = Path(__file__).parent / "dependencies" / "include"
     if internal_deps_src.exists():
@@ -63,7 +72,21 @@ def generate_vs_project(config):
     # --- 5) Write config.json for your own record ---
     (output_folder / "config.json").write_text(json.dumps(config, indent=2))
 
-    # --- 6) Gather .cpp / .h for the vcxproj ---
+    # --- 6) Copy each .lib into src/lib and prepare linker paths ---
+    lib_dest = src_dir / "lib"
+    lib_dest.mkdir(parents=True, exist_ok=True)
+
+    # Copy the actual .lib files into src/lib
+    lib_dest = src_dir / "lib"
+    lib_dest.mkdir(parents=True, exist_ok=True)
+    for lib_dir in library_dirs:
+        for lib_name in libraries:
+            src_lib = Path(lib_dir) / lib_name
+            if not src_lib.exists():
+                raise RuntimeError(f"Library not found: {src_lib}")
+            shutil.copy2(src_lib, lib_dest / lib_name)
+
+    # Gather .cpp / .h for the vcxproj
     cpp_files = list(src_dir.rglob("*.cpp"))
     h_files   = list(include_dir.rglob("*.h"))
 
@@ -76,22 +99,27 @@ def generate_vs_project(config):
         for f in h_files
     )
 
+    # Now point the linker at our local lib folder and list only .lib names
+    lib_dirs_tag = "lib;%(AdditionalLibraryDirectories)"
+    libs_tag = ";".join(Path(lib).name for lib in libraries) + ";%(AdditionalDependencies)"
+
     # --- 7) Fill & write *.vcxproj ---
     vcxproj_content = VCXPROJ_TEMPLATE.safe_substitute({
-        "CPP_FILES":     cpp_tags,
-        "HEADER_FILES":  h_tags,
-        "PROJECT_GUID":  project_guid,
-        "EXTENSION_NAME": ext_name,
-        "DLL_NAME":      dll_name,
-        "USER_PREPROCESSOR_DEFINES":  user_defs_str
+        "CPP_FILES":                 cpp_tags,
+        "HEADER_FILES":              h_tags,
+        "PROJECT_GUID":              project_guid,
+        "PROJECT_NAME":              project_name,
+        "USER_PREPROCESSOR_DEFINES": user_defs_str,
+        "LIBRARY_DIRS":              lib_dirs_tag,
+        "LIBRARIES":                 libs_tag,
     })
-    (src_dir / f"{ext_name}.vcxproj").write_text(vcxproj_content)
+    (src_dir / f"{project_name}.vcxproj").write_text(vcxproj_content)
 
     # --- 8) Fill & write .sln ---
     sln_content = SLN_TEMPLATE.substitute({
-        "PROJECT_NAME":  ext_name,
-        "PROJECT_GUID":  project_guid
+        "PROJECT_NAME": project_name,
+        "PROJECT_GUID": project_guid
     })
-    (output_folder / f"{ext_name}.sln").write_text(sln_content)
+    (output_folder / f"{project_name}.sln").write_text(sln_content)
 
     return f"VS project created under: {output_folder}"

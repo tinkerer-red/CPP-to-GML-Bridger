@@ -13,10 +13,10 @@ def generate_yy_extension(parse_result, config):
     known_structs = parse_result["struct_fields"].keys()
     enum_names    = set(parse_result["enums"].keys())
 
-    dll_name      = config.get("dll_name", "GM-OpenXR.dll")
+    project_name  = config.get("project_name", "ProjectName")
     init_name     = config.get("init_function", "YYExtensionInitialise")
-    cleanup_name  = config.get("cleanup_function", "YYExtensionInitialise")
-    extension_name= config.get("extension_name", "GM_OpenXR")
+    cleanup_name  = config.get("cleanup_function", "YYExtensionCleanup")
+    dll_name = f"{project_name}.dll"
 
     func_entries = []
     count_success = count_warning = count_failure = 0
@@ -128,13 +128,13 @@ def generate_yy_extension(parse_result, config):
     # === Extension entry ===
     extension = {
         "$GMExtension":      "",
-        "%Name":             extension_name,
+        "%Name":             project_name,
         "androidProps":      {},
-        "filename":          extension_name,
+        "filename":          project_name,
         "functions":         file_entry["functions"],
         "init":              init_name,
         "kind":              1,
-        "name":              extension_name,
+        "name":              project_name,
         "resourceType":      "GMExtension",
         "resourceVersion":   "2.0",
         "files":             [file_entry],

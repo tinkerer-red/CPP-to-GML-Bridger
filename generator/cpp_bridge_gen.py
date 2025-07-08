@@ -329,17 +329,67 @@ extern "C" const char* __cpp_create_{name}() {{
 
             # 2) Standard numerics (float, double, int32, bool, enum)
             elif ext == "double":
+                # always accept as double in the bridge signature
                 decls.append(f"double {arg_name}")
+                # cast back to the real C type if needed
+                cdecl = arg["declared_type"]
+                if cdecl == "float":
+                    converts.append(
+                        f"float {arg_name}_val = static_cast<float>({arg_name});"
+                    )
+                    call_args.append(f"{arg_name}_val")
+                elif cdecl != "double":
+                    # e.g. uint32_t propertyCapacityInput = static_cast<uint32_t>(propertyCapacityInput);
+                    converts.append(
+                        f"{cdecl} {arg_name}_val = static_cast<{cdecl}>({arg_name});"
+                    )
+                    call_args.append(f"{arg_name}_val")
+                else:
+                    # it's already a true double
+                    call_args.append(arg_name)
+            
+            # 4) Structs passed by value → receive as JSON, deserialize
+            elif is_ref and not arg["has_pointer"] and base_type in known_structs:
+                decls.append(f"const char* {arg_name}_json")
+                converts.append(f"    // Deserialize JSON into {base_type}")
+                converts.append(
+                    f"    {base_type} {arg_name} = "
+                    f"nlohmann::json::parse({arg_name}_json).get<{base_type}>();"
+                )
                 call_args.append(arg_name)
 
-            # 4) Refs (pointers to structs or function pointers)
+            # 5) Refs (opaque handles, function pointers, or buffers)
             elif is_ref:
                 decls.append(f"const char* {arg_name}_ref")
-                converts.append(f"// Convert Argument{i} ({arg_name}) to {base_type}")
-                converts.append(f"void* {arg_name}_ptr = RefManager::instance().retrieve({arg_name}_ref);")
-                converts.append(f"if (!{arg_name}_ptr) return {err_return};")
-                converts.append(f"{base_type}* {arg_name} = static_cast<{base_type}*>({arg_name}_ptr);")
-                call_args.append(arg_name)
+                converts.append(f"    // Convert Argument{i} ({arg_name}) to {arg['declared_type']}")
+                converts.append(
+                    f"    void* {arg_name}_ptr = RefManager::instance().retrieve({arg_name}_ref);"
+                )
+                converts.append(f"    if (!{arg_name}_ptr) return {err_return};")
+
+                # detect how many levels of pointer were declared (e.g. "T**" → depth=2)
+                depth = arg["declared_type"].count("*")
+                if depth >= 2:
+                    # cast to the element type pointer, then take its address
+                    elem_type = base_type  # e.g. "XrVector3f"
+                    converts.append(
+                        f"    {elem_type}* {arg_name}_buf = "
+                        f"static_cast<{elem_type}*>({arg_name}_ptr);"
+                    )
+                    # use the original declared_type (e.g. "XrVector3f**") here
+                    converts.append(
+                        f"    {arg['declared_type']} {arg_name} = &{arg_name}_buf;"
+                    )
+                    call_args.append(arg_name)
+                else:
+                    # ordinary single-pointer
+                    converts.append(
+                        f"    {base_type}* {arg_name} = "
+                        f"static_cast<{base_type}*>({arg_name}_ptr);"
+                    )
+                    call_args.append(arg_name)
+
+
 
             # 3) Plain strings (const char*, std::string)
             elif ext == "string":

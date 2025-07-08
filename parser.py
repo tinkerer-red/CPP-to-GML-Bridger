@@ -160,7 +160,7 @@ def classify_c_type(parse_result, c_type, config):
     }
 
     # 1) Pointers
-    if has_ptr:
+    if has_ptr or rec["is_struct"] or rec["is_function_ptr"]:
         rec["is_ref"] = True
         rec["extension_type"] = "string"
         return rec
@@ -422,6 +422,17 @@ def parse_header(config):
         # Finally, ensure each prototype ends on its own line
         content = re.sub(r'\)\s*;\s*', ');' + '\n', content)
         
+        # Helper: collapse C-style array syntax into pointer + size
+        def normalize_array(tp, nm):
+            # e.g. "float vals[16]" → ("float*", "vals", "16")
+            if '[' in nm and nm.endswith(']'):
+                idx      = nm.index('[')
+                size     = nm[idx+1:-1]
+                nm_clean = nm[:idx]
+                tp_ptr   = (tp + '*').strip()
+                return tp_ptr, nm_clean, size
+            return tp, nm, None
+        
         # 9) Functions
         for m in FUNC_RE.finditer(content):
             fn_name = m.group("name")
@@ -439,7 +450,16 @@ def parse_header(config):
                     tp, nm = parts
                 else:
                     tp, nm = parts[0], f"arg{len(arg_list)}"
+                
+                # normalize C-style arrays → pointers + capture size
+                tp, nm, array_size = normalize_array(tp, nm)
+
                 meta = classify_c_type(parse_result, tp, config)
+
+                if array_size is not None:
+                    meta["is_ref"]         = True
+                    meta["extension_type"] = "string"
+
                 entry = {"name": nm, "type": tp, **meta}
                 arg_list.append(entry)
 
@@ -475,11 +495,52 @@ def parse_header(config):
 
         all_results["files"][hdr] = parse_result
 
-
+    
     parse_result = flatten_parse_data(all_results)
 
+    # If the user supplied one or more .lib files, extract their exported symbols
+    exports = []
+    for lib_path_str in config.get("libraries", []):
+        lib_path = Path(lib_path_str)
+        print(f"[GMBridge] Dumping exports from {lib_path!r}")
+        try:
+            proc = subprocess.run(
+                ["dumpbin", "/EXPORTS", str(lib_path)],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                encoding="utf-8", check=True
+            )
+        except subprocess.CalledProcessError as err:
+            print(f"[GMBridge] dumpbin failed on {lib_path!r}: {err.stderr.strip()}")
+            continue
+
+        for line in proc.stdout.splitlines():
+            m = re.match(r'^\s+([A-Za-z_]\w+)$', line)
+            if m:
+                exports.append(m.group(1))
+    
+    parse_result["exports"] = exports
+
+    
+    # Report counts before pruning
+    funcs = parse_result.get("functions", [])
+    print(f"[GMBridge] Parsed {len(funcs)} functions, found {len(exports)} exports")
+
+    # Now prune to intersection: only keep functions whose names are in exports,
+    # and only keep export names that correspond to a parsed function.
+    funcs = parse_result.get("functions", [])
+    if parse_result["exports"]:
+        pruned_funcs = [fn for fn in funcs if fn["name"] in parse_result["exports"]]
+        pruned_exports = [name for name in parse_result["exports"]
+                          if any(fn["name"] == name for fn in pruned_funcs)]
+        parse_result["functions"] = pruned_funcs
+        parse_result["exports"]   = pruned_exports
+
+    # Report counts after pruning
+    print(f"[GMBridge] Kept {len(parse_result['functions'])} functions, {len(parse_result['exports'])} exports")
+
+    
     if config.get("debug"):
         with open("debug_parser.json","w",encoding="utf-8") as f:
             json.dump(parse_result, f, indent=2)
-            
+
     return parse_result

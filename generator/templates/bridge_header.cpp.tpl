@@ -10,15 +10,12 @@
 #include <unordered_set>
 #include <queue>
 #include <stack>
-#include <span>
 #include <optional>
 #include <variant>
 #include <memory>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 ${INCLUDE_HEADER}
-
-extern double debug_mode;
 
 // Shared buffer for JSON/ref returns
 static thread_local std::string _tmp_str;
@@ -53,17 +50,11 @@ extern "C" double __cpp_from_json(const char* ref_cstr, const char* json_cstr) {
 }
 
 extern "C" double __ref_destroy(const char* ref) {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_destroy" << std::endl;
-    }
     RefManager::instance().release(ref);
     return 1.0;
 }
 
 extern "C" double __ref_manager_flush() {
-    if (debug_mode) {
-        std::cout << "[GMBridge] Called __ref_manager_flush (ALL)" << std::endl;
-    }
     RefManager::instance().flush();
     return 1.0;
 }
@@ -203,16 +194,6 @@ extern "C" const char* __cpp_create_buffer() {
 
     auto* buffPtr = new GMBufferPtr{};
     std::string _tmp_str = RefManager::instance().store("buffer", buffPtr);
-    return _tmp_str.c_str();
-}
-
-// === Span<uint8_t> ===
-using GMSpanOfUint8 = std::span<uint8_t>;
-extern "C" const char* __cpp_create_span() {
-    REFMAN_REGISTER_TYPE(span, GMSpanOfUint8);
-
-    auto* spanPtr = new GMSpanOfUint8{};
-    std::string _tmp_str = RefManager::instance().store("span", spanPtr);
     return _tmp_str.c_str();
 }
 

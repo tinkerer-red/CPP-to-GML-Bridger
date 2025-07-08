@@ -13,8 +13,9 @@ def main():
     # Load tool configuration
     with open("config.json", "r", encoding="utf-8") as cfg_file:
         config = json.load(cfg_file)
-
+    
     # Clean output folder (preserve .gitignore and .vs)
+    project_name = config.get("project_name", "GM_OpenXR")
     output_path = Path(config["output_folder"])
     preserved = {".gitignore", ".vs"}
 
@@ -42,13 +43,13 @@ def main():
 
     # 2) Generate the GML stub
     gml_file = generate_gml_stub(parse_result, config)
-    gml_path = os.path.join(config["output_folder"], config["gml_stub"])
+    gml_path     = os.path.join(config["output_folder"], f"{project_name}.gml")
     with open(gml_path, "w", encoding="utf-8") as f:
         f.write(gml_file)
 
     # 3) Generate the YY extension file
     yy_file = generate_yy_extension(parse_result, config)
-    yy_path = os.path.join(config["output_folder"], config["yy_extension"])
+    yy_path     = os.path.join(config["output_folder"], f"{project_name}.yy")
     with open(yy_path, "w", encoding="utf-8") as f:
         f.write(yy_file)
 

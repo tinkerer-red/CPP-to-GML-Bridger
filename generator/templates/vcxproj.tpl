@@ -13,7 +13,8 @@
 
   <PropertyGroup Label="Globals">
     <ProjectGuid>{$PROJECT_GUID}</ProjectGuid>
-    <RootNamespace>${EXTENSION_NAME}</RootNamespace>
+    <RootNamespace>${PROJECT_NAME}</RootNamespace>
+    <TargetName>${PROJECT_NAME}</TargetName>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
 
@@ -51,7 +52,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(OutDir)${DLL_NAME}</OutputFile>
+      <AdditionalLibraryDirectories>${LIBRARY_DIRS}</AdditionalLibraryDirectories>
+      <AdditionalDependencies>${LIBRARIES}</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
 
@@ -71,7 +73,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(OutDir)${DLL_NAME}</OutputFile>
+      <OutputFile>$(OutDir)${PROJECT_NAME}</OutputFile>
     </Link>
   </ItemDefinitionGroup>
 
