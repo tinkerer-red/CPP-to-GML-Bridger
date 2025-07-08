@@ -59,7 +59,7 @@ def generate_vs_project(config):
                 shutil.copy2(item, dest_path)
 
     # --- 4) Move generated bridge + RefManager files to src/ ---
-    bridge_cpp = output_folder / "bridge.cpp"
+    bridge_cpp = output_folder / f"{config["project_name"]}.cpp"
     if bridge_cpp.exists():
         src_dir.mkdir(parents=True, exist_ok=True)
         shutil.move(str(bridge_cpp), str(src_dir / bridge_cpp.name))

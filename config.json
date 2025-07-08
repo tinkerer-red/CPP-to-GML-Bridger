@@ -5,12 +5,7 @@
   "libraries": [
     "input/lib/openxr_loader.lib"
   ],
-  
   "output_folder": "output",
-  "output_cpp_file": "bridge.cpp",
-  
-  "gml_stub": "GM_OpenXR.gml",
-  "yy_extension": "GM_OpenXR.yy",
   
   "project_name": "GM_OpenXR",
   "namespace": "XR",

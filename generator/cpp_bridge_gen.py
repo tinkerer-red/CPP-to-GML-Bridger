@@ -474,7 +474,7 @@ extern "C" const char* __cpp_create_{name}() {{
     })
 
     return {
-        config["output_cpp_file"]: bridge_cpp,
+        f"{config["project_name"]}.cpp": bridge_cpp,
         "RefManager.h": REF_MANAGER_H,
         "RefManager.cpp": REF_MANAGER_CPP
     }
