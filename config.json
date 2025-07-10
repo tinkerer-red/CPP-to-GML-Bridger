@@ -1,26 +1,28 @@
 {
-  "include_files": [
-    "input/include/openxr/openxr.h"
-  ],
-  "libraries": [
-    "input/lib/openxr_loader.lib"
-  ],
-  "output_folder": "output",
-  
-  "project_name": "GM_OpenXR",
-  "namespace": "XR",
-  "init_function": "YYExtensionInitialise",
-  
-  "skip_function_prefixes": ["_"],
-  "cull_function_names": true,
-  "cull_constant_names": true,
-  "cull_enum_names": true,
-  
-  "debug": true,
-  
-  "preprocessor": ["cpp", "-P", "-dD", "-std=c99"],
-  "preprocessor_defines": [
-    "XR_EXTENSION_PROTOTYPES"
-  ]
-  
+	"include_files": ["input/include/openxr/openxr.h"],
+	"link_libraries": [],
+	"cmake_overrides": {},
+	
+	"project_name": "GM_OpenXR",
+	"namespace": "XR",
+
+	"init_function": "YYExtensionInitialise",
+	"cleanup_function": "YYExtensionCleanup",
+
+	"skip_function_prefixes": ["_"],
+	"strip_namespace_from_functions": true,
+	"strip_namespace_from_constants": true,
+	"strip_namespace_from_enums": true,
+
+	"debug": true,
+	"verbose_logging": true,
+
+	"preprocessor": ["cpp", "-P", "-dD", "-std=c99"],
+	"preprocessor_defines": ["XR_EXTENSION_PROTOTYPES"],
+
+	"targets": ["windows-x64", "linux-x64"],
+	"emit_docs": true,
+	"emit_vs_project": true,
+	
+	"extra_includes": []
 }

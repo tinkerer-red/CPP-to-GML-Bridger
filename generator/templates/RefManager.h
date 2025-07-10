@@ -4,7 +4,8 @@
 #include <sstream>
 #include <functional>
 #include <type_traits>
-#include <nlohmann/json.hpp>
+#include "deps/nlohmann/json.hpp"
+
 using json = nlohmann::json;
 
 class RefManager {

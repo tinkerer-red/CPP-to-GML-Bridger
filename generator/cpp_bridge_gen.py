@@ -1,19 +1,23 @@
-# generator/cpp_bridge_gen.py
 import os
+import re
+import shutil
 from pathlib import Path
 from string import Template
+from generator.builtin_constructors import BUILTIN_PATTERNS
 
-# Load templates…
-TEMPLATES_DIR     = Path(__file__).parent / "templates"
-BRIDGE_HEADER_TPL = Template((TEMPLATES_DIR / "bridge_header.cpp.tpl").read_text(encoding="utf-8"))
-REF_MANAGER_H     = (TEMPLATES_DIR / "RefManager.h").read_text(encoding="utf-8")
-REF_MANAGER_CPP   = (TEMPLATES_DIR / "RefManager.cpp").read_text(encoding="utf-8")
+# ——— Load our templates & RefManager sources ———
+TEMPLATES_DIR = Path(__file__).parent / "templates"
+BRIDGE_HEADER_TEMPLATE = Template(
+    (TEMPLATES_DIR / "bridge.h.tpl").read_text(encoding="utf-8")
+)
+REF_MANAGER_HEADER = (TEMPLATES_DIR / "RefManager.h").read_text(encoding="utf-8")
+REF_MANAGER_SOURCE = (TEMPLATES_DIR / "RefManager.cpp").read_text(encoding="utf-8")
 
-# Constants for 64-bit limits
-INT64_MIN = "-9223372036854775808"
-INT64_MAX = "9223372036854775807"
-
-import re
+# ——— Helper to sanitize C++ types into valid identifier suffixes ———
+def sanitize_type_name(type_name: str) -> str:
+    cleaned = re.sub(r'[^0-9A-Za-z_]', '_', type_name)
+    cleaned = re.sub(r'__+', '_', cleaned).strip('_')
+    return cleaned
 
 def resolve_type(type_name: str, typedef_map: dict[str,str]) -> str:
     """Chase typedefs until we find the underlying type."""
@@ -191,290 +195,376 @@ def generate_struct_json_overloads(struct_name: str,
     lines.append(f'REFMAN_REGISTER_TYPE({struct_name}, {struct_name});')
     return "\n".join(lines)
 
+def collect_reachable_structs(parse_result, exported_functions):
+    # parse_result["struct_fields"]: Dict[str, List[field_dict]]
+    struct_fields = parse_result["struct_fields"]
+    reachable   = set()
+    work_queue  = []
 
-    return "\n".join(lines)
+    # 1) Seed: any struct that is a return or arg type
+    for fn in exported_functions:
+        rt = fn["return_meta"]["canonical_type"]
+        if rt in struct_fields and rt not in reachable:
+            reachable.add(rt)
+            work_queue.append(rt)
+
+        for arg in fn["args"]:
+            at = arg["canonical_type"]
+            if at in struct_fields and at not in reachable:
+                reachable.add(at)
+                work_queue.append(at)
+
+    # 2) BFS/DFS: pull in any nested structs
+    while work_queue:
+        current = work_queue.pop()
+        for field in struct_fields[current]:
+            inner_type = field["canonical_type"]
+            if inner_type in struct_fields and inner_type not in reachable:
+                reachable.add(inner_type)
+                work_queue.append(inner_type)
+
+    return reachable
+
+def _write_bridge_and_deps(out_files: dict[str,str], verbose: bool):
+    """
+    1) Dump every generated bridge file into output/src/
+    2) Copy the entire ./deps folder into output/src/deps
+    """
+    out_src = Path.cwd() / "output" / "src"
+    out_src.mkdir(parents=True, exist_ok=True)
+
+    # 1) Write generated bridge files
+    for name, text in out_files.items():
+        path = out_src / name
+        path.write_text(text, encoding="utf-8")
+        if verbose:
+            print(f"[GMBridge][cpp_bridge] Wrote {path}")
+
+    # 2) Copy deps
+    deps_src = Path.cwd() / "deps"
+    deps_dst = out_src / "deps"
+    if deps_src.is_dir():
+        shutil.copytree(deps_src, deps_dst, dirs_exist_ok=True)
+        if verbose:
+            print(f"[GMBridge][cpp_bridge] Copied deps {deps_src} → {deps_dst}")
+    else:
+        raise FileNotFoundError(f"[GMBridge][cpp_bridge] Expected './deps' folder, not found.")
 
 def order_structs_by_dependency(dependency_map: dict[str, list[str]]) -> list[str]:
     """
-    dependency_map: map from struct_name to list of structs it depends on
-    returns a list of struct_names in an order where dependencies come first
+    Given a map struct_name → [structs it depends on],
+    returns a list in which every struct appears **after**
+    all the structs it relies on.
     """
-    # 1) Build reverse adjacency: for each edge parent→child, record child→parent
-    dependents: dict[str, list[str]] = {name: [] for name in dependency_map}
+    # Build reverse adjacency: child → list of parents
+    dependents = {name: [] for name in dependency_map}
     for parent, children in dependency_map.items():
         for child in children:
             dependents[child].append(parent)
 
-    # 2) Compute in-degree = number of dependencies each struct has
-    in_degree: dict[str, int] = {
-        name: len(children)
-        for name, children in dependency_map.items()
-    }
+    # in-degree = how many deps each struct has
+    in_degree = {name: len(children) for name, children in dependency_map.items()}
 
-    # 3) Start with structs that have no dependencies
-    processing_queue = [name for name, deg in in_degree.items() if deg == 0]
-    sorted_list: list[str] = []
+    # start with zero-in-degree structs
+    queue = [name for name, deg in in_degree.items() if deg == 0]
+    sorted_list = []
 
-    # 4) Kahn’s algorithm
-    while processing_queue:
-        current = processing_queue.pop(0)
-        sorted_list.append(current)
-        # “Remove” edges from current to its dependents
-        for parent in dependents[current]:
+    # Kahn’s topo sort
+    while queue:
+        n = queue.pop(0)
+        sorted_list.append(n)
+        for parent in dependents[n]:
             in_degree[parent] -= 1
             if in_degree[parent] == 0:
-                processing_queue.append(parent)
+                queue.append(parent)
 
-    # 5) Detect cycles
     if len(sorted_list) != len(dependency_map):
         raise ValueError("Cycle detected in struct dependencies")
+    return sorted_list
 
+# ——— The refactored bridge generator ———
+def order_structs_by_dependency(dependency_map: dict[str, list[str]]) -> list[str]:
+    """
+    Given struct → [other structs it depends on], returns a list where
+    dependencies always come before dependents.
+    """
+    # Build reverse adjacency
+    dependents = {name: [] for name in dependency_map}
+    for parent, children in dependency_map.items():
+        for child in children:
+            dependents[child].append(parent)
+
+    # Compute in-degrees
+    in_degree = {name: len(children) for name, children in dependency_map.items()}
+
+    # Kahn’s algorithm
+    queue = [n for n, deg in in_degree.items() if deg == 0]
+    sorted_list = []
+    while queue:
+        n = queue.pop(0)
+        sorted_list.append(n)
+        for parent in dependents[n]:
+            in_degree[parent] -= 1
+            if in_degree[parent] == 0:
+                queue.append(parent)
+
+    if len(sorted_list) != len(dependency_map):
+        raise ValueError("Cycle detected in struct dependencies")
     return sorted_list
 
 
+def generate_cpp_bridge(parse_result, config, defines, exports):
+    """
+    parse_result: output of parse_headers()
+    defines:      list[str] but unused
+    exports:      list of symbol names to wrap
+    """
+    verbose = config.get("verbose_logging", False)
+    if verbose:
+        print("[GMBridge][cpp_bridge] Starting generate_cpp_bridge()")
 
-def generate_cpp_bridge(parse_result, config):
-    debug               = config.get("debug", True)
-    functions           = parse_result["functions"]
-    known_structs       = parse_result["struct_fields"].keys()
-    func_ptr_aliases    = parse_result["function_ptr_aliases"]
-    
-    namespace   = config.get("namespace", "XR")
+    project_name = config["project_name"]
+    output_root  = Path.cwd() / "output"
+    src_dir      = output_root / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
 
-    # 0) Build dependency graph: structName -> [list of nested struct names]
-    struct_fields = parse_result["struct_fields"]
-    struct_set    = set(struct_fields.keys())
+    # 1) Filter exported functions
+    all_functions = [fn for fn in parse_result["functions"]
+                     if fn["name"] in set(exports)]
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Exported functions: {len(all_functions)}")
 
-    deps = {}
-    for struct_name, fields in struct_fields.items():
-        needed = []
-        for f in fields:
-            # resolve to canonical type (reuse your resolve_type logic)
-            canon = resolve_type(f["type"], parse_result["typedef_map"])
-            # if it’s one of your structs, record the dependency
-            if canon in struct_set:
-                needed.append(canon)
-        deps[struct_name] = needed
-
-    # Topologically sort so that nested structs come first
-    ordered_structs = order_structs_by_dependency(deps)
-
-    # Only keep structs whose name is their own canonical type
-    filtered_structs = [
-        name for name in ordered_structs
-        if resolve_type(name, parse_result["typedef_map"]) == name
-    ]
-
-    # 1) Struct constructors + JSON I/O (import then export)
-    struct_constructors = []
-    for name in filtered_structs:
-        fields = parse_result["struct_fields"][name]
-        # 1) Create function
-        struct_constructors.append(f'''
-// === Auto-generated bridge for {name} ===
-extern "C" const char* __cpp_create_{name}() {{
-    auto* obj = new {name}{{}};
-    std::string _tmp_str = RefManager::instance().store("{name}", obj);
-    return _tmp_str.c_str();
-}}
-'''.strip())
-
-        # 2) JSON overloads
-        struct_constructors.append(generate_struct_json_overloads(name, fields, parse_result))
-
-    
-    # 2) Function bridges
-    function_bridges = []
-    for fn in functions:
-        fn_name     = fn["name"]
-        ret_meta = fn["return_meta"]
-        ret_ext  = ret_meta["extension_type"]
-        canon_rt = ret_meta["canonical_type"]
-
-        # pick return signature and default error return
-        if ret_ext == "void":
-            # we return a dummy double (GML will ignore it)
-            ret_sig, err_return = "double", "0.0"
-        elif ret_ext == "double":
-            ret_sig, err_return = "double", "std::numeric_limits<double>::quiet_NaN()"
-        elif ret_ext in ("ref", "string"):
-            ret_sig, err_return = "const char*", "\"\""
-        else:
-            # fallback – should rarely happen
-            ret_sig, err_return = "const char*", "\"\""
-
-
-
-        # Build argument decls, conversions, and call_args:
-        decls, converts, call_args = [], [], []
-        for i, arg in enumerate(fn["args"]):
-            arg_name         = arg["name"]
-            base_type    = arg["base_type"]
-            canonical    = arg["canonical_type"].lower()
-            is_big       = arg["is_unsupported_numeric"]
-            is_ref       = arg["is_ref"]
-            ext          = arg["extension_type"]
-
-            # 1) Big integers → receive as string, parse back
-            if is_big:
-                decls.append(f"const char* {name}_str")
-                # Use the real declared_type (e.g. XrInstance) for the local variable
-                if canonical.startswith("u"):
-                    converts.append(f"// Parse big unsigned integer Argument{i} ({name})")
-                    converts.append(f"{arg['declared_type']} {name} = static_cast<{arg['declared_type']}>(std::stoull({name}_str));")
-                else:
-                    converts.append(f"// Parse big signed integer Argument{i} ({name})")
-                    converts.append(f"{arg['declared_type']} {name} = static_cast<{arg['declared_type']}>(std::stoll({name}_str));")
-                call_args.append(name)
-
-            # 2) Standard numerics (float, double, int32, bool, enum)
-            elif ext == "double":
-                # always accept as double in the bridge signature
-                decls.append(f"double {arg_name}")
-                # cast back to the real C type if needed
-                cdecl = arg["declared_type"]
-                if cdecl == "float":
-                    converts.append(
-                        f"float {arg_name}_val = static_cast<float>({arg_name});"
-                    )
-                    call_args.append(f"{arg_name}_val")
-                elif cdecl != "double":
-                    # e.g. uint32_t propertyCapacityInput = static_cast<uint32_t>(propertyCapacityInput);
-                    converts.append(
-                        f"{cdecl} {arg_name}_val = static_cast<{cdecl}>({arg_name});"
-                    )
-                    call_args.append(f"{arg_name}_val")
-                else:
-                    # it's already a true double
-                    call_args.append(arg_name)
-            
-            # 4) Structs passed by value → receive as JSON, deserialize
-            elif is_ref and not arg["has_pointer"] and base_type in known_structs:
-                decls.append(f"const char* {arg_name}_json")
-                converts.append(f"    // Deserialize JSON into {base_type}")
-                converts.append(
-                    f"    {base_type} {arg_name} = "
-                    f"nlohmann::json::parse({arg_name}_json).get<{base_type}>();"
-                )
-                call_args.append(arg_name)
-
-            # 5) Refs (opaque handles, function pointers, or buffers)
-            elif is_ref:
-                decls.append(f"const char* {arg_name}_ref")
-                converts.append(f"    // Convert Argument{i} ({arg_name}) to {arg['declared_type']}")
-                converts.append(
-                    f"    void* {arg_name}_ptr = RefManager::instance().retrieve({arg_name}_ref);"
-                )
-                converts.append(f"    if (!{arg_name}_ptr) return {err_return};")
-
-                # detect how many levels of pointer were declared (e.g. "T**" → depth=2)
-                depth = arg["declared_type"].count("*")
-                if depth >= 2:
-                    # cast to the element type pointer, then take its address
-                    elem_type = base_type  # e.g. "XrVector3f"
-                    converts.append(
-                        f"    {elem_type}* {arg_name}_buf = "
-                        f"static_cast<{elem_type}*>({arg_name}_ptr);"
-                    )
-                    # use the original declared_type (e.g. "XrVector3f**") here
-                    converts.append(
-                        f"    {arg['declared_type']} {arg_name} = &{arg_name}_buf;"
-                    )
-                    call_args.append(arg_name)
-                else:
-                    # ordinary single-pointer
-                    converts.append(
-                        f"    {base_type}* {arg_name} = "
-                        f"static_cast<{base_type}*>({arg_name}_ptr);"
-                    )
-                    call_args.append(arg_name)
-
-
-
-            # 3) Plain strings (const char*, std::string)
-            elif ext == "string":
-                decls.append(f"const char* {arg_name}")
-                call_args.append(arg_name)
-            
-            # 5) Fallback: treat as string
-            else:
-                # we don’t know how to marshal this yet!
-                decls.append(f"// TODO: marshal argument '{arg_name}' of type {arg['type']}")
-                call_args.append(arg_name)
-
-
-
-        # assemble the function bridge
-        fb = [f"// Bridge for {fn_name}"]
-        fb.append(f'extern "C" {ret_sig} __{fn_name}({", ".join(decls)}) {{')
-
-        if debug:
-            fb.append(f'    std::cout << "[GMBridge] Called {fn_name}" << std::endl;')
-
-        fb += [f"    {line}" for line in converts if line.strip()]
-        
-        # If it's not a void return set up it's result value
-        if ret_ext == "void":
-            fb.append(f"    {fn_name}({', '.join(call_args)});")
-        else:
-            fb.append(f"\n    {canon_rt} result = {fn_name}({', '.join(call_args)});")
-
-        if ret_ext == "void":
-            # just call it, then return our dummy
-            fb.append(f"    return 0.0;")
-        
-        # 1) Unsupported-width integer returns → serialize to string
-        elif ret_meta["is_unsupported_numeric"]:
-            fb.append(
-                "    _tmp_str = std::to_string(result);\n"
-                "    return _tmp_str.c_str();"
-            )
-
-        # 2) Standard-number returns
-        elif ret_ext == "double":
-            fb.append("    return static_cast<double>(result);")
-
-        # 3) Ref returns
-        elif ret_meta["is_ref"]:
-            fb.append(
-                f'    _tmp_str = RefManager::instance().store("{ret_meta["base_type"]}", result);\n'
-                "    return _tmp_str.c_str();"
-            )
-
-        # 4) Native-string returns
-        elif ret_ext == "string":
-            fb.append("    return result;")
-
-        # 5) Fallback error
-        else:
-            fb.append(f"    return {err_return};")
-        
-        fb.append("}\n")
-        function_bridges.append("\n".join(fb))
-
-    # 3) Fill in the header template
-    # build a multi-line include block from every entry in config["include_files"]:
+    # 2) Build includes (based purely on config["include_files"])
     include_lines = []
-    for path in config.get("include_files", []):
-        # normalize and strip any leading folders up through "include/"
-        rel = Path(path).as_posix()
-        if "/include/" in rel:
-            rel = rel.split("/include/",1)[1]
-        include_lines.append(f'#include "{rel}"')
-    # if none were supplied, fall back to a single default include
+    include_dirs = set()
+
+    for original_path in config.get("include_files", []):
+        original_path = Path(original_path).resolve()
+        if not original_path.exists():
+            continue  # skip missing files
+
+        # Use only the filename (drop all folders)
+        header_name = original_path.name
+        include_lines.append(f'#include <{header_name}>')
+
+        # Now scan for "include" folder parent and infer upstream include dir
+        for parent in original_path.parents:
+            if parent.name.lower() == "include":
+                include_dirs.add(str(Path("output") / "upstream" / "include"))
+                break
+        else:
+            include_dirs.add(str(Path("output") / "upstream"))
+
     if not include_lines:
-        include_lines = ['#include "openxr.h"']
-    include_header = "\n".join(include_lines)
+        include_lines = ['// No include_files provided']
+        include_dirs.add(str(Path("output") / "upstream"))
 
-    bridge_cpp = BRIDGE_HEADER_TPL.substitute({
-        "INCLUDE_HEADER":         include_header,
-        "REF_MANAGER_BRIDGES": "",  
-        "STRUCT_CONSTRUCTORS": "\n".join(struct_constructors),
-        "FUNCTION_BRIDGES":    "\n".join(function_bridges)
-    })
+    include_block = "\n".join(include_lines)
 
-    return {
-        f"{config["project_name"]}.cpp": bridge_cpp,
-        "RefManager.h": REF_MANAGER_H,
-        "RefManager.cpp": REF_MANAGER_CPP
+
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Includes:\n{include_block}")
+    
+    # 3) Compute used types & reachable structs
+    used_types = set()
+    for fn in all_functions:
+        used_types.add(fn["return_meta"]["canonical_type"])
+        for arg in fn["args"]:
+            used_types.add(arg["canonical_type"])
+    reachable = collect_reachable_structs(parse_result, all_functions)
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Reachable structs: {reachable}")
+    for struct in reachable:
+        for fld in parse_result["struct_fields"][struct]:
+            used_types.add(fld["canonical_type"])
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Types to inspect: {sorted(used_types)}")
+
+    # 3a) Build dependency graph *among reachable only*
+    #    struct_name -> [other reachable structs it directly uses]
+    deps = {}
+    typedef_map = parse_result["typedef_map"]
+    struct_fields = parse_result["struct_fields"]
+    for struct in reachable:
+        needed = []
+        for f in struct_fields[struct]:
+            canon = resolve_type(f["type"], typedef_map)
+            if canon in reachable:
+                needed.append(canon)
+        deps[struct] = needed
+
+    # 3b) Topologically sort so dependencies come first
+    ordered_structs = order_structs_by_dependency(deps)
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Ordered structs: {ordered_structs}")
+
+    # 4) Generate builtin constructors
+    builtin_constructors = []
+    for t in sorted(used_types):
+        for pat, gen in BUILTIN_PATTERNS:
+            m = pat.fullmatch(t)
+            if m:
+                builtin_constructors.append(gen(m))
+                break
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Built-in constructors: "
+              f"{len(builtin_constructors)}")
+
+    # 5) Struct JSON + create(), **in dependency order**
+    struct_json_overloads = []
+    struct_create_decls   = []
+    struct_create_defs    = []
+    for struct in ordered_structs:
+        struct_json_overloads.append(
+            generate_struct_json_overloads(
+                struct,
+                struct_fields[struct],
+                parse_result
+            )
+        )
+        struct_create_decls.append(
+            f'extern "C" const char* __cpp_create_{struct}();'
+        )
+        struct_create_defs.append(
+            f'// === Bridge for {struct} ===\n'
+            f'extern "C" const char* __cpp_create_{struct}() {{\n'
+            f'    auto* obj = new {struct}{{}};\n'
+            f'    return RefManager::instance().store("{struct}", obj).c_str();\n'
+            f'}}'
+        )
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Struct overloads + create(): "
+              f"{len(ordered_structs)}")
+
+    # 6) Function declarations & definitions (unchanged)
+    function_declarations = []
+    function_definitions  = []
+    for fn in all_functions:
+        name      = fn["name"]
+        ret_meta  = fn["return_meta"]
+        ext_ret   = ret_meta["extension_type"]
+        canon_rt  = ret_meta["canonical_type"]
+
+        # pick return signature
+        if ext_ret == "void":
+            ret_sig, err = "double", "0.0"
+        elif ext_ret == "double":
+            ret_sig, err = "double", "std::numeric_limits<double>::quiet_NaN()"
+        else:
+            ret_sig, err = "const char*", "\"\""
+
+        decls, converts, calls = [], [], []
+        for arg in fn["args"]:
+            nm = arg["name"]
+            et = arg["extension_type"]
+            if arg["is_unsupported_numeric"]:
+                decls.append(f"const char* {nm}_str")
+                converts.append(
+                    f"{arg['declared_type']} {nm} = "
+                    f"static_cast<{arg['declared_type']}>"
+                    f"(std::stoull({nm}_str));"
+                )
+                calls.append(nm)
+
+            elif et == "double":
+                decls.append(f"double {nm}")
+                c = arg["declared_type"]
+                if c != "double":
+                    converts.append(
+                        f"{c} {nm}_val = static_cast<{c}>({nm});"
+                    )
+                    calls.append(f"{nm}_val")
+                else:
+                    calls.append(nm)
+
+            elif arg["is_ref"]:
+                decls.append(f"const char* {nm}_ref")
+                converts.append(
+                    f"    void* ptr_{nm} = "
+                    f"RefManager::instance().retrieve({nm}_ref);"
+                )
+                converts.append(f"    if (!ptr_{nm}) return {err};")
+                depth = arg["declared_type"].count("*")
+                base  = arg["base_type"]
+                if depth >= 2:
+                    converts.append(
+                        f"    {base}* buf = static_cast<{base}*>(ptr_{nm});"
+                    )
+                    converts.append(
+                        f"    {arg['declared_type']} {nm} = &buf;"
+                    )
+                else:
+                    converts.append(
+                        f"    {base}* {nm} = static_cast<{base}*>(ptr_{nm});"
+                    )
+                calls.append(nm)
+
+            elif et == "string":
+                decls.append(f"const char* {nm}")
+                calls.append(nm)
+
+            else:
+                decls.append(
+                    f"// TODO marshal '{nm}' of type {arg['type']}"
+                )
+                calls.append(nm)
+
+        # declaration
+        function_declarations.append(
+            f'extern "C" {ret_sig} __{name}({", ".join(decls)});'
+        )
+
+        # definition
+        body = [f'extern "C" {ret_sig} __{name}({", ".join(decls)}) {{']
+        for ln in converts:
+            body.append(f"    {ln}")
+        if ext_ret == "void":
+            body.append(f"    {name}({', '.join(calls)});")
+            body.append("    return 0.0;")
+        else:
+            body.append(
+                f"    {canon_rt} result = {name}({', '.join(calls)});"
+            )
+            if ext_ret == "double":
+                body.append("    return static_cast<double>(result);")
+            else:
+                body.append(
+                    f'    std::string _tmp = '
+                    f'RefManager::instance().store'
+                    f'("{ret_meta["base_type"]}", result);'
+                )
+                body.append("    return _tmp.c_str();")
+        body.append("}")
+        function_definitions.append("\n".join(body))
+
+    if verbose:
+        print(f"[GMBridge][cpp_bridge]  Function bridges: "
+              f"{len(all_functions)}")
+
+    # 7) Render templates (unchanged)
+    header_ctx = {
+        "PROJECT_NAME_UPPER": project_name.upper(),
+        "INCLUDE_LINES": include_block,
+        "BUILTIN_CONSTRUCTORS": "\n\n".join(builtin_constructors),
+        "JSON_OVERLOADS": "\n\n".join(struct_json_overloads),
+        "DECLARATIONS": "\n".join(struct_create_decls + function_declarations),
+        "STRUCT_DEFS": "\n\n".join(struct_create_defs),
+        "FUNCTION_DEFS": "\n\n".join(function_definitions),
     }
+
+    bridge_header = BRIDGE_HEADER_TEMPLATE.substitute(header_ctx)
+    bridge_source = f'#include "{project_name}.h"\n'
+
+    # write files
+    out_files = {
+        f"{project_name}.h": bridge_header,
+        f"{project_name}.cpp": bridge_source,
+        "RefManager.h": REF_MANAGER_HEADER,
+        "RefManager.cpp": REF_MANAGER_SOURCE,
+    }
+    _write_bridge_and_deps(out_files, verbose)
+
+    if verbose:
+        print("[GMBridge][cpp_bridge] Completed generate_cpp_bridge()")
+
+    return out_files

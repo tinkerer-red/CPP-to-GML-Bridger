@@ -1,0 +1,47 @@
+{
+  "source_files": [],
+  "header_files": [
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_loader_negotiation.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_platform_defines.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_reflection.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_reflection_parent_structs.h",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\include\\openxr\\openxr_reflection_structs.h"
+  ],
+  "cmake_files": [
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\ARM64_uwp\\lib\\cmake\\openxr\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\ARM64_uwp\\lib\\cmake\\openxr\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\ARM64_uwp\\lib\\cmake\\openxr\\OpenXRTargets-relwithdebinfo.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\ARM64_uwp\\lib\\cmake\\openxr\\OpenXRTargets.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32\\lib\\cmake\\openxr\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32\\lib\\cmake\\openxr\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32\\lib\\cmake\\openxr\\OpenXRTargets-relwithdebinfo.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32\\lib\\cmake\\openxr\\OpenXRTargets.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32_uwp\\lib\\cmake\\openxr\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32_uwp\\lib\\cmake\\openxr\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32_uwp\\lib\\cmake\\openxr\\OpenXRTargets-relwithdebinfo.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32_uwp\\lib\\cmake\\openxr\\OpenXRTargets.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64\\lib\\cmake\\openxr\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64\\lib\\cmake\\openxr\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64\\lib\\cmake\\openxr\\OpenXRTargets-relwithdebinfo.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64\\lib\\cmake\\openxr\\OpenXRTargets.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64_uwp\\lib\\cmake\\openxr\\OpenXRConfig.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64_uwp\\lib\\cmake\\openxr\\OpenXRConfigVersion.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64_uwp\\lib\\cmake\\openxr\\OpenXRTargets-relwithdebinfo.cmake",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64_uwp\\lib\\cmake\\openxr\\OpenXRTargets.cmake"
+  ],
+  "has_cmake_list": false,
+  "map_files": [],
+  "def_files": [],
+  "object_dirs": [],
+  "library_files": [
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\ARM64_uwp\\lib\\openxr_loader.lib",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32\\lib\\openxr_loader.lib",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\Win32_uwp\\lib\\openxr_loader.lib",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64\\lib\\openxr_loader.lib",
+    "C:\\Users\\Red\\Documents\\GameMakerStudio2\\_tools\\GM-OpenXR\\extensions\\GM_OpenXR\\scr\\GMBridge\\input\\x64_uwp\\lib\\openxr_loader.lib"
+  ]
+}
