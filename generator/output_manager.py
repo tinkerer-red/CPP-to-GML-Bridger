@@ -1,24 +1,35 @@
-import os
 import shutil
+from pathlib import Path
 
-def copy_output_binary(config, output_info):
+def copy_output_binary(config: dict, output_info: dict) -> str:
     """
     Copies a compiled binary into the GameMaker extension folder structure.
 
-    Example target path:
-      extensions/GM_OpenXR/platforms/Windows/x64/GM_OpenXR.dll
+    Example destination:
+      <output_folder>/extensions/GM_OpenXR/platforms/Windows/x64/GM_OpenXR.dll
+    Returns the path to the copied binary.
     """
-    ext_folder = os.path.join(
-        config["output_folder"],
-        "extensions",
-        config["dll_name"],
-        "platforms",
-        output_info["platform"],
-        output_info["architecture"]
-    )
-    os.makedirs(ext_folder, exist_ok=True)
+    # 1) Locate build directory
+    project_root = Path.cwd()
+    input_root   = project_root / "input"
+    output_root  = project_root / "output"
+    
+    project_name = config.get("project_name", "GMBridge")
+    extension_name = output_info["filename"]
+    source_path = Path(output_info["full_path"])
 
-    target_path = os.path.join(ext_folder, output_info["filename"])
+    # Build destination directory
+    destination_directory = (output_root / "extensions" / project_name)
+    destination_directory.mkdir(parents=True, exist_ok=True)
 
-    shutil.copy2(output_info["full_path"], target_path)
-    print(f"Copied: {output_info['filename']} -> {target_path}")
+    # Destination file path
+    destination_path = destination_directory / output_info["filename"]
+
+    # Copy the binary
+    shutil.copy2(str(source_path), str(destination_path))
+
+    # Optional log
+    if config.get("verbose_logging", False):
+        print(f"[GMBridge][copy] Copied binary from {source_path} to {destination_path}")
+
+    return str(destination_path)

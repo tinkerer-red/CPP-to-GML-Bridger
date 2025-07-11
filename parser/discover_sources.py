@@ -11,7 +11,7 @@ def discover_all_sources(config):
       - CMake scripts (CMakeLists.txt, *.cmake)
       - Map files (*.map)
       - Module-definition files (*.def)
-      - Object file directories (containing .o/.obj)
+      - Object files (.o/.obj)
       - Library files (.lib, .a)
 
     Honors any explicit overrides in config["cmake_overrides"] for CMake paths.
@@ -23,7 +23,7 @@ def discover_all_sources(config):
         has_cmake_list:   True if a CMakeLists.txt is present
         map_files:        list of .map file paths
         def_files:        list of .def file paths
-        object_dirs:      list of directories containing .o/.obj files
+        object_files:     list of all discovered .o and .obj files
         library_files:    list of .lib and .a file paths
     """
     verbose = config.get("verbose_logging", False)
@@ -31,9 +31,10 @@ def discover_all_sources(config):
         print("[GMBridge][discover_sources] Starting discover_all_sources()")
 
     project_root    = os.getcwd()
-    input_directory = os.path.normpath(os.path.join(project_root, "input"))
+    input_directory = os.path.join(project_root, "input")
     if not os.path.isdir(input_directory):
         raise FileNotFoundError(f"Input directory not found: {input_directory!r}")
+    input_directory = os.path.normpath(input_directory)
     if verbose:
         print(f"[GMBridge][discover_sources]  Input directory: {input_directory}")
 
@@ -43,7 +44,7 @@ def discover_all_sources(config):
     map_files       = []
     def_files       = []
     library_files   = []
-    object_dirs_set = set()
+    object_files    = []
 
     # 1) Collect any override CMake paths
     override_paths = []
@@ -82,7 +83,7 @@ def discover_all_sources(config):
                 continue
 
             if ext in {".o", ".obj"}:
-                object_dirs_set.add(current_root)
+                object_files.append(file_path)
                 continue
 
             if ext in {".lib", ".a"}:
@@ -95,7 +96,7 @@ def discover_all_sources(config):
         print(f"[GMBridge][discover_sources]  Collected {len(map_files)} map files")
         print(f"[GMBridge][discover_sources]  Collected {len(def_files)} def files")
         print(f"[GMBridge][discover_sources]  Collected {len(library_files)} library files")
-        print(f"[GMBridge][discover_sources]  Found {len(object_dirs_set)} object dirs")
+        print(f"[GMBridge][discover_sources]  Collected {len(object_files)} object files")
 
     # 3) Apply CMake override if present
     if override_paths:
@@ -118,6 +119,6 @@ def discover_all_sources(config):
         "has_cmake_list": has_cmake_list,
         "map_files":      map_files,
         "def_files":      def_files,
-        "object_dirs":    sorted(object_dirs_set),
+        "object_files":   object_files,
         "library_files":  library_files
     }

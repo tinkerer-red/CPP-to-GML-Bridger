@@ -13,6 +13,7 @@ def _to_src_rel(path: Path) -> str:
     so that fixed/generated files all resolve properly.
     """
     project_root = Path.cwd().resolve()
+    output_root  = project_root / "output"
     rel = path.resolve().relative_to(project_root)
     return f"${{CMAKE_CURRENT_SOURCE_DIR}}/{rel.as_posix()}"
 

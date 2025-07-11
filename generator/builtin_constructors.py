@@ -1,6 +1,32 @@
 # generator/builtin_constructors.py
 import re
 
+__all__ = [
+    "sanitize_type_name",
+    "gen_string",
+    "gen_string_view",
+    "gen_vector",
+    "gen_array",
+    "gen_deque",
+    "gen_list",
+    "gen_set",
+    "gen_unordered_set",
+    "gen_ordered_map",
+    "gen_unordered_map",
+    "gen_pair",
+    "gen_tuple",
+    "gen_optional",
+    "gen_variant",
+    "gen_shared_ptr",
+    "gen_unique_ptr",
+    "gen_weak_ptr",
+    "gen_function",
+    "gen_span",
+    "gen_queue",
+]
+
+# todo: "std::string", "std::wstring", "std::u16string", "std::u32string", "std::vector", "std::array", "std::list", "std::deque", "std::set", "std::map"
+
 def sanitize_type_name(type_name: str) -> str:
     cleaned_string = re.sub(r'[^0-9A-Za-z_]', '_', type_name)
     cleaned_string = re.sub(r'__+', '_', cleaned_string).strip('_')

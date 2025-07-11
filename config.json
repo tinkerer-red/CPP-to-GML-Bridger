@@ -1,7 +1,5 @@
 {
 	"include_files": ["input/include/openxr/openxr.h"],
-	"link_libraries": [],
-	"cmake_overrides": {},
 	
 	"project_name": "GM_OpenXR",
 	"namespace": "XR",
@@ -17,12 +15,16 @@
 	"debug": true,
 	"verbose_logging": true,
 
-	"preprocessor": ["cpp", "-P", "-dD", "-std=c99"],
+	"preprocessor": [],
 	"preprocessor_defines": ["XR_EXTENSION_PROTOTYPES"],
-
-	"targets": ["windows-x64", "linux-x64"],
+	"cmake_overrides": {},
+	
+	"targets": ["windows-x64"],
 	"emit_docs": true,
 	"emit_vs_project": true,
 	
-	"extra_includes": []
+	"extra_includes": [],
+	
+	"export_symbols":[],
+	"export_files":[]
 }

@@ -11,8 +11,11 @@ VCXPROJ_TEMPLATE = Template((TEMPLATES_DIR / "vcxproj.tpl").read_text(encoding="
 SLN_TEMPLATE     = Template((TEMPLATES_DIR / "sln.tpl").read_text(encoding="utf-8"))
 
 def generate_vs_project(config):
-    output_folder = Path(config["output_folder"])
-    src_dir       = output_folder / "src"
+    project_root = Path.cwd()
+    input_root   = project_root / "input"
+    output_root  = project_root / "output"
+    build_dir    = output_root / "build" / target
+    src_dir       = output_root / "src"
     include_dir   = src_dir / "include"
 
     # derive everything from a single project_name
@@ -59,18 +62,18 @@ def generate_vs_project(config):
                 shutil.copy2(item, dest_path)
 
     # --- 4) Move generated bridge + RefManager files to src/ ---
-    bridge_cpp = output_folder / f"{config["project_name"]}.cpp"
+    bridge_cpp = output_root / f"{config["project_name"]}.cpp"
     if bridge_cpp.exists():
         src_dir.mkdir(parents=True, exist_ok=True)
         shutil.move(str(bridge_cpp), str(src_dir / bridge_cpp.name))
 
     for fname in ("RefManager.cpp", "RefManager.h"):
-        fpath = output_folder / fname
+        fpath = output_root / fname
         if fpath.exists():
             shutil.move(str(fpath), str(src_dir / fname))
 
     # --- 5) Write config.json for your own record ---
-    (output_folder / "config.json").write_text(json.dumps(config, indent=2))
+    (output_root / "config.json").write_text(json.dumps(config, indent=2))
 
     # --- 6) Copy each .lib into src/lib and prepare linker paths ---
     lib_dest = src_dir / "lib"
@@ -120,6 +123,6 @@ def generate_vs_project(config):
         "PROJECT_NAME": project_name,
         "PROJECT_GUID": project_guid
     })
-    (output_folder / f"{project_name}.sln").write_text(sln_content)
+    (output_root / f"{project_name}.sln").write_text(sln_content)
 
-    return f"VS project created under: {output_folder}"
+    return f"VS project created under: {output_root}"

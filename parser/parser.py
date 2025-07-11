@@ -6,6 +6,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from parser.utils import classify_c_type
+
 # ——— Module-scope regexes ———
 LINE_CONTINUATION_RE = re.compile(r'\\\r?\n\s*')
 # We no longer need MACRO_DEF_RE or manual expand_macros once we invoke cpp.
@@ -103,96 +105,6 @@ def get_enum_prefix_suffix_cleanup(enum_keys):
         if sfx.isupper() and len(sfx) >= 2:
             suffix = f"_{sfx}"
     return prefix, suffix
-
-def classify_c_type(parse_result, c_type, config):
-    """
-    Given a raw C type (possibly via typedef/using), classify it:
-    - is_ref: opaque handle
-    - is_unsupported_numeric: big integer round-trip
-    - is_standard_numeric: float/int32/bool
-    - extension_type: "string" or "double"
-    """
-    typedef_map      = parse_result["typedef_map"]
-    using_map        = parse_result["using_map"]
-    known_structs    = set(parse_result["struct_fields"].keys())
-    function_ptrs    = set(parse_result["function_ptr_aliases"])
-    enum_names       = set(parse_result["enums"].keys())
-
-    def resolve_full(name):
-        seen = set()
-        t = name
-        # chase using and typedef chains
-        while True:
-            if t in using_map and t not in seen:
-                seen.add(t)
-                t = using_map[t]
-                continue
-            if t in typedef_map and t not in seen:
-                seen.add(t)
-                t = typedef_map[t]
-                continue
-            break
-        return t
-
-    cleaned = re.sub(r'\bextern\b\s*', '', c_type, flags=re.IGNORECASE)
-
-    original = cleaned.strip()
-    outer    = resolve_full(original)
-    # peel const & pointers
-    has_const   = outer.startswith("const ")
-    has_ptr     = outer.endswith("*")
-    no_const    = re.sub(r'^const\s+', '', outer).rstrip('*').strip()
-    canonical   = resolve_full(no_const).strip()
-
-    rec = {
-        "declared_type": original,
-        "base_type":     no_const,
-        "canonical_type": canonical,
-        "has_const":     has_const,
-        "has_pointer":   has_ptr,
-        "is_enum":       no_const in enum_names,
-        "is_struct":     no_const in known_structs,
-        "is_function_ptr": outer in function_ptrs,
-        "is_standard_numeric": False,
-        "is_unsupported_numeric": False,
-        "is_ref": False,
-        "extension_type": ""
-    }
-
-    # 1) Pointers
-    if has_ptr or rec["is_struct"] or rec["is_function_ptr"]:
-        rec["is_ref"] = True
-        rec["extension_type"] = "string"
-        return rec
-    
-    # 2) Any alias of a big integer *where the alias name differs* → handle
-    big_ints = {"int64_t","uint64_t","size_t","uintptr_t"}
-    if canonical in big_ints and original != canonical:
-        rec["is_ref"] = True
-        rec["extension_type"] = "string"
-        return rec
-
-    # 3) Raw big integers → strings
-    if canonical in big_ints:
-        rec["is_unsupported_numeric"] = True
-        rec["extension_type"] = "string"
-        return rec
-
-    # 4) Enums → double
-    if rec["is_enum"]:
-        rec["is_standard_numeric"] = True
-        rec["extension_type"] = "double"
-        return rec
-
-    # 0) Void‐returning functions → no bridge return value
-    if canonical == "void":
-        rec["extension_type"] = "void"
-        return rec
-    
-    # 5) Everything else numeric → double
-    rec["is_standard_numeric"] = True
-    rec["extension_type"] = "double"
-    return rec
 
 def parse_header(config):
     """
