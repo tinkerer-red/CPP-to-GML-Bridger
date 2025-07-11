@@ -11,6 +11,14 @@ from parser.primitives import NUMERIC_CANONICAL_TYPES
 from generator.builtin_constructors import BUILTIN_PATTERNS
 from generator.builtin_constructors import *
 
+from parser.primitives import (
+    SAFE_SIGNED_INTS,
+    SAFE_UNSIGNED_INTS,
+    UNSAFE_INTS,
+    FLOAT_TYPES,
+    BOOL_TYPES
+)
+
 # ——— Load our templates & RefManager sources ———
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 BRIDGE_HEADER_TEMPLATE = Template(
@@ -423,11 +431,11 @@ def generate_cpp_bridge(reachable_results: Dict[str,Any],
             )
         )
         struct_create_decls.append(
-            f'extern "C" const char* __cpp_create_{struct}();'
+            f'GM_FUNC(const char*) __cpp_create_{struct}();'
         )
         struct_create_defs.append(
             f'// === Bridge for {struct} ===\n'
-            f'extern "C" const char* __cpp_create_{struct}() {{\n'
+            f'GM_FUNC(const char*) __cpp_create_{struct}() {{\n'
             f'    auto* obj = new {struct}{{}};\n'
             f'    return RefManager::instance().store("{struct}", obj).c_str();\n'
             f'}}'
@@ -463,13 +471,21 @@ def generate_cpp_bridge(reachable_results: Dict[str,Any],
                 )
                 calls.append(nm)
             elif et == "double":
-                decls.append(f"double {nm}")
-                c = arg["declared_type"]
-                if c != "double":
-                    converts.append(f"{c} tmp_{nm} = static_cast<{c}>({nm});")
-                    calls.append(f"tmp_{nm}")
-                else:
+                if arg.get("force_string_wrapper", False):
+                    decls.append(f"const char* {nm}_str")
+                    converts.append(
+                        f'{arg["declared_type"]} {nm} = static_cast<{arg["declared_type"]}>(std::stod({nm}_str));'
+                    )
                     calls.append(nm)
+                else:
+                    decls.append(f"double {nm}")
+                    c = arg["declared_type"]
+                    if c != "double":
+                        converts.append(f"{c} tmp_{nm} = static_cast<{c}>({nm});")
+                        calls.append(f"tmp_{nm}")
+                    else:
+                        calls.append(nm)
+
             elif arg.get("is_ref", False):
                 decls.append(f"const char* {nm}_ref")
                 converts.append(
@@ -496,10 +512,10 @@ def generate_cpp_bridge(reachable_results: Dict[str,Any],
                 calls.append(nm)
 
         function_declarations.append(
-            f'extern "C" {ret_sig} __{name}({", ".join(decls)});'
+            f'GM_FUNC({ret_sig}) __{name}({", ".join(decls)});'
         )
 
-        body = [f'extern "C" {ret_sig} __{name}({", ".join(decls)}) {{']
+        body = [f'GM_FUNC({ret_sig}) __{name}({", ".join(decls)}) {{']
         for ln in converts:
             body.append(f"    {ln}")
         if ext_ret == "void":
@@ -508,7 +524,11 @@ def generate_cpp_bridge(reachable_results: Dict[str,Any],
         else:
             body.append(f"    {canon_rt} result = {name}({", ".join(calls)});")
             if ext_ret == "double":
-                body.append("    return static_cast<double>(result);")
+                if canon_rt in UNSAFE_INTS:
+                    body.append('    static std::string _tmp = std::to_string(result);')
+                    body.append("    return _tmp.c_str();")
+                else:
+                    body.append("    return static_cast<double>(result);")
             else:
                 body.append(
                     f'    std::string _tmp = RefManager::instance().store'
@@ -523,21 +543,33 @@ def generate_cpp_bridge(reachable_results: Dict[str,Any],
 
     # 7) Render templates
     header_ctx = {
-        "PROJECT_NAME_UPPER": project_name.upper(),
-        "INCLUDE_LINES":      include_block,
+        "PROJECT_NAME_UPPER":   project_name.upper(),
+        "INCLUDE_LINES":        include_block,
         "BUILTIN_CONSTRUCTORS": "\n\n".join(builtin_constructors),
-        "JSON_OVERLOADS":     "\n\n".join(struct_json_overloads),
-        "DECLARATIONS":       "\n".join(struct_create_decls + function_declarations),
-        "STRUCT_DEFS":        "\n\n".join(struct_create_defs),
-        "FUNCTION_DEFS":      "\n\n".join(function_definitions),
+        "JSON_OVERLOADS":       "\n\n".join(struct_json_overloads),
+        "DECLARATIONS":         "\n".join(struct_create_decls + function_declarations),
     }
     bridge_header = BRIDGE_HEADER_TEMPLATE.substitute(header_ctx)
-    bridge_source = f'#include "{project_name}.h"\n'
-    out_files     = {
-        f"{project_name}.h":  bridge_header,
+
+    # Build the .cpp with all struct + function definitions
+    struct_defs_code   = "\n\n".join(struct_create_defs)
+    function_defs_code = "\n\n".join(function_definitions)
+
+    bridge_source = (
+        f'#include "{project_name}.h"\n\n'
+        f'#pragma region StructConstructors\n'
+        f'{struct_defs_code}\n'
+        f'#pragma endregion\n\n'
+        f'#pragma region FunctionDefinitions\n'
+        f'{function_defs_code}\n'
+        f'#pragma endregion\n'
+    )
+
+    out_files = {
+        f"{project_name}.h":   bridge_header,
         f"{project_name}.cpp": bridge_source,
-        "RefManager.h":       REF_MANAGER_HEADER,
-        "RefManager.cpp":     REF_MANAGER_SOURCE,
+        "RefManager.h":        REF_MANAGER_HEADER,
+        "RefManager.cpp":      REF_MANAGER_SOURCE,
     }
     _write_bridge_and_deps(out_files, verbose)
 

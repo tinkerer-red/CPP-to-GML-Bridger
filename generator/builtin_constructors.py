@@ -35,7 +35,7 @@ def sanitize_type_name(type_name: str) -> str:
 def gen_string() -> str:
     return """
 using GMString = std::string;
-extern "C" const char* __cpp_create_string() {
+inline GM_FUNC(const char*) __cpp_create_string() {
     REFMAN_REGISTER_TYPE(string, GMString);
     auto* stringPtr = new GMString{};
     std::string _tmp_str = RefManager::instance().store("string", stringPtr);
@@ -46,7 +46,7 @@ extern "C" const char* __cpp_create_string() {
 def gen_string_view() -> str:
     return """
 using GMStringView = std::string_view;
-extern "C" const char* __cpp_create_string_view() {
+inline GM_FUNC(const char*) __cpp_create_string_view() {
     REFMAN_REGISTER_TYPE(string_view, GMStringView);
     auto* viewPtr = new GMStringView{};
     std::string _tmp_str = RefManager::instance().store("string_view", viewPtr);
@@ -59,7 +59,7 @@ def gen_vector(element_type: str) -> str:
     alias_name = f"GMVectorOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::vector<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(vector, {alias_name});
     auto* vecPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("vector", vecPtr);
@@ -72,7 +72,7 @@ def gen_array(element_type: str, size: int) -> str:
     alias_name = f"GMArrayOf{sanitize_type_name(element_type).title()}_{size}"
     return f"""
 using {alias_name} = std::array<{element_type}, {size}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(array, {alias_name});
     auto* arrPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("array", arrPtr);
@@ -85,7 +85,7 @@ def gen_deque(element_type: str) -> str:
     alias_name = f"GMDequeOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::deque<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(deque, {alias_name});
     auto* deqPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("deque", deqPtr);
@@ -98,7 +98,7 @@ def gen_list(element_type: str) -> str:
     alias_name = f"GMListOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::list<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(list, {alias_name});
     auto* lstPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("list", lstPtr);
@@ -111,7 +111,7 @@ def gen_set(element_type: str) -> str:
     alias_name = f"GMSetOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::set<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(set, {alias_name});
     auto* setPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("set", setPtr);
@@ -124,7 +124,7 @@ def gen_unordered_set(element_type: str) -> str:
     alias_name = f"GMUnorderedSetOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::unordered_set<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(unordered_set, {alias_name});
     auto* usetPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("unordered_set", usetPtr);
@@ -137,7 +137,7 @@ def gen_ordered_map(key_type: str, value_type: str) -> str:
     alias_name = f"GMMapOf{sanitize_type_name(key_type).title()}To{sanitize_type_name(value_type).title()}"
     return f"""
 using {alias_name} = std::map<{key_type}, {value_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(map, {alias_name});
     auto* mapPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("map", mapPtr);
@@ -150,7 +150,7 @@ def gen_unordered_map(key_type: str, value_type: str) -> str:
     alias_name = f"GMUnorderedMapOf{sanitize_type_name(key_type).title()}To{sanitize_type_name(value_type).title()}"
     return f"""
 using {alias_name} = std::unordered_map<{key_type}, {value_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(unordered_map, {alias_name});
     auto* umapPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("unordered_map", umapPtr);
@@ -163,7 +163,7 @@ def gen_pair(first_type: str, second_type: str) -> str:
     alias_name = f"GMPair{sanitize_type_name(first_type).title()}{sanitize_type_name(second_type).title()}"
     return f"""
 using {alias_name} = std::pair<{first_type}, {second_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(pair, {alias_name});
     auto* pairPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("pair", pairPtr);
@@ -177,7 +177,7 @@ def gen_tuple(type_list: str) -> str:
     alias_name = "GMTuple" + "".join(sanitize_type_name(t).title() for t in types)
     return f"""
 using {alias_name} = std::tuple<{', '.join(types)}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(tuple, {alias_name});
     auto* tplPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("tuple", tplPtr);
@@ -190,7 +190,7 @@ def gen_optional(inner_type: str) -> str:
     alias_name = f"GMOptionalOf{sanitize_type_name(inner_type).title()}"
     return f"""
 using {alias_name} = std::optional<{inner_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE_CUSTOM(
         optional,
         /* deleter */[](void* p) {{ delete static_cast<{alias_name}*>(p); }},
@@ -221,7 +221,7 @@ def gen_variant(type_list: str) -> str:
     case_block = "\n".join(case_lines)
     return f"""
 using {alias_name} = std::variant<{', '.join(variants)}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE_CUSTOM(
         variant,
         /* deleter */[](void* p) {{ delete static_cast<{alias_name}*>(p); }},
@@ -252,7 +252,7 @@ def gen_shared_ptr(inner_type: str) -> str:
     alias_name = f"GMSharedPtrOf{sanitize_type_name(inner_type).title()}"
     return f"""
 using {alias_name} = std::shared_ptr<{inner_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(shared_ptr, {alias_name});
     auto* spPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("shared_ptr", spPtr);
@@ -265,7 +265,7 @@ def gen_unique_ptr(inner_type: str) -> str:
     alias_name = f"GMUniquePtrOf{sanitize_type_name(inner_type).title()}"
     return f"""
 using {alias_name} = std::unique_ptr<{inner_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(unique_ptr, {alias_name});
     auto* upPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("unique_ptr", upPtr);
@@ -278,7 +278,7 @@ def gen_weak_ptr(inner_type: str) -> str:
     alias_name = f"GMWeakPtrOf{sanitize_type_name(inner_type).title()}"
     return f"""
 using {alias_name} = std::weak_ptr<{inner_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(weak_ptr, {alias_name});
     auto* wpPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("weak_ptr", wpPtr);
@@ -292,7 +292,7 @@ def gen_function(return_type: str, args_list: str) -> str:
     alias_name = f"GMFunctionOf{sanitize_type_name(return_type).title()}_{arg_sanit.title()}"
     return f"""
 using {alias_name} = std::function<{return_type}({args_list})>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(function, {alias_name});
     auto* fnPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("function", fnPtr);
@@ -305,7 +305,7 @@ def gen_span(element_type: str) -> str:
     alias_name = f"GMSpanOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::span<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(span, {alias_name});
     auto* spPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("span", spPtr);
@@ -318,7 +318,7 @@ def gen_queue(element_type: str) -> str:
     alias_name = f"GMQueueOf{sanitize_type_name(element_type).title()}"
     return f"""
 using {alias_name} = std::queue<{element_type}>;
-extern "C" const char* __cpp_create_{suffix}() {{
+inline GM_FUNC(const char*) __cpp_create_{suffix}() {{
     REFMAN_REGISTER_TYPE(queue, {alias_name});
     auto* qPtr = new {alias_name}{{}};
     std::string _tmp_str = RefManager::instance().store("queue", qPtr);

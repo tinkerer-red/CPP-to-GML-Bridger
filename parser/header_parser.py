@@ -8,6 +8,13 @@ from pathlib import Path
 from typing import List, Set, Dict, Any
 
 from parser.utils import classify_c_type, flatten_parse_data
+from parser.primitives import (
+    SAFE_SIGNED_INTS,
+    SAFE_UNSIGNED_INTS,
+    UNSAFE_INTS,
+    FLOAT_TYPES,
+    BOOL_TYPES
+)
 
 def find_reachable_types(supplied_function_names, parse_data):
     """
@@ -306,6 +313,7 @@ def parse_headers(config, sources, defines, expanded_headers):
         for m in FUNC_RE.finditer(content):
             fn_name = m.group("name")
             raw_args = m.group("args").strip()
+            # split args by commas *outside* nested angle brackets or parentheses:
             args = re.split(r',\s*(?![^<]*>)', raw_args) if raw_args else []
             arg_list = []
             for a in args:
@@ -325,8 +333,23 @@ def parse_headers(config, sources, defines, expanded_headers):
                 if array_size is not None:
                     meta["is_ref"]         = True
                     meta["extension_type"] = "string"
+
+                # --- Unsafe number override ---
+                canon = meta.get("canonical_type", "").lower()
+                if canon in UNSAFE_INTS:
+                    meta["extension_type"] = "string"
+                    meta["requires_string_wrapper"] = True
+
                 entry = {"name": nm, "type": tp, **meta}
                 arg_list.append(entry)
+
+            # Detect "needs stringification" for GML if >4 mixed args
+            arg_types = [arg["extension_type"] for arg in arg_list]
+            if len(arg_list) > 4 and "string" in arg_types and "double" in arg_types:
+                for arg in arg_list:
+                    if arg["extension_type"] == "double":
+                        arg["force_string_wrapper"] = True
+
             ret_meta = classify_c_type(file_result, m.group("ret").strip(), config)
             file_result["functions"].append({
                 "name":        fn_name,

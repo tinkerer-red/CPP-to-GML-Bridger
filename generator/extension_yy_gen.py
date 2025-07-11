@@ -3,11 +3,6 @@
 import json
 import uuid
 from pathlib import Path
-
-# generator/yy_renderers.py
-
-import json
-from pathlib import Path
 from string import Template
 
 # Utility to load a template file from disk
@@ -17,9 +12,9 @@ def load_yy_template(template_name: str) -> Template:
 
 # GM return/arg type code mapping
 GML_TYPE_CODE = {
-    "double": 1,
-    "string": 2,
-    "void":   3,
+    "double": 2,
+    "string": 1,
+    "void":   2,
 }
 
 # Platform/architecture → GM target ID mapping
@@ -37,29 +32,27 @@ def platform_to_gm_targets(platform: str, arch: str) -> list:
     return []
 
 # Render a single function entry block from template
-def render_function_entry(func_meta):
-    """
-    func_meta: {
-        "name": str,
-        "return_meta": {"extension_type": ...},
-        "args": [{"name": str, "extension_type": ...}, ...],
-        "doc": str
-    }
-    """
+def render_function_entry(fn, namespace, expose_raw_names):
     template_path = Path("generator/templates/extension_file_function.tpl")
     template = Template(template_path.read_text(encoding="utf-8"))
 
-    function_name = func_meta["name"]
-    arg_types = [GML_TYPE_CODE.get(arg["extension_type"], 1) for arg in func_meta["args"]]
-    return_type = GML_TYPE_CODE.get(func_meta["return_meta"]["extension_type"], 1)
+    function_name = fn["name"]
+    arg_types = []
+    for arg in fn["args"]:
+        code = GML_TYPE_CODE.get("string" if arg.get("force_string_wrapper") else arg["extension_type"], 2)
+        arg_types.append(code)
+    return_type = GML_TYPE_CODE.get(fn["return_meta"]["extension_type"], 2)
+    
+    # If using namespace exposure, then GML name is namespaced; otherwise, just the raw function name
+    hidden = "false" if expose_raw_names else "true"
 
     return template.substitute({
         "FunctionGmlName": f"__{function_name}",
         "ArgCount": len(arg_types),
         "ArgCodes": json.dumps(arg_types),
-        "Documentation": func_meta.get("doc", "").replace('"', '\\"'),
+        "Documentation": fn.get("doc", "").replace('"', '\\"'),
         "ExternalName": f"__{function_name}",
-        "Help": func_meta.get("doc", ""),
+        "Help": fn.get("doc", ""),
         "ReturnType": return_type,
         "Hidden": hidden,
     })
@@ -93,7 +86,6 @@ def render_extension_yy(extension_name: str, config: dict, file_blocks: list) ->
         "ExtensionVersion": config.get("extension_version", "0.0.1"),
         "FilesArray": "[\n" + ",\n".join(file_blocks) + "\n]"
     })
-
 
 def generate_yy_extension(parse_result: dict, config: dict, all_outputs: list):
     """

@@ -181,7 +181,14 @@ def render_function(func: dict, parse_result: dict, config: dict) -> str:
 
     args = func.get("args", [])
     args_doc = ", ".join(a["name"] for a in args)
-    args_code = ", ".join(f"_{a['name']}" for a in args)
+    args_code_parts = []
+    for arg in args:
+        arg_name = f"_{arg['name']}"
+        if arg.get("force_string_wrapper"):
+            arg_name = f"string({arg_name})"
+        args_code_parts.append(arg_name)
+
+    args_code = ", ".join(args_code_parts)
     params_docs = "\n".join(
         f"    /// @param {{{map_jsdobase_type(arg['base_type'], arg['type'], arg['canonical_type'], parse_result, config)}}} {arg['name']}\t\t\t{{{arg['base_type']}}}\t{{{arg['type']}}}\t{{{arg['canonical_type']}}}"
         for arg in args

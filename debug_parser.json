@@ -612,7 +612,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -664,7 +665,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "properties",
@@ -732,7 +734,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "viewConfigurationType",
@@ -748,7 +751,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "environmentBlendModeCapacityInput",
@@ -764,7 +768,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "environmentBlendModeCountOutput",
@@ -1256,7 +1261,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "location",
@@ -1360,7 +1366,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "viewConfigurationTypeCapacityInput",
@@ -1376,7 +1383,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "viewConfigurationTypeCountOutput",
@@ -1460,7 +1468,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "viewConfigurationType",
@@ -1544,7 +1553,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "viewConfigurationType",
@@ -1560,7 +1570,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "viewCapacityInput",
@@ -1576,7 +1587,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "viewCountOutput",
@@ -1692,7 +1704,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -2432,7 +2445,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "viewCountOutput",
@@ -2532,7 +2546,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -2584,7 +2599,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "bufferCapacityInput",
@@ -2600,7 +2616,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -2996,7 +3013,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "interactionProfile",
@@ -3404,7 +3422,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "sourceCountOutput",
@@ -3436,7 +3455,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -3504,7 +3524,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -3776,7 +3797,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "viewIndex",
@@ -3792,7 +3814,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "visibilityMaskType",
@@ -3808,7 +3831,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "visibilityMask",
@@ -4116,7 +4140,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "notificationLevel",
@@ -4372,7 +4397,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "messageTypes",
@@ -4388,7 +4414,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "callbackData",
@@ -4768,7 +4795,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "topLevelPath",
@@ -4784,7 +4812,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "isActive",
@@ -4852,7 +4881,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "inputSourcePath",
@@ -4868,7 +4898,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "state",
@@ -4936,7 +4967,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "inputSourcePath",
@@ -4952,7 +4984,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "state",
@@ -5020,7 +5053,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "inputSourcePath",
@@ -5036,7 +5070,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "state",
@@ -5104,7 +5139,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "inputSourcePath",
@@ -5120,7 +5156,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "space",
@@ -5752,7 +5789,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "controllerModelKeyState",
@@ -5820,7 +5858,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "bufferCapacityInput",
@@ -5836,7 +5875,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -5920,7 +5960,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "properties",
@@ -5988,7 +6029,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "state",
@@ -6056,7 +6098,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "viewConfigurationType",
@@ -6072,7 +6115,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "modeCapacityInput",
@@ -6088,7 +6132,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "modeCountOutput",
@@ -6500,7 +6545,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "featureCapacityInput",
@@ -6516,7 +6562,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "featureCountOutput",
@@ -7184,7 +7231,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "readOutput",
@@ -7900,7 +7948,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -8104,7 +8153,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -9508,7 +9558,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "properties",
@@ -9748,7 +9799,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "timeout",
@@ -9764,7 +9816,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -9816,7 +9869,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "enable",
@@ -9884,7 +9938,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "size",
@@ -10312,7 +10367,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -10364,7 +10420,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "reprojectionErrorMeters",
@@ -10432,7 +10489,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "meters",
@@ -10500,7 +10558,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "number",
@@ -10516,7 +10575,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -10568,7 +10628,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "bufferCapacityInput",
@@ -10584,7 +10645,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -10804,7 +10866,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "mapCountOutput",
@@ -12428,7 +12491,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -12528,7 +12592,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -12628,7 +12693,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -12680,7 +12746,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "results",
@@ -12764,7 +12831,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -12832,7 +12900,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -12900,7 +12969,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -13360,7 +13430,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -14476,7 +14547,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -14528,7 +14600,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "textureData",
@@ -14832,7 +14905,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -14988,7 +15062,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "counter",
@@ -15072,7 +15147,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -15192,7 +15268,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -15760,7 +15837,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -16912,7 +16990,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "renderModelIdCountOutput",
@@ -16944,7 +17023,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -17012,7 +17092,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "pathCountOutput",
@@ -17044,7 +17125,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -17112,7 +17194,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -17988,7 +18071,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "componentTypeCapacityInput",
@@ -18004,7 +18088,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "componentTypeCountOutput",
@@ -18088,7 +18173,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "uuid",
@@ -20108,7 +20194,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "polygonBufferIndex",
@@ -21320,7 +21407,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -21388,7 +21476,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -21456,7 +21545,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -21524,7 +21614,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         }
       ]
     },
@@ -21576,7 +21667,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "capabilityCapacityInput",
@@ -21592,7 +21684,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "capabilityCountOutput",
@@ -21676,7 +21769,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "capability",
@@ -21760,7 +21854,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "capability",
@@ -21776,7 +21871,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "capabilityFeatureCapacityInput",
@@ -21792,7 +21888,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "capabilityFeatureCountOutput",
@@ -22476,7 +22573,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -22576,7 +22674,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -22676,7 +22775,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -22776,7 +22876,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -22876,7 +22977,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -22976,7 +23078,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -23076,7 +23179,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "bufferCountOutput",
@@ -23176,7 +23280,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": false,
           "is_ref": true,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "anchorEntity",
@@ -23244,7 +23349,8 @@
           "is_standard_numeric": false,
           "is_unsupported_numeric": true,
           "is_ref": false,
-          "extension_type": "string"
+          "extension_type": "string",
+          "requires_string_wrapper": true
         },
         {
           "name": "persistenceScopeCapacityInput",
@@ -23260,7 +23366,8 @@
           "is_standard_numeric": true,
           "is_unsupported_numeric": false,
           "is_ref": false,
-          "extension_type": "double"
+          "extension_type": "double",
+          "force_string_wrapper": true
         },
         {
           "name": "persistenceScopeCountOutput",
@@ -65293,572 +65400,572 @@
   "constants": {},
   "using_map": {},
   "reachable_types": [
-    "XrSpatialEntityPersistInfoEXT",
-    "XrExternalCameraIntrinsicsOCULUS",
-    "XrViewLocateInfo",
-    "XrSpatialEntityComponentDataBaseHeaderBD",
-    "XrTime",
-    "XrFacialTrackerCreateInfoHTC",
-    "XrCompositionLayerFlags",
-    "XrSpaceLocationFlags",
-    "XrPlaneDetectionStateEXT",
-    "XrRenderModelIdEXT",
-    "XrPassthroughFormHTC",
-    "XrFovf",
-    "XrFacialTrackingTypeHTC",
-    "XrRenderModelAssetNodePropertiesEXT",
-    "XrCreateSpatialDiscoverySnapshotCompletionInfoEXT",
-    "XrFrameBeginInfo",
-    "XrSpatialGraphNodeTypeMSFT",
-    "XrVector2f",
-    "struct XrWorldMeshDetectorML_T",
-    "unsigned char",
-    "XrSwapchainImageBaseHeader",
-    "struct XrPassthroughLayerFB_T",
-    "XrGeometryInstanceCreateInfoFB",
-    "XrHandEXT",
-    "XrSenseDataProviderStartInfoBD",
-    "XrEnvironmentDepthImageAcquireInfoMETA",
-    "XrEnvironmentDepthImageMETA",
-    "XrLoaderInitInfoBaseHeaderKHR",
-    "struct XrInstance_T",
-    "XrSpatialEntityIdEXT",
-    "XrPassthroughFB",
-    "struct XrVirtualKeyboardMETA_T",
-    "XrCreateSpatialDiscoverySnapshotCompletionEXT",
-    "XrBodySkeletonFB",
-    "XrVersion",
-    "XrPlaneDetectorPolygonBufferEXT",
-    "XrSceneMeshBuffersGetInfoMSFT",
-    "XrEnvironmentDepthHandRemovalSetInfoMETA",
-    "XrActionsSyncInfo",
-    "XrSceneComponentsLocateInfoMSFT",
-    "XrWorldMeshDetectorCreateInfoML",
-    "XrUnpersistSpatialEntityCompletionEXT",
-    "XrSpatialAnchorsUpdateExpirationCompletionML",
-    "XrSpatialEntityEXT",
-    "XrRect2Di",
-    "XrExtent2Di",
-    "struct XrSpatialGraphNodeBindingMSFT_T",
-    "XrBodyJointLocationsFB",
-    "struct XrGeometryInstanceFB_T",
-    "XrActionStateVector2f",
-    "XrSwapchainImageWaitInfo",
-    "XrSpatialSnapshotEXT",
-    "XrPersistenceLocationBD",
-    "struct XrEyeTrackerFB_T *",
-    "XrSystemTrackingProperties",
-    "struct XrSenseDataProviderBD_T",
-    "XrHandJointEXT",
-    "XrSpatialPersistenceContextEXT",
-    "XrForceFeedbackCurlLocationMNDX",
-    "XrGeometryInstanceTransformFB",
-    "XrSwapchainCreateFlags",
-    "XrFrameWaitInfo",
-    "XrMarkerDetectorProfileML",
-    "XrWorldMeshBufferSizeML",
-    "struct XrSpatialGraphNodeBindingMSFT_T *",
-    "XrFaceTrackingDataSource2FB",
-    "XrSceneCaptureInfoBD",
-    "XrSpatialAnchorConfidenceML",
-    "XrFoveationModeHTC",
-    "XrSwapchain",
-    "struct XrFoveationProfileFB_T",
-    "XrInputSourceLocalizedNameFlags",
-    "XrFoveationEyeTrackedStateFlagsMETA",
-    "XrUserCalibrationEnableEventsInfoML",
-    "XrFaceExpressionSet2FB",
-    "XrPassthroughKeyboardHandsIntensityFB",
-    "uint32_t",
-    "XrHandMeshIndexBufferMSFT",
-    "XrDebugUtilsObjectNameInfoEXT",
-    "XrSpaceShareInfoFB",
-    "struct XrSpatialEntityEXT_T",
-    "XrVirtualKeyboardLocationInfoMETA",
-    "XrEnvironmentDepthSwapchainCreateFlagsMETA",
-    "XrSpatialAnchorsPublishInfoML",
-    "XrSceneComponentsGetInfoMSFT",
-    "XrExtent3DfFB",
-    "struct XrBodyTrackerFB_T *",
-    "struct XrRenderModelAssetEXT_T",
-    "XrTriangleMeshCreateInfoFB",
-    "struct XrFaceTrackerFB_T *",
-    "XrTrackingOptimizationSettingsHintQCOM",
-    "XrEventDataBuffer",
-    "XrKeyboardTrackingQueryFlagsFB",
-    "XrSpaceTriangleMeshMETA",
-    "XrHandJointsLocateInfoEXT",
-    "XrSpatialAnchorMSFT",
-    "XrSystemGraphicsProperties",
-    "XrColocationDiscoveryStartInfoMETA",
-    "XrMarkerSpaceCreateInfoVARJO",
-    "XrSpaceLocations",
-    "XrFuturePollResultEXT",
-    "XrSpaceQueryInfoBaseHeaderFB",
-    "XrPersistSpatialEntityCompletionEXT",
-    "XrPlaneDetectorFlagsEXT",
-    "struct XrSpatialPersistenceContextEXT_T",
-    "struct XrVirtualKeyboardMETA_T *",
-    "XrMarkerDetectorML",
-    "XrPlaneDetectorOrientationEXT",
-    "XrSessionCreateInfo",
-    "XrSceneOrientedBoxBoundMSFT",
-    "XrExtent2Df",
-    "XrSpaceEraseInfoFB",
-    "XrEnvironmentDepthImageViewMETA",
-    "XrFutureStateEXT",
-    "XrDebugUtilsMessengerCreateInfoEXT",
-    "XrQueriedSenseDataBD",
-    "XrBodyTrackerCreateInfoBD",
-    "XrControllerModelNodeStateMSFT",
-    "XrRenderModelAssetDataEXT",
-    "XrSwapchainUsageFlags",
-    "XrHandMeshMSFT",
-    "XrSystemNotificationsSetInfoML",
-    "XrSpatialAnchorsPublishCompletionML",
-    "XrMarkerDetectorCreateInfoML",
-    "XrPassthroughLayerPurposeFB",
-    "XrShareSpacesInfoMETA",
-    "XrFacialExpressionBlendShapePropertiesFlagsML",
-    "XrEnvironmentDepthSwapchainCreateInfoMETA",
-    "XrPerformanceMetricsCounterUnitMETA",
-    "char",
-    "void",
-    "XrVirtualKeyboardInputInfoMETA",
-    "struct XrSenseDataProviderBD_T *",
-    "XrWorldMeshDetectorFlagsML",
-    "XrInteractionRenderModelIdsEnumerateInfoEXT",
-    "XrPlaneDetectorLocationEXT",
-    "XrRenderModelBufferFB",
-    "XrWorldMeshStateRequestInfoML",
-    "XrSceneBoundsMSFT",
-    "struct XrSpace_T *",
-    "XrFaceExpressionStatusFB",
-    "XrSpatialAnchorCreateInfoEXT",
-    "XrOffset2Df",
-    "XrSimultaneousHandsAndControllersTrackingResumeInfoMETA",
-    "XrSceneComponentLocationMSFT",
-    "XrSpatialEntityComponentTypeBD",
-    "XrKeyboardTrackingFlagsFB",
-    "XrReferenceSpaceType",
-    "struct XrHandTrackerEXT_T",
-    "XrHandTrackerCreateInfoEXT",
-    "XrUuid",
-    "XrEnvironmentBlendMode",
-    "XrFacialExpressionBlendShapeGetInfoML",
-    "XrViewState",
-    "struct XrActionSet_T *",
-    "XrViewConfigurationProperties",
-    "XrSpatialEntityComponentGetInfoBD",
-    "XrCompositionLayerBaseHeader",
-    "XrActionCreateInfo",
-    "XrRenderModelAssetCreateInfoEXT",
-    "XrTriangleMeshFB",
-    "XrCreateSpatialAnchorsCompletionML",
-    "XrRenderModelNodeStateEXT",
-    "XrDigitalLensControlFlagsALMALENCE",
-    "XrSpatialContextEXT",
-    "XrPassthroughColorLutCreateInfoMETA",
-    "struct XrSpatialContextEXT_T",
-    "struct XrMarkerDetectorML_T *",
-    "XrFaceExpressionWeightsFB",
-    "XrSpatialGraphNodeBindingPropertiesGetInfoMSFT",
-    "XrBodyJointConfidenceHTC",
-    "XrRenderModelCreateInfoEXT",
-    "XrBodyJointLocationsHTC",
-    "XrSpatialPersistenceScopeEXT",
-    "struct XrSwapchain_T",
-    "XrSpatialAnchorsDeleteInfoML",
-    "struct XrSceneMSFT_T *",
-    "XrSharedSpatialAnchorDownloadInfoBD",
-    "struct XrPlaneDetectorEXT_T",
-    "XrSpatialEntityIdBD",
-    "XrSpacePersistenceModeFB",
-    "XrCreateSpatialContextCompletionEXT",
-    "struct XrAction_T *",
-    "XrSpaceComponentStatusFB",
-    "uint8_t",
-    "XrRecommendedLayerResolutionMETA",
-    "XrEnvironmentDepthSwapchainStateMETA",
-    "XrOffset2Di",
-    "XrReferenceSpaceCreateInfo",
-    "XrHandJointSetEXT",
-    "XrEnvironmentDepthProviderCreateFlagsMETA",
-    "XrVirtualKeyboardCreateInfoMETA",
-    "XrPassthroughCreateInfoFB",
-    "XrSpatialAnchorCreateInfoHTC",
-    "XrFacialExpressionBlendShapePropertiesML",
-    "XrSpatialAnchorCreateCompletionBD",
-    "XrSpatialGraphStaticNodeBindingCreateInfoMSFT",
-    "XrPassthroughFlagsFB",
-    "struct XrEnvironmentDepthProviderMETA_T *",
-    "XrPassthroughCreateInfoHTC",
-    "XrPassthroughColorLutUpdateInfoMETA",
-    "XrPassthroughStyleFB",
-    "struct XrRenderModelEXT_T",
-    "XrSystemProperties",
-    "XrExternalCameraAttachedToDeviceOCULUS",
-    "XrSenseDataProviderStateBD",
-    "XrMarkerDetectorSnapshotInfoML",
-    "XrMapLocalizationRequestInfoML",
-    "struct XrFutureEXT_T",
-    "XrEyeGazesInfoFB",
-    "XrVisibilityMaskTypeKHR",
-    "XrVector3f",
-    "XrLocalizationMapImportInfoML",
-    "XrHandMeshVertexBufferMSFT",
-    "struct XrFoveationProfileFB_T *",
-    "XrSpaceContainerFB",
-    "XrPlaneDetectorBeginInfoEXT",
-    "XrWorldMeshBlockML",
-    "XrSpatialAnchorPersistenceInfoMSFT",
-    "struct XrFacialExpressionClientML_T",
-    "XrBodySkeletonJointHTC",
-    "XrRenderModelAssetPropertiesGetInfoEXT",
-    "XrSpatialUpdateSnapshotCreateInfoEXT",
-    "struct XrSenseDataSnapshotBD_T",
-    "struct XrSpaceUserFB_T",
-    "XrExtent3DfEXT",
-    "XrWorldMeshBufferML",
-    "XrSpatialEntityStateBD",
-    "struct XrRenderModelEXT_T *",
-    "XrActionType",
-    "XrBodyJointLocationFB",
-    "struct XrSpatialAnchorMSFT_T *",
-    "XrSpaceQueryResultsFB",
-    "XrExternalCameraExtrinsicsOCULUS",
-    "XrFaceExpressionSetFB",
-    "XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT",
-    "XrVirtualKeyboardModelVisibilitySetInfoMETA",
-    "XrRenderModelAssetPropertiesEXT",
-    "struct XrSpace_T",
-    "XrPerformanceMetricsCounterFlagsMETA",
-    "XrSpaceUserCreateInfoFB",
-    "XrReprojectionModeMSFT",
-    "struct XrActionSet_T",
-    "struct XrAction_T",
-    "XrViveTrackerPathsHTCX",
-    "struct XrBodyTrackerHTC_T *",
-    "struct XrFaceTracker2FB_T",
-    "struct XrSpatialSnapshotEXT_T",
-    "XrPerfSettingsNotificationLevelEXT",
-    "XrVirtualKeyboardAnimationStateMETA",
-    "struct XrPassthroughColorLutMETA_T",
-    "XrFrameState",
-    "XrRenderModelEXT",
-    "XrSpatialComponentDataQueryConditionEXT",
-    "XrDebugUtilsMessengerCallbackDataEXT",
-    "XrBodyJointSetBD",
-    "XrControllerModelNodePropertiesMSFT",
-    "XrVirtualKeyboardSpaceCreateInfoMETA",
-    "XrVisibilityMaskKHR",
-    "XrSpatialAnchorsUpdateExpirationInfoML",
-    "XrView",
-    "XrShareSpacesRecipientBaseHeaderMETA",
-    "struct XrFaceTracker2FB_T *",
-    "struct XrHandTrackerEXT_T *",
-    "XrPlaneDetectorGetInfoEXT",
-    "XrVirtualKeyboardTextureDataMETA",
-    "struct XrSpatialSnapshotEXT_T *",
-    "struct XrRenderModelAssetEXT_T *",
-    "XrTrackingOptimizationSettingsDomainQCOM",
-    "XrKeyboardTrackingQueryFB",
-    "XrHandPoseTypeMSFT",
-    "float",
-    "XrInteractionRenderModelSubactionPathInfoEXT",
-    "XrBodyJointsLocateInfoHTC",
-    "XrAnchorBD",
-    "XrSessionActionSetsAttachInfo",
-    "XrPerfSettingsDomainEXT",
-    "int64_t",
-    "XrControllerModelKeyMSFT",
-    "XrForceFeedbackCurlApplyLocationMNDX",
-    "XrControllerModelKeyStateMSFT",
-    "XrSpatialAnchorNameHTC",
-    "XrTriangleMeshFlagsFB",
-    "XrPlaneDetectorCreateInfoEXT",
-    "XrLocalizationMapTypeML",
-    "XrSenseDataQueryInfoBD",
-    "XrSpatialAnchorCreateInfoBD",
-    "XrSpacesLocateInfo",
-    "XrSpatialGraphNodeSpaceCreateInfoMSFT",
-    "XrWorldMeshRequestCompletionInfoML",
-    "XrSpatialContextCreateInfoEXT",
-    "struct XrDebugUtilsMessengerEXT_T",
-    "XrSpatialCapabilityConfigurationBaseHeaderEXT",
-    "XrVirtualKeyboardTextContextChangeInfoMETA",
-    "struct XrAnchorBD_T *",
-    "XrSpatialPersistenceContextCreateInfoEXT",
-    "struct XrWorldMeshDetectorML_T *",
-    "XrVector4sFB",
-    "XrObjectType",
-    "struct XrInstance_T *",
-    "XrUuidMSFT",
-    "XrPassthroughLayerFB",
-    "XrColocationAdvertisementStartInfoMETA",
-    "struct XrSceneObserverMSFT_T *",
-    "XrRenderModelPropertiesFB",
-    "XrSpatialComponentTypeEXT",
     "XrFoveationProfileCreateInfoFB",
-    "struct XrSpatialAnchorMSFT_T",
-    "XrEnvironmentDepthProviderCreateInfoMETA",
-    "XrDuration",
-    "XrColocationDiscoveryStopInfoMETA",
-    "XrRenderModelPathInfoFB",
-    "XrSpatialGraphNodeBindingPropertiesMSFT",
-    "XrRect3DfFB",
-    "XrSemanticLabelsFB",
-    "XrInputSourceLocalizedNameGetInfo",
-    "XrSpaceTriangleMeshGetInfoMETA",
-    "XrQueriedSenseDataGetInfoBD",
-    "struct XrFacialExpressionClientML_T *",
-    "XrMarkerTypeML",
-    "XrViewStateFlags",
-    "XrSenseDataProviderCreateInfoBD",
-    "XrInstanceProperties",
-    "XrRenderModelPropertiesGetInfoEXT",
-    "XrColor4f",
-    "XrWorldMeshDetectorLodML",
-    "struct XrSwapchain_T *",
-    "XrExtensionProperties",
-    "struct XrPassthroughHTC_T *",
-    "XrPassthroughPreferencesMETA",
-    "XrPerformanceMetricsStateMETA",
-    "XrDeserializeSceneFragmentMSFT",
-    "XrActionStateGetInfo",
-    "XrSpatialEntityAnchorCreateInfoBD",
-    "XrControllerModelStateMSFT",
-    "XrActionSpaceCreateInfo",
-    "XrMarkerML",
-    "XrVector4f",
-    "XrSpatialAnchorsCreateInfoBaseHeaderML",
-    "XrBodyJointLocationHTC",
-    "struct XrPassthroughHTC_T",
-    "XrInteractionProfileSuggestedBinding",
-    "XrWindingOrderFB",
-    "XrFaceTrackerCreateInfo2FB",
-    "struct XrEnvironmentDepthProviderMETA_T",
-    "XrRenderModelAssetDataGetInfoEXT",
-    "XrWorldMeshBlockRequestML",
-    "XrColocationAdvertisementStopInfoMETA",
-    "XrRoomLayoutFB",
-    "struct XrTriangleMeshFB_T",
-    "XrPath",
-    "XrSwapchainCreateInfo",
-    "struct XrPassthroughFB_T",
-    "XrSpatialBufferIdEXT",
-    "XrRenderModelFlagsFB",
-    "XrSpatialComponentDataQueryResultEXT",
-    "XrExternalCameraOCULUS",
     "XrPerformanceMetricsCounterMETA",
-    "struct XrFutureEXT_T *",
-    "XrFaceExpressionWeights2FB",
-    "struct XrBodyTrackerHTC_T",
-    "XrSpaceQueryResultFB",
-    "XrControllerModelPropertiesMSFT",
-    "struct XrSpaceUserFB_T *",
-    "XrFacialExpressionsHTC",
-    "XrSpaceSaveInfoFB",
-    "XrAction",
-    "struct XrSceneMSFT_T",
-    "XrBodyJointsLocateInfoBD",
-    "XrSceneCaptureRequestInfoFB",
-    "XrStructureType",
-    "XrSceneSphereBoundMSFT",
-    "struct XrMarkerDetectorML_T",
-    "XrSwapchainImageAcquireInfo",
-    "XrSceneComponentMSFT",
-    "XrFoveationEyeTrackedStateMETA",
-    "XrBodyJointSetHTC",
-    "XrLocalizationEnableEventsInfoML",
-    "XrSystemGetInfo",
-    "XrBodyJointLocationsBD",
-    "uint64_t",
-    "XrSceneMeshBuffersMSFT",
-    "XrSceneComponentTypeMSFT",
-    "XrSceneObserverCreateInfoMSFT",
-    "XrPassthroughLayerCreateInfoFB",
-    "struct XrPlaneDetectorEXT_T *",
-    "struct XrSpatialEntityEXT_T *",
-    "XrRenderModelSpaceCreateInfoEXT",
-    "XrSessionCreateFlags",
-    "XrSceneDeserializeInfoMSFT",
-    "struct XrAnchorBD_T",
-    "XrFoveationApplyInfoHTC",
-    "XrSpatialEntityFromIdCreateInfoEXT",
-    "XrFacialBlendShapeML",
-    "XrBoundary2DFB",
-    "XrBodyJointsLocateInfoFB",
-    "XrSceneCreateInfoMSFT",
-    "XrSpaceListSaveInfoFB",
-    "XrVirtualKeyboardLocationTypeMETA",
-    "XrEyeGazeFB",
-    "XrSpatialAnchorCreateInfoFB",
-    "XrSpatialAnchorsCreateStorageInfoML",
-    "XrKeyboardTrackingDescriptionFB",
-    "XrRenderModelPropertiesEXT",
-    "XrHapticBaseHeader",
-    "XrSpaceUserFB",
-    "XrLocalizationMapQueryInfoBaseHeaderML",
-    "struct XrDebugUtilsMessengerEXT_T *",
-    "XrSpatialEntityUnpersistInfoEXT",
-    "XrApplicationInfo",
-    "XrActionStateFloat",
-    "XrFaceTrackerCreateInfoFB",
-    "XrEyeTrackerCreateInfoFB",
-    "PFN_xrVoidFunction",
-    "XrSpatialAnchorUnpersistInfoBD",
-    "XrSpatialBufferGetInfoEXT",
-    "XrViewConfigurationView",
-    "XrSpace",
-    "XrVirtualKeyboardModelAnimationStatesMETA",
-    "XrForceFeedbackCurlApplyLocationsMNDX",
-    "XrSpaceComponentTypeFB",
-    "XrSpatialAnchorPersistenceNameMSFT",
-    "XrInstanceCreateInfo",
-    "struct XrBodyTrackerFB_T",
-    "XrHandJointLocationEXT",
-    "struct XrExportedLocalizationMapML_T",
-    "XrWorldMeshBlockStateML",
-    "XrBodyTrackerCreateInfoFB",
-    "XrKeyboardSpaceCreateInfoFB",
-    "XrSpatialCapabilityFeatureEXT",
-    "XrExternalCameraStatusFlagsOCULUS",
-    "XrRect2Df",
-    "struct XrFacialTrackerHTC_T *",
-    "struct XrBodyTrackerBD_T *",
-    "XrActionStatePose",
-    "XrActionSetCreateInfo",
-    "XrActiveActionSet",
-    "XrWorldMeshBlockResultML",
-    "XrViewConfigurationType",
-    "XrInteractionRenderModelTopLevelUserPathGetInfoEXT",
-    "struct XrFacialTrackerHTC_T",
-    "XrPlaneDetectorSemanticTypeEXT",
-    "XrSwapchainSubImage",
-    "struct XrSession_T",
-    "PFN_xrDebugUtilsMessengerCallbackEXT",
-    "XrActionSuggestedBinding",
-    "XrEyeGazesFB",
-    "struct XrPassthroughColorLutMETA_T *",
-    "XrSceneFrustumBoundMSFT",
-    "XrDigitalLensControlALMALENCE",
-    "XrFrameEndInfo",
-    "XrPassthroughPreferenceFlagsMETA",
-    "XrFaceExpressionInfo2FB",
-    "XrAnchorSpaceCreateInfoBD",
-    "struct XrEnvironmentDepthSwapchainMETA_T",
-    "XrSpatialAnchorsQueryInfoBaseHeaderML",
-    "unsigned short",
-    "XrBodySkeletonJointFB",
-    "XrRenderModelLoadInfoFB",
-    "XrPerfSettingsLevelEXT",
-    "XrSpatialAnchorSpaceCreateInfoMSFT",
-    "XrActionStateBoolean",
-    "XrSceneComponentLocationsMSFT",
-    "XrVirtualKeyboardInputStateFlagsMETA",
-    "XrSessionBeginInfo",
-    "XrFutureEXT",
-    "XrPlaneDetectorLocationsEXT",
-    "XrHandTrackingMeshFB",
-    "struct XrPassthroughFB_T *",
-    "XrSpatialAnchorShareInfoBD",
-    "unsigned int",
-    "XrSpatialEntityTrackingStateEXT",
-    "int16_t",
-    "struct XrSpatialAnchorsStorageML_T",
-    "XrHandJointLocationsEXT",
-    "XrHapticActionInfo",
-    "XrPassthroughColorLutDataMETA",
-    "struct XrExportedLocalizationMapML_T *",
-    "uint16_t",
-    "XrActionSet",
-    "struct XrEnvironmentDepthSwapchainMETA_T *",
-    "XrDevicePcmSampleRateStateFB",
-    "XrSenseDataProviderTypeBD",
-    "XrOffset3DfFB",
-    "struct XrBodyTrackerBD_T",
-    "XrSpatialAnchorsDeleteCompletionML",
-    "struct XrTriangleMeshFB_T *",
-    "XrCreateSpatialPersistenceContextCompletionEXT",
-    "XrFacialExpressionClientCreateInfoML",
-    "XrSpaceLocation",
-    "XrDebugUtilsLabelEXT",
-    "XrSenseDataQueryCompletionBD",
-    "struct XrPassthroughLayerFB_T *",
-    "XrWorldMeshStateRequestCompletionML",
-    "int32_t",
-    "XrPosef",
-    "XrSceneComputeConsistencyMSFT",
-    "XrQuaternionf",
-    "struct XrSpatialAnchorStoreConnectionMSFT_T *",
-    "XrHandMeshUpdateInfoMSFT",
-    "struct XrGeometryInstanceFB_T *",
-    "XrApiLayerProperties",
-    "XrMarkerDetectorStateML",
-    "XrBodyJointSetFB",
-    "XrBool32",
-    "XrBoundSourcesForActionEnumerateInfo",
-    "XrNewSceneComputeInfoMSFT",
-    "XrSpatialAnchorStoreConnectionMSFT",
-    "XrSpatialAnchorPersistInfoBD",
-    "XrBodyTrackerCreateInfoHTC",
-    "XrRecommendedLayerResolutionGetInfoMETA",
-    "struct XrEyeTrackerFB_T",
-    "XrSenseDataSnapshotBD",
-    "XrDebugUtilsMessageSeverityFlagsEXT",
-    "XrSpaceUserIdFB",
-    "XrSpatialPersistenceContextResultEXT",
-    "XrSwapchainImageReleaseInfo",
-    "XrUuidEXT",
-    "XrVirtualKeyboardInputSourceMETA",
-    "XrMarkerDetectorStatusML",
-    "XrSceneComponentsMSFT",
-    "struct XrSpatialAnchorStoreConnectionMSFT_T",
-    "XrFutureCompletionEXT",
-    "XrSpatialAnchorCreateInfoMSFT",
-    "XrHandMeshVertexMSFT",
-    "struct XrSceneObserverMSFT_T",
-    "XrRenderModelKeyFB",
-    "XrLocalizationMapML",
+    "XrEnvironmentBlendMode",
+    "struct XrHandTrackerEXT_T *",
+    "struct XrPassthroughHTC_T *",
     "XrSpatialDiscoverySnapshotCreateInfoEXT",
-    "XrSystemId",
-    "unsigned long long",
-    "XrSpatialAnchorsQueryCompletionML",
-    "XrPassthroughColorLutChannelsMETA",
+    "XrPlaneDetectorFlagsEXT",
+    "int16_t",
+    "XrEyeGazeFB",
+    "struct XrEyeTrackerFB_T",
     "long long",
-    "XrResult",
-    "XrSceneComputeStateMSFT",
-    "XrBodyJointLocationBD",
-    "XrSimultaneousHandsAndControllersTrackingPauseInfoMETA",
-    "struct XrSpatialAnchorsStorageML_T *",
-    "XrWorldMeshBufferRecommendedSizeInfoML",
-    "XrSwapchainStateBaseHeaderFB",
-    "XrFutureCancelInfoEXT",
-    "XrSpaceStorageLocationFB",
-    "struct XrSession_T *",
-    "struct XrFaceTrackerFB_T",
-    "XrRenderModelStateEXT",
-    "XrWorldMeshBlockStatusML",
-    "XrSerializedSceneFragmentDataGetInfoMSFT",
-    "XrSpatialCapabilityComponentTypesEXT",
-    "XrInstanceCreateFlags",
-    "XrSpaceLocationData",
-    "XrBodySkeletonHTC",
-    "XrInteractionProfileState",
-    "XrRenderModelStateGetInfoEXT",
-    "XrMarkerSpaceCreateInfoML",
-    "XrSpaceComponentStatusSetInfoFB",
-    "XrWorldMeshGetInfoML",
-    "XrSceneComputeFeatureMSFT",
-    "XrSpatialCapabilityEXT",
+    "XrSpatialEntityFromIdCreateInfoEXT",
+    "XrSpatialEntityPersistInfoEXT",
+    "XrSpatialAnchorsCreateInfoBaseHeaderML",
+    "unsigned short",
+    "XrMarkerDetectorStateML",
+    "XrSpatialAnchorShareInfoBD",
+    "XrFacialExpressionBlendShapePropertiesML",
+    "struct XrTriangleMeshFB_T *",
+    "XrFacialBlendShapeML",
+    "XrSpatialGraphNodeTypeMSFT",
+    "XrPassthroughFormHTC",
+    "struct XrEnvironmentDepthSwapchainMETA_T *",
+    "XrBodySkeletonJointFB",
+    "XrSessionActionSetsAttachInfo",
+    "XrViewState",
+    "XrSceneComputeConsistencyMSFT",
+    "XrPlaneDetectorSemanticTypeEXT",
     "XrColorSpaceFB",
+    "XrViveTrackerPathsHTCX",
+    "XrVirtualKeyboardTextureDataMETA",
+    "XrSpaceTriangleMeshMETA",
+    "XrLocalizationMapQueryInfoBaseHeaderML",
+    "XrSpatialAnchorPersistInfoBD",
+    "void",
+    "XrRenderModelBufferFB",
+    "XrPassthroughKeyboardHandsIntensityFB",
+    "XrDigitalLensControlFlagsALMALENCE",
+    "XrQuaternionf",
+    "XrInteractionRenderModelSubactionPathInfoEXT",
+    "XrSenseDataProviderTypeBD",
+    "XrKeyboardTrackingQueryFB",
+    "struct XrRenderModelAssetEXT_T",
+    "XrBodyJointSetBD",
+    "XrActionStateVector2f",
+    "XrEnvironmentDepthProviderCreateInfoMETA",
+    "XrFacialTrackerCreateInfoHTC",
+    "uint16_t",
+    "XrSceneComponentsMSFT",
+    "XrVector3f",
+    "XrSessionCreateInfo",
+    "XrBodyJointLocationHTC",
+    "XrSpatialGraphNodeSpaceCreateInfoMSFT",
+    "XrSwapchainImageWaitInfo",
+    "XrDebugUtilsMessengerCreateInfoEXT",
+    "struct XrSpatialAnchorMSFT_T",
+    "XrSceneComputeStateMSFT",
+    "XrPath",
+    "XrActionsSyncInfo",
+    "XrBodyJointLocationsHTC",
+    "XrSpaceUserCreateInfoFB",
+    "XrRenderModelPathInfoFB",
+    "XrFrameBeginInfo",
+    "XrSystemTrackingProperties",
+    "XrCompositionLayerBaseHeader",
+    "XrInstanceCreateInfo",
+    "XrLocalizationMapTypeML",
+    "XrActionSetCreateInfo",
+    "XrFaceTrackerCreateInfoFB",
+    "XrColocationAdvertisementStartInfoMETA",
+    "XrVirtualKeyboardLocationInfoMETA",
+    "XrPassthroughLayerPurposeFB",
+    "XrBodyJointsLocateInfoHTC",
+    "XrTrackingOptimizationSettingsDomainQCOM",
+    "XrBodyJointLocationBD",
+    "PFN_xrVoidFunction",
+    "XrVirtualKeyboardSpaceCreateInfoMETA",
+    "XrSpace",
+    "XrEyeGazesFB",
+    "XrVirtualKeyboardLocationTypeMETA",
+    "XrSpatialAnchorNameHTC",
+    "XrExtensionProperties",
+    "XrResult",
+    "XrControllerModelNodeStateMSFT",
+    "struct XrAnchorBD_T *",
+    "XrWorldMeshBlockML",
+    "XrSwapchainCreateInfo",
+    "XrSpatialAnchorStoreConnectionMSFT",
+    "XrRecommendedLayerResolutionMETA",
+    "uint8_t",
+    "XrEnvironmentDepthProviderCreateFlagsMETA",
+    "XrFaceExpressionSetFB",
+    "XrPerformanceMetricsCounterUnitMETA",
+    "struct XrMarkerDetectorML_T *",
+    "XrSpaceComponentStatusFB",
+    "XrForceFeedbackCurlLocationMNDX",
+    "XrSwapchainSubImage",
+    "XrAnchorSpaceCreateInfoBD",
+    "XrSimultaneousHandsAndControllersTrackingPauseInfoMETA",
+    "XrPassthroughCreateInfoFB",
+    "XrEnvironmentDepthSwapchainCreateInfoMETA",
+    "XrRenderModelAssetPropertiesGetInfoEXT",
+    "XrMarkerDetectorML",
+    "XrFrameState",
+    "XrDevicePcmSampleRateStateFB",
+    "XrPerfSettingsNotificationLevelEXT",
+    "struct XrActionSet_T",
+    "XrRenderModelKeyFB",
+    "XrHandJointLocationsEXT",
+    "XrHandMeshVertexBufferMSFT",
+    "XrSimultaneousHandsAndControllersTrackingResumeInfoMETA",
+    "XrPlaneDetectorOrientationEXT",
+    "struct XrExportedLocalizationMapML_T *",
+    "XrSpatialContextCreateInfoEXT",
+    "XrQueriedSenseDataBD",
+    "XrActionSuggestedBinding",
+    "XrSpatialPersistenceContextCreateInfoEXT",
+    "XrBodyTrackerCreateInfoHTC",
+    "XrEnvironmentDepthSwapchainCreateFlagsMETA",
+    "XrRenderModelPropertiesEXT",
+    "XrSpatialPersistenceScopeEXT",
+    "XrTriangleMeshFlagsFB",
+    "XrPlaneDetectorPolygonBufferEXT",
+    "XrSwapchainCreateFlags",
+    "struct XrPassthroughHTC_T",
+    "XrVirtualKeyboardInputInfoMETA",
+    "XrInstanceProperties",
+    "XrSenseDataProviderStateBD",
+    "XrSceneComponentTypeMSFT",
+    "XrBodyJointLocationsFB",
+    "struct XrSwapchain_T",
+    "XrVersion",
+    "XrFacialExpressionBlendShapePropertiesFlagsML",
+    "struct XrTriangleMeshFB_T",
+    "struct XrSceneMSFT_T *",
+    "XrWorldMeshGetInfoML",
+    "XrCreateSpatialAnchorsCompletionML",
+    "XrPerformanceMetricsCounterFlagsMETA",
+    "XrEnvironmentDepthImageAcquireInfoMETA",
+    "XrEnvironmentDepthSwapchainStateMETA",
+    "XrFaceExpressionWeights2FB",
+    "XrDigitalLensControlALMALENCE",
+    "XrSpatialGraphNodeBindingPropertiesMSFT",
+    "XrWorldMeshRequestCompletionInfoML",
+    "XrRenderModelCreateInfoEXT",
+    "unsigned int",
+    "XrUserCalibrationEnableEventsInfoML",
+    "XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT",
+    "struct XrBodyTrackerFB_T",
+    "struct XrPassthroughFB_T",
+    "struct XrWorldMeshDetectorML_T *",
+    "XrOffset2Df",
+    "XrPlaneDetectorCreateInfoEXT",
+    "XrExternalCameraExtrinsicsOCULUS",
+    "XrPassthroughFB",
+    "XrBodyJointLocationFB",
+    "XrFacialExpressionsHTC",
+    "XrViewConfigurationProperties",
+    "XrVirtualKeyboardAnimationStateMETA",
+    "XrPassthroughColorLutChannelsMETA",
+    "XrFovf",
+    "int64_t",
+    "XrSpaceLocationData",
+    "XrSceneBoundsMSFT",
+    "struct XrBodyTrackerHTC_T *",
+    "XrBodyJointLocationsBD",
+    "XrRect2Di",
+    "struct XrRenderModelEXT_T",
+    "XrOffset3DfFB",
+    "struct XrFaceTrackerFB_T",
+    "struct XrFacialExpressionClientML_T",
+    "XrHapticBaseHeader",
+    "XrBodyJointSetHTC",
+    "struct XrSpatialSnapshotEXT_T",
+    "XrSwapchainImageBaseHeader",
+    "struct XrPassthroughColorLutMETA_T *",
+    "XrHandMeshIndexBufferMSFT",
+    "XrSpatialEntityComponentDataBaseHeaderBD",
+    "XrVirtualKeyboardCreateInfoMETA",
+    "XrSwapchainImageAcquireInfo",
+    "struct XrMarkerDetectorML_T",
+    "XrFrameEndInfo",
+    "XrMarkerSpaceCreateInfoML",
+    "XrViewLocateInfo",
+    "XrSpaceStorageLocationFB",
+    "XrActionStateGetInfo",
+    "XrSceneMeshBuffersMSFT",
+    "XrSpatialAnchorPersistenceNameMSFT",
+    "XrEyeTrackerCreateInfoFB",
+    "struct XrFaceTracker2FB_T",
+    "XrInputSourceLocalizedNameGetInfo",
+    "struct XrSpatialAnchorStoreConnectionMSFT_T",
+    "XrPassthroughFlagsFB",
+    "XrHandMeshMSFT",
+    "struct XrSpatialPersistenceContextEXT_T",
     "XrFaceExpressionInfoFB",
-    "XrFuturePollInfoEXT",
-    "XrHandMeshSpaceCreateInfoMSFT",
-    "XrFormFactor",
-    "XrSpatialAnchorStateML",
+    "XrRenderModelFlagsFB",
+    "struct XrBodyTrackerBD_T",
+    "XrRenderModelAssetDataEXT",
+    "XrFoveationEyeTrackedStateFlagsMETA",
+    "XrFacialTrackingTypeHTC",
+    "struct XrGeometryInstanceFB_T",
+    "XrBodyJointsLocateInfoFB",
+    "XrHandJointLocationEXT",
+    "struct XrFoveationProfileFB_T",
+    "struct XrRenderModelAssetEXT_T *",
+    "struct XrInstance_T *",
+    "XrPassthroughColorLutDataMETA",
+    "struct XrAnchorBD_T",
+    "XrVirtualKeyboardInputStateFlagsMETA",
+    "struct XrSpatialGraphNodeBindingMSFT_T *",
+    "struct XrSpaceUserFB_T",
+    "XrSpatialCapabilityComponentTypesEXT",
+    "struct XrVirtualKeyboardMETA_T",
+    "struct XrWorldMeshDetectorML_T",
+    "XrVector4f",
+    "XrColocationAdvertisementStopInfoMETA",
+    "XrSpatialAnchorCreateInfoEXT",
+    "XrDebugUtilsMessageTypeFlagsEXT",
+    "XrSpatialAnchorsPublishInfoML",
+    "struct XrEyeTrackerFB_T *",
+    "XrMarkerDetectorProfileML",
+    "XrStructureType",
+    "XrVisibilityMaskKHR",
+    "XrSpacesLocateInfo",
+    "XrSpacePersistenceModeFB",
+    "XrSemanticLabelsFB",
+    "XrFuturePollResultEXT",
+    "XrFaceExpressionWeightsFB",
+    "XrSpatialAnchorPersistenceInfoMSFT",
+    "XrWorldMeshBlockStatusML",
+    "XrSceneCaptureRequestInfoFB",
+    "XrFutureCompletionEXT",
+    "XrSpatialComponentTypeEXT",
+    "XrExternalCameraAttachedToDeviceOCULUS",
+    "XrVisibilityMaskTypeKHR",
+    "XrSessionCreateFlags",
+    "XrSpatialEntityAnchorCreateInfoBD",
+    "XrSpaceQueryResultsFB",
+    "XrActionSpaceCreateInfo",
+    "XrUuid",
+    "XrNewSceneComputeInfoMSFT",
+    "struct XrFoveationProfileFB_T *",
+    "XrSpatialAnchorsUpdateExpirationCompletionML",
+    "struct XrSpatialSnapshotEXT_T *",
+    "XrHandTrackerCreateInfoEXT",
+    "XrSpaceComponentStatusSetInfoFB",
+    "XrPassthroughCreateInfoHTC",
+    "XrSpatialEntityComponentTypeBD",
+    "XrSharedSpatialAnchorDownloadInfoBD",
+    "XrPlaneDetectorBeginInfoEXT",
+    "XrSceneSphereBoundMSFT",
+    "XrBodyTrackerCreateInfoFB",
+    "unsigned char",
+    "XrSpatialAnchorsCreateStorageInfoML",
+    "XrSpatialBufferGetInfoEXT",
+    "XrPersistenceLocationBD",
+    "XrReferenceSpaceCreateInfo",
+    "XrSpaceContainerFB",
+    "XrReferenceSpaceType",
+    "XrEnvironmentDepthHandRemovalSetInfoMETA",
+    "XrSpatialPersistenceContextResultEXT",
+    "XrWorldMeshDetectorFlagsML",
+    "XrColocationDiscoveryStartInfoMETA",
+    "XrFaceExpressionStatusFB",
+    "XrSpaceQueryResultFB",
+    "XrHandTrackingMeshFB",
+    "XrGeometryInstanceTransformFB",
+    "struct XrSpace_T *",
+    "XrBoundary2DFB",
+    "XrRenderModelIdEXT",
+    "XrViewConfigurationType",
+    "XrSwapchainStateBaseHeaderFB",
+    "XrSystemNotificationsSetInfoML",
+    "XrRenderModelPropertiesFB",
+    "XrLocalizationEnableEventsInfoML",
+    "XrSceneComponentMSFT",
+    "XrHandMeshUpdateInfoMSFT",
+    "XrPerformanceMetricsStateMETA",
+    "XrSpaceQueryInfoBaseHeaderFB",
+    "XrSpatialEntityIdEXT",
+    "XrSerializedSceneFragmentDataGetInfoMSFT",
+    "XrSpaceListSaveInfoFB",
+    "XrPlaneDetectorLocationsEXT",
+    "XrCreateSpatialContextCompletionEXT",
+    "XrRoomLayoutFB",
+    "XrWorldMeshBufferML",
+    "XrLoaderInitInfoBaseHeaderKHR",
+    "XrSwapchainImageReleaseInfo",
+    "XrReprojectionModeMSFT",
+    "XrExternalCameraIntrinsicsOCULUS",
+    "struct XrInstance_T",
+    "struct XrFacialTrackerHTC_T",
+    "uint64_t",
+    "XrActionStateFloat",
+    "XrSpatialEntityUnpersistInfoEXT",
+    "XrSceneComputeFeatureMSFT",
+    "XrVector4sFB",
+    "XrCreateSpatialPersistenceContextCompletionEXT",
+    "XrShareSpacesInfoMETA",
+    "XrHandPoseTypeMSFT",
+    "XrTrackingOptimizationSettingsHintQCOM",
+    "XrFaceExpressionSet2FB",
+    "XrTriangleMeshFB",
+    "XrSceneComponentLocationMSFT",
+    "XrView",
+    "XrWorldMeshBlockStateML",
+    "XrSceneComponentLocationsMSFT",
+    "XrRenderModelAssetPropertiesEXT",
+    "XrPassthroughStyleFB",
+    "XrSystemId",
+    "XrPerfSettingsLevelEXT",
+    "XrColocationDiscoveryStopInfoMETA",
+    "XrSpatialUpdateSnapshotCreateInfoEXT",
+    "struct XrFaceTrackerFB_T *",
+    "XrInteractionRenderModelTopLevelUserPathGetInfoEXT",
+    "XrExtent2Di",
+    "XrSpatialAnchorCreateInfoHTC",
+    "XrRenderModelNodeStateEXT",
+    "XrFacialExpressionBlendShapeGetInfoML",
+    "XrBodyTrackerCreateInfoBD",
+    "XrExternalCameraStatusFlagsOCULUS",
+    "char",
+    "XrSpatialAnchorsDeleteCompletionML",
+    "struct XrEnvironmentDepthProviderMETA_T *",
+    "struct XrSceneObserverMSFT_T *",
+    "XrInputSourceLocalizedNameFlags",
+    "XrSystemGetInfo",
+    "struct XrSpaceUserFB_T *",
+    "XrSpatialCapabilityEXT",
+    "XrSenseDataSnapshotBD",
+    "struct XrSpace_T",
+    "XrSpaceSaveInfoFB",
+    "XrSpatialCapabilityConfigurationBaseHeaderEXT",
+    "XrFaceTrackerCreateInfo2FB",
+    "XrSceneMeshBuffersGetInfoMSFT",
+    "XrForceFeedbackCurlApplyLocationMNDX",
+    "XrActionStateBoolean",
+    "XrRenderModelStateEXT",
+    "XrAnchorBD",
+    "struct XrFacialTrackerHTC_T *",
+    "XrLocalizationMapImportInfoML",
+    "XrSpatialAnchorsPublishCompletionML",
+    "XrColor4f",
+    "PFN_xrDebugUtilsMessengerCallbackEXT",
+    "XrVirtualKeyboardModelAnimationStatesMETA",
+    "struct XrPlaneDetectorEXT_T",
+    "XrSpatialSnapshotEXT",
+    "XrMarkerML",
+    "XrInteractionProfileState",
+    "XrRect2Df",
+    "struct XrFacialExpressionClientML_T *",
+    "XrShareSpacesRecipientBaseHeaderMETA",
+    "XrBodyJointConfidenceHTC",
+    "XrSenseDataProviderStartInfoBD",
     "XrWorldMeshRequestCompletionML",
-    "XrDebugUtilsMessageTypeFlagsEXT"
+    "struct XrPassthroughColorLutMETA_T",
+    "struct XrSceneMSFT_T",
+    "XrSpatialAnchorCreateCompletionBD",
+    "XrSpatialAnchorCreateInfoBD",
+    "struct XrBodyTrackerBD_T *",
+    "struct XrSpatialAnchorStoreConnectionMSFT_T *",
+    "XrSpatialEntityComponentGetInfoBD",
+    "XrApplicationInfo",
+    "XrEyeGazesInfoFB",
+    "XrPassthroughLayerFB",
+    "XrUuidEXT",
+    "XrSceneDeserializeInfoMSFT",
+    "XrSpatialAnchorStateML",
+    "XrObjectType",
+    "XrKeyboardSpaceCreateInfoFB",
+    "XrCompositionLayerFlags",
+    "XrCreateSpatialDiscoverySnapshotCompletionEXT",
+    "struct XrSpatialEntityEXT_T",
+    "XrHapticActionInfo",
+    "XrForceFeedbackCurlApplyLocationsMNDX",
+    "XrBodySkeletonHTC",
+    "XrRecommendedLayerResolutionGetInfoMETA",
+    "XrSenseDataProviderCreateInfoBD",
+    "XrPlaneDetectorGetInfoEXT",
+    "struct XrDebugUtilsMessengerEXT_T *",
+    "struct XrPassthroughFB_T *",
+    "XrSceneComponentsGetInfoMSFT",
+    "float",
+    "struct XrSpatialAnchorMSFT_T *",
+    "XrFutureStateEXT",
+    "XrWorldMeshBlockRequestML",
+    "XrViewConfigurationView",
+    "XrSwapchain",
+    "XrPosef",
+    "XrRect3DfFB",
+    "XrControllerModelNodePropertiesMSFT",
+    "XrSwapchainUsageFlags",
+    "XrFaceTrackingDataSource2FB",
+    "XrPassthroughLayerCreateInfoFB",
+    "struct XrHandTrackerEXT_T",
+    "XrPassthroughPreferenceFlagsMETA",
+    "XrSpatialGraphStaticNodeBindingCreateInfoMSFT",
+    "XrSpaceLocations",
+    "XrSpatialAnchorSpaceCreateInfoMSFT",
+    "XrVirtualKeyboardModelVisibilitySetInfoMETA",
+    "XrFoveationModeHTC",
+    "XrSceneComponentsLocateInfoMSFT",
+    "struct XrAction_T *",
+    "XrSpatialPersistenceContextEXT",
+    "XrSpatialAnchorCreateInfoFB",
+    "XrSpatialGraphNodeBindingPropertiesGetInfoMSFT",
+    "XrFaceExpressionInfo2FB",
+    "XrMarkerTypeML",
+    "XrOffset2Di",
+    "struct XrPassthroughLayerFB_T",
+    "XrSystemProperties",
+    "XrHandJointSetEXT",
+    "struct XrSpatialEntityEXT_T *",
+    "XrSpaceLocation",
+    "uint32_t",
+    "struct XrFutureEXT_T",
+    "XrTriangleMeshCreateInfoFB",
+    "XrSpatialBufferIdEXT",
+    "struct XrSenseDataProviderBD_T *",
+    "XrSpaceUserIdFB",
+    "XrDebugUtilsObjectNameInfoEXT",
+    "XrRenderModelPropertiesGetInfoEXT",
+    "XrPlaneDetectorLocationEXT",
+    "XrEventDataBuffer",
+    "XrSpatialEntityIdBD",
+    "XrSpatialAnchorUnpersistInfoBD",
+    "XrSpatialComponentDataQueryConditionEXT",
+    "XrSceneCaptureInfoBD",
+    "XrSpatialContextEXT",
+    "struct XrSession_T",
+    "XrPlaneDetectionStateEXT",
+    "XrLocalizationMapML",
+    "XrRenderModelAssetNodePropertiesEXT",
+    "struct XrSpatialContextEXT_T",
+    "XrKeyboardTrackingDescriptionFB",
+    "XrHandJointsLocateInfoEXT",
+    "XrSpatialAnchorConfidenceML",
+    "int32_t",
+    "XrAction",
+    "struct XrVirtualKeyboardMETA_T *",
+    "XrSpatialAnchorMSFT",
+    "XrVirtualKeyboardTextContextChangeInfoMETA",
+    "XrWorldMeshStateRequestCompletionML",
+    "XrEnvironmentDepthImageViewMETA",
+    "XrActionStatePose",
+    "XrDebugUtilsLabelEXT",
+    "XrSpaceUserFB",
+    "XrKeyboardTrackingFlagsFB",
+    "struct XrSpatialAnchorsStorageML_T *",
+    "XrSpatialEntityTrackingStateEXT",
+    "XrPersistSpatialEntityCompletionEXT",
+    "XrDebugUtilsMessageSeverityFlagsEXT",
+    "struct XrSwapchain_T *",
+    "XrWorldMeshBufferSizeML",
+    "XrRenderModelStateGetInfoEXT",
+    "XrControllerModelKeyMSFT",
+    "struct XrSession_T *",
+    "XrTime",
+    "XrRenderModelEXT",
+    "XrInstanceCreateFlags",
+    "XrPassthroughColorLutCreateInfoMETA",
+    "struct XrPassthroughLayerFB_T *",
+    "struct XrBodyTrackerFB_T *",
+    "XrSpatialEntityStateBD",
+    "XrFuturePollInfoEXT",
+    "XrRenderModelAssetDataGetInfoEXT",
+    "XrSpatialEntityEXT",
+    "XrFoveationEyeTrackedStateMETA",
+    "XrWorldMeshDetectorLodML",
+    "XrActionSet",
+    "XrBodySkeletonJointHTC",
+    "XrFormFactor",
+    "XrBoundSourcesForActionEnumerateInfo",
+    "XrWorldMeshBlockResultML",
+    "XrPerfSettingsDomainEXT",
+    "XrVector2f",
+    "struct XrFaceTracker2FB_T *",
+    "XrExternalCameraOCULUS",
+    "XrSpaceTriangleMeshGetInfoMETA",
+    "XrSpaceEraseInfoFB",
+    "XrSpaceLocationFlags",
+    "XrExtent2Df",
+    "XrSystemGraphicsProperties",
+    "struct XrSenseDataSnapshotBD_T",
+    "XrQueriedSenseDataGetInfoBD",
+    "struct XrSpatialAnchorsStorageML_T",
+    "struct XrSceneObserverMSFT_T",
+    "struct XrSpatialGraphNodeBindingMSFT_T",
+    "XrMapLocalizationRequestInfoML",
+    "struct XrBodyTrackerHTC_T",
+    "XrExtent3DfFB",
+    "XrWorldMeshStateRequestInfoML",
+    "XrSpaceShareInfoFB",
+    "XrBodySkeletonFB",
+    "XrHandMeshSpaceCreateInfoMSFT",
+    "XrControllerModelPropertiesMSFT",
+    "struct XrFutureEXT_T *",
+    "struct XrEnvironmentDepthSwapchainMETA_T",
+    "struct XrRenderModelEXT_T *",
+    "XrHandEXT",
+    "XrWindingOrderFB",
+    "XrSceneFrustumBoundMSFT",
+    "XrDebugUtilsMessengerCallbackDataEXT",
+    "struct XrActionSet_T *",
+    "XrBodyJointsLocateInfoBD",
+    "XrRenderModelAssetCreateInfoEXT",
+    "XrFutureCancelInfoEXT",
+    "XrPassthroughColorLutUpdateInfoMETA",
+    "XrSpatialCapabilityFeatureEXT",
+    "XrSpatialComponentDataQueryResultEXT",
+    "XrFacialExpressionClientCreateInfoML",
+    "struct XrPlaneDetectorEXT_T *",
+    "XrBodyJointSetFB",
+    "XrHandMeshVertexMSFT",
+    "XrSpatialAnchorsUpdateExpirationInfoML",
+    "XrSceneOrientedBoxBoundMSFT",
+    "XrBool32",
+    "XrGeometryInstanceCreateInfoFB",
+    "XrViewStateFlags",
+    "XrKeyboardTrackingQueryFlagsFB",
+    "XrPassthroughPreferencesMETA",
+    "XrSceneCreateInfoMSFT",
+    "struct XrSenseDataProviderBD_T",
+    "XrApiLayerProperties",
+    "XrVirtualKeyboardInputSourceMETA",
+    "struct XrExportedLocalizationMapML_T",
+    "XrActiveActionSet",
+    "XrUnpersistSpatialEntityCompletionEXT",
+    "XrExtent3DfEXT",
+    "XrMarkerSpaceCreateInfoVARJO",
+    "XrFrameWaitInfo",
+    "XrDuration",
+    "XrInteractionProfileSuggestedBinding",
+    "struct XrDebugUtilsMessengerEXT_T",
+    "unsigned long long",
+    "XrMarkerDetectorSnapshotInfoML",
+    "XrRenderModelSpaceCreateInfoEXT",
+    "XrSpatialAnchorsQueryInfoBaseHeaderML",
+    "XrActionType",
+    "XrSpatialAnchorCreateInfoMSFT",
+    "XrUuidMSFT",
+    "XrEnvironmentDepthImageMETA",
+    "XrDeserializeSceneFragmentMSFT",
+    "XrMarkerDetectorStatusML",
+    "XrSceneObserverCreateInfoMSFT",
+    "XrSpatialAnchorsDeleteInfoML",
+    "XrWorldMeshBufferRecommendedSizeInfoML",
+    "XrControllerModelKeyStateMSFT",
+    "XrSessionBeginInfo",
+    "XrSpaceComponentTypeFB",
+    "XrInteractionRenderModelIdsEnumerateInfoEXT",
+    "struct XrEnvironmentDepthProviderMETA_T",
+    "struct XrGeometryInstanceFB_T *",
+    "XrRenderModelLoadInfoFB",
+    "struct XrAction_T",
+    "XrSpatialAnchorsQueryCompletionML",
+    "XrCreateSpatialDiscoverySnapshotCompletionInfoEXT",
+    "XrControllerModelStateMSFT",
+    "XrFoveationApplyInfoHTC",
+    "XrSenseDataQueryCompletionBD",
+    "XrWorldMeshDetectorCreateInfoML",
+    "XrFutureEXT",
+    "XrMarkerDetectorCreateInfoML",
+    "XrHandJointEXT",
+    "XrSenseDataQueryInfoBD",
+    "XrActionCreateInfo"
   ]
 }
