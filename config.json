@@ -8,9 +8,7 @@
 	"cleanup_function": "YYExtensionCleanup",
 
 	"skip_function_prefixes": ["_"],
-	"strip_namespace_from_functions": true,
-	"strip_namespace_from_constants": true,
-	"strip_namespace_from_enums": true,
+	"strip_namespace_from_symbols": true,
 
 	"debug": true,
 	"verbose_logging": true,

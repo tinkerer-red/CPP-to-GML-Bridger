@@ -144,7 +144,7 @@ def main():
             print("\n[GMBridge][main]    - Copying binaries into extension layout")
         copy_output_binary(config, output_info)
         
-        save_debug_json(all_outputs)
+        save_debug_json(reachable_results)
 
     # Step 3: Generate GML stubs
     if verbose:

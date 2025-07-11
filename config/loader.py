@@ -65,9 +65,7 @@ def load_config(path):
     raw.setdefault("cleanup_function", "YYExtensionCleanup")
 
     raw.setdefault("skip_function_prefixes", [])
-    raw.setdefault("strip_namespace_from_functions", True)
-    raw.setdefault("strip_namespace_from_constants", True)
-    raw.setdefault("strip_namespace_from_enums", True)
+    raw.setdefault("strip_namespace_from_symbols", True)
 
     raw.setdefault("debug", False)
     raw.setdefault("verbose_logging", False)

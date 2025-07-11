@@ -37,7 +37,7 @@ def platform_to_gm_targets(platform: str, arch: str) -> list:
     return []
 
 # Render a single function entry block from template
-def render_function_entry(func_meta, namespace, expose_raw_names):
+def render_function_entry(func_meta):
     """
     func_meta: {
         "name": str,
@@ -53,12 +53,8 @@ def render_function_entry(func_meta, namespace, expose_raw_names):
     arg_types = [GML_TYPE_CODE.get(arg["extension_type"], 1) for arg in func_meta["args"]]
     return_type = GML_TYPE_CODE.get(func_meta["return_meta"]["extension_type"], 1)
 
-    # If using namespace exposure, then GML name is namespaced; otherwise, just the raw function name
-    gml_func_name = function_name if expose_raw_names else f"__{function_name}"
-    hidden = "false" if expose_raw_names else "true"
-
     return template.substitute({
-        "FunctionGmlName": gml_func_name,
+        "FunctionGmlName": f"__{function_name}",
         "ArgCount": len(arg_types),
         "ArgCodes": json.dumps(arg_types),
         "Documentation": func_meta.get("doc", "").replace('"', '\\"'),
